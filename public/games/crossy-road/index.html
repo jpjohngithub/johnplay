@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Crossy Road 3D - JohnPlay</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background: #0f172a; font-family: 'Segoe UI', system-ui, sans-serif; }
+    #canvas { width: 100%; height: 100%; display: block; }
+    #ui { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; pointer-events: none; z-index: 10; }
+    .hud { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 12px; padding: 8px 16px; color: #fff; font-weight: bold; font-size: 14px; }
+    .hud span { color: #fbbf24; font-family: monospace; font-size: 18px; }
+    #gameover-screen { position: absolute; inset: 0; background: rgba(0,0,0,0.88); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 20; color: white; }
+    #gameover-screen h1 { font-size: 40px; color: #f43f5e; font-weight: 900; }
+    button { pointer-events: auto; background: linear-gradient(135deg, #fbbf24, #f43f5e); color: white; border: none; padding: 12px 28px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 14px; margin-top: 15px; }
+    #instructions { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.85); border-radius: 20px; padding: 6px 18px; color: #cbd5e1; font-size: 12px; pointer-events: none; z-index: 10; }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <div class="hud">🐔 PASSOS: <span id="score">0</span></div>
+    <div class="hud">⭐ RECORDE: <span id="high-score">0</span></div>
+  </div>
+
+  <div id="instructions">
+    [⬆️ ou W] Pular pra Frente | [⬅️ ➡️ ou A/D] Pular pros Lados | [⬇️ ou S] Recuar
+  </div>
+
+  <div id="gameover-screen">
+    <h1>💥 ATROPELADO!</h1>
+    <p>Pontuação alcançada: <strong id="final-score" style="color:#fbbf24">0</strong></p>
+    <button onclick="restart()">ATRAVESSAR DE NOVO</button>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let W, H;
+    const GRID = 50;
+    let cols, rows;
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      cols = Math.floor(W / GRID);
+      rows = Math.floor(H / GRID);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let chicken = { x: 0, y: 0 };
+    let score = 0;
+    let highScore = 0;
+    let lanes = [];
+    let isGameOver = false;
+
+    function initGame() {
+      chicken = { x: Math.floor(cols / 2), y: rows - 2 };
+      score = 0;
+      lanes = [];
+
+      for (let r = 0; r < rows; r++) {
+        createLane(r);
+      }
+      isGameOver = false;
+      document.getElementById('gameover-screen').style.display = 'none';
+      document.getElementById('score').innerText = '0';
+    }
+
+    function createLane(rowIndex) {
+      const type = rowIndex > rows - 4 ? 'grass' : (Math.random() < 0.65 ? 'road' : 'grass');
+      const vehicles = [];
+      const speed = (Math.random() * 2 + 1.5) * (Math.random() < 0.5 ? 1 : -1);
+
+      if (type === 'road') {
+        vehicles.push({ x: Math.random() * W, w: 60, speed: speed });
+        vehicles.push({ x: (Math.random() * W + W / 2) % W, w: 60, speed: speed });
+      }
+
+      lanes[rowIndex] = { type, vehicles, speed };
+    }
+
+    window.addEventListener('keydown', e => {
+      if (isGameOver) return;
+      if (['ArrowUp', 'KeyW'].includes(e.code)) {
+        chicken.y--;
+        score++;
+        highScore = Math.max(highScore, score);
+        document.getElementById('score').innerText = `${score}`;
+        document.getElementById('high-score').innerText = `${highScore}`;
+
+        // Scroll lanes down
+        if (chicken.y < rows * 0.4) {
+          chicken.y++;
+          lanes.pop();
+          const newType = Math.random() < 0.7 ? 'road' : 'grass';
+          const speed = (Math.random() * 2.5 + 1.5) * (Math.random() < 0.5 ? 1 : -1);
+          const vehicles = newType === 'road' ? [
+            { x: Math.random() * W, w: 70, speed },
+            { x: (Math.random() * W + W / 2) % W, w: 70, speed }
+          ] : [];
+          lanes.unshift({ type: newType, vehicles, speed });
+        }
+      }
+      if (['ArrowDown', 'KeyS'].includes(e.code) && chicken.y < rows - 2) chicken.y++;
+      if (['ArrowLeft', 'KeyA'].includes(e.code) && chicken.x > 0) chicken.x--;
+      if (['ArrowRight', 'KeyD'].includes(e.code) && chicken.x < cols - 1) chicken.x++;
+    });
+
+    function loop() {
+      requestAnimationFrame(loop);
+      if (!isGameOver) update();
+      render();
+    }
+
+    function update() {
+      // Update vehicles
+      lanes.forEach((lane, rIndex) => {
+        if (lane.type === 'road') {
+          lane.vehicles.forEach(v => {
+            v.x += v.speed;
+            if (v.speed > 0 && v.x > W) v.x = -v.w;
+            if (v.speed < 0 && v.x < -v.w) v.x = W;
+
+            // Hit Chicken
+            if (rIndex === chicken.y) {
+              const chickenPixelX = chicken.x * GRID;
+              if (chickenPixelX + GRID > v.x && chickenPixelX < v.x + v.w) {
+                triggerGameOver();
+              }
+            }
+          });
+        }
+      });
+    }
+
+    function render() {
+      // Draw Lanes
+      lanes.forEach((lane, r) => {
+        ctx.fillStyle = lane.type === 'grass' ? '#166534' : '#1e293b';
+        ctx.fillRect(0, r * GRID, W, GRID);
+
+        // Road markings
+        if (lane.type === 'road') {
+          ctx.strokeStyle = '#ffffff44';
+          ctx.setLineDash([12, 12]);
+          ctx.beginPath();
+          ctx.moveTo(0, r * GRID + GRID / 2);
+          ctx.lineTo(W, r * GRID + GRID / 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        // Draw Cars
+        lane.vehicles.forEach(v => {
+          ctx.fillStyle = '#ef4444';
+          ctx.shadowColor = '#ef4444';
+          ctx.shadowBlur = 8;
+          ctx.fillRect(v.x, r * GRID + 8, v.w, GRID - 16);
+          ctx.shadowBlur = 0;
+          // Car Windows
+          ctx.fillStyle = '#38bdf8';
+          ctx.fillRect(v.x + 10, r * GRID + 12, v.w - 20, GRID - 24);
+        });
+      });
+
+      // Draw Chicken (Yellow)
+      ctx.fillStyle = '#fbbf24';
+      ctx.shadowColor = '#fbbf24';
+      ctx.shadowBlur = 10;
+      ctx.fillRect(chicken.x * GRID + 8, chicken.y * GRID + 8, GRID - 16, GRID - 16);
+      // Comb
+      ctx.fillStyle = '#ef4444';
+      ctx.fillRect(chicken.x * GRID + GRID / 2 - 4, chicken.y * GRID + 2, 8, 6);
+      ctx.shadowBlur = 0;
+    }
+
+    function triggerGameOver() {
+      isGameOver = true;
+      document.getElementById('final-score').innerText = `${score}`;
+      document.getElementById('gameover-screen').style.display = 'flex';
+    }
+
+    function restart() {
+      initGame();
+    }
+
+    initGame();
+    loop();
+  </script>
+</body>
+</html>

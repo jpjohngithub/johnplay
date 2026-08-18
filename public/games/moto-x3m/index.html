@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Moto X3M Stunt Biker - JohnPlay</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background: #0c101d; font-family: 'Segoe UI', system-ui, sans-serif; }
+    #canvas { width: 100%; height: 100%; display: block; }
+    #ui { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; pointer-events: none; z-index: 10; }
+    .hud { background: rgba(12, 16, 29, 0.85); backdrop-filter: blur(8px); border: 1px solid rgba(244, 63, 94, 0.4); border-radius: 12px; padding: 8px 16px; color: #fff; font-weight: bold; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+    .hud span { color: #f43f5e; font-family: monospace; font-size: 18px; }
+    #gameover-screen, #win-screen { position: absolute; inset: 0; background: rgba(8, 11, 20, 0.9); backdrop-filter: blur(10px); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 20; color: white; }
+    #gameover-screen h1 { font-size: 36px; color: #f43f5e; font-weight: 900; margin-bottom: 8px; }
+    #win-screen h1 { font-size: 36px; color: #10b981; font-weight: 900; margin-bottom: 8px; }
+    button { pointer-events: auto; background: linear-gradient(135deg, #f43f5e, #fbbf24); color: white; border: none; padding: 12px 28px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 14px; margin-top: 15px; transition: 0.2s; }
+    button:hover { transform: scale(1.05); }
+    #instructions { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(12, 16, 29, 0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 6px 18px; color: #cbd5e1; font-size: 12px; pointer-events: none; z-index: 10; }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <div class="hud">⏱️ TEMPO: <span id="timer">0.0s</span></div>
+    <div class="hud">⭐ MORTAIS: <span id="flips">0</span></div>
+  </div>
+
+  <div id="instructions">
+    [⬆️ ou W] Acelerar | [⬇️ ou S] Frear | [⬅️ ➡️ ou A/D] Inclinar Moto & Fazer Mortais
+  </div>
+
+  <div id="gameover-screen">
+    <h1>💥 MOTO DESTRUÍDA!</h1>
+    <p>Você capotou a moto na pista.</p>
+    <button onclick="restart()">TENTAR NOVAMENTE</button>
+  </div>
+
+  <div id="win-screen">
+    <h1>🏆 PISTA CONCLUÍDA!</h1>
+    <p>Tempo total: <strong id="final-time" style="color:#10b981">0s</strong></p>
+    <button onclick="restart()">JOGAR NOVAMENTE</button>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let W, H;
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let bike = {
+      x: 100,
+      y: 300,
+      vx: 0,
+      vy: 0,
+      angle: 0,
+      angularV: 0,
+      wheelR: 14
+    };
+
+    let keys = { up: false, down: false, left: false, right: false };
+    let timeElapsed = 0;
+    let flipCount = 0;
+    let accumulatedAngle = 0;
+    let isGameOver = false;
+    let isWin = false;
+
+    window.addEventListener('keydown', e => {
+      if (['ArrowUp', 'KeyW'].includes(e.code)) { keys.up = true; e.preventDefault(); }
+      if (['ArrowDown', 'KeyS'].includes(e.code)) { keys.down = true; e.preventDefault(); }
+      if (['ArrowLeft', 'KeyA'].includes(e.code)) { keys.left = true; e.preventDefault(); }
+      if (['ArrowRight', 'KeyD'].includes(e.code)) { keys.right = true; e.preventDefault(); }
+    });
+
+    window.addEventListener('keyup', e => {
+      if (['ArrowUp', 'KeyW'].includes(e.code)) keys.up = false;
+      if (['ArrowDown', 'KeyS'].includes(e.code)) keys.down = false;
+      if (['ArrowLeft', 'KeyA'].includes(e.code)) keys.left = false;
+      if (['ArrowRight', 'KeyD'].includes(e.code)) keys.right = false;
+    });
+
+    // Terrain with giant loops and ramps
+    function getTerrainY(x) {
+      if (x < 150) return H * 0.65;
+      if (x > 3000) return H * 0.65; // Finish line
+      return H * 0.65 + Math.sin(x * 0.008) * 80 + Math.sin(x * 0.02) * 35;
+    }
+
+    function loop() {
+      if (!isGameOver && !isWin) {
+        requestAnimationFrame(loop);
+        update();
+      }
+      render();
+    }
+
+    function update() {
+      timeElapsed += 1/60;
+      document.getElementById('timer').innerText = `${timeElapsed.toFixed(1)}s`;
+      document.getElementById('flips').innerText = `${flipCount}`;
+
+      // Gas & Brake
+      if (keys.up) {
+        bike.vx += Math.cos(bike.angle) * 0.45;
+        bike.vy += Math.sin(bike.angle) * 0.45;
+      }
+      if (keys.down) {
+        bike.vx *= 0.93;
+      }
+      if (keys.left) bike.angularV -= 0.022;
+      if (keys.right) bike.angularV += 0.022;
+
+      // Gravity & Damping
+      bike.vy += 0.42;
+      bike.vx *= 0.988;
+      bike.angularV *= 0.94;
+
+      bike.x += bike.vx;
+      bike.y += bike.vy;
+      bike.angle += bike.angularV;
+
+      accumulatedAngle += bike.angularV;
+      if (Math.abs(accumulatedAngle) >= Math.PI * 2) {
+        flipCount++;
+        accumulatedAngle = 0;
+      }
+
+      // Checkpoint / Finish
+      if (bike.x > 3200) {
+        isWin = true;
+        document.getElementById('final-time').innerText = `${timeElapsed.toFixed(1)}s (-${flipCount * 0.5}s bônus)`;
+        document.getElementById('win-screen').style.display = 'flex';
+        return;
+      }
+
+      // Ground Collision
+      const groundY = getTerrainY(bike.x);
+      if (bike.y + bike.wheelR >= groundY) {
+        bike.y = groundY - bike.wheelR;
+        bike.vy = 0;
+
+        const slope = Math.atan2(getTerrainY(bike.x + 8) - getTerrainY(bike.x - 8), 16);
+        bike.angle = bike.angle * 0.65 + slope * 0.35;
+
+        // Crash check if upside down
+        const normAngle = Math.abs(bike.angle % (Math.PI * 2));
+        if (normAngle > Math.PI * 0.65 && normAngle < Math.PI * 1.35) {
+          isGameOver = true;
+          document.getElementById('gameover-screen').style.display = 'flex';
+        }
+      }
+    }
+
+    function render() {
+      ctx.fillStyle = '#0a0e1c';
+      ctx.fillRect(0, 0, W, H);
+
+      const camX = bike.x - W * 0.3;
+
+      // Draw Terrain
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(0, H);
+      for (let x = 0; x <= W; x += 15) {
+        const worldX = x + camX;
+        ctx.lineTo(x, getTerrainY(worldX));
+      }
+      ctx.lineTo(W, H);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Finish Line Banner
+      const finishScreenX = 3200 - camX;
+      if (finishScreenX > -100 && finishScreenX < W + 100) {
+        ctx.fillStyle = '#10b981';
+        ctx.fillRect(finishScreenX, getTerrainY(3200) - 120, 15, 120);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px sans-serif';
+        ctx.fillText('🏁 CHEGADA', finishScreenX - 40, getTerrainY(3200) - 130);
+      }
+
+      // Draw Bike & Stunt Rider
+      ctx.save();
+      ctx.translate(bike.x - camX, bike.y);
+      ctx.rotate(bike.angle);
+
+      // Wheels
+      ctx.fillStyle = '#0f172a';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(-22, 10, bike.wheelR, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.arc(22, 10, bike.wheelR, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+      // Frame
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(-22, 10); ctx.lineTo(0, -5); ctx.lineTo(22, 10);
+      ctx.moveTo(0, -5); ctx.lineTo(-10, -18); ctx.lineTo(12, -14);
+      ctx.stroke();
+
+      // Rider Body & Helmet
+      ctx.fillStyle = '#fbbf24';
+      ctx.beginPath(); ctx.arc(-4, -28, 8, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(-10, -20, 14, 14);
+
+      ctx.restore();
+    }
+
+    function restart() {
+      bike = { x: 100, y: 300, vx: 0, vy: 0, angle: 0, angularV: 0, wheelR: 14 };
+      timeElapsed = 0;
+      flipCount = 0;
+      accumulatedAngle = 0;
+      isGameOver = false;
+      isWin = false;
+      document.getElementById('gameover-screen').style.display = 'none';
+      document.getElementById('win-screen').style.display = 'none';
+      loop();
+    }
+
+    loop();
+  </script>
+</body>
+</html>

@@ -61,21 +61,8 @@ export interface BrowserGame {
   thumbnail: string;
   description: string;
   controls: string;
-  type: 
-    | 'canvas-subway' 
-    | 'canvas-moto' 
-    | 'canvas-slope' 
-    | 'canvas-retrobowl' 
-    | 'canvas-1v1' 
-    | 'canvas-paperio' 
-    | 'canvas-crossy' 
-    | 'canvas-flappy' 
-    | 'canvas-snake' 
-    | 'canvas-spaceinvaders' 
-    | 'canvas-pong' 
-    | 'canvas-2048'
-    | 'canvas-tetris'
-    | 'web-emulator';
+  type: 'native-game' | 'web-emulator' | 'canvas-game';
+  gameUrl?: string;
   emulatorCore?: 'gba' | 'snes' | 'nes' | 'segaMD' | 'n64' | 'psx' | 'arcade';
   romUrl?: string;
   tags: string[];

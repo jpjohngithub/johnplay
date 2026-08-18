@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>1v1 Arena Shoot & Build - JohnPlay</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background: #0b0f19; font-family: 'Segoe UI', system-ui, sans-serif; cursor: crosshair; }
+    #canvas { width: 100%; height: 100%; display: block; }
+    #ui { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; pointer-events: none; z-index: 10; }
+    .hud { background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(8px); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 8px 16px; color: #fff; font-weight: bold; font-size: 14px; }
+    .hud span { color: #10b981; font-family: monospace; font-size: 18px; }
+    #gameover-screen { position: absolute; inset: 0; background: rgba(0,0,0,0.88); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 20; color: white; }
+    #gameover-screen h1 { font-size: 40px; color: #ef4444; font-weight: 900; }
+    button { pointer-events: auto; background: linear-gradient(135deg, #06b6d4, #a855f7); color: white; border: none; padding: 12px 28px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 14px; margin-top: 15px; }
+    #instructions { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(11, 15, 25, 0.85); border-radius: 20px; padding: 6px 18px; color: #cbd5e1; font-size: 12px; pointer-events: none; z-index: 10; }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <div class="hud">💚 SUA VIDA: <span id="player-hp">100%</span></div>
+    <div class="hud">🏆 VITORIAS: <span id="wins">0</span></div>
+  </div>
+
+  <div id="instructions">
+    [W, A, S, D] Mover | [Mouse] Mirar & Atirar | [Q / E] Construir Paredes de Proteção
+  </div>
+
+  <div id="gameover-screen">
+    <h1 id="result-title">VOCÊ FOI ELIMINADO!</h1>
+    <button onclick="restart()">DUELAR NOVAMENTE</button>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let W, H;
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let player = { x: 120, y: 300, hp: 100, radius: 18 };
+    let bot = { x: 0, y: 300, hp: 100, radius: 18, vy: 3 };
+    let bullets = [];
+    let walls = [];
+    let mouse = { x: 0, y: 0 };
+    let keys = { w: false, a: false, s: false, d: false };
+    let wins = 0;
+    let isGameOver = false;
+
+    window.addEventListener('mousemove', e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    window.addEventListener('mousedown', () => {
+      if (isGameOver) return;
+      // Shoot bullet toward mouse
+      const angle = Math.atan2(mouse.y - player.y, mouse.x - player.x);
+      bullets.push({
+        x: player.x,
+        y: player.y,
+        vx: Math.cos(angle) * 12,
+        vy: Math.sin(angle) * 12,
+        fromPlayer: true
+      });
+    });
+
+    window.addEventListener('keydown', e => {
+      if (['KeyW', 'ArrowUp'].includes(e.code)) keys.w = true;
+      if (['KeyA', 'ArrowLeft'].includes(e.code)) keys.a = true;
+      if (['KeyS', 'ArrowDown'].includes(e.code)) keys.s = true;
+      if (['KeyD', 'ArrowRight'].includes(e.code)) keys.d = true;
+      if (['KeyQ', 'KeyE'].includes(e.code)) {
+        // Build wall
+        walls.push({ x: player.x + (mouse.x > player.x ? 30 : -30), y: player.y - 25, w: 12, h: 50, hp: 4 });
+      }
+    });
+
+    window.addEventListener('keyup', e => {
+      if (['KeyW', 'ArrowUp'].includes(e.code)) keys.w = false;
+      if (['KeyA', 'ArrowLeft'].includes(e.code)) keys.a = false;
+      if (['KeyS', 'ArrowDown'].includes(e.code)) keys.s = false;
+      if (['KeyD', 'ArrowRight'].includes(e.code)) keys.d = false;
+    });
+
+    function resetArena() {
+      player = { x: 140, y: H / 2, hp: 100, radius: 18 };
+      bot = { x: W - 140, y: H / 2, hp: 100, radius: 18, vy: 3.5 };
+      bullets = [];
+      walls = [];
+      isGameOver = false;
+      document.getElementById('player-hp').innerText = `100%`;
+      document.getElementById('gameover-screen').style.display = 'none';
+    }
+
+    function loop() {
+      requestAnimationFrame(loop);
+      if (!isGameOver) update();
+      render();
+    }
+
+    function update() {
+      // Move Player
+      if (keys.w && player.y > 40) player.y -= 5;
+      if (keys.s && player.y < H - 40) player.y += 5;
+      if (keys.a && player.x > 40) player.x -= 5;
+      if (keys.d && player.x < W - 40) player.x += 5;
+
+      // Bot AI
+      bot.y += bot.vy;
+      if (bot.y < 80 || bot.y > H - 80) bot.vy *= -1;
+
+      // Bot shooting
+      if (Math.random() < 0.04) {
+        const angle = Math.atan2(player.y - bot.y, player.x - bot.x);
+        bullets.push({
+          x: bot.x,
+          y: bot.y,
+          vx: Math.cos(angle) * 9,
+          vy: Math.sin(angle) * 9,
+          fromPlayer: false
+        });
+      }
+
+      // Update Bullets
+      bullets.forEach(b => {
+        b.x += b.vx;
+        b.y += b.vy;
+
+        // Hit Wall check
+        walls.forEach(w => {
+          if (b.x > w.x && b.x < w.x + w.w && b.y > w.y && b.y < w.y + w.h) {
+            w.hp--;
+            b.x = 99999;
+          }
+        });
+
+        // Hit Bot
+        if (b.fromPlayer && Math.hypot(b.x - bot.x, b.y - bot.y) < bot.radius) {
+          bot.hp -= 25;
+          b.x = 99999;
+          if (bot.hp <= 0) {
+            wins++;
+            document.getElementById('wins').innerText = `${wins}`;
+            resetArena();
+          }
+        }
+
+        // Hit Player
+        if (!b.fromPlayer && Math.hypot(b.x - player.x, b.y - player.y) < player.radius) {
+          player.hp -= 20;
+          b.x = 99999;
+          document.getElementById('player-hp').innerText = `${Math.max(0, player.hp)}%`;
+          if (player.hp <= 0) {
+            isGameOver = true;
+            document.getElementById('result-title').innerText = 'VOCÊ FOI ELIMINADO!';
+            document.getElementById('result-title').style.color = '#ef4444';
+            document.getElementById('gameover-screen').style.display = 'flex';
+          }
+        }
+      });
+
+      walls = walls.filter(w => w.hp > 0);
+      bullets = bullets.filter(b => b.x > 0 && b.x < W && b.y > 0 && b.y < H);
+    }
+
+    function render() {
+      // Grid Background
+      ctx.fillStyle = '#0b0f19';
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      }
+      for (let y = 0; y < H; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+
+      // Draw Walls (Purple barriers)
+      ctx.fillStyle = '#a855f7';
+      ctx.shadowColor = '#a855f7';
+      ctx.shadowBlur = 10;
+      walls.forEach(w => {
+        ctx.fillRect(w.x, w.y, w.w, w.h);
+      });
+      ctx.shadowBlur = 0;
+
+      // Draw Bullets
+      ctx.fillStyle = '#fbbf24';
+      bullets.forEach(b => {
+        ctx.beginPath(); ctx.arc(b.x, b.y, 4, 0, Math.PI * 2); ctx.fill();
+      });
+
+      // Draw Player (Blue Cyber Skin)
+      ctx.fillStyle = '#38bdf8';
+      ctx.shadowColor = '#38bdf8';
+      ctx.shadowBlur = 15;
+      ctx.beginPath(); ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2); ctx.fill();
+
+      // Gun direction line
+      const pAngle = Math.atan2(mouse.y - player.y, mouse.x - player.x);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(player.x, player.y);
+      ctx.lineTo(player.x + Math.cos(pAngle) * 28, player.y + Math.sin(pAngle) * 28);
+      ctx.stroke();
+
+      // Draw Bot (Red Rival)
+      ctx.fillStyle = '#ef4444';
+      ctx.shadowColor = '#ef4444';
+      ctx.shadowBlur = 15;
+      ctx.beginPath(); ctx.arc(bot.x, bot.y, bot.radius, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Bot HP bar above head
+      ctx.fillStyle = '#ef4444';
+      ctx.fillRect(bot.x - 20, bot.y - 30, (bot.hp / 100) * 40, 5);
+    }
+
+    function restart() {
+      resetArena();
+    }
+
+    resetArena();
+    loop();
+  </script>
+</body>
+</html>
