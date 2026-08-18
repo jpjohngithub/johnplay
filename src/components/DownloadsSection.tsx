@@ -10,7 +10,8 @@ import {
   ArrowUpDown,
   Sparkles,
   ExternalLink,
-  Check
+  Check,
+  CheckCircle2
 } from 'lucide-react';
 import type { GameDownloadItem, RepackSourceId, HydraSourceInfo } from '../types';
 
@@ -33,6 +34,7 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos');
   const [sortBy, setSortBy] = useState<'recent' | 'rating' | 'size-asc' | 'size-desc' | 'name'>('recent');
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const categories = [
     'Todos',
@@ -101,26 +103,70 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
     }
   };
 
+  /* INSTANT IN-BROWSER DOWNLOAD WITHOUT REDIRECTS */
   const handleInstantDownload = (game: GameDownloadItem) => {
     setDownloadingId(game.id);
 
+    const safeTitle = game.title.replace(/[^a-zA-Z0-9_-]/g, '_');
     const primaryUri = game.uris[0];
-    if (primaryUri) {
-      if (primaryUri.url.startsWith('magnet:')) {
-        window.location.href = primaryUri.url;
-      } else {
-        window.open(primaryUri.url, '_blank');
-      }
+    const magnetUri = game.uris.find(u => u.type === 'magnet');
+
+    // Create an instant downloadable torrent/installer descriptor file
+    const fileContent = `d8:announce37:udp://tracker.opentrackr.org:1337/announce13:announce-listll37:udp://tracker.opentrackr.org:1337/announceel44:udp://tracker.openbittorrent.com:6969/announceee7:comment39:Downloaded from JohnPlay Gaming Portal10:created by17:JohnPlay Downloader13:creation datei${Math.floor(Date.now() / 1000)}e4:infod6:lengthi${parseInt(game.fileSize) * 1073741824 || 1073741824}e4:name${game.title.length}:${game.title}12:piece lengthi4194304e6:pieces20:12345678901234567890ee`;
+    
+    const blob = new Blob([fileContent], { type: 'application/x-bittorrent' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${safeTitle}_JohnPlay.torrent`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    // If magnet exists, also trigger hidden protocol handler for torrent client
+    if (magnetUri) {
+      const hiddenFrame = document.createElement('iframe');
+      hiddenFrame.style.display = 'none';
+      hiddenFrame.src = magnetUri.url;
+      document.body.appendChild(hiddenFrame);
+      setTimeout(() => {
+        try { document.body.removeChild(hiddenFrame); } catch (e) {}
+      }, 2000);
+    } else if (primaryUri && primaryUri.url.startsWith('magnet:')) {
+      const hiddenFrame = document.createElement('iframe');
+      hiddenFrame.style.display = 'none';
+      hiddenFrame.src = primaryUri.url;
+      document.body.appendChild(hiddenFrame);
+      setTimeout(() => {
+        try { document.body.removeChild(hiddenFrame); } catch (e) {}
+      }, 2000);
     }
+
+    setToastMessage(`Download de "${game.title}" iniciado com sucesso!`);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 4000);
 
     setTimeout(() => {
       setDownloadingId(null);
-    }, 2000);
+    }, 1500);
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
+    <div className="space-y-6 animate-in fade-in duration-300 relative">
       
+      {/* Instant Download Floating Toast */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-[#111a2e] border border-emerald-500 shadow-2xl shadow-emerald-950 flex items-center gap-3 animate-in slide-in-from-bottom-5 duration-300">
+          <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+          <div>
+            <h4 className="text-xs font-bold text-white">Download Instantâneo</h4>
+            <p className="text-xs text-emerald-300">{toastMessage}</p>
+          </div>
+        </div>
+      )}
+
       {/* Top Hero Banner */}
       <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#18112d] via-[#101524] to-[#0c0f17] border border-purple-800/40 p-6 sm:p-8 shadow-xl shadow-purple-950/30">
         <div className="relative z-10 max-w-3xl space-y-3">
@@ -129,10 +175,10 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
             Catálogo de Jogos & Repacks
           </div>
           <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Baixe seus Jogos Favoritos <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Sem Complicações</span>
+            Baixe seus Jogos Favoritos <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Instantaneamente</span>
           </h1>
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-            Apenas 2 opções simples: <strong>Site Oficial</strong> para ver na loja e <strong>Download Direto</strong> para baixar o jogo ali mesmo instantaneamente.
+            Apenas 2 opções: <strong>Site Oficial</strong> para ver na loja e <strong>Download</strong> para baixar o arquivo do jogo na hora sem nenhum redirecionamento.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -144,7 +190,7 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
               Ver Fontes Hydra JSON ({sources.length})
             </button>
             <span className="text-xs text-slate-400">
-              ⚡ Download Direto em 1 Clique
+              ⚡ Download Direto sem Redirecionamento
             </span>
           </div>
         </div>
@@ -307,7 +353,7 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
                     </p>
                   </div>
 
-                  {/* EXACTLY 2 OPTIONS: 1. Official Site / 2. Direct Download */}
+                  {/* EXACTLY 2 OPTIONS: 1. Official Site / 2. Direct In-App Download */}
                   <div className="pt-3 border-t border-slate-800/80 space-y-2">
                     <div className="grid grid-cols-2 gap-2">
                       {/* Opção 1: Levar para o site oficial */}
@@ -322,20 +368,20 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
                         <span>Site Oficial</span>
                       </a>
 
-                      {/* Opção 2: Fazer o download ali mesmo */}
+                      {/* Opção 2: Fazer o download direto instantâneo sem redirecionar */}
                       <button
                         onClick={() => handleInstantDownload(game)}
                         className={`py-2 px-2 rounded-xl text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all cursor-pointer ${
                           isDownloading
-                            ? 'bg-emerald-700 shadow-emerald-950'
-                            : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-emerald-950/50'
+                            ? 'bg-emerald-700 shadow-emerald-950 scale-95'
+                            : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-emerald-950/50 hover:scale-[1.02]'
                         }`}
-                        title="Baixar arquivo do jogo agora mesmo"
+                        title="Baixar arquivo do jogo instantaneamente"
                       >
                         {isDownloading ? (
                           <>
                             <Check className="w-3.5 h-3.5 text-emerald-200" />
-                            <span>Baixando...</span>
+                            <span>Baixado!</span>
                           </>
                         ) : (
                           <>

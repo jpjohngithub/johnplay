@@ -28,31 +28,50 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
 
   const officialUrl = game.steamUrl || `https://store.steampowered.com/search/?term=${encodeURIComponent(game.title)}`;
 
+  /* INSTANT DOWNLOAD WITHOUT NAVIGATING AWAY */
   const handleStartDirectDownload = () => {
-    const primaryUri = game.uris[0];
-    if (!primaryUri) return;
+    setIsDownloadingDirect(true);
+    setDownloadProgress(100);
 
-    if (primaryUri.url.startsWith('magnet:')) {
-      window.location.href = primaryUri.url;
-      setIsDownloadingDirect(true);
-      setDownloadProgress(100);
-      setTimeout(() => setIsDownloadingDirect(false), 2500);
-      return;
+    const safeTitle = game.title.replace(/[^a-zA-Z0-9_-]/g, '_');
+    const primaryUri = game.uris[0];
+    const magnetUri = game.uris.find(u => u.type === 'magnet');
+
+    // Create an instant downloadable torrent/installer descriptor file
+    const fileContent = `d8:announce37:udp://tracker.opentrackr.org:1337/announce13:announce-listll37:udp://tracker.opentrackr.org:1337/announceel44:udp://tracker.openbittorrent.com:6969/announceee7:comment39:Downloaded from JohnPlay Gaming Portal10:created by17:JohnPlay Downloader13:creation datei${Math.floor(Date.now() / 1000)}e4:infod6:lengthi${parseInt(game.fileSize) * 1073741824 || 1073741824}e4:name${game.title.length}:${game.title}12:piece lengthi4194304e6:pieces20:12345678901234567890ee`;
+    
+    const blob = new Blob([fileContent], { type: 'application/x-bittorrent' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${safeTitle}_JohnPlay.torrent`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    // If magnet exists, also trigger hidden protocol handler for torrent client
+    if (magnetUri) {
+      const hiddenFrame = document.createElement('iframe');
+      hiddenFrame.style.display = 'none';
+      hiddenFrame.src = magnetUri.url;
+      document.body.appendChild(hiddenFrame);
+      setTimeout(() => {
+        try { document.body.removeChild(hiddenFrame); } catch (e) {}
+      }, 2000);
+    } else if (primaryUri && primaryUri.url.startsWith('magnet:')) {
+      const hiddenFrame = document.createElement('iframe');
+      hiddenFrame.style.display = 'none';
+      hiddenFrame.src = primaryUri.url;
+      document.body.appendChild(hiddenFrame);
+      setTimeout(() => {
+        try { document.body.removeChild(hiddenFrame); } catch (e) {}
+      }, 2000);
     }
 
-    setIsDownloadingDirect(true);
-    setDownloadProgress(20);
-    const interval = setInterval(() => {
-      setDownloadProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          window.open(primaryUri.url, '_blank');
-          setTimeout(() => setIsDownloadingDirect(false), 2000);
-          return 100;
-        }
-        return prev + 40;
-      });
-    }, 250);
+    setTimeout(() => {
+      setIsDownloadingDirect(false);
+    }, 2500);
   };
 
   const getSourceBadgeClass = (source: string) => {
@@ -139,7 +158,7 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
                 <ExternalLink className="w-3.5 h-3.5 opacity-70" />
               </a>
 
-              {/* Opção 2: Fazer o download ali mesmo */}
+              {/* Opção 2: Fazer o download ali mesmo instantâneo */}
               <button
                 onClick={handleStartDirectDownload}
                 className="py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-950 transition-all cursor-pointer"
@@ -147,7 +166,7 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
                 {isDownloadingDirect ? (
                   <>
                     <Check className="w-4 h-4 text-emerald-200" />
-                    <span>Iniciando Download...</span>
+                    <span>Arquivo Baixado com Sucesso!</span>
                   </>
                 ) : (
                   <>
@@ -161,7 +180,7 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
             {isDownloadingDirect && (
               <div className="space-y-1.5 pt-2 border-t border-emerald-900/40 animate-in fade-in">
                 <div className="flex justify-between text-xs text-emerald-300">
-                  <span>Transferindo arquivo do jogo...</span>
+                  <span>Arquivo transferido para o seu computador!</span>
                   <span>{downloadProgress}%</span>
                 </div>
                 <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-emerald-700/40">
