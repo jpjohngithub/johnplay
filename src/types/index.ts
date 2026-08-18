@@ -61,10 +61,9 @@ export interface BrowserGame {
   thumbnail: string;
   description: string;
   controls: string;
-  type: 'native-game' | 'web-emulator' | 'canvas-game';
-  gameUrl?: string;
-  emulatorCore?: 'gba' | 'snes' | 'nes' | 'segaMD' | 'n64' | 'psx' | 'arcade';
-  romUrl?: string;
+  pokiUrl: string;
+  developer?: string;
+  rating?: number;
   tags: string[];
 }
 
