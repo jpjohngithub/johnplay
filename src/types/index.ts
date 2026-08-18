@@ -74,7 +74,10 @@ export interface BrowserGame {
     | 'canvas-spaceinvaders' 
     | 'canvas-pong' 
     | 'canvas-2048'
-    | 'canvas-tetris';
+    | 'canvas-tetris'
+    | 'web-emulator';
+  emulatorCore?: 'gba' | 'snes' | 'nes' | 'segaMD' | 'n64' | 'psx' | 'arcade';
+  romUrl?: string;
   tags: string[];
 }
 

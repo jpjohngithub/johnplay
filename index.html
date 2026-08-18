@@ -4,12 +4,30 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a855f7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z'/></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JohnPlay - O Portal Gamer Supremo | Downloads, Emuladores, Jogos Web & FPS Boost</title>
-    <meta name="description" content="Portal definitivo com download de jogos repacks (FitGirl, DODI, SteamRIP, GOG, Xatab, Atop, Empress), jogos de navegador, emuladores para PC, promoções Epic Games e Steam, otimizações de sistema e apps úteis." />
+    <title>JohnPlay - O Portal Gamer Supremo | Downloads, Emuladores, Jogos Web & Apps</title>
+    <meta name="description" content="Portal definitivo com download de jogos repacks (FitGirl, DODI, SteamRIP, GOG, Xatab, Atop, Empress), jogos de navegador Poki/Jogos 360, emuladores para PC, promoções Epic Games e Steam e apps essenciais." />
+
+    <!-- Poki SDK Virtual Shim / Ad-Bypass Engine for In-Browser Games -->
+    <script>
+      (function() {
+        var pokiShim = {
+          init: function() { return Promise.resolve(); },
+          gameLoadingFinished: function() { console.log('[JohnPlay PokiSDK Shim] Game Loading Finished'); },
+          gameplayStart: function() { console.log('[JohnPlay PokiSDK Shim] Gameplay Started'); },
+          gameplayStop: function() { console.log('[JohnPlay PokiSDK Shim] Gameplay Stopped'); },
+          commercialBreak: function() { return Promise.resolve(); },
+          rewardedBreak: function() { return Promise.resolve(true); },
+          displayAd: function() { return Promise.resolve(); },
+          destroyAd: function() {},
+          setDebug: function() {},
+          captureError: function() {}
+        };
+        window.PokiSDK = pokiShim;
+      })();
+    </script>
   </head>
   <body class="bg-[#0b0d14] text-slate-100 min-h-screen">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

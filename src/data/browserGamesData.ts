@@ -62,14 +62,37 @@ export const BROWSER_GAMES: BrowserGame[] = [
     tags: ['Jogos 360', 'IO Game', 'Competitivo', 'Viciante']
   },
   {
-    id: 'crossy-road-pixel',
-    title: 'Crossy Road: Animal Cross',
-    genre: 'Arcade / Travessia',
-    thumbnail: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=700&auto=format&fit=crop&q=60',
-    description: 'Atravesse avenidas cheias de carros em alta velocidade, trilhos de trem e rios com troncos flutuantes sem ser esmagado.',
-    controls: '[Seta ⬆️ ou W] Avançar, [⬅️ ➡️ ou A/D] Andar para os lados, [⬇️ ou S] Recuar.',
-    type: 'canvas-crossy',
-    tags: ['Poki Hit', 'Casual', '3D Voxel', 'Família']
+    id: 'emulator-gba-web',
+    title: 'Emulador GBA no Navegador (Game Boy Advance)',
+    genre: 'Emulador Web / GBA',
+    thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=700&auto=format&fit=crop&q=60',
+    description: 'Jogue qualquer jogo de Game Boy Advance direto no navegador com áudio estéreo, save/load states e suporte a controle USB.',
+    controls: '[Z] = Botão A, [X] = Botão B, [A] = Botão L, [S] = Botão R, [Enter] = Start, [Shift] = Select.',
+    type: 'web-emulator',
+    emulatorCore: 'gba',
+    tags: ['Emulador Web', 'GBA', 'Retro', 'Poki Emulador']
+  },
+  {
+    id: 'emulator-snes-web',
+    title: 'Emulador SNES no Navegador (Super Nintendo)',
+    genre: 'Emulador Web / SNES',
+    thumbnail: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=700&auto=format&fit=crop&q=60',
+    description: 'Emulador completo de Super Nintendo de 16-bits para reviver clássicos lendários direto no navegador sem instalar nada.',
+    controls: '[Z] = B, [X] = A, [A] = Y, [S] = X, [Q] = L, [W] = R, [Enter] = Start, [Shift] = Select.',
+    type: 'web-emulator',
+    emulatorCore: 'snes',
+    tags: ['Emulador Web', 'SNES', '16-Bit', 'Poki Emulador']
+  },
+  {
+    id: 'emulator-genesis-web',
+    title: 'Emulador Mega Drive / Genesis no Navegador',
+    genre: 'Emulador Web / Sega',
+    thumbnail: 'https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=700&auto=format&fit=crop&q=60',
+    description: 'Emulador clássico do console da Sega Mega Drive / Genesis para jogar Sonic e clássicos da era de ouro dos 16 bits.',
+    controls: '[Z] = Botão A, [X] = Botão B, [C] = Botão C, [Enter] = Start.',
+    type: 'web-emulator',
+    emulatorCore: 'segaMD',
+    tags: ['Emulador Web', 'Sega', 'Mega Drive', 'Poki Emulador']
   },
   {
     id: 'flappy-cyber',

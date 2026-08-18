@@ -10,7 +10,9 @@ import {
   Sparkles,
   ShieldCheck,
   Trophy,
-  Flame
+  Flame,
+  Upload,
+  FolderOpen
 } from 'lucide-react';
 import { BROWSER_GAMES } from '../data/browserGamesData';
 import type { BrowserGame } from '../types';
@@ -19,7 +21,7 @@ export const BrowserGamesSection: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState<BrowserGame | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('Todos');
 
-  const categories = ['Todos', 'Poki Hit', 'Jogos 360', '3D Runner', 'Reflexo Rápido', 'Esportes', 'Popular'];
+  const categories = ['Todos', 'Poki Hit', 'Jogos 360', 'Emulador Web', '3D Runner', 'Reflexo Rápido', 'Esportes'];
 
   const filteredGames = BROWSER_GAMES.filter(g => {
     if (activeCategory === 'Todos') return true;
@@ -34,13 +36,13 @@ export const BrowserGamesSection: React.FC = () => {
         <div className="relative z-10 max-w-2xl space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-semibold">
             <Gamepad2 className="w-3.5 h-3.5 text-cyan-400" />
-            Arcade Web 100% Nativo & Sem Erros
+            Arcade Web & Emuladores de Navegador (Poki / Jogos 360)
           </div>
           <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Jogos no Navegador <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Sem 404 & Sem Anúncios</span>
+            Jogos no Navegador e <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Emuladores Web Integrados</span>
           </h1>
           <p className="text-sm text-slate-300 leading-relaxed">
-            Todos os jogos (<strong>Subway Surfers</strong>, <strong>Moto X3M</strong>, <strong>Slope 3D</strong>, <strong>Retro Bowl</strong>, <strong>1v1 Arena</strong>, <strong>Paper.io</strong> e mais) foram construídos com motores gráficos nativos embutidos. <strong>Nunca caem e rodam a 60 FPS direto no navegador!</strong>
+            Jogue os sucessos do <strong>Poki</strong> e <strong>Jogos 360</strong> (Subway Surfers, Moto X3M, Slope 3D, Retro Bowl) e acesse <strong>Emuladores Web de GBA, SNES e Mega Drive</strong> diretamente no navegador sem precisar instalar nada!
           </p>
         </div>
       </div>
@@ -136,7 +138,7 @@ export const BrowserGamesSection: React.FC = () => {
   );
 };
 
-/* Dedicated Standalone Player Modal (100% Native Canvas Engines) */
+/* Dedicated Standalone Player Modal */
 const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({ game, onClose }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -184,7 +186,7 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
                 <span>•</span>
                 <span className="text-emerald-400 flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  Motor 100% Nativo (Sem 404 & Sem Anúncios)
+                  {game.type === 'web-emulator' ? 'Emulador WebAssembly (Save/Load States)' : 'Motor 100% Nativo & Sem Anúncios'}
                 </span>
               </div>
             </div>
@@ -211,7 +213,11 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
 
         {/* Game Stage Area */}
         <div className="relative flex-1 w-full h-full bg-[#05070d] flex items-center justify-center overflow-hidden p-2 sm:p-4">
-          <NativeCanvasEngine game={game} />
+          {game.type === 'web-emulator' ? (
+            <WebRetroEmulatorPlayer core={game.emulatorCore || 'gba'} title={game.title} />
+          ) : (
+            <NativeCanvasEngine game={game} />
+          )}
         </div>
 
         {/* Player Controls Guide Footer */}
@@ -223,10 +229,139 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
 
           <div className="hidden sm:flex items-center gap-2 text-[11px] text-purple-300 font-medium">
             <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-            JohnPlay Web Engine 60FPS
+            JohnPlay Web Engine
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+/* WebAssembly Retro Emulator Component (EmulatorJS / ROM Drag & Drop) */
+const WebRetroEmulatorPlayer: React.FC<{ core: string; title: string }> = ({ core, title }) => {
+  const [loadedRomName, setLoadedRomName] = useState<string | null>(null);
+  const [isEmulatorActive, setIsEmulatorActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [emulatorHtml, setEmulatorHtml] = useState<string>('');
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setLoadedRomName(file.name);
+    const romBlobUrl = URL.createObjectURL(file);
+
+    // Build standalone EmulatorJS payload
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body, html { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#05070d; display:flex; align-items:center; justify-content:center; }
+            #game { width:100%; height:100%; }
+          </style>
+        </head>
+        <body>
+          <div id="game"></div>
+          <script>
+            window.EJS_player = '#game';
+            window.EJS_core = '${core}';
+            window.EJS_gameUrl = '${romBlobUrl}';
+            window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
+            window.EJS_startOnLoaded = true;
+          </script>
+          <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+        </body>
+      </html>
+    `;
+    setEmulatorHtml(html);
+    setIsEmulatorActive(true);
+  };
+
+  const startDemoGame = () => {
+    setLoadedRomName(`Demo ${core.toUpperCase()} ROM`);
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body, html { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#05070d; display:flex; align-items:center; justify-content:center; }
+            #game { width:100%; height:100%; }
+          </style>
+        </head>
+        <body>
+          <div id="game"></div>
+          <script>
+            window.EJS_player = '#game';
+            window.EJS_core = '${core}';
+            window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
+            window.EJS_startOnLoaded = true;
+          </script>
+          <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+        </body>
+      </html>
+    `;
+    setEmulatorHtml(html);
+    setIsEmulatorActive(true);
+  };
+
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center relative">
+      {isEmulatorActive ? (
+        <iframe
+          srcDoc={emulatorHtml}
+          title={title}
+          className="w-full h-full border-0 rounded-xl"
+          allow="autoplay; gamepad; keyboard; fullscreen"
+        />
+      ) : (
+        <div className="max-w-md w-full p-6 sm:p-8 rounded-2xl bg-[#0e1424] border border-cyan-700/40 shadow-2xl text-center space-y-5 animate-in zoom-in-95">
+          <div className="w-16 h-16 rounded-2xl bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center mx-auto text-cyan-300">
+            <Gamepad2 className="w-8 h-8" />
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-white">{title}</h3>
+            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+              Carregue qualquer arquivo de ROM (<strong>.{core}</strong>, <strong>.zip</strong>, <strong>.bin</strong>) para jogar com aceleração WebAssembly e suporte a controles!
+            </p>
+          </div>
+
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            className="hidden"
+            accept=".gba,.snes,.sfc,.smc,.nes,.gen,.md,.bin,.zip,.iso,.n64"
+          />
+
+          <div className="space-y-3 pt-2">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-cyan-950 cursor-pointer transition-all hover:scale-[1.02]"
+            >
+              <Upload className="w-4 h-4" />
+              <span>Carregar ROM do Computador ({core.toUpperCase()})</span>
+            </button>
+
+            <button
+              onClick={startDemoGame}
+              className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold flex items-center justify-center gap-2 border border-slate-700 cursor-pointer transition-all"
+            >
+              <FolderOpen className="w-4 h-4 text-purple-400" />
+              <span>Iniciar Emulador em Branco</span>
+            </button>
+          </div>
+
+          {loadedRomName && (
+            <p className="text-xs text-emerald-400 font-mono">
+              ROM: {loadedRomName}
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
@@ -314,7 +449,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         // Update obstacles
         obstacles.forEach(obs => {
           obs.z -= speed;
-          // Collision check when near player (z around 60)
           if (obs.z < 80 && obs.z > 30 && obs.lane === lane) {
             if (obs.type === 'coin') {
               localScore += 25;
@@ -343,7 +477,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         ctx.fillStyle = '#080c18';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Horizon & Sky neon gradient
         const horizonY = canvas.height * 0.35;
         const grad = ctx.createLinearGradient(0, 0, 0, horizonY);
         grad.addColorStop(0, '#190a2e');
@@ -351,7 +484,7 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, canvas.width, horizonY);
 
-        // Neon City Skyline in background
+        // Neon City Skyline
         ctx.fillStyle = '#1e163b';
         ctx.fillRect(50, horizonY - 40, 60, 40);
         ctx.fillRect(130, horizonY - 70, 70, 70);
@@ -406,7 +539,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
             ctx.shadowColor = '#8b5cf6';
             ctx.shadowBlur = 12;
             ctx.fillRect(curX - size * 0.7, curY - size * 1.5, size * 1.4, size * 1.5);
-            // Train Windshield
             ctx.fillStyle = '#38bdf8';
             ctx.fillRect(curX - size * 0.5, curY - size * 1.4, size * 1.0, size * 0.4);
             ctx.shadowBlur = 0;
@@ -421,16 +553,13 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         ctx.fillStyle = '#38bdf8';
         ctx.shadowColor = '#38bdf8';
         ctx.shadowBlur = 15;
-        // Body
         ctx.fillRect(pX - 15, pY - pHeight, 30, pHeight);
-        // Head / Cap
         if (!isRolling) {
           ctx.fillStyle = '#ec4899';
           ctx.beginPath();
           ctx.arc(pX, pY - pHeight - 8, 10, 0, Math.PI * 2);
           ctx.fill();
         }
-        // Hoverboard trail glow
         ctx.fillStyle = '#a855f7';
         ctx.fillRect(pX - 20, pY, 40, 5);
         ctx.shadowBlur = 0;
@@ -481,7 +610,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         if (!isRunning) return;
         animationFrameId = requestAnimationFrame(loop);
 
-        // Terrain function: generates procedural hills and ramps
         const getTerrainY = (x: number) => {
           return 260 + Math.sin(x * 0.015) * 35 + Math.sin(x * 0.04) * 15;
         };
@@ -498,7 +626,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         if (leanLeft) bikeAngularV -= 0.015;
         if (leanRight) bikeAngularV += 0.015;
 
-        // Gravity & Physics
         bikeVy += 0.4;
         bikeVx *= 0.985;
         bikeAngularV *= 0.95;
@@ -507,14 +634,12 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         bikeY += bikeVy;
         bikeAngle += bikeAngularV;
 
-        // Ground Collision
         if (bikeY > terrainY) {
           bikeY = terrainY;
           bikeVy = 0;
           const slopeAngle = Math.atan2(getTerrainY(bikeX + 5) - getTerrainY(bikeX - 5), 10);
           bikeAngle = bikeAngle * 0.7 + slopeAngle * 0.3;
 
-          // Crash if upside down on ground
           const normalizedAngle = Math.abs((bikeAngle % (Math.PI * 2)));
           if (normalizedAngle > Math.PI * 0.65 && normalizedAngle < Math.PI * 1.35) {
             setGameOver(true);
@@ -522,7 +647,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
           }
         }
 
-        // Stunt Flip tracker
         if (Math.abs(bikeAngle - lastAngle) > Math.PI * 1.8) {
           totalFlips++;
           localScore += 200;
@@ -533,14 +657,11 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         setScore(localScore);
         setHighScore(h => Math.max(h, localScore));
 
-        // Render
         ctx.fillStyle = '#090d1a';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Camera offset following bike
         const camX = bikeX - 150;
 
-        // Draw Hills / Terrain
         ctx.fillStyle = '#1e293b';
         ctx.strokeStyle = '#38bdf8';
         ctx.lineWidth = 3;
@@ -556,19 +677,16 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         ctx.fill();
         ctx.stroke();
 
-        // Draw Bike
         ctx.save();
         ctx.translate(bikeX - camX, bikeY - 15);
         ctx.rotate(bikeAngle);
 
-        // Wheels
         ctx.fillStyle = '#0f172a';
         ctx.strokeStyle = '#f43f5e';
         ctx.lineWidth = 2;
         ctx.beginPath(); ctx.arc(-18, 12, 10, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
         ctx.beginPath(); ctx.arc(18, 12, 10, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
 
-        // Chassis & Body
         ctx.strokeStyle = '#38bdf8';
         ctx.lineWidth = 3;
         ctx.beginPath();
@@ -576,7 +694,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         ctx.moveTo(0, 0); ctx.lineTo(-8, -12); ctx.lineTo(10, -8);
         ctx.stroke();
 
-        // Stunt Rider
         ctx.fillStyle = '#fbbf24';
         ctx.beginPath(); ctx.arc(-5, -20, 6, 0, Math.PI * 2); ctx.fill();
 
@@ -596,7 +713,7 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
     // 3. SLOPE 3D (Neon Tunnel Ball Runner)
     // =========================================================================
     if (game.type === 'canvas-slope') {
-      let ballX = 0; // -1 to 1 normalized
+      let ballX = 0;
       let ballSpeed = 6;
       let slopeTiles: { z: number; width: number; hasObstacle: boolean; obsX: number }[] = [];
       let localScore = 0;
@@ -632,7 +749,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
 
         slopeTiles.forEach(tile => {
           tile.z -= ballSpeed * 0.5;
-          // Collision with obstacles near bottom (z around 10)
           if (tile.z < 25 && tile.z > 0 && tile.hasObstacle) {
             const playerPixelX = ballX * 110;
             if (Math.abs(playerPixelX - tile.obsX) < 25) {
@@ -652,7 +768,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
           });
         }
 
-        // Fall off edge check
         if (Math.abs(ballX) > 1.05) {
           setGameOver(true);
           isRunning = false;
@@ -663,14 +778,12 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         setHighScore(h => Math.max(h, localScore));
         ballSpeed += 0.002;
 
-        // Render
         ctx.fillStyle = '#060914';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         const centerX = canvas.width / 2;
         const horizonY = 80;
 
-        // Draw Slope 3D Platforms
         slopeTiles.slice().reverse().forEach(tile => {
           const scale = 1 - tile.z / 700;
           if (scale <= 0) return;
@@ -695,7 +808,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
           }
         });
 
-        // Draw Ball
         const bX = centerX + ballX * 110;
         const bY = canvas.height - 60;
         ctx.fillStyle = '#38bdf8';
@@ -748,7 +860,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         if (!isRunning) return;
         animationFrameId = requestAnimationFrame(loop);
 
-        // Move receivers & defenders
         receivers.forEach(r => {
           r.x += r.vx;
           r.y += r.vy;
@@ -757,19 +868,16 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
           d.y += 0.6;
         });
 
-        // Ball physics
         if (ball.flying) {
           ball.x += ball.vx;
           ball.y += ball.vy;
 
-          // Catch check
           receivers.forEach(r => {
             if (Math.hypot(ball.x - r.x, ball.y - r.y) < 25) {
               localScore += 100;
               setScore(localScore);
               setHighScore(h => Math.max(h, localScore));
               ball.flying = false;
-              // Reset play
               qbY = canvas.height - 70;
               receivers = [
                 { x: 120, y: canvas.height - 80, vx: 0.8, vy: -2.2, caught: false },
@@ -778,24 +886,20 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
             }
           });
 
-          // Out of bounds or intercepted
           if (ball.y < 40 || ball.x < 20 || ball.x > canvas.width - 20) {
             ball.flying = false;
           }
         }
 
-        // Render Field
         ctx.fillStyle = '#166534';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Yard lines
         ctx.strokeStyle = '#ffffff88';
         ctx.lineWidth = 2;
         for (let y = 50; y < canvas.height; y += 60) {
           ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
         }
 
-        // End Zone
         ctx.fillStyle = '#b91c1c';
         ctx.fillRect(0, 0, canvas.width, 50);
         ctx.fillStyle = '#ffffff';
@@ -803,7 +907,6 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         ctx.textAlign = 'center';
         ctx.fillText('TOUCHDOWN ZONE', canvas.width / 2, 32);
 
-        // Draw Aim Arc
         if (!ball.flying) {
           ctx.strokeStyle = '#fbbf24';
           ctx.setLineDash([6, 6]);
@@ -814,20 +917,15 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
           ctx.setLineDash([]);
         }
 
-        // Draw Players (Pixel style)
-        // QB
         ctx.fillStyle = '#38bdf8';
         ctx.fillRect(qbX - 10, qbY - 10, 20, 20);
 
-        // Receivers
         ctx.fillStyle = '#38bdf8';
         receivers.forEach(r => ctx.fillRect(r.x - 8, r.y - 8, 16, 16));
 
-        // Defenders
         ctx.fillStyle = '#f43f5e';
         defenders.forEach(d => ctx.fillRect(d.x - 8, d.y - 8, 16, 16));
 
-        // Ball
         if (ball.flying) {
           ctx.fillStyle = '#78350f';
           ctx.beginPath(); ctx.arc(ball.x, ball.y, 6, 0, Math.PI * 2); ctx.fill();
@@ -858,11 +956,9 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         if (['KeyA', 'ArrowLeft'].includes(e.code)) p.x -= 12;
         if (['KeyD', 'ArrowRight'].includes(e.code)) p.x += 12;
         if (['KeyQ', 'KeyE'].includes(e.code)) {
-          // Build protective wall
           walls.push({ x: p.x + 25, y: p.y - 20, w: 10, h: 45, hp: 3 });
         }
         if (e.code === 'Space') {
-          // Shoot
           bullets.push({ x: p.x + 15, y: p.y, vx: 7, vy: 0, fromPlayer: true });
         }
       };
@@ -872,14 +968,12 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         if (!isRunning) return;
         animationFrameId = requestAnimationFrame(loop);
 
-        // Bot AI movement & shooting
         bot.y += bot.vy;
         if (bot.y < 60 || bot.y > canvas.height - 60) bot.vy *= -1;
         if (Math.random() < 0.03) {
           bullets.push({ x: bot.x - 15, y: bot.y, vx: -6, vy: 0, fromPlayer: false });
         }
 
-        // Bullet physics & hit detection
         bullets.forEach(b => {
           b.x += b.vx;
           b.y += b.vy;
@@ -909,27 +1003,22 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
         setScore(localScore);
         setHighScore(h => Math.max(h, localScore));
 
-        // Render Arena
         ctx.fillStyle = '#0f172a';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // HP Bars
         ctx.fillStyle = '#10b981';
         ctx.fillRect(30, 20, p.hp * 1.5, 10);
         ctx.fillStyle = '#f43f5e';
         ctx.fillRect(canvas.width - 180, 20, bot.hp * 1.5, 10);
 
-        // Draw Walls
         ctx.fillStyle = '#a855f7';
         walls.forEach(w => ctx.fillRect(w.x, w.y, w.w, w.h));
 
-        // Draw Player & Bot
         ctx.fillStyle = '#38bdf8';
         ctx.beginPath(); ctx.arc(p.x, p.y, 14, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = '#f43f5e';
         ctx.beginPath(); ctx.arc(bot.x, bot.y, 14, 0, Math.PI * 2); ctx.fill();
 
-        // Bullets
         ctx.fillStyle = '#fbbf24';
         bullets.forEach(b => {
           ctx.beginPath(); ctx.arc(b.x, b.y, 4, 0, Math.PI * 2); ctx.fill();
@@ -945,10 +1034,9 @@ const NativeCanvasEngine: React.FC<{ game: BrowserGame }> = ({ game }) => {
     }
 
     // =========================================================================
-    // 6. DEFAULT FALLBACK CANVAS (Snake, Flappy, Pong, Space Invaders, 2048)
+    // 6. DEFAULT CANVASES (Snake, Flappy, Pong, Space Invaders, 2048)
     // =========================================================================
     if (game.type === 'canvas-snake' || game.type === 'canvas-flappy' || game.type === 'canvas-spaceinvaders' || game.type === 'canvas-pong' || game.type === 'canvas-2048' || game.type === 'canvas-paperio' || game.type === 'canvas-crossy') {
-      // Snake native implementation
       const gridSize = 20;
       const tileCount = canvas.width / gridSize;
       let snake = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
