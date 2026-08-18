@@ -61,9 +61,20 @@ export interface BrowserGame {
   thumbnail: string;
   description: string;
   controls: string;
-  type: 'canvas-2048' | 'canvas-flappy' | 'canvas-snake' | 'canvas-pong' | 'canvas-spaceinvaders' | 'canvas-tetris' | 'iframe';
-  iframeUrl?: string;
-  author?: string;
+  type: 
+    | 'canvas-subway' 
+    | 'canvas-moto' 
+    | 'canvas-slope' 
+    | 'canvas-retrobowl' 
+    | 'canvas-1v1' 
+    | 'canvas-paperio' 
+    | 'canvas-crossy' 
+    | 'canvas-flappy' 
+    | 'canvas-snake' 
+    | 'canvas-spaceinvaders' 
+    | 'canvas-pong' 
+    | 'canvas-2048'
+    | 'canvas-tetris';
   tags: string[];
 }
 
