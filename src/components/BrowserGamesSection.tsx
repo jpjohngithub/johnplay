@@ -5,75 +5,155 @@ import {
   ExternalLink, 
   Search, 
   Sparkles, 
-  Star
+  Star,
+  Layers
 } from 'lucide-react';
 import { BROWSER_GAMES } from '../data/browserGamesData';
 
 export const BrowserGamesSection: React.FC = () => {
+  const [activePlatform, setActivePlatform] = useState<string>('all');
   const [activeCategory, setActiveCategory] = useState<string>('Todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const platforms = [
+    { id: 'all', label: 'Todas as Plataformas', count: BROWSER_GAMES.length },
+    { id: 'Poki', label: 'Poki (poki.com)', count: BROWSER_GAMES.filter(g => g.platform === 'Poki').length },
+    { id: 'Jogos 360', label: 'Jogos 360 (jogos360.com.br)', count: BROWSER_GAMES.filter(g => g.platform === 'Jogos 360').length },
+    { id: 'Web IO', label: 'Web IO & Multiplayer', count: BROWSER_GAMES.filter(g => g.platform === 'Web IO').length }
+  ];
 
   const categories = [
     'Todos', 
     'Mais Jogados', 
-    '3D', 
-    'Carros', 
-    'Motos', 
-    'Esportes', 
     '2 Jogadores', 
+    'Motos & Carros', 
+    'Esportes & Futebol', 
+    'Luta & Ação', 
     'Tiro', 
-    'Quebra-Cabeça'
+    'Quebra-Cabeça & Lógica',
+    '3D'
   ];
 
   const filteredGames = BROWSER_GAMES.filter(g => {
-    const matchesSearch = g.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          g.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          g.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    if (!matchesSearch) return false;
-    if (activeCategory === 'Todos') return true;
-    return g.tags.some(t => t.toLowerCase() === activeCategory.toLowerCase());
+    // Platform filter
+    if (activePlatform !== 'all' && g.platform !== activePlatform) {
+      return false;
+    }
+
+    // Category filter
+    if (activeCategory !== 'Todos' && !g.tags.includes(activeCategory)) {
+      return false;
+    }
+
+    // Search query filter
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchTitle = g.title.toLowerCase().includes(q);
+      const matchDesc = g.description.toLowerCase().includes(q);
+      const matchTag = g.tags.some(t => t.toLowerCase().includes(q));
+      const matchPlatform = g.platform.toLowerCase().includes(q);
+      return matchTitle || matchDesc || matchTag || matchPlatform;
+    }
+
+    return true;
   });
 
-  const openPokiGame = (url: string) => {
+  const openGame = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const getPlatformBadgeColor = (platform: string) => {
+    switch (platform) {
+      case 'Poki': return 'bg-cyan-950/90 text-cyan-300 border-cyan-500/40';
+      case 'Jogos 360': return 'bg-amber-950/90 text-amber-300 border-amber-500/40';
+      case 'Web IO': return 'bg-purple-950/90 text-purple-300 border-purple-500/40';
+      default: return 'bg-blue-950/90 text-blue-300 border-blue-500/40';
+    }
   };
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       
-      {/* Hero Banner with Poki Branding */}
-      <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c132c] via-[#101b3b] to-[#080d1e] border border-cyan-800/40 p-6 sm:p-8 shadow-2xl shadow-cyan-950/40">
+      {/* Hero Banner with Multi-Platform Portal */}
+      <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0e1630] via-[#101b3b] to-[#080d1e] border border-cyan-800/40 p-6 sm:p-8 shadow-2xl shadow-cyan-950/40">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-semibold">
               <Gamepad2 className="w-3.5 h-3.5 text-cyan-400" />
-              Catálogo Oficial do Poki (poki.com)
+              Central de Jogos Web (Poki, Jogos 360 & Web IO)
             </div>
             <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-              Jogos Oficiais do <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400 bg-clip-text text-transparent">Poki</span>
+              Jogos de Navegador <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400 bg-clip-text text-transparent">Originais com Capa & Acesso Direto</span>
             </h1>
             <p className="text-sm text-slate-300 leading-relaxed">
-              Acesse diretamente os sucessos mundiais do <strong>Poki</strong> (Subway Surfers, Monkey Mart, Moto X3M, Drive Mad, Retro Bowl, 1v1.LOL, Paper.io 2, Level Devil e mais). Clique em qualquer jogo para <strong>jogar a versão oficial completa</strong>!
+              Todos os jogos clássicos e modernos do <strong>Poki</strong> (Subway Surfers, Monkey Mart, Moto X3M, Drive Mad, Retro Bowl), do <strong>Jogos 360</strong> (Fogo e Água, Bad Ice-Cream, Bleach vs Naruto, Papa's Pizzeria) e do mundo <strong>.IO</strong> com capas completas e direcionamento direto para o jogo certo!
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row md:flex-col gap-3 flex-shrink-0">
-            <a
-              href="https://poki.com/pt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-cyan-950/60 cursor-pointer transition-all hover:scale-105"
-            >
-              <ExternalLink className="w-4 h-4" />
-              <span>Abrir Poki.com Completo</span>
-            </a>
+            <div className="flex items-center gap-2">
+              <a
+                href="https://poki.com/pt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all hover:scale-105"
+              >
+                <span>Poki Oficial</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="https://www.jogos360.com.br/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all hover:scale-105"
+              >
+                <span>Jogos 360 Oficial</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
             
             <div className="flex items-center justify-center gap-2 text-xs text-slate-400 bg-[#090e1c]/80 px-3.5 py-2 rounded-xl border border-slate-800">
               <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
-              <span>{BROWSER_GAMES.length}+ Jogos Originais Catalogados</span>
+              <span>{BROWSER_GAMES.length}+ Jogos Catalogados com Capa</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Platform Switcher Tabs */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <Layers className="w-3.5 h-3.5 text-cyan-400" />
+            Filtrar por Plataforma:
+          </span>
+          <span className="text-xs text-cyan-300 font-medium">
+            {filteredGames.length} jogos disponíveis
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+          {platforms.map((p) => {
+            const isSelected = activePlatform === p.id;
+            return (
+              <button
+                key={p.id}
+                onClick={() => setActivePlatform(p.id)}
+                className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-2 transition-all cursor-pointer ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md shadow-cyan-950 scale-[1.02]'
+                    : 'bg-[#131826] text-slate-400 hover:text-white border border-slate-800'
+                }`}
+              >
+                <span>{p.label}</span>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                  isSelected ? 'bg-black/30 text-white' : 'bg-slate-800 text-slate-400'
+                }`}>
+                  {p.count}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -86,7 +166,7 @@ export const BrowserGamesSection: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Buscar jogo no Poki..."
+            placeholder="Buscar jogo (Subway Surfers, Fogo e Água, Naruto...)"
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#121727] border border-slate-800 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"
           />
         </div>
@@ -97,9 +177,9 @@ export const BrowserGamesSection: React.FC = () => {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 activeCategory === cat
-                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md shadow-cyan-950 scale-[1.02]'
+                  ? 'bg-purple-600 text-white shadow-md shadow-purple-950'
                   : 'bg-[#131826] text-slate-400 hover:text-white border border-slate-800'
               }`}
             >
@@ -118,19 +198,20 @@ export const BrowserGamesSection: React.FC = () => {
           >
             {/* Thumbnail Header */}
             <div 
-              onClick={() => openPokiGame(game.pokiUrl)}
+              onClick={() => openGame(game.gameUrl)}
               className="relative h-48 w-full overflow-hidden bg-slate-900 cursor-pointer"
             >
               <img
                 src={game.thumbnail}
                 alt={game.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90 group-hover:brightness-100"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#121727] via-transparent to-black/40"></div>
               
-              {/* Badge Genre */}
-              <span className="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-cyan-950/90 text-cyan-300 border border-cyan-500/40 backdrop-blur-md">
-                {game.genre}
+              {/* Platform Badge */}
+              <span className={`absolute top-3 left-3 text-[10px] font-bold px-2.5 py-0.5 rounded-full border backdrop-blur-md ${getPlatformBadgeColor(game.platform)}`}>
+                {game.platform}
               </span>
 
               {/* Rating Star */}
@@ -154,7 +235,7 @@ export const BrowserGamesSection: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between gap-2">
                   <h3 
-                    onClick={() => openPokiGame(game.pokiUrl)}
+                    onClick={() => openGame(game.gameUrl)}
                     className="font-bold text-slate-100 group-hover:text-cyan-300 transition-colors text-base line-clamp-1 cursor-pointer"
                     title={game.title}
                   >
@@ -162,11 +243,19 @@ export const BrowserGamesSection: React.FC = () => {
                   </h3>
                 </div>
 
-                {game.developer && (
-                  <p className="text-[11px] text-cyan-400/80 font-medium mt-0.5">
-                    Por: {game.developer}
-                  </p>
-                )}
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="text-[11px] text-cyan-400/90 font-medium">
+                    {game.genre}
+                  </span>
+                  {game.developer && (
+                    <>
+                      <span className="text-slate-600">•</span>
+                      <span className="text-[10px] text-slate-400 truncate">
+                        {game.developer}
+                      </span>
+                    </>
+                  )}
+                </div>
 
                 <p className="text-xs text-slate-400 mt-1.5 line-clamp-2 leading-relaxed">
                   {game.description}
@@ -184,15 +273,15 @@ export const BrowserGamesSection: React.FC = () => {
 
               {/* Card Footer Actions */}
               <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[11px] text-slate-400 flex items-center gap-1 truncate max-w-[160px]">
+                <span className="text-[11px] text-slate-400 flex items-center gap-1 truncate max-w-[150px]">
                   🎮 {game.controls}
                 </span>
                 
                 <button
-                  onClick={() => openPokiGame(game.pokiUrl)}
+                  onClick={() => openGame(game.gameUrl)}
                   className="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105"
                 >
-                  <span>Jogar no Poki</span>
+                  <span>Jogar Agora</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -205,10 +294,10 @@ export const BrowserGamesSection: React.FC = () => {
         <div className="text-center py-12 bg-[#121727] rounded-2xl border border-slate-800">
           <p className="text-slate-400 text-sm">Nenhum jogo encontrado para "{searchQuery}".</p>
           <button
-            onClick={() => { setSearchQuery(''); setActiveCategory('Todos'); }}
-            className="mt-3 text-xs text-cyan-400 hover:underline"
+            onClick={() => { setSearchQuery(''); setActiveCategory('Todos'); setActivePlatform('all'); }}
+            className="mt-3 text-xs text-cyan-400 hover:underline cursor-pointer"
           >
-            Limpar filtros
+            Limpar todos os filtros
           </button>
         </div>
       )}

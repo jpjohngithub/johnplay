@@ -57,11 +57,12 @@ export interface GameDownloadItem {
 export interface BrowserGame {
   id: string;
   title: string;
+  platform: 'Poki' | 'Jogos 360' | 'CrazyGames' | 'Web IO' | 'Y8';
   genre: string;
   thumbnail: string;
   description: string;
   controls: string;
-  pokiUrl: string;
+  gameUrl: string;
   developer?: string;
   rating?: number;
   tags: string[];
