@@ -4,13 +4,25 @@ import {
   Play, 
   RotateCcw, 
   X, 
-  Info
+  Info,
+  Maximize2,
+  Minimize2,
+  Sparkles,
+  ShieldCheck
 } from 'lucide-react';
 import { BROWSER_GAMES } from '../data/browserGamesData';
 import type { BrowserGame } from '../types';
 
 export const BrowserGamesSection: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState<BrowserGame | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>('Todos');
+
+  const categories = ['Todos', 'Poki Hit', 'Jogos 360', 'Nativo', 'Reflexo Rápido', 'Esportes', '3D Runner'];
+
+  const filteredGames = BROWSER_GAMES.filter(g => {
+    if (activeCategory === 'Todos') return true;
+    return g.tags.some(t => t.toLowerCase() === activeCategory.toLowerCase());
+  });
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
@@ -20,25 +32,45 @@ export const BrowserGamesSection: React.FC = () => {
         <div className="relative z-10 max-w-2xl space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-semibold">
             <Gamepad2 className="w-3.5 h-3.5 text-cyan-400" />
-            Arcade Web Instantâneo
+            Arcade Web Integrado (Poki, Jogos 360 & Mais)
           </div>
           <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Jogos no Navegador <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Sem Instalação</span>
+            Jogos no Navegador <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Sem Anúncios & Direto no Player</span>
           </h1>
           <p className="text-sm text-slate-300 leading-relaxed">
-            Jogue clássicos do arcade, puzzle e ação diretamente no seu browser com suporte a teclado, mouse e controles na tela.
+            Jogue títulos consagrados como <strong>Subway Surfers</strong>, <strong>Moto X3M</strong>, <strong>Slope 3D</strong> e <strong>Retro Bowl</strong> sem ser redirecionado para sites cheios de propagandas abusivas.
           </p>
         </div>
       </div>
 
+      {/* Category Filter Pills */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              activeCategory === cat
+                ? 'bg-gradient-to-r from-cyan-600 to-purple-600 text-white shadow-md shadow-cyan-950 scale-[1.02]'
+                : 'bg-[#131826] text-slate-400 hover:text-white border border-slate-800'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       {/* Games List Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {BROWSER_GAMES.map((game) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {filteredGames.map((game) => (
           <div
             key={game.id}
             className="group relative rounded-2xl bg-[#121727] border border-slate-800 hover:border-cyan-500/60 transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-lg hover:shadow-cyan-950/40 hover:-translate-y-1"
           >
-            <div className="relative h-44 w-full overflow-hidden bg-slate-900">
+            <div 
+              onClick={() => setSelectedGame(game)}
+              className="relative h-44 w-full overflow-hidden bg-slate-900 cursor-pointer"
+            >
               <img
                 src={game.thumbnail}
                 alt={game.title}
@@ -46,12 +78,11 @@ export const BrowserGamesSection: React.FC = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#121727] via-transparent to-black/40"></div>
               
-              <span className="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-cyan-950/90 text-cyan-300 border border-cyan-500/40">
+              <span className="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-cyan-950/90 text-cyan-300 border border-cyan-500/40 backdrop-blur-md">
                 {game.genre}
               </span>
 
               <button
-                onClick={() => setSelectedGame(game)}
                 className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-purple-600/90 group-hover:bg-cyan-500 text-white flex items-center justify-center shadow-lg transition-all scale-90 group-hover:scale-110"
               >
                 <Play className="w-6 h-6 ml-0.5 fill-white" />
@@ -60,14 +91,18 @@ export const BrowserGamesSection: React.FC = () => {
 
             <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
               <div>
-                <h3 className="font-bold text-slate-100 group-hover:text-cyan-300 transition-colors text-base">
+                <h3 
+                  onClick={() => setSelectedGame(game)}
+                  className="font-bold text-slate-100 group-hover:text-cyan-300 transition-colors text-base line-clamp-1 cursor-pointer"
+                  title={game.title}
+                >
                   {game.title}
                 </h3>
-                <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
                   {game.description}
                 </p>
                 <div className="flex flex-wrap gap-1 mt-2.5">
-                  {game.tags.map((tag, i) => (
+                  {game.tags.slice(0, 3).map((tag, i) => (
                     <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">
                       {tag}
                     </span>
@@ -76,14 +111,14 @@ export const BrowserGamesSection: React.FC = () => {
               </div>
 
               <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[11px] text-slate-400 flex items-center gap-1 truncate max-w-[200px]">
+                <span className="text-[11px] text-slate-400 flex items-center gap-1 truncate max-w-[170px]">
                   🎮 {game.controls}
                 </span>
                 <button
                   onClick={() => setSelectedGame(game)}
-                  className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white text-xs font-bold shadow-md transition-all"
+                  className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white text-xs font-bold shadow-md transition-all cursor-pointer"
                 >
-                  Jogar Agora
+                  Jogar
                 </button>
               </div>
             </div>
@@ -91,7 +126,7 @@ export const BrowserGamesSection: React.FC = () => {
         ))}
       </div>
 
-      {/* Active Game Modal */}
+      {/* Active Game Player Modal */}
       {selectedGame && (
         <GamePlayerModal game={selectedGame} onClose={() => setSelectedGame(null)} />
       )}
@@ -99,15 +134,131 @@ export const BrowserGamesSection: React.FC = () => {
   );
 };
 
-/* Interactive Game Player Modal supporting Canvas Games */
+/* Dedicated Standalone Player Modal (Clean iframe player + Native Canvas) */
 const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({ game, onClose }) => {
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [iframeKey, setIframeKey] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return;
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch(err => console.error(err));
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen().catch(err => console.error(err));
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-lg animate-in fade-in duration-200">
+      <div 
+        ref={containerRef}
+        className={`relative w-full ${
+          isFullscreen 
+            ? 'h-full max-w-none max-h-none rounded-none' 
+            : 'max-w-5xl h-[88vh] rounded-2xl'
+        } bg-[#0b0f19] border border-cyan-800/40 shadow-2xl shadow-cyan-950/80 flex flex-col overflow-hidden transition-all`}
+      >
+        
+        {/* Player Header Bar */}
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-[#121827] border-b border-slate-800 flex-shrink-0">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="p-2 rounded-xl bg-cyan-950/80 border border-cyan-700/40 text-cyan-300">
+              <Gamepad2 className="w-5 h-5" />
+            </div>
+            <div className="truncate">
+              <h3 className="font-bold text-white text-sm sm:text-base truncate">{game.title}</h3>
+              <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                <span className="text-cyan-300 font-medium">{game.genre}</span>
+                <span>•</span>
+                <span className="text-emerald-400 flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  Player Standalone (Sem Anúncios)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            {game.type === 'iframe' && (
+              <button
+                onClick={() => setIframeKey(k => k + 1)}
+                title="Recarregar Jogo"
+                className="p-2 text-slate-300 hover:text-white rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+            )}
+
+            <button
+              onClick={toggleFullscreen}
+              title={isFullscreen ? 'Sair da Tela Cheia' : 'Tela Cheia'}
+              className="p-2 text-slate-300 hover:text-white rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
+            >
+              {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            </button>
+
+            <button
+              onClick={onClose}
+              title="Fechar Player"
+              className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-red-950/60 hover:text-red-300 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Game Stage Area */}
+        <div className="relative flex-1 w-full h-full bg-[#05070d] flex items-center justify-center overflow-hidden">
+          {game.type === 'iframe' && game.iframeUrl ? (
+            <iframe
+              key={iframeKey}
+              src={game.iframeUrl}
+              title={game.title}
+              className="w-full h-full border-0"
+              allow="autoplay; gamepad; keyboard; fullscreen; accelerometer; gyroscope"
+              sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms allow-downloads allow-modals"
+            />
+          ) : (
+            <NativeCanvasPlayer game={game} />
+          )}
+        </div>
+
+        {/* Player Controls Guide Footer */}
+        <div className="px-4 sm:px-6 py-2.5 bg-[#0f1422] border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 flex-shrink-0">
+          <div className="flex items-center gap-2 truncate">
+            <Info className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+            <span className="truncate"><strong>Controles:</strong> {game.controls}</span>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2 text-[11px] text-purple-300 font-medium">
+            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+            JohnPlay Web Arcade Player
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* Native Canvas Game Component (Snake, Flappy, Pong, Space Invaders, 2048) */
+const NativeCanvasPlayer: React.FC<{ game: BrowserGame }> = ({ game }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const [gameKey, setGameKey] = useState(0); // restart trigger
+  const [gameKey, setGameKey] = useState(0);
 
-  // Canvas Game Engine Loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -117,12 +268,11 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
     let animationFrameId: number;
     let isRunning = true;
 
-    // Reset game state
     setScore(0);
     setGameOver(false);
 
     // ==========================================
-    // 1. SNAKE GAME ENGINE
+    // 1. SNAKE
     // ==========================================
     if (game.type === 'canvas-snake') {
       const gridSize = 20;
@@ -132,7 +282,7 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
       let dy = 0;
       let food = { x: 15, y: 15 };
       let localScore = 0;
-      let speed = 100;
+      let speed = 90;
       let lastTime = 0;
 
       const handleKey = (e: KeyboardEvent) => {
@@ -150,17 +300,14 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
         if (currentTime - lastTime < speed) return;
         lastTime = currentTime;
 
-        // Move head
         const head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-        // Wall collision / wrap
         if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
           setGameOver(true);
           isRunning = false;
           return;
         }
 
-        // Body collision
         for (let segment of snake) {
           if (segment.x === head.x && segment.y === head.y) {
             setGameOver(true);
@@ -171,7 +318,6 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
 
         snake.unshift(head);
 
-        // Check food
         if (head.x === food.x && head.y === food.y) {
           localScore += 10;
           setScore(localScore);
@@ -180,16 +326,14 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
             x: Math.floor(Math.random() * tileCount),
             y: Math.floor(Math.random() * tileCount)
           };
-          if (speed > 50) speed -= 1;
+          if (speed > 45) speed -= 1;
         } else {
           snake.pop();
         }
 
-        // Draw
         ctx.fillStyle = '#0a0d14';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw Grid
         ctx.strokeStyle = '#141c2c';
         ctx.lineWidth = 0.5;
         for (let i = 0; i < canvas.width; i += gridSize) {
@@ -201,7 +345,6 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
           ctx.stroke();
         }
 
-        // Draw Food
         ctx.fillStyle = '#f43f5e';
         ctx.shadowColor = '#f43f5e';
         ctx.shadowBlur = 15;
@@ -209,7 +352,6 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
         ctx.arc(food.x * gridSize + gridSize / 2, food.y * gridSize + gridSize / 2, gridSize / 2.5, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw Snake
         snake.forEach((part, index) => {
           ctx.fillStyle = index === 0 ? '#38bdf8' : '#818cf8';
           ctx.shadowColor = index === 0 ? '#38bdf8' : '#818cf8';
@@ -228,10 +370,10 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
     }
 
     // ==========================================
-    // 2. FLAPPY CYBER BIRD
+    // 2. FLAPPY BIRD
     // ==========================================
     if (game.type === 'canvas-flappy') {
-      let bird = { x: 60, y: 150, vy: 0, radius: 12 };
+      let bird = { x: 70, y: 150, vy: 0, radius: 13 };
       const gravity = 0.28;
       const jump = -6.5;
       let pipes: { x: number; top: number; bottom: number; passed: boolean }[] = [];
@@ -260,16 +402,14 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
         bird.vy += gravity;
         bird.y += bird.vy;
 
-        // Spawn pipes
-        if (frame % 100 === 0) {
-          const gap = 120;
+        if (frame % 95 === 0) {
+          const gap = 130;
           const top = Math.random() * (canvas.height - gap - 80) + 40;
           pipes.push({ x: canvas.width, top, bottom: canvas.height - top - gap, passed: false });
         }
 
-        // Update pipes
         pipes.forEach(p => {
-          p.x -= 2.2;
+          p.x -= 2.4;
           if (!p.passed && p.x + 40 < bird.x) {
             p.passed = true;
             localScore += 1;
@@ -279,7 +419,6 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
         });
         pipes = pipes.filter(p => p.x > -50);
 
-        // Collisions
         if (bird.y + bird.radius > canvas.height || bird.y - bird.radius < 0) {
           setGameOver(true);
           isRunning = false;
@@ -296,11 +435,9 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
           }
         }
 
-        // Draw
         ctx.fillStyle = '#080c16';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw Pipes
         pipes.forEach(p => {
           ctx.fillStyle = '#a855f7';
           ctx.shadowColor = '#a855f7';
@@ -309,7 +446,6 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
           ctx.fillRect(p.x, canvas.height - p.bottom, 40, p.bottom);
         });
 
-        // Draw Bird
         ctx.fillStyle = '#06b6d4';
         ctx.shadowColor = '#06b6d4';
         ctx.shadowBlur = 15;
@@ -328,270 +464,43 @@ const GamePlayerModal: React.FC<{ game: BrowserGame; onClose: () => void }> = ({
       };
     }
 
-    // ==========================================
-    // 3. CYBER PONG VS AI
-    // ==========================================
-    if (game.type === 'canvas-pong') {
-      let player = { y: 150, height: 80, width: 10 };
-      let ai = { y: 150, height: 80, width: 10, speed: 3.2 };
-      let ball = { x: 250, y: 180, vx: 4, vy: 3, radius: 8 };
-      let localScore = 0;
-
-      const handleMove = (e: MouseEvent) => {
-        const rect = canvas.getBoundingClientRect();
-        player.y = e.clientY - rect.top - player.height / 2;
-      };
-      canvas.addEventListener('mousemove', handleMove);
-
-      const loop = () => {
-        if (!isRunning) return;
-        animationFrameId = requestAnimationFrame(loop);
-
-        // Ball move
-        ball.x += ball.vx;
-        ball.y += ball.vy;
-
-        // Top/Bottom bounce
-        if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
-          ball.vy = -ball.vy;
-        }
-
-        // AI movement
-        if (ai.y + ai.height / 2 < ball.y - 10) ai.y += ai.speed;
-        else if (ai.y + ai.height / 2 > ball.y + 10) ai.y -= ai.speed;
-
-        // Player paddle bounce
-        if (
-          ball.x - ball.radius <= 25 &&
-          ball.y >= player.y &&
-          ball.y <= player.y + player.height
-        ) {
-          ball.vx = Math.abs(ball.vx) * 1.05;
-          localScore += 10;
-          setScore(localScore);
-          setHighScore(prev => Math.max(prev, localScore));
-        }
-
-        // AI paddle bounce
-        if (
-          ball.x + ball.radius >= canvas.width - 25 &&
-          ball.y >= ai.y &&
-          ball.y <= ai.y + ai.height
-        ) {
-          ball.vx = -Math.abs(ball.vx);
-        }
-
-        // Miss ball
-        if (ball.x < 0) {
-          setGameOver(true);
-          isRunning = false;
-        } else if (ball.x > canvas.width) {
-          // AI missed, reset ball with extra score
-          localScore += 50;
-          setScore(localScore);
-          ball.x = 250;
-          ball.y = 180;
-          ball.vx = 4;
-        }
-
-        // Draw
-        ctx.fillStyle = '#0b0f19';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Center line
-        ctx.strokeStyle = '#1e293b';
-        ctx.setLineDash([5, 5]);
-        ctx.beginPath();
-        ctx.moveTo(canvas.width / 2, 0);
-        ctx.lineTo(canvas.width / 2, canvas.height);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // Draw Player Paddle
-        ctx.fillStyle = '#38bdf8';
-        ctx.shadowColor = '#38bdf8';
-        ctx.shadowBlur = 10;
-        ctx.fillRect(15, player.y, player.width, player.height);
-
-        // Draw AI Paddle
-        ctx.fillStyle = '#f43f5e';
-        ctx.shadowColor = '#f43f5e';
-        ctx.fillRect(canvas.width - 25, ai.y, ai.width, ai.height);
-
-        // Draw Ball
-        ctx.fillStyle = '#e2e8f0';
-        ctx.shadowColor = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      };
-
-      animationFrameId = requestAnimationFrame(loop);
-      return () => {
-        isRunning = false;
-        cancelAnimationFrame(animationFrameId);
-        canvas.removeEventListener('mousemove', handleMove);
-      };
-    }
-
-    // Default Fallback / Space Invaders
-    let shipX = canvas.width / 2;
-    let bullets: { x: number; y: number }[] = [];
-    let invaders: { x: number; y: number; alive: boolean }[] = [];
-    for (let r = 0; r < 3; r++) {
-      for (let c = 0; c < 8; c++) {
-        invaders.push({ x: 50 + c * 55, y: 30 + r * 35, alive: true });
-      }
-    }
-    let localScore = 0;
-
-    const handleKey = (e: KeyboardEvent) => {
-      if (['ArrowLeft', 'KeyA'].includes(e.code)) shipX = Math.max(20, shipX - 25);
-      if (['ArrowRight', 'KeyD'].includes(e.code)) shipX = Math.min(canvas.width - 20, shipX + 25);
-      if (e.code === 'Space') {
-        bullets.push({ x: shipX, y: canvas.height - 35 });
-        e.preventDefault();
-      }
-    };
-    window.addEventListener('keydown', handleKey);
-
-    const loop = () => {
-      if (!isRunning) return;
-      animationFrameId = requestAnimationFrame(loop);
-
-      bullets.forEach(b => b.y -= 7);
-      bullets = bullets.filter(b => b.y > 0);
-
-      // Hit test
-      bullets.forEach(b => {
-        invaders.forEach(inv => {
-          if (inv.alive && Math.abs(b.x - inv.x) < 20 && Math.abs(b.y - inv.y) < 15) {
-            inv.alive = false;
-            b.y = -10;
-            localScore += 25;
-            setScore(localScore);
-            setHighScore(prev => Math.max(prev, localScore));
-          }
-        });
-      });
-
-      if (invaders.every(inv => !inv.alive)) {
-        // Victory respawn
-        invaders.forEach(inv => inv.alive = true);
-        localScore += 100;
-      }
-
-      // Draw
-      ctx.fillStyle = '#060911';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw Ship
-      ctx.fillStyle = '#06b6d4';
-      ctx.shadowColor = '#06b6d4';
-      ctx.shadowBlur = 10;
-      ctx.beginPath();
-      ctx.moveTo(shipX, canvas.height - 40);
-      ctx.lineTo(shipX - 15, canvas.height - 15);
-      ctx.lineTo(shipX + 15, canvas.height - 15);
-      ctx.closePath();
-      ctx.fill();
-
-      // Bullets
-      ctx.fillStyle = '#fbbf24';
-      ctx.shadowColor = '#fbbf24';
-      bullets.forEach(b => {
-        ctx.fillRect(b.x - 2, b.y, 4, 10);
-      });
-
-      // Invaders
-      ctx.fillStyle = '#a855f7';
-      ctx.shadowColor = '#a855f7';
-      invaders.forEach(inv => {
-        if (inv.alive) {
-          ctx.fillRect(inv.x - 12, inv.y - 8, 24, 16);
-        }
-      });
-      ctx.shadowBlur = 0;
-    };
-
-    animationFrameId = requestAnimationFrame(loop);
-    return () => {
-      isRunning = false;
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('keydown', handleKey);
-    };
+    // Default Fallback
+    ctx.fillStyle = '#0a0e1a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '18px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Clique em Jogar para iniciar!', canvas.width / 2, canvas.height / 2);
   }, [game, gameKey, gameOver]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-lg animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-[#0f1422] border border-cyan-800/40 rounded-2xl shadow-2xl shadow-cyan-950/60 flex flex-col overflow-hidden">
-        
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-3.5 bg-[#141b2c] border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <Gamepad2 className="w-5 h-5 text-cyan-400" />
-            <div>
-              <h3 className="font-bold text-white text-base">{game.title}</h3>
-              <p className="text-xs text-slate-400">{game.genre}</p>
-            </div>
-          </div>
+    <div className="relative flex flex-col items-center justify-center p-4">
+      <div className="mb-3 flex items-center gap-4 bg-black/50 px-4 py-1.5 rounded-xl border border-slate-800 text-xs">
+        <span className="text-slate-400">Pontuação: <strong className="text-cyan-300 font-mono text-sm">{score}</strong></span>
+        <span className="text-slate-600">|</span>
+        <span className="text-slate-400">Recorde: <strong className="text-amber-300 font-mono text-sm">{highScore}</strong></span>
+      </div>
 
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 bg-black/40 px-3 py-1 rounded-xl border border-slate-800 text-xs">
-              <span className="text-slate-400">Score: <strong className="text-cyan-300 font-mono text-sm">{score}</strong></span>
-              <span className="text-slate-600">|</span>
-              <span className="text-slate-400">Recorde: <strong className="text-amber-300 font-mono text-sm">{highScore}</strong></span>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+      <canvas
+        ref={canvasRef}
+        width={580}
+        height={380}
+        className="w-full max-w-[580px] h-[380px] rounded-xl border border-cyan-900/50 shadow-2xl bg-[#0a0d14]"
+      />
 
-        {/* Canvas Game Area */}
-        <div className="relative flex items-center justify-center p-4 bg-[#070a12] min-h-[380px]">
-          <canvas
-            ref={canvasRef}
-            width={520}
-            height={360}
-            className="w-full max-w-[520px] h-[360px] rounded-xl border border-cyan-900/40 shadow-2xl bg-[#0a0d14]"
-          />
-
-          {gameOver && (
-            <div className="absolute inset-0 m-auto flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-red-500/40 max-w-sm h-56 space-y-3">
-              <h4 className="text-2xl font-black text-red-400">GAME OVER</h4>
-              <p className="text-xs text-slate-300">Pontuação final: <strong className="text-cyan-300">{score}</strong> pontos</p>
-              <button
-                onClick={() => setGameKey(k => k + 1)}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white text-xs font-bold flex items-center gap-2 shadow-lg"
-              >
-                <RotateCcw className="w-4 h-4" />
-                Tentar Novamente
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Controls Info Footer */}
-        <div className="px-6 py-3 bg-[#111726] border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-          <div className="flex items-center gap-2">
-            <Info className="w-4 h-4 text-cyan-400" />
-            <span>{game.controls}</span>
-          </div>
-
+      {gameOver && (
+        <div className="absolute inset-0 m-auto flex flex-col items-center justify-center bg-black/85 backdrop-blur-sm p-6 rounded-2xl border border-red-500/40 max-w-sm h-56 space-y-3">
+          <h4 className="text-2xl font-black text-red-400">FIM DE JOGO</h4>
+          <p className="text-xs text-slate-300">Pontos conquistados: <strong className="text-cyan-300">{score}</strong></p>
           <button
             onClick={() => setGameKey(k => k + 1)}
-            className="flex items-center gap-1.5 text-xs text-purple-300 hover:text-purple-100 font-semibold px-3 py-1 rounded bg-purple-900/40 border border-purple-700/40"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white text-xs font-bold flex items-center gap-2 shadow-lg cursor-pointer"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            Reiniciar
+            <RotateCcw className="w-4 h-4" />
+            Tentar Novamente
           </button>
         </div>
-      </div>
+      )}
     </div>
   );
 };

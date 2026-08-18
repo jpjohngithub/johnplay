@@ -11,7 +11,9 @@ import {
   Cpu, 
   Clock, 
   Star, 
-  CheckCircle2 
+  CheckCircle2,
+  Zap,
+  FileDown
 } from 'lucide-react';
 import type { GameDownloadItem } from '../types';
 
@@ -22,6 +24,8 @@ interface GameDetailsModalProps {
 
 export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClose }) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [isDownloadingDirect, setIsDownloadingDirect] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState(0);
 
   if (!game) return null;
 
@@ -29,6 +33,27 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
     navigator.clipboard.writeText(url);
     setCopiedIndex(index);
     setTimeout(() => setCopiedIndex(null), 2500);
+  };
+
+  const handleStartDirectDownload = (uri: { type: string; url: string; label: string }) => {
+    if (uri.url.startsWith('magnet:')) {
+      window.location.href = uri.url;
+      return;
+    }
+
+    setIsDownloadingDirect(true);
+    setDownloadProgress(10);
+    const interval = setInterval(() => {
+      setDownloadProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          window.open(uri.url, '_blank');
+          setTimeout(() => setIsDownloadingDirect(false), 2000);
+          return 100;
+        }
+        return prev + 30;
+      });
+    }, 300);
   };
 
   const getSourceBadgeClass = (source: string) => {
@@ -45,7 +70,7 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
       <div className="relative w-full max-w-3xl max-h-[92vh] bg-[#0e121d] border border-purple-800/40 rounded-2xl shadow-2xl shadow-purple-950/70 flex flex-col overflow-hidden">
         
         {/* Banner with Cover Header */}
@@ -59,7 +84,7 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
           
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors z-10"
+            className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors z-10 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -103,6 +128,46 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
         {/* Content Body */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           
+          {/* Direct Download Action Hero */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950/60 to-emerald-950/60 border border-emerald-500/30 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+                  <Zap className="w-3.5 h-3.5 text-emerald-400" />
+                  Download Direto pelo JohnPlay
+                </span>
+                <h4 className="text-sm font-black text-white mt-0.5">
+                  Baixar {game.title} ({game.fileSize})
+                </h4>
+              </div>
+
+              {game.uris.length > 0 && (
+                <button
+                  onClick={() => handleStartDirectDownload(game.uris[0])}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-lg shadow-emerald-950 flex items-center justify-center gap-2 cursor-pointer transition-all"
+                >
+                  <FileDown className="w-4 h-4" />
+                  <span>{game.uris[0].type === 'magnet' ? 'Abrir Magnet Torrent' : 'Iniciar Download Imediato'}</span>
+                </button>
+              )}
+            </div>
+
+            {isDownloadingDirect && (
+              <div className="space-y-1.5 pt-2 border-t border-emerald-900/40 animate-in fade-in">
+                <div className="flex justify-between text-xs text-emerald-300">
+                  <span>Conectando aos servidores de alta velocidade...</span>
+                  <span>{downloadProgress}%</span>
+                </div>
+                <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-emerald-700/40">
+                  <div 
+                    className="bg-emerald-500 h-full transition-all duration-300 rounded-full"
+                    style={{ width: `${downloadProgress}%` }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Categories */}
           <div className="flex flex-wrap gap-1.5">
             {game.category.map((cat, i) => (
@@ -183,7 +248,7 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
           <div className="space-y-3">
             <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
               <Download className="w-4 h-4 text-emerald-400" />
-              Links de Download & Mirrors Disponíveis
+              Links e Servidores Disponíveis ({game.uris.length})
             </h3>
             
             <div className="space-y-2">
@@ -209,7 +274,7 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <button
                         onClick={() => handleCopyUri(uri.url, index)}
-                        className={`p-2 rounded-lg text-xs flex items-center gap-1 border transition-all ${
+                        className={`p-2 rounded-lg text-xs flex items-center gap-1 border transition-all cursor-pointer ${
                           isCopied
                             ? 'bg-emerald-950 text-emerald-300 border-emerald-500'
                             : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
@@ -220,15 +285,13 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
                         <span className="hidden sm:inline">{isCopied ? 'Copiado!' : 'Copiar'}</span>
                       </button>
 
-                      <a
-                        href={uri.url}
-                        target={isMagnet ? '_self' : '_blank'}
-                        rel="noopener noreferrer"
-                        className="px-3.5 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-md shadow-emerald-950 flex items-center gap-1.5 transition-all"
+                      <button
+                        onClick={() => handleStartDirectDownload(uri)}
+                        className="px-3.5 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-md shadow-emerald-950 flex items-center gap-1.5 transition-all cursor-pointer"
                       >
                         <Download className="w-3.5 h-3.5" />
                         <span>{isMagnet ? 'Abrir Torrent' : 'Baixar Agora'}</span>
-                      </a>
+                      </button>
                     </div>
                   </div>
                 );
@@ -250,7 +313,7 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
           <span>Fonte: {game.sourceName}</span>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 font-medium"
+            className="px-4 py-1.5 rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 font-medium cursor-pointer"
           >
             Fechar
           </button>
