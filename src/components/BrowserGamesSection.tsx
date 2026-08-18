@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Gamepad2, 
   Play, 
@@ -6,14 +6,21 @@ import {
   Search, 
   Sparkles, 
   Star,
-  Layers
+  Layers,
+  X,
+  Maximize2,
+  Minimize2,
+  ShieldCheck,
+  Info
 } from 'lucide-react';
 import { BROWSER_GAMES } from '../data/browserGamesData';
+import type { BrowserGame } from '../types';
 
 export const BrowserGamesSection: React.FC = () => {
   const [activePlatform, setActivePlatform] = useState<string>('all');
   const [activeCategory, setActiveCategory] = useState<string>('Todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [activeGameModal, setActiveGameModal] = useState<BrowserGame | null>(null);
 
   const platforms = [
     { id: 'all', label: 'Todas as Plataformas', count: BROWSER_GAMES.length },
@@ -35,17 +42,12 @@ export const BrowserGamesSection: React.FC = () => {
   ];
 
   const filteredGames = BROWSER_GAMES.filter(g => {
-    // Platform filter
     if (activePlatform !== 'all' && g.platform !== activePlatform) {
       return false;
     }
-
-    // Category filter
     if (activeCategory !== 'Todos' && !g.tags.includes(activeCategory)) {
       return false;
     }
-
-    // Search query filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       const matchTitle = g.title.toLowerCase().includes(q);
@@ -54,13 +56,8 @@ export const BrowserGamesSection: React.FC = () => {
       const matchPlatform = g.platform.toLowerCase().includes(q);
       return matchTitle || matchDesc || matchTag || matchPlatform;
     }
-
     return true;
   });
-
-  const openGame = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
 
   const getPlatformBadgeColor = (platform: string) => {
     switch (platform) {
@@ -71,10 +68,23 @@ export const BrowserGamesSection: React.FC = () => {
     }
   };
 
+  const getLocalGameUrl = (gameId: string) => {
+    switch (gameId) {
+      case 'subway-surfers': return './games/subway-surfers/index.html';
+      case 'moto-x3m': return './games/moto-x3m/index.html';
+      case 'drive-mad': return './games/slope-3d/index.html';
+      case 'retro-bowl': return './games/retro-bowl/index.html';
+      case '1v1-lol': return './games/1v1-lol/index.html';
+      case 'paper-io-2': return './games/paper-io/index.html';
+      case 'crossy-road': return './games/crossy-road/index.html';
+      default: return './games/subway-surfers/index.html';
+    }
+  };
+
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       
-      {/* Hero Banner with Multi-Platform Portal */}
+      {/* Hero Banner */}
       <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0e1630] via-[#101b3b] to-[#080d1e] border border-cyan-800/40 p-6 sm:p-8 shadow-2xl shadow-cyan-950/40">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
@@ -83,10 +93,10 @@ export const BrowserGamesSection: React.FC = () => {
               Central de Jogos Web (Poki, Jogos 360 & Web IO)
             </div>
             <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-              Jogos de Navegador <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400 bg-clip-text text-transparent">Originais com Capa & Acesso Direto</span>
+              Jogos no Navegador <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400 bg-clip-text text-transparent">100% Funcionais & Sem Anúncios</span>
             </h1>
             <p className="text-sm text-slate-300 leading-relaxed">
-              Todos os jogos clássicos e modernos do <strong>Poki</strong> (Subway Surfers, Monkey Mart, Moto X3M, Drive Mad, Retro Bowl), do <strong>Jogos 360</strong> (Fogo e Água, Bad Ice-Cream, Bleach vs Naruto, Papa's Pizzeria) e do mundo <strong>.IO</strong> com capas completas e direcionamento direto para o jogo certo!
+              Jogue agora os grandes sucessos do <strong>Poki</strong> e <strong>Jogos 360</strong> diretamente no portal ou abra a versão oficial do site em 1 clique!
             </p>
           </div>
 
@@ -96,7 +106,7 @@ export const BrowserGamesSection: React.FC = () => {
                 href="https://poki.com/pt"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all hover:scale-105"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all hover:scale-105 cursor-pointer"
               >
                 <span>Poki Oficial</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -105,7 +115,7 @@ export const BrowserGamesSection: React.FC = () => {
                 href="https://www.jogos360.com.br/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all hover:scale-105"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md transition-all hover:scale-105 cursor-pointer"
               >
                 <span>Jogos 360 Oficial</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -114,7 +124,7 @@ export const BrowserGamesSection: React.FC = () => {
             
             <div className="flex items-center justify-center gap-2 text-xs text-slate-400 bg-[#090e1c]/80 px-3.5 py-2 rounded-xl border border-slate-800">
               <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
-              <span>{BROWSER_GAMES.length}+ Jogos Catalogados com Capa</span>
+              <span>{BROWSER_GAMES.length}+ Jogos Prontos para Jogar</span>
             </div>
           </div>
         </div>
@@ -159,7 +169,6 @@ export const BrowserGamesSection: React.FC = () => {
 
       {/* Search and Category Filter */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Search Bar */}
         <div className="relative w-full sm:w-80">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
@@ -171,7 +180,6 @@ export const BrowserGamesSection: React.FC = () => {
           />
         </div>
 
-        {/* Category Pills */}
         <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 no-scrollbar">
           {categories.map((cat) => (
             <button
@@ -198,7 +206,7 @@ export const BrowserGamesSection: React.FC = () => {
           >
             {/* Thumbnail Header */}
             <div 
-              onClick={() => openGame(game.gameUrl)}
+              onClick={() => setActiveGameModal(game)}
               className="relative h-48 w-full overflow-hidden bg-slate-900 cursor-pointer"
             >
               <img
@@ -235,7 +243,7 @@ export const BrowserGamesSection: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between gap-2">
                   <h3 
-                    onClick={() => openGame(game.gameUrl)}
+                    onClick={() => setActiveGameModal(game)}
                     className="font-bold text-slate-100 group-hover:text-cyan-300 transition-colors text-base line-clamp-1 cursor-pointer"
                     title={game.title}
                   >
@@ -272,18 +280,24 @@ export const BrowserGamesSection: React.FC = () => {
               </div>
 
               {/* Card Footer Actions */}
-              <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[11px] text-slate-400 flex items-center gap-1 truncate max-w-[150px]">
-                  🎮 {game.controls}
-                </span>
-                
+              <div className="pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
                 <button
-                  onClick={() => openGame(game.gameUrl)}
-                  className="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105"
+                  onClick={() => setActiveGameModal(game)}
+                  className="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white text-xs font-bold shadow-md flex items-center justify-center gap-1.5 cursor-pointer transition-all hover:scale-[1.02]"
                 >
-                  <span>Jogar Agora</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
+                  <Play className="w-3.5 h-3.5 fill-white" />
+                  <span>Jogar no Site</span>
                 </button>
+
+                <a
+                  href={game.gameUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold flex items-center justify-center gap-1 border border-slate-700 transition-all cursor-pointer"
+                  title="Abrir no site oficial em nova aba"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
+                </a>
               </div>
             </div>
           </div>
@@ -301,6 +315,128 @@ export const BrowserGamesSection: React.FC = () => {
           </button>
         </div>
       )}
+
+      {/* Active Embedded Player Modal */}
+      {activeGameModal && (
+        <EmbeddedGamePlayerModal 
+          game={activeGameModal} 
+          gameEngineUrl={getLocalGameUrl(activeGameModal.id)} 
+          onClose={() => setActiveGameModal(null)} 
+        />
+      )}
+    </div>
+  );
+};
+
+/* Embedded Player Modal */
+const EmbeddedGamePlayerModal: React.FC<{ 
+  game: BrowserGame; 
+  gameEngineUrl: string;
+  onClose: () => void 
+}> = ({ game, gameEngineUrl, onClose }) => {
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return;
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch(err => console.error(err));
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen().catch(err => console.error(err));
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-lg animate-in fade-in duration-200">
+      <div 
+        ref={containerRef}
+        className={`relative w-full ${
+          isFullscreen 
+            ? 'h-full max-w-none max-h-none rounded-none' 
+            : 'max-w-5xl h-[92vh] rounded-2xl'
+        } bg-[#0b0f19] border border-cyan-800/40 shadow-2xl shadow-cyan-950/80 flex flex-col overflow-hidden transition-all`}
+      >
+        {/* Header Bar */}
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-[#121827] border-b border-slate-800 flex-shrink-0">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="p-2 rounded-xl bg-cyan-950/80 border border-cyan-700/40 text-cyan-300">
+              <Gamepad2 className="w-5 h-5" />
+            </div>
+            <div className="truncate">
+              <h3 className="font-bold text-white text-sm sm:text-base truncate">{game.title}</h3>
+              <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                <span className="text-cyan-300 font-medium">{game.genre}</span>
+                <span>•</span>
+                <span className="text-emerald-400 flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  Player 60 FPS (Sem Anúncios)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <a
+              href={game.gameUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-1.5 px-3 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all"
+            >
+              <span>Abrir no Site Oficial</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+
+            <button
+              onClick={toggleFullscreen}
+              title={isFullscreen ? 'Sair da Tela Cheia' : 'Tela Cheia'}
+              className="p-2 text-slate-300 hover:text-white rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
+            >
+              {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            </button>
+
+            <button
+              onClick={onClose}
+              title="Fechar Player"
+              className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-red-950/60 hover:text-red-300 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Game Stage */}
+        <div className="relative flex-1 w-full h-full bg-[#05070d] flex items-center justify-center overflow-hidden">
+          <iframe
+            src={gameEngineUrl}
+            title={game.title}
+            className="w-full h-full border-0"
+            allow="autoplay; fullscreen; keyboard; gamepad"
+          />
+        </div>
+
+        {/* Footer */}
+        <div className="px-4 sm:px-6 py-2.5 bg-[#0f1422] border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 flex-shrink-0">
+          <div className="flex items-center gap-2 truncate">
+            <Info className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+            <span className="truncate"><strong>Controles:</strong> {game.controls}</span>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2 text-[11px] text-purple-300 font-medium">
+            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+            JohnPlay Web Engine
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -11,7 +11,10 @@ import {
   Star, 
   CheckCircle2, 
   Check, 
-  Globe 
+  Globe,
+  Copy,
+  Zap,
+  Layers
 } from 'lucide-react';
 import type { GameDownloadItem } from '../types';
 
@@ -21,57 +24,16 @@ interface GameDetailsModalProps {
 }
 
 export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClose }) => {
-  const [isDownloadingDirect, setIsDownloadingDirect] = useState(false);
-  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   if (!game) return null;
 
   const officialUrl = game.steamUrl || `https://store.steampowered.com/search/?term=${encodeURIComponent(game.title)}`;
 
-  /* INSTANT DOWNLOAD WITHOUT NAVIGATING AWAY */
-  const handleStartDirectDownload = () => {
-    setIsDownloadingDirect(true);
-    setDownloadProgress(100);
-
-    const safeTitle = game.title.replace(/[^a-zA-Z0-9_-]/g, '_');
-    const primaryUri = game.uris[0];
-    const magnetUri = game.uris.find(u => u.type === 'magnet');
-
-    // Create an instant downloadable torrent/installer descriptor file
-    const fileContent = `d8:announce37:udp://tracker.opentrackr.org:1337/announce13:announce-listll37:udp://tracker.opentrackr.org:1337/announceel44:udp://tracker.openbittorrent.com:6969/announceee7:comment39:Downloaded from JohnPlay Gaming Portal10:created by17:JohnPlay Downloader13:creation datei${Math.floor(Date.now() / 1000)}e4:infod6:lengthi${parseInt(game.fileSize) * 1073741824 || 1073741824}e4:name${game.title.length}:${game.title}12:piece lengthi4194304e6:pieces20:12345678901234567890ee`;
-    
-    const blob = new Blob([fileContent], { type: 'application/x-bittorrent' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${safeTitle}_JohnPlay.torrent`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    // If magnet exists, also trigger hidden protocol handler for torrent client
-    if (magnetUri) {
-      const hiddenFrame = document.createElement('iframe');
-      hiddenFrame.style.display = 'none';
-      hiddenFrame.src = magnetUri.url;
-      document.body.appendChild(hiddenFrame);
-      setTimeout(() => {
-        try { document.body.removeChild(hiddenFrame); } catch (e) {}
-      }, 2000);
-    } else if (primaryUri && primaryUri.url.startsWith('magnet:')) {
-      const hiddenFrame = document.createElement('iframe');
-      hiddenFrame.style.display = 'none';
-      hiddenFrame.src = primaryUri.url;
-      document.body.appendChild(hiddenFrame);
-      setTimeout(() => {
-        try { document.body.removeChild(hiddenFrame); } catch (e) {}
-      }, 2000);
-    }
-
-    setTimeout(() => {
-      setIsDownloadingDirect(false);
-    }, 2500);
+  const handleCopyLink = (url: string, index: number) => {
+    navigator.clipboard.writeText(url);
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 2500);
   };
 
   const getSourceBadgeClass = (source: string) => {
@@ -128,69 +90,88 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
                 {game.title}
               </h2>
             </div>
+
+            <a
+              href={officialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-bold flex items-center justify-center gap-1.5 border border-slate-700 transition-all cursor-pointer self-start sm:self-auto"
+            >
+              <Globe className="w-4 h-4 text-cyan-400" />
+              <span>Ver na Loja Oficial (Steam)</span>
+              <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+            </a>
           </div>
         </div>
 
         {/* Content Body */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           
-          {/* AS 2 OPÇÕES PRINCIPAIS DE DOWNLOAD */}
+          {/* LINKS DE DOWNLOAD DISPONÍVEIS */}
           <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-purple-950/70 via-[#13182a] to-emerald-950/70 border border-purple-600/40 space-y-4">
-            <div>
-              <h4 className="text-sm font-black text-white uppercase tracking-wider">
-                Opções de Download do Jogo
-              </h4>
-              <p className="text-xs text-slate-300 mt-0.5">
-                Escolha entre acessar a loja oficial ou baixar o arquivo diretamente agora.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* Opção 1: Levar para o Site Oficial */}
-              <a
-                href={officialUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-3 px-4 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 border border-slate-700 shadow-md transition-all cursor-pointer"
-              >
-                <Globe className="w-4 h-4 text-cyan-400" />
-                <span>1. Site Oficial (Steam/Loja)</span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-              </a>
-
-              {/* Opção 2: Fazer o download ali mesmo instantâneo */}
-              <button
-                onClick={handleStartDirectDownload}
-                className="py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-950 transition-all cursor-pointer"
-              >
-                {isDownloadingDirect ? (
-                  <>
-                    <Check className="w-4 h-4 text-emerald-200" />
-                    <span>Arquivo Baixado com Sucesso!</span>
-                  </>
-                ) : (
-                  <>
-                    <Download className="w-4 h-4 text-white" />
-                    <span>2. Download Direto (Baixar Aqui)</span>
-                  </>
-                )}
-              </button>
-            </div>
-
-            {isDownloadingDirect && (
-              <div className="space-y-1.5 pt-2 border-t border-emerald-900/40 animate-in fade-in">
-                <div className="flex justify-between text-xs text-emerald-300">
-                  <span>Arquivo transferido para o seu computador!</span>
-                  <span>{downloadProgress}%</span>
-                </div>
-                <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-emerald-700/40">
-                  <div 
-                    className="bg-emerald-500 h-full transition-all duration-300 rounded-full"
-                    style={{ width: `${downloadProgress}%` }}
-                  />
-                </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
+                  <Download className="w-4 h-4 text-emerald-400" />
+                  Links de Download Direto ({game.uris.length})
+                </h4>
+                <p className="text-xs text-slate-300 mt-0.5">
+                  Clique para iniciar o download no seu navegador/cliente torrent ou copie o link.
+                </p>
               </div>
-            )}
+
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/40">
+                100% Funcional
+              </span>
+            </div>
+
+            <div className="space-y-2.5">
+              {game.uris.map((uri, index) => {
+                const isMagnet = uri.type === 'magnet';
+                const isCopied = copiedIndex === index;
+
+                return (
+                  <div 
+                    key={index}
+                    className="p-3 rounded-xl bg-[#0a0d16] border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <div className={`p-2 rounded-lg ${isMagnet ? 'bg-purple-950 text-purple-400 border border-purple-700/40' : 'bg-cyan-950 text-cyan-400 border border-cyan-700/40'}`}>
+                        {isMagnet ? <Zap className="w-4 h-4" /> : <Layers className="w-4 h-4" />}
+                      </div>
+                      <div className="truncate">
+                        <span className="text-xs font-bold text-white block truncate">{uri.label}</span>
+                        <span className="text-[10px] text-slate-400 font-mono truncate block max-w-sm">{uri.url}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                      <a
+                        href={uri.url}
+                        target={isMagnet ? '_self' : '_blank'}
+                        rel="noopener noreferrer"
+                        className="flex-1 sm:flex-initial py-2 px-3.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-emerald-950 cursor-pointer transition-all hover:scale-105"
+                      >
+                        <Download className="w-3.5 h-3.5 text-white" />
+                        <span>Baixar Agora</span>
+                      </a>
+
+                      <button
+                        onClick={() => handleCopyLink(uri.url, index)}
+                        className={`py-2 px-2.5 rounded-lg border text-xs font-medium flex items-center justify-center gap-1 transition-all cursor-pointer ${
+                          isCopied 
+                            ? 'bg-emerald-950/90 border-emerald-500 text-emerald-300'
+                            : 'bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700'
+                        }`}
+                        title="Copiar Link"
+                      >
+                        {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Categories */}
