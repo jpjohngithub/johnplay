@@ -1,0 +1,112 @@
+import type { GameDealItem } from '../types';
+
+export const PROMOTIONS_LIST: GameDealItem[] = [
+  {
+    id: 'epic-free-1',
+    title: 'Ghostrunner: Complete Edition',
+    store: 'Epic Games',
+    storeLogo: 'Zap',
+    originalPrice: 'R$ 139,99',
+    discountedPrice: 'GRÁTIS (100% OFF)',
+    discountPercentage: 100,
+    isFree: true,
+    freeUntil: 'Quinta-feira, 12:00 BRT',
+    coverImage: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=700&auto=format&fit=crop&q=60',
+    dealUrl: 'https://store.epicgames.com/pt-BR/free-games',
+    tags: ['Cyberpunk', 'Ação', 'Grátis da Semana', 'Epic Games'],
+    expiryTime: 'Resgate para sempre em sua biblioteca Epic'
+  },
+  {
+    id: 'epic-free-2',
+    title: 'The Big Con: Grifter Edition',
+    store: 'Epic Games',
+    storeLogo: 'Zap',
+    originalPrice: 'R$ 49,99',
+    discountedPrice: 'GRÁTIS (100% OFF)',
+    discountPercentage: 100,
+    isFree: true,
+    freeUntil: 'Quinta-feira, 12:00 BRT',
+    coverImage: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=700&auto=format&fit=crop&q=60',
+    dealUrl: 'https://store.epicgames.com/pt-BR/free-games',
+    tags: ['Aventura', 'Comédia', 'Indie', 'Epic Games'],
+    expiryTime: 'Resgate para sempre em sua biblioteca Epic'
+  },
+  {
+    id: 'steam-deal-witcher3',
+    title: 'The Witcher 3: Wild Hunt - Complete Edition',
+    store: 'Steam',
+    storeLogo: 'Flame',
+    originalPrice: 'R$ 159,99',
+    discountedPrice: 'R$ 31,99',
+    discountPercentage: 80,
+    isFree: false,
+    coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=700&auto=format&fit=crop&q=60',
+    dealUrl: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/',
+    tags: ['RPG', 'Mundo Aberto', 'Oferta Especial Steam', 'História Rica']
+  },
+  {
+    id: 'steam-deal-cyberpunk',
+    title: 'Cyberpunk 2077',
+    store: 'Steam',
+    storeLogo: 'Flame',
+    originalPrice: 'R$ 199,90',
+    discountedPrice: 'R$ 99,95',
+    discountPercentage: 50,
+    isFree: false,
+    coverImage: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=700&auto=format&fit=crop&q=60',
+    dealUrl: 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/',
+    tags: ['Cyberpunk', 'RPG', 'Promoção Histórica', 'Ficção Científica']
+  },
+  {
+    id: 'steam-deal-rdr2',
+    title: 'Red Dead Redemption 2',
+    store: 'Steam',
+    storeLogo: 'Flame',
+    originalPrice: 'R$ 299,90',
+    discountedPrice: 'R$ 89,97',
+    discountPercentage: 70,
+    isFree: false,
+    coverImage: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=700&auto=format&fit=crop&q=60',
+    dealUrl: 'https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/',
+    tags: ['Mundo Aberto', 'Faroeste', 'Sucesso de Vendas', 'Obra-Prima']
+  },
+  {
+    id: 'steam-deal-hollow',
+    title: 'Hollow Knight',
+    store: 'Steam',
+    storeLogo: 'Flame',
+    originalPrice: 'R$ 46,99',
+    discountedPrice: 'R$ 23,49',
+    discountPercentage: 50,
+    isFree: false,
+    coverImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=700&auto=format&fit=crop&q=60',
+    dealUrl: 'https://store.steampowered.com/app/367520/Hollow_Knight/',
+    tags: ['Metroidvania', 'PC Fraco', 'Indie', 'Extremamente Positivo']
+  },
+  {
+    id: 'steam-deal-monster-hunter',
+    title: 'Monster Hunter: World',
+    store: 'Steam',
+    storeLogo: 'Flame',
+    originalPrice: 'R$ 99,90',
+    discountedPrice: 'R$ 32,96',
+    discountPercentage: 67,
+    isFree: false,
+    coverImage: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=700&auto=format&fit=crop&q=60',
+    dealUrl: 'https://store.steampowered.com/app/582010/Monster_Hunter_World/',
+    tags: ['Co-op', 'Caça a Monstros', 'Ação', 'Multiplayer']
+  },
+  {
+    id: 'steam-deal-resident-evil-4',
+    title: 'Resident Evil 4 Remake',
+    store: 'Steam',
+    storeLogo: 'Flame',
+    originalPrice: 'R$ 169,00',
+    discountedPrice: 'R$ 84,50',
+    discountPercentage: 50,
+    isFree: false,
+    coverImage: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=700&auto=format&fit=crop&q=60',
+    dealUrl: 'https://store.steampowered.com/app/2050650/Resident_Evil_4/',
+    tags: ['Terror', 'Sobrevivência', 'Ação', 'Capcom']
+  }
+];
