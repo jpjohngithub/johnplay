@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { 
   X, 
   Download, 
-  Copy, 
-  Check, 
   ExternalLink, 
   ShieldAlert, 
   Sparkles, 
@@ -11,9 +9,9 @@ import {
   Cpu, 
   Clock, 
   Star, 
-  CheckCircle2,
-  Zap,
-  FileDown
+  CheckCircle2, 
+  Check, 
+  Globe 
 } from 'lucide-react';
 import type { GameDownloadItem } from '../types';
 
@@ -23,37 +21,38 @@ interface GameDetailsModalProps {
 }
 
 export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClose }) => {
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [isDownloadingDirect, setIsDownloadingDirect] = useState(false);
   const [downloadProgress, setDownloadProgress] = useState(0);
 
   if (!game) return null;
 
-  const handleCopyUri = (url: string, index: number) => {
-    navigator.clipboard.writeText(url);
-    setCopiedIndex(index);
-    setTimeout(() => setCopiedIndex(null), 2500);
-  };
+  const officialUrl = game.steamUrl || `https://store.steampowered.com/search/?term=${encodeURIComponent(game.title)}`;
 
-  const handleStartDirectDownload = (uri: { type: string; url: string; label: string }) => {
-    if (uri.url.startsWith('magnet:')) {
-      window.location.href = uri.url;
+  const handleStartDirectDownload = () => {
+    const primaryUri = game.uris[0];
+    if (!primaryUri) return;
+
+    if (primaryUri.url.startsWith('magnet:')) {
+      window.location.href = primaryUri.url;
+      setIsDownloadingDirect(true);
+      setDownloadProgress(100);
+      setTimeout(() => setIsDownloadingDirect(false), 2500);
       return;
     }
 
     setIsDownloadingDirect(true);
-    setDownloadProgress(10);
+    setDownloadProgress(20);
     const interval = setInterval(() => {
       setDownloadProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          window.open(uri.url, '_blank');
+          window.open(primaryUri.url, '_blank');
           setTimeout(() => setIsDownloadingDirect(false), 2000);
           return 100;
         }
-        return prev + 30;
+        return prev + 40;
       });
-    }, 300);
+    }, 250);
   };
 
   const getSourceBadgeClass = (source: string) => {
@@ -110,52 +109,59 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
                 {game.title}
               </h2>
             </div>
-
-            {game.steamUrl && (
-              <a
-                href={game.steamUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors self-start sm:self-end"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-                Página na Steam
-              </a>
-            )}
           </div>
         </div>
 
         {/* Content Body */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           
-          {/* Direct Download Action Hero */}
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950/60 to-emerald-950/60 border border-emerald-500/30 space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">
-                  <Zap className="w-3.5 h-3.5 text-emerald-400" />
-                  Download Direto pelo JohnPlay
-                </span>
-                <h4 className="text-sm font-black text-white mt-0.5">
-                  Baixar {game.title} ({game.fileSize})
-                </h4>
-              </div>
+          {/* AS 2 OPÇÕES PRINCIPAIS DE DOWNLOAD */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-purple-950/70 via-[#13182a] to-emerald-950/70 border border-purple-600/40 space-y-4">
+            <div>
+              <h4 className="text-sm font-black text-white uppercase tracking-wider">
+                Opções de Download do Jogo
+              </h4>
+              <p className="text-xs text-slate-300 mt-0.5">
+                Escolha entre acessar a loja oficial ou baixar o arquivo diretamente agora.
+              </p>
+            </div>
 
-              {game.uris.length > 0 && (
-                <button
-                  onClick={() => handleStartDirectDownload(game.uris[0])}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-lg shadow-emerald-950 flex items-center justify-center gap-2 cursor-pointer transition-all"
-                >
-                  <FileDown className="w-4 h-4" />
-                  <span>{game.uris[0].type === 'magnet' ? 'Abrir Magnet Torrent' : 'Iniciar Download Imediato'}</span>
-                </button>
-              )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Opção 1: Levar para o Site Oficial */}
+              <a
+                href={officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-3 px-4 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 border border-slate-700 shadow-md transition-all cursor-pointer"
+              >
+                <Globe className="w-4 h-4 text-cyan-400" />
+                <span>1. Site Oficial (Steam/Loja)</span>
+                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+              </a>
+
+              {/* Opção 2: Fazer o download ali mesmo */}
+              <button
+                onClick={handleStartDirectDownload}
+                className="py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-950 transition-all cursor-pointer"
+              >
+                {isDownloadingDirect ? (
+                  <>
+                    <Check className="w-4 h-4 text-emerald-200" />
+                    <span>Iniciando Download...</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4 text-white" />
+                    <span>2. Download Direto (Baixar Aqui)</span>
+                  </>
+                )}
+              </button>
             </div>
 
             {isDownloadingDirect && (
               <div className="space-y-1.5 pt-2 border-t border-emerald-900/40 animate-in fade-in">
                 <div className="flex justify-between text-xs text-emerald-300">
-                  <span>Conectando aos servidores de alta velocidade...</span>
+                  <span>Transferindo arquivo do jogo...</span>
                   <span>{downloadProgress}%</span>
                 </div>
                 <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-emerald-700/40">
@@ -244,66 +250,11 @@ export const GameDetailsModal: React.FC<GameDetailsModalProps> = ({ game, onClos
             </div>
           )}
 
-          {/* Download Mirrors / URIs */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-              <Download className="w-4 h-4 text-emerald-400" />
-              Links e Servidores Disponíveis ({game.uris.length})
-            </h3>
-            
-            <div className="space-y-2">
-              {game.uris.map((uri, index) => {
-                const isCopied = copiedIndex === index;
-                const isMagnet = uri.url.startsWith('magnet:');
-                return (
-                  <div
-                    key={index}
-                    className="p-3 rounded-xl bg-[#141b2e] border border-slate-800 hover:border-emerald-600/50 transition-all flex items-center justify-between gap-3"
-                  >
-                    <div className="flex items-center gap-2.5 overflow-hidden">
-                      <span className={`text-[10px] px-2 py-0.5 rounded font-bold uppercase ${
-                        isMagnet ? 'bg-purple-900 text-purple-200 border border-purple-600' : 'bg-blue-900 text-blue-200 border border-blue-600'
-                      }`}>
-                        {isMagnet ? 'TORRENT P2P' : 'DDL DIRETO'}
-                      </span>
-                      <span className="text-xs font-semibold text-slate-200 truncate">
-                        {uri.label}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <button
-                        onClick={() => handleCopyUri(uri.url, index)}
-                        className={`p-2 rounded-lg text-xs flex items-center gap-1 border transition-all cursor-pointer ${
-                          isCopied
-                            ? 'bg-emerald-950 text-emerald-300 border-emerald-500'
-                            : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
-                        }`}
-                        title="Copiar Link / Magnet"
-                      >
-                        {isCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span className="hidden sm:inline">{isCopied ? 'Copiado!' : 'Copiar'}</span>
-                      </button>
-
-                      <button
-                        onClick={() => handleStartDirectDownload(uri)}
-                        className="px-3.5 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-md shadow-emerald-950 flex items-center gap-1.5 transition-all cursor-pointer"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                        <span>{isMagnet ? 'Abrir Torrent' : 'Baixar Agora'}</span>
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
           {/* Safety Disclaimer */}
           <div className="p-3.5 rounded-xl bg-amber-950/30 border border-amber-800/40 flex items-start gap-2.5 text-xs text-amber-200/90">
             <ShieldAlert className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
             <p>
-              <strong>Dica de Segurança JohnPlay:</strong> Adicione a pasta de instalação dos seus jogos às exclusões do Windows Defender antes de descompactar para evitar que arquivos de bypass ou dlls sejam deletados por falsos positivos.
+              <strong>Dica de Segurança JohnPlay:</strong> Adicione a pasta de instalação dos seus jogos às exclusões do Windows Defender antes de descompactar para evitar falsos positivos.
             </p>
           </div>
         </div>
