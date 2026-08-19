@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JohnPlay — Portal Gamer, Addons Hydra & Subway Surfers Player</title>
+<title>JohnPlay — Portal Gamer, Addons Hydra & Promoções Steam/Epic</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23a06bff'/><text x='16' y='22' font-family='Arial' font-weight='900' font-size='15' fill='%23150827' text-anchor='middle'>JP</text></svg>">
 
 <!-- DNS Prefetch & Preconnect for Ultra-Fast CDN Asset Delivery -->
@@ -114,10 +114,7 @@
   .source-atop{background:rgba(6,182,212,.15);color:#22d3ee;border-color:rgba(6,182,212,.4)}
   .source-empress{background:rgba(217,70,239,.15);color:#e879f9;border-color:rgba(217,70,239,.4)}
   
-  .old{color:var(--muted);text-decoration:line-through;font-weight:600;font-size:.8em}
-  .price-new{color:var(--accent-hi);font-weight:800}
-  .price-free{color:var(--accent-hi);font-weight:800}
-  .card-price{display:flex;align-items:center;gap:7px;font-size:13px}
+  .free-badge{background:rgba(16,185,129,.18);color:var(--emerald);border:1px solid rgba(16,185,129,.4);font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px}
   .tags{display:flex;gap:7px;flex-wrap:wrap}
   .tag{font-size:11px;font-weight:600;color:var(--muted);border:1px solid var(--border);padding:3px 9px;border-radius:99px}
   .tabs{display:flex;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:11px;padding:5px;width:fit-content;flex-wrap:wrap}
@@ -178,9 +175,9 @@
   .deal-info{position:absolute;left:0;right:0;bottom:0;padding:16px;z-index:2}
   .deal-info h3{font-size:16px;margin-bottom:3px}
   .deal-info .g{font-size:12px;color:var(--muted);margin-bottom:10px}
-  .free-flag{position:absolute;top:12px;left:12px;z-index:2;background:var(--accent);color:var(--accent-ink);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:7px}
-  .redeem-btn{height:39px;padding:0 18px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:13px;display:inline-flex;align-items:center;gap:8px;transition:background .15s}
-  .redeem-btn:hover{background:var(--accent-hi)}
+  .free-flag{position:absolute;top:12px;left:12px;z-index:2;background:var(--emerald);color:#031d13;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:7px}
+  .redeem-btn{height:39px;padding:0 18px;border-radius:9px;background:var(--emerald);color:#031d13;font-weight:800;font-size:13px;display:inline-flex;align-items:center;gap:8px;transition:background .15s}
+  .redeem-btn:hover{background:#34d399}
   .redeem-btn svg{width:15px;height:15px}
 
   /* ---------- Browse & Addons Layout ---------- */
@@ -207,7 +204,7 @@
   select{height:38px;background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:0 12px;font-family:inherit;font-size:13.5px;outline:none;cursor:pointer}
   select:focus{border-color:var(--accent)}
 
-  /* ---------- Game cards with Official 600x900 Box Art ---------- */
+  /* ---------- Game cards with Official 600x900 Box Art (Zero Fake Prices) ---------- */
   .games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;grid-auto-flow:dense}
   .game-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .18s, border-color .18s;display:flex;flex-direction:column;contain:content}
   .game-card:hover{border-color:var(--border-hi);transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.35)}
@@ -240,7 +237,7 @@
 
   /* Live Specials Feed Grid */
   .specials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:18px}
-  .special-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .18s, border-color .18s;display:flex;flex-direction:column}
+  .special-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .18s, border-color .18s;display:flex;flex-direction:column;cursor:pointer}
   .special-card:hover{border-color:var(--border-hi);transform:translateY(-3px)}
   .special-card .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#140e24}
   .special-card .thumb img{width:100%;height:100%;object-fit:cover}
@@ -352,7 +349,7 @@
   .drawer-item .inf{flex:1;min-width:0}
   .drawer-item h4{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .drawer-item .g{font-size:12px;color:var(--muted)}
-  .drawer-item .p{color:var(--accent-hi);font-weight:800;font-size:14px;margin-top:3px}
+  .drawer-item .p{color:var(--emerald);font-weight:800;font-size:13px;margin-top:3px}
   .drawer-item .rm{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:var(--muted);transition:color .15s;flex-shrink:0}
   .drawer-item .rm:hover{color:var(--danger);background:rgba(224,108,140,.12)}
   .drawer-item .rm svg{width:15px;height:15px}
@@ -360,7 +357,7 @@
   .drawer-empty svg{width:40px;height:40px;margin:0 auto 12px;display:block;opacity:.45}
   .drawer-foot{border-top:1px solid var(--border);padding:18px 22px;display:flex;flex-direction:column;gap:14px}
   .drawer-total{display:flex;justify-content:space-between;font-size:15px}
-  .drawer-total b{font-size:20px;color:var(--accent-hi)}
+  .drawer-total b{font-size:20px;color:var(--emerald)}
   .drawer-foot .btn{justify-content:center}
 
   /* ---------- Toasts ---------- */
@@ -413,12 +410,12 @@
 
 <div class="topstrip">
   <div class="wrap">
-    <span><span class="live-dot"></span><b>487.230</b> jogadores online agora · Subway Surfers Player Embutido</span>
+    <span><span class="live-dot"></span><b>487.230</b> jogadores online agora · 100% Addons Gratuitos & Promoções Oficiais</span>
     <div class="right">
       <a href="#apps">Baixar o JohnPlay</a>
       <a href="#" onclick="openSourcesModal(); return false;">Fontes Hydra (7)</a>
-      <a href="#promo">Ofertas Steam & Epic</a>
-      <a href="#">PT-BR | R$</a>
+      <a href="#promo">Promoções Steam & Epic</a>
+      <a href="#">PT-BR</a>
     </div>
   </div>
 </div>
@@ -430,10 +427,10 @@
       <span class="logo-txt"><small>STORE & ADDONS</small><b>JohnPlay</b></span>
     </a>
     <nav class="nav-links" id="navLinks">
-      <a href="#loja" data-nav="loja" class="on">Loja & Addons</a>
+      <a href="#loja" data-nav="loja" class="on">Loja & Addons (Grátis)</a>
       <a href="#browser" data-nav="browser">Jogar Subway Surfers</a>
       <a href="#emuladores" data-nav="emuladores">Emuladores</a>
-      <a href="#promo" data-nav="promo">Promoções Steam & Epic</a>
+      <a href="#promo" data-nav="promo">Promoções & Jogos Grátis</a>
       <a href="#apps" data-nav="apps">Apps & Otimizações</a>
     </nav>
     
@@ -458,14 +455,14 @@
 </header>
 
 <main>
-  <!-- ============ PÁGINA: LOJA & ADDONS ============ -->
+  <!-- ============ PÁGINA: LOJA & ADDONS (SEM PREÇOS) ============ -->
   <section class="page on" id="page-loja">
     <div class="wrap">
       <div class="stats">
         <div class="stat"><span class="ic"><i data-lucide="users"></i></span><div><b>487.230</b><span>Jogadores online</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="download"></i></span><div><b id="statGames">45</b><span>Jogos no Catálogo</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="layers"></i></span><div><b>7</b><span>Fontes Hydra Ativas</span></div></div>
-        <div class="stat"><span class="ic"><i data-lucide="gift"></i></span><div><b>1</b><span>Grátis esta semana</span></div></div>
+        <div class="stat"><span class="ic"><i data-lucide="check-circle"></i></span><div><b>100%</b><span>Gratuito & Ilimitado</span></div></div>
       </div>
 
       <!-- Carousel Destaques Epic Store Style -->
@@ -479,12 +476,12 @@
         </div>
       </div>
 
-      <!-- Ofertas da Semana -->
+      <!-- Destaques Addons da Semana -->
       <section class="section" id="ofertas">
         <div class="sec-head">
-          <div><div class="kicker">Economize agora</div><h2>Ofertas & Destaques da Semana</h2></div>
+          <div><div class="kicker">Downloads em Alta</div><h2>Destaques Populares da Semana</h2></div>
           <div class="countdown">
-            <span class="lbl">Terminam em</span>
+            <span class="lbl">Atualização do catálogo em</span>
             <div class="cd-box">
               <div class="u"><b id="cdD">00</b><span>dias</span></div>
               <div class="u"><b id="cdH">00</b><span>horas</span></div>
@@ -499,7 +496,7 @@
       <!-- Explorar Jogos & Addons Catalog -->
       <section class="section" id="explorar">
         <div class="sec-head">
-          <div><div class="kicker">Catálogo Oficial das 7 Fontes Hydra</div><h2>Explorar todos os jogos</h2></div>
+          <div><div class="kicker">Catálogo Completo das 7 Fontes Hydra</div><h2>Explorar todos os jogos</h2></div>
           <div class="tabs" id="tabs">
             <button data-tab="all" class="on">Todos os Jogos</button>
             <button data-tab="new">Novidades</button>
@@ -512,11 +509,11 @@
             <h4>Fontes Addons</h4>
             <div class="fpills" id="sourceFilters" style="margin-bottom:18px"></div>
 
+            <h4>Tamanho do Download</h4>
+            <div class="fpills" id="sizeFilters" style="margin-bottom:18px"></div>
+
             <h4>Gênero</h4>
             <div id="genreFilters"></div>
-            
-            <h4>Faixa de Preço / Grátis</h4>
-            <div class="fpills" id="priceFilters"></div>
             
             <button class="clear-btn" id="clearFilters">Limpar filtros</button>
           </aside>
@@ -540,7 +537,7 @@
       <!-- Em Breve -->
       <section class="section" id="em-breve">
         <div class="sec-head">
-          <div><div class="kicker">Calendário</div><h2>Em breve no JohnPlay</h2></div>
+          <div><div class="kicker">Lançamentos Futuros</div><h2>Em breve no JohnPlay</h2></div>
           <div class="hs-arrows">
             <button id="hsPrev" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
             <button id="hsNext" aria-label="Próximo"><i data-lucide="chevron-right"></i></button>
@@ -637,31 +634,28 @@
     </div>
   </section>
 
-  <!-- ============ PÁGINA: PROMOÇÕES STEAM & EPIC EM TEMPO REAL ============ -->
+  <!-- ============ PÁGINA: PROMOÇÕES & JOGOS GRÁTIS EM TEMPO REAL ============ -->
   <section class="page" id="page-promo">
     <div class="wrap">
       <div class="bg-hero">
         <div class="z">
           <div class="kicker">Sincronização em Tempo Real · Steam & Epic Games</div>
-          <h2>Ofertas &amp; Promoções ao Vivo</h2>
-          <p>Super descontos e jogos gratuitos obtidos diretamente dos feeds oficiais da Steam Store e Epic Games Store.</p>
+          <h2>Promoções Oficiais &amp; Jogos Grátis</h2>
+          <p>Acompanhe todos os super descontos e jogos gratuitos resgatáveis em tempo real diretamente na interface do JohnPlay.</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap" class="z">
-          <a href="https://store.steampowered.com/specials?l=portuguese" target="_blank" class="btn btn-primary">
-            <i data-lucide="flame"></i>Steam Specials Oficial
-          </a>
-          <a href="https://store.epicgames.com/sales-and-specials?lang=pt-BR" target="_blank" class="btn btn-ghost">
-            <i data-lucide="gift"></i>Epic Games Specials
-          </a>
+          <button class="btn btn-emerald" onclick="fetchLiveSteamSpecials()">
+            <i data-lucide="refresh-cw"></i>Sincronizar Ofertas ao Vivo
+          </button>
         </div>
       </div>
 
       <!-- Feed ao Vivo da Steam -->
       <section class="section">
         <div class="sec-head">
-          <div><div class="kicker">Steam Store Specials Feed (Oficial)</div><h2>Ofertas em Destaque na Steam</h2></div>
+          <div><div class="kicker">Steam Store Specials Feed (Oficial em Tempo Real)</div><h2>Super Ofertas Oficiais Steam</h2></div>
           <button class="btn btn-ghost" style="height:36px;padding:0 14px;font-size:12px" onclick="fetchLiveSteamSpecials()">
-            <i data-lucide="refresh-cw"></i>Atualizar Ofertas
+            <i data-lucide="refresh-cw"></i>Atualizar Feed
           </button>
         </div>
         <div class="specials-grid" id="liveSteamGrid">
@@ -675,22 +669,9 @@
       <!-- Grátis da Semana -->
       <section class="section">
         <div class="sec-head">
-          <div><div class="kicker">Grátis para Resgatar</div><h2>Jogo Gratuito da Semana</h2></div>
+          <div><div class="kicker">Grátis para Baixar e Jogar</div><h2>Jogos Gratuitos em Destaque</h2></div>
         </div>
         <div class="deals-grid" id="freeGrid"></div>
-      </section>
-
-      <!-- Todas as promoções do catálogo -->
-      <section class="section">
-        <div class="sec-head">
-          <div><div class="kicker">Super Descontos no Catálogo JohnPlay</div><h2>Todas as promoções</h2></div>
-          <div class="tabs" id="dealTabs">
-            <button data-d="all" class="on">Todas</button>
-            <button data-d="30">30%+</button>
-            <button data-d="50">50%+</button>
-          </div>
-        </div>
-        <div class="games-grid" id="promoGrid"></div>
       </section>
     </div>
   </section>
@@ -723,7 +704,7 @@
           <span class="logo-mark">JP</span>
           <span class="logo-txt"><small>STORE & ADDONS</small><b>JohnPlay</b></span>
         </a>
-        <p>Sua biblioteca gamer completa: downloads via addons Hydra, emuladores, promoções oficiais e ferramentas de PC.</p>
+        <p>Sua biblioteca gamer completa: downloads via addons Hydra 100% gratuitos, emuladores, promoções oficiais e ferramentas de PC.</p>
         <div class="foot-social">
           <a href="#" aria-label="GitHub"><i data-lucide="github"></i></a>
           <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
@@ -734,8 +715,8 @@
       <div class="foot-col">
         <h5>Loja & Addons</h5>
         <a href="#loja">Todos os Jogos</a>
-        <a href="#promo">Ofertas Steam/Epic</a>
-        <a href="#promo">Grátis da Semana</a>
+        <a href="#promo">Promoções Steam & Epic</a>
+        <a href="#promo">Jogos Grátis</a>
         <a href="#loja">Em breve</a>
       </div>
       <div class="foot-col">
@@ -834,8 +815,6 @@ let GAMES = [
     sourceName: 'FitGirl Repacks',
     genre: 'RPG',
     tags: ['RPG', 'Souls-like', 'Mundo Aberto', 'Ação'],
-    price: 299.90,
-    discount: 25,
     fileSize: '49.8 GB',
     rating: 4.9,
     release: '2024-06-21',
@@ -858,8 +837,6 @@ let GAMES = [
     sourceName: 'FitGirl Repacks',
     genre: 'Mundo Aberto',
     tags: ['Mundo Aberto', 'História', 'Faroeste', 'Ação'],
-    price: 299.90,
-    discount: 67,
     fileSize: '66.3 GB',
     rating: 5.0,
     release: '2023-11-05',
@@ -881,8 +858,6 @@ let GAMES = [
     sourceName: 'FitGirl Repacks',
     genre: 'Ação',
     tags: ['Ação', 'Super-Heróis', 'Mundo Aberto', 'Aventura'],
-    price: 249.90,
-    discount: 40,
     fileSize: '41.8 GB',
     rating: 4.9,
     release: '2023-09-18',
@@ -904,8 +879,6 @@ let GAMES = [
     sourceName: 'FitGirl Repacks',
     genre: 'RPG',
     tags: ['Souls-like', 'RPG', 'Fantasia Sombria', 'Difícil'],
-    price: 189.90,
-    discount: 50,
     fileSize: '18.5 GB',
     rating: 4.9,
     release: '2023-01-10',
@@ -926,8 +899,6 @@ let GAMES = [
     sourceName: 'FitGirl Repacks',
     genre: 'Ação',
     tags: ['Souls-like', 'Ninja', 'Ação', 'Japão Feudal'],
-    price: 199.90,
-    discount: 50,
     fileSize: '12.8 GB',
     rating: 4.9,
     release: '2023-04-12',
@@ -939,6 +910,24 @@ let GAMES = [
     mirrors: [{ name: 'Magnet Torrent (FitGirl)', type: 'magnet', url: 'magnet:?xt=urn:btih:s3k1r0sh4d0wsd13tw1c3f1tg1rl00000000000000&dn=Sekiro+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
     specs: { os: 'Windows 7/8/10 64-bit', cpu: 'Intel Core i3-2100', ram: '4 GB RAM', gpu: 'GTX 760', storage: '25 GB' }
   },
+  {
+    id: 'lies-of-p-deluxe',
+    name: 'Lies of P: Deluxe Edition (v1.5.0)',
+    source: 'fitgirl',
+    sourceName: 'FitGirl Repacks',
+    genre: 'RPG',
+    tags: ['Souls-like', 'Sombrio', 'Ação', 'Pinóquio'],
+    fileSize: '34.5 GB',
+    rating: 4.8,
+    release: '2024-02-15',
+    sold: 11500,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1627720/library_600x900.jpg',
+    desc: 'Acorde na cidade em ruínas de Krat e desvende os mistérios dos fantoches assassinos.',
+    steamUrl: 'https://store.steampowered.com/app/1627720/Lies_of_P/',
+    magnet: 'magnet:?xt=urn:btih:l13s0fpd3lux3f1tg1rl000000000000000000000000&dn=Lies+of+P+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:l13s0fpd3lux3f1tg1rl000000000000000000000000&dn=Lies+of+P+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Core i3-6300', ram: '8 GB RAM', gpu: 'GTX 960 4GB', storage: '50 GB' }
+  },
 
   // --- DODI REPACKS (CAPAS OFICIAIS STEAM) ---
   {
@@ -948,8 +937,6 @@ let GAMES = [
     sourceName: 'DODI Repacks',
     genre: 'Mundo Aberto',
     tags: ['Mundo Aberto', 'Ação', 'Crime', 'Clássico'],
-    price: 199.90,
-    discount: 50,
     fileSize: '59.4 GB',
     rating: 4.9,
     release: '2024-03-10',
@@ -973,8 +960,6 @@ let GAMES = [
     sourceName: 'DODI Repacks',
     genre: 'Ação',
     tags: ['Ação', 'Samurai', 'Mundo Aberto', 'História'],
-    price: 249.90,
-    discount: 20,
     fileSize: '48.2 GB',
     rating: 4.9,
     release: '2024-05-16',
@@ -996,8 +981,6 @@ let GAMES = [
     sourceName: 'DODI Repacks',
     genre: 'Ação',
     tags: ['Zumbis', 'História Emocionante', 'Sobrevivência', 'Ação'],
-    price: 249.90,
-    discount: 30,
     fileSize: '65.2 GB',
     rating: 4.8,
     release: '2024-01-20',
@@ -1012,6 +995,24 @@ let GAMES = [
     ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 1500X / Core i7-4770K', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '100 GB SSD' }
   },
+  {
+    id: 'horizon-forbidden-west',
+    name: 'Horizon Forbidden West: Complete Edition',
+    source: 'dodi',
+    sourceName: 'DODI Repacks',
+    genre: 'Mundo Aberto',
+    tags: ['Mundo Aberto', 'Sci-Fi', 'Aventura', 'Robôs'],
+    fileSize: '95.4 GB',
+    rating: 4.8,
+    release: '2024-03-21',
+    sold: 13200,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2420110/library_600x900.jpg',
+    desc: 'Acompanhe Aloy enquanto ela desbrava uma fronteira majestosa e perigosa que oculta novas e misteriosas ameaças.',
+    steamUrl: 'https://store.steampowered.com/app/2420110/Horizon_Forbidden_West_Complete_Edition/',
+    magnet: 'magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent (DODI)', type: 'magnet', url: 'magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 10 64-bit', cpu: 'i3-8100 / Ryzen 3 1300X', ram: '16 GB RAM', gpu: 'GTX 1650 4GB', storage: '150 GB SSD' }
+  },
 
   // --- STEAMRIP (DIRECT PLAY / CAPAS OFICIAIS STEAM) ---
   {
@@ -1021,8 +1022,6 @@ let GAMES = [
     sourceName: 'SteamRIP',
     genre: 'Ação',
     tags: ['Ação', 'Mitologia', 'Souls-like', 'Aventura'],
-    price: 229.90,
-    discount: 0,
     fileSize: '118.5 GB',
     rating: 4.8,
     release: '2024-08-20',
@@ -1045,8 +1044,6 @@ let GAMES = [
     sourceName: 'SteamRIP',
     genre: 'Ação',
     tags: ['Ação', 'Mitologia Nórdica', 'História', 'Aventura'],
-    price: 249.90,
-    discount: 15,
     fileSize: '102.0 GB',
     rating: 4.9,
     release: '2024-09-19',
@@ -1068,8 +1065,6 @@ let GAMES = [
     sourceName: 'SteamRIP',
     genre: 'Aventura',
     tags: ['Multiplayer', 'Criaturas', 'Sobrevivência', 'Base Building'],
-    price: 89.90,
-    discount: 0,
     fileSize: '19.4 GB',
     rating: 4.8,
     release: '2024-07-30',
@@ -1084,6 +1079,24 @@ let GAMES = [
     ],
     specs: { os: 'Windows 10 64-bit', cpu: 'i5-3570K 3.4 GHz', ram: '16 GB RAM', gpu: 'GeForce GTX 1050 (2GB)', storage: '40 GB' }
   },
+  {
+    id: 'helldivers-2',
+    name: 'Helldivers 2 (Super Citizen Edition)',
+    source: 'steamrip',
+    sourceName: 'SteamRIP',
+    genre: 'Ação',
+    tags: ['Co-op', 'Tiro', 'Sci-Fi', 'Multiplayer'],
+    fileSize: '70.0 GB',
+    rating: 4.8,
+    release: '2024-02-08',
+    sold: 26000,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/library_600x900.jpg',
+    desc: 'A última linha de ataque da galáxia. Junte-se aos Helldivers na luta pela liberdade contra hordas alienígenas.',
+    steamUrl: 'https://store.steampowered.com/app/553850/HELLDIVERS_2/',
+    magnet: 'magnet:?xt=urn:btih:h3lld1v3rs2st34mr1p00000000000000000000000000&dn=Helldivers+2+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:h3lld1v3rs2st34mr1p00000000000000000000000000&dn=Helldivers+2+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i7-4790K', ram: '8 GB RAM', gpu: 'GTX 1050 Ti', storage: '100 GB' }
+  },
 
   // --- FREE GOG GAMES (DRM-FREE / CAPAS OFICIAIS STEAM) ---
   {
@@ -1093,8 +1106,6 @@ let GAMES = [
     sourceName: 'Free GOG Games',
     genre: 'RPG',
     tags: ['RPG', 'Cyberpunk', 'Mundo Aberto', 'FPS'],
-    price: 199.90,
-    discount: 60,
     fileSize: '68.2 GB',
     rating: 4.8,
     release: '2024-09-12',
@@ -1116,8 +1127,6 @@ let GAMES = [
     sourceName: 'Free GOG Games',
     genre: 'RPG',
     tags: ['RPG', 'Mundo Aberto', 'História Rica', 'Fantasia'],
-    price: 159.90,
-    discount: 75,
     fileSize: '51.4 GB',
     rating: 5.0,
     release: '2023-12-14',
@@ -1139,8 +1148,6 @@ let GAMES = [
     sourceName: 'Free GOG Games',
     genre: 'RPG',
     tags: ['RPG', 'D&D', 'Estratégia', 'Jogo do Ano'],
-    price: 199.90,
-    discount: 20,
     fileSize: '122.0 GB',
     rating: 5.0,
     release: '2023-08-03',
@@ -1159,8 +1166,6 @@ let GAMES = [
     sourceName: 'Free GOG Games',
     genre: 'Ação',
     tags: ['Metroidvania', 'Souls-like', '2D', 'Indie Clássico'],
-    price: 46.99,
-    discount: 50,
     fileSize: '1.8 GB',
     rating: 5.0,
     release: '2024-02-14',
@@ -1184,8 +1189,6 @@ let GAMES = [
     sourceName: 'Xatab Repacks',
     genre: 'Corrida',
     tags: ['Corrida', 'Mundo Aberto', 'Automobilismo', 'Multiplayer'],
-    price: 249.90,
-    discount: 50,
     fileSize: '110.0 GB',
     rating: 4.8,
     release: '2024-04-18',
@@ -1206,8 +1209,6 @@ let GAMES = [
     sourceName: 'Xatab Repacks',
     genre: 'Ação',
     tags: ['FPS', 'Mundo Aberto', 'Ação', 'Guerra'],
-    price: 249.90,
-    discount: 60,
     fileSize: '52.0 GB',
     rating: 4.6,
     release: '2023-10-15',
@@ -1230,8 +1231,6 @@ let GAMES = [
     sourceName: 'Atop-Games',
     genre: 'Aventura',
     tags: ['Sandbox', 'Construção', 'Sobrevivência', 'Mundo Aberto'],
-    price: 149.90,
-    discount: 0,
     fileSize: '1.2 GB',
     rating: 4.9,
     release: '2024-06-07',
@@ -1253,8 +1252,6 @@ let GAMES = [
     sourceName: 'Atop-Games',
     genre: 'Ação',
     tags: ['FPS', 'Ação Frenética', 'Demônios', 'Trilha Pesada'],
-    price: 199.90,
-    discount: 50,
     fileSize: '45.0 GB',
     rating: 4.9,
     release: '2023-08-10',
@@ -1277,8 +1274,6 @@ let GAMES = [
     sourceName: 'Empress Releases',
     genre: 'RPG',
     tags: ['RPG', 'Mundo Aberto', 'Magia', 'Aventura'],
-    price: 249.90,
-    discount: 50,
     fileSize: '69.7 GB',
     rating: 4.7,
     release: '2023-02-23',
@@ -1300,8 +1295,6 @@ let GAMES = [
     sourceName: 'Empress Releases',
     genre: 'Terror',
     tags: ['Terror', 'Sobrevivência', 'Ação', 'Zumbis'],
-    price: 199.90,
-    discount: 40,
     fileSize: '54.1 GB',
     rating: 4.9,
     release: '2023-05-10',
@@ -1322,8 +1315,6 @@ let GAMES = [
     sourceName: 'Empress Releases',
     genre: 'Luta',
     tags: ['Luta', 'Gore', 'Multiplayer', 'Ação'],
-    price: 279.90,
-    discount: 50,
     fileSize: '115.0 GB',
     rating: 4.6,
     release: '2023-09-19',
@@ -1342,8 +1333,6 @@ let GAMES = [
     sourceName: 'Empress Releases',
     genre: 'Terror',
     tags: ['Terror', 'Sci-Fi', 'Sobrevivência', 'Espaço'],
-    price: 249.90,
-    discount: 60,
     fileSize: '48.0 GB',
     rating: 4.9,
     release: '2023-01-27',
@@ -1428,12 +1417,11 @@ const state={
   redeemed:new Set(),
   genres:new Set(),
   sourceFilter:'all',
-  price:'all',
+  sizeFilter:'all',
   sort:'relev',
   search:'',
   tab:'all',
-  emuEra:'Todos',
-  dealF:'all'
+  emuEra:'Todos'
 };
 
 try{
@@ -1458,17 +1446,9 @@ function save(){
 /* ================= HELPERS & PERFORMANCE ================= */
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
-const fmt=v=>'R$ '+v.toFixed(2).replace('.',',');
-const finalPrice=g=>g.price===0?0:g.price*(1-(g.discount||0)/100);
 const byId=id=>GAMES.find(g=>g.id===id);
 const refreshIcons=()=>{ if(window.lucide) lucide.createIcons(); };
 const starIcon='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
-
-function priceHTML(g,big=false){
-  if(g.price===0)return'<span class="price-free">Grátis</span>';
-  if(g.discount)return`<span class="disc-chip">-${g.discount}%</span><span class="old">${fmt(g.price)}</span><span class="price-new">${fmt(finalPrice(g))}</span>`;
-  return`<span class="${big?'price-new':''}" style="${big?'':'font-weight:800'}">${fmt(g.price)}</span>`;
-}
 
 function toast(msg,icon='check-circle'){
   const el=document.createElement('div');el.className='toast';
@@ -1510,8 +1490,6 @@ function handleCustomJsonImport(event){
           sourceName: data.name||'Fonte Customizada',
           genre: 'Geral',
           tags: ['Addon', 'Custom'],
-          price: 199.90,
-          discount: 0,
           fileSize: d.fileSize||'Desconhecido',
           rating: 4.8,
           release: d.uploadDate||'Recente',
@@ -1547,10 +1525,12 @@ function debouncedSearch(val){
   }, 120);
 }
 
-/* ================= LIVE STEAM & EPIC SPECIALS ENGINE ================= */
+/* ================= LIVE STEAM & EPIC SPECIALS ENGINE (EXIBIÇÃO DIRETO NO SITE) ================= */
+let LIVE_SPECIALS_CACHE = [];
+
 async function fetchLiveSteamSpecials(){
   const grid=$('#liveSteamGrid');
-  grid.innerHTML=`<div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>Buscando promoções ao vivo na Steam...</div>`;
+  grid.innerHTML=`<div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>Buscando ofertas ao vivo na Steam...</div>`;
   refreshIcons();
 
   try{
@@ -1559,12 +1539,13 @@ async function fetchLiveSteamSpecials(){
     const specials = (data.specials && data.specials.items) || [];
     
     if(specials.length > 0){
-      grid.innerHTML = specials.slice(0, 8).map(item => {
+      LIVE_SPECIALS_CACHE = specials;
+      grid.innerHTML = specials.slice(0, 12).map((item, idx) => {
         const orig = (item.original_price / 100).toFixed(2).replace('.', ',');
         const fin = (item.final_price / 100).toFixed(2).replace('.', ',');
         const img = item.large_capsule_image || item.header_image || `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${item.id}/header.jpg`;
         return `
-          <div class="special-card">
+          <div class="special-card" onclick="openLiveSpecialModal(${idx})">
             <div class="thumb">
               <img src="${img}" alt="${item.name}" loading="lazy" decoding="async">
               <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-${item.discount_percent}%</span>
@@ -1573,12 +1554,12 @@ async function fetchLiveSteamSpecials(){
               <h4 title="${item.name}">${item.name}</h4>
               <div class="foot">
                 <div>
-                  <span class="old" style="margin-right:6px">R$ ${orig}</span>
-                  <span class="price-new">R$ ${fin}</span>
+                  <span style="color:var(--muted);text-decoration:line-through;font-size:12px;margin-right:6px">R$ ${orig}</span>
+                  <span style="color:var(--emerald);font-weight:800;font-size:14px">R$ ${fin}</span>
                 </div>
-                <a href="https://store.steampowered.com/app/${item.id}/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">
-                  Ver na Loja
-                </a>
+                <button class="opt-btn opt-btn-primary" style="padding:5px 12px;font-size:11px" onclick="event.stopPropagation(); openLiveSpecialModal(${idx})">
+                  Ver Detalhes
+                </button>
               </div>
             </div>
           </div>
@@ -1589,61 +1570,71 @@ async function fetchLiveSteamSpecials(){
       throw new Error('Nenhum item retornado');
     }
   }catch(err){
-    grid.innerHTML = `
-      <div class="special-card">
+    const FALLBACK_SPECIALS = [
+      { id: 1091500, name: 'Cyberpunk 2077: Phantom Liberty', discount_percent: 60, original_price: 19990, final_price: 7996, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg', desc: 'Mergulhe nas ruas cheias de neon de Night City e no perigoso distrito de Dogtown.' },
+      { id: 1174180, name: 'Red Dead Redemption 2', discount_percent: 67, original_price: 29990, final_price: 9897, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg', desc: 'A jornada definitiva de Arthur Morgan pela América do início do século XX.' },
+      { id: 292030, name: 'The Witcher 3: Wild Hunt Complete', discount_percent: 75, original_price: 15990, final_price: 3997, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg', desc: 'Vencedor de mais de 250 prêmios de Jogo do Ano com todas as expansões inclusas.' },
+      { id: 1551360, name: 'Forza Horizon 5', discount_percent: 50, original_price: 24990, final_price: 12495, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg', desc: 'Explore os cenários deslumbrantes do México em centenas de supercarros.' }
+    ];
+    LIVE_SPECIALS_CACHE = FALLBACK_SPECIALS;
+    grid.innerHTML = FALLBACK_SPECIALS.map((item, idx) => `
+      <div class="special-card" onclick="openLiveSpecialModal(${idx})">
         <div class="thumb">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg" alt="Cyberpunk 2077">
-          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-60%</span>
+          <img src="${item.header_image}" alt="${item.name}">
+          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-${item.discount_percent}%</span>
         </div>
         <div class="body">
-          <h4>Cyberpunk 2077: Phantom Liberty</h4>
+          <h4>${item.name}</h4>
           <div class="foot">
-            <div><span class="old">R$ 199,90</span> <span class="price-new">R$ 79,96</span></div>
-            <a href="https://store.steampowered.com/app/1091500/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">Steam</a>
+            <div>
+              <span style="color:var(--muted);text-decoration:line-through;font-size:12px;margin-right:6px">R$ ${(item.original_price/100).toFixed(2).replace('.',',')}</span>
+              <span style="color:var(--emerald);font-weight:800;font-size:14px">R$ ${(item.final_price/100).toFixed(2).replace('.',',')}</span>
+            </div>
+            <button class="opt-btn opt-btn-primary" style="padding:5px 12px;font-size:11px" onclick="event.stopPropagation(); openLiveSpecialModal(${idx})">
+              Ver Detalhes
+            </button>
           </div>
         </div>
       </div>
-      <div class="special-card">
-        <div class="thumb">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg" alt="Red Dead Redemption 2">
-          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-67%</span>
-        </div>
-        <div class="body">
-          <h4>Red Dead Redemption 2</h4>
-          <div class="foot">
-            <div><span class="old">R$ 299,90</span> <span class="price-new">R$ 98,97</span></div>
-            <a href="https://store.steampowered.com/app/1174180/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">Steam</a>
-          </div>
-        </div>
-      </div>
-      <div class="special-card">
-        <div class="thumb">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg" alt="The Witcher 3">
-          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-75%</span>
-        </div>
-        <div class="body">
-          <h4>The Witcher 3: Wild Hunt Complete</h4>
-          <div class="foot">
-            <div><span class="old">R$ 159,90</span> <span class="price-new">R$ 39,97</span></div>
-            <a href="https://store.steampowered.com/app/292030/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">Steam</a>
-          </div>
-        </div>
-      </div>
-      <div class="special-card">
-        <div class="thumb">
-          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg" alt="Forza Horizon 5">
-          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-50%</span>
-        </div>
-        <div class="body">
-          <h4>Forza Horizon 5</h4>
-          <div class="foot">
-            <div><span class="old">R$ 249,90</span> <span class="price-new">R$ 124,95</span></div>
-            <a href="https://store.steampowered.com/app/1551360/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">Steam</a>
-          </div>
-        </div>
-      </div>
-    `;
+    `).join('');
   }
+  refreshIcons();
+}
+
+function openLiveSpecialModal(idx){
+  const item = LIVE_SPECIALS_CACHE[idx];
+  if(!item) return;
+  const orig = (item.original_price / 100).toFixed(2).replace('.', ',');
+  const fin = (item.final_price / 100).toFixed(2).replace('.', ',');
+  const img = item.large_capsule_image || item.header_image || `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${item.id}/header.jpg`;
+
+  $('#modalBox').innerHTML=`
+    <div class="modal-media">
+      <img src="${img}" alt="${item.name}">
+      <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="disc-chip">-${item.discount_percent}% OFERTA OFICIAL</span>
+        <span class="source-chip source-steamrip">Steam Store</span>
+      </div>
+      <h2>${item.name}</h2>
+      <div class="modal-meta">
+        <span style="color:var(--muted);text-decoration:line-through;font-size:15px">De: R$ ${orig}</span>
+        <span style="color:var(--emerald);font-size:20px;font-weight:900">Por: R$ ${fin}</span>
+      </div>
+      <p>Oferta especial em destaque na Steam Store com desconto oficial de ${item.discount_percent}%. Você pode conferir os detalhes completos ou baixar a versão addon DRM-Free caso disponível na biblioteca JohnPlay.</p>
+      
+      <div class="modal-buy" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <a href="https://store.steampowered.com/app/${item.id}/" target="_blank" class="btn btn-emerald">
+          <i data-lucide="external-link"></i>Abrir na Steam Oficial
+        </a>
+        <button class="btn btn-ghost" onclick="closeModal()">
+          Fechar
+        </button>
+      </div>
+    </div>`;
+  $('#modalOverlay').classList.add('show');
   refreshIcons();
 }
 
@@ -1656,13 +1647,6 @@ function navigate(){
   $$('#navLinks a').forEach(a=>a.classList.toggle('on',a.dataset.nav===h));
   window.scrollTo({top:0});
   if(h==='promo') fetchLiveSteamSpecials();
-  if(h==='browser'){
-    setTimeout(()=>{
-      if(!$('#subwayIframe').src || $('#subwayIframe').src==='about:blank'){
-        // Ready player
-      }
-    }, 100);
-  }
 }
 window.addEventListener('hashchange',navigate, {passive:true});
 
@@ -1683,6 +1667,7 @@ function buildCarousel(){
           <span>Destaque Oficial</span>
           <span class="sep"></span>
           <span class="source-chip ${srcObj.badgeClass}">${g.sourceName}</span>
+          <span class="free-badge">100% Grátis</span>
         </div>
         <h1 class="slide-title">${g.name}</h1>
         <p class="slide-desc">${g.desc}</p>
@@ -1742,23 +1727,22 @@ setInterval(()=>{
   const p=n=>String(n).padStart(2,'0');
   const set=(a,b)=>{if($(a))$(a).textContent=b};
   set('#cdD',p(dd));set('#cdH',p(hh));set('#cdM',p(mm));set('#cdS',p(ss));
-  set('#cdD2',p(dd));set('#cdH2',p(hh));set('#cdM2',p(mm));set('#cdS2',p(ss));
 },1000);
 
-/* ================= LOJA: OFERTAS ================= */
+/* ================= LOJA: DESTAQUES (ZERO PREÇOS) ================= */
 function renderDeals(){
   const free=byId(FREE_WEEK[0]);
   const freeHTML=`
     <article class="deal-card" onclick="openModal('${free.id}')">
       <div class="media">
-        <span class="free-flag">Grátis agora</span>
+        <span class="free-flag">Destaque Grátis</span>
         <img src="${free.cover}" alt="${free.name}" loading="lazy" decoding="async">
       </div>
       <div class="deal-info">
         <h3>${free.name}</h3>
         <div class="g">${free.genre} · DRM-Free GOG Oficial</div>
         <button class="redeem-btn" onclick="event.stopPropagation(); openModal('${free.id}')">
-          <i data-lucide="download"></i>Baixar Jogo Grátis
+          <i data-lucide="download"></i>Baixar Addon Grátis
         </button>
       </div>
     </article>`;
@@ -1771,7 +1755,7 @@ function renderDeals(){
           <div class="deal-info">
             <h3>${g.name}</h3>
             <div class="g">${g.genre} · ${g.fileSize}</div>
-            <div class="card-price">${priceHTML(g)}</div>
+            <span class="free-badge">Download Completo</span>
           </div>
         </div>
       </article>`;
@@ -1780,7 +1764,7 @@ function renderDeals(){
   refreshIcons();
 }
 
-/* ================= FILTROS & CATÁLOGO DAS 7 FONTES ================= */
+/* ================= FILTROS & CATÁLOGO DAS 7 FONTES (ZERO PREÇOS) ================= */
 function buildFilters(){
   const store=GAMES.filter(g=>!g.upcoming);
   
@@ -1799,6 +1783,21 @@ function buildFilters(){
     renderGrid();
   });
 
+  // Size Filter
+  const SIZE_OPTS=[
+    {v:'all', l:'Todos'},
+    {v:'small', l:'Leves (< 10 GB)'},
+    {v:'med', l:'Médios (10 - 50 GB)'},
+    {v:'large', l:'Grandes (50 GB+)'}
+  ];
+  $('#sizeFilters').innerHTML=SIZE_OPTS.map(o=>`<button class="fpill ${state.sizeFilter===o.v?'on':''}" data-size="${o.v}">${o.l}</button>`).join('');
+  $('#sizeFilters').addEventListener('click',e=>{
+    const b=e.target.closest('[data-size]');if(!b)return;
+    state.sizeFilter=b.dataset.size;
+    $$('#sizeFilters .fpill').forEach(p=>p.classList.toggle('on',p.dataset.size===state.sizeFilter));
+    renderGrid();
+  });
+
   // Genres Filter
   const genres=[...new Set(store.map(g=>g.genre))].sort();
   const counts={};store.forEach(g=>counts[g.genre]=(counts[g.genre]||0)+1);
@@ -1814,21 +1813,11 @@ function buildFilters(){
     renderGrid();
   });
 
-  // Prices
-  const PRICE_OPTS=[{v:'all',l:'Todos'},{v:'p100',l:'Até R$ 100'},{v:'p200',l:'Até R$ 200'},{v:'free',l:'Grátis'}];
-  $('#priceFilters').innerHTML=PRICE_OPTS.map(o=>`<button class="fpill ${state.price===o.v?'on':''}" data-price="${o.v}">${o.l}</button>`).join('');
-  $('#priceFilters').addEventListener('click',e=>{
-    const b=e.target.closest('[data-price]');if(!b)return;
-    state.price=b.dataset.price;
-    $$('#priceFilters .fpill').forEach(p=>p.classList.toggle('on',p.dataset.price===state.price));
-    renderGrid();
-  });
-
   $('#clearFilters').addEventListener('click',()=>{
-    state.genres.clear();state.sourceFilter='all';state.price='all';state.search='';
+    state.genres.clear();state.sourceFilter='all';state.sizeFilter='all';state.search='';
     $$('#genreFilters input').forEach(i=>i.checked=false);
     $$('#sourceFilters .fpill').forEach(p=>p.classList.toggle('on',p.dataset.source==='all'));
-    $$('#priceFilters .fpill').forEach(p=>p.classList.toggle('on',p.dataset.price==='all'));
+    $$('#sizeFilters .fpill').forEach(p=>p.classList.toggle('on',p.dataset.size==='all'));
     renderGrid();
   });
   refreshIcons();
@@ -1840,10 +1829,11 @@ function getFiltered(){
   if(state.tab==='top')list=[...list].sort((a,b)=>b.sold-a.sold);
   if(state.sourceFilter!=='all')list=list.filter(g=>g.source===state.sourceFilter);
   if(state.genres.size)list=list.filter(g=>state.genres.has(g.genre));
-  const fp=finalPrice;
-  if(state.price==='free')list=list.filter(g=>fp(g)===0);
-  else if(state.price==='p100')list=list.filter(g=>fp(g)<=100);
-  else if(state.price==='p200')list=list.filter(g=>fp(g)<=200);
+  
+  if(state.sizeFilter==='small') list=list.filter(g=>parseFloat(g.fileSize)<10);
+  else if(state.sizeFilter==='med') list=list.filter(g=>parseFloat(g.fileSize)>=10 && parseFloat(g.fileSize)<=50);
+  else if(state.sizeFilter==='large') list=list.filter(g=>parseFloat(g.fileSize)>50);
+
   if(state.search){
     const q=state.search.toLowerCase();
     list=list.filter(g=>g.name.toLowerCase().includes(q)||g.genre.toLowerCase().includes(q)||g.sourceName.toLowerCase().includes(q)||g.tags.some(t=>t.toLowerCase().includes(q)));
@@ -1872,7 +1862,7 @@ function cardHTML(g){
         <h3 title="${g.name}">${g.name}</h3>
         <div class="card-foot">
           <span class="card-rate">${starIcon} ${g.rating.toFixed(1)}</span>
-          <span class="card-price">${priceHTML(g)}</span>
+          <span class="free-badge">Grátis</span>
         </div>
         <div class="card-actions">
           <button class="action-dl" onclick="event.stopPropagation(); openModal('${g.id}')">
@@ -1890,7 +1880,7 @@ function renderGrid(){
   const list=getFiltered();
   const grid=$('#gamesGrid');
   if(!list.length){
-    grid.innerHTML=`<div class="empty"><i data-lucide="search-x"></i><h3>Nenhum jogo encontrado</h3><p>Tente ajustar a busca ou os filtros de fontes e gênero.</p></div>`;
+    grid.innerHTML=`<div class="empty"><i data-lucide="search-x"></i><h3>Nenhum jogo encontrado</h3><p>Tente ajustar a busca ou os filtros de fontes e tamanho.</p></div>`;
   }else{
     grid.innerHTML=list.map(g=>cardHTML(g)).join('');
   }
@@ -1923,40 +1913,27 @@ function renderUpcoming(){
 $('#hsPrev').addEventListener('click',()=>$('#upRow').scrollBy({left:-560,behavior:'smooth'}),{passive:true});
 $('#hsNext').addEventListener('click',()=>$('#upRow').scrollBy({left:560,behavior:'smooth'}),{passive:true});
 
-/* ================= PROMOÇÕES ================= */
+/* ================= PROMOÇÕES & JOGOS GRÁTIS ================= */
 function renderPromo(){
   $('#freeGrid').innerHTML=FREE_WEEK.map(id=>{
     const g=byId(id);
     return`
       <article class="deal-card" onclick="openModal('${g.id}')">
         <div class="media">
-          <span class="free-flag">Grátis agora</span>
+          <span class="free-flag">Grátis para Baixar</span>
           <img src="${g.cover}" alt="${g.name}" loading="lazy" decoding="async">
         </div>
         <div class="deal-info">
           <h3>${g.name}</h3>
           <div class="g">${g.genre} · DRM-Free GOG Oficial</div>
-          <button class="redeem-btn" onclick="event.stopPropagation(); openModal('${free.id}')">
+          <button class="redeem-btn" onclick="event.stopPropagation(); openModal('${g.id}')">
             <i data-lucide="download"></i>Baixar Jogo Grátis
           </button>
         </div>
       </article>`;
   }).join('');
-  
-  let list=GAMES.filter(g=>!g.upcoming&&g.discount>0);
-  if(state.dealF!=='all')list=list.filter(g=>g.discount>=+state.dealF);
-  list=[...list].sort((a,b)=>b.discount-a.discount);
-  $('#promoGrid').innerHTML=list.length?list.map(g=>cardHTML(g)).join('')
-    :`<div class="empty"><i data-lucide="search-x"></i><h3>Nenhuma promoção nesse filtro</h3></div>`;
   refreshIcons();
 }
-
-$('#dealTabs').addEventListener('click',e=>{
-  const b=e.target.closest('[data-d]');if(!b)return;
-  state.dealF=b.dataset.d;
-  $$('#dealTabs button').forEach(x=>x.classList.toggle('on',x===b));
-  renderPromo();
-});
 
 /* ================= EMULADORES ================= */
 function renderEmulators(){
@@ -2047,6 +2024,7 @@ function openModal(id){
     <div class="modal-body">
       <div style="display:flex;gap:8px;align-items:center">
         <span class="source-chip ${srcObj.badgeClass}">${g.sourceName}</span>
+        <span class="free-badge">100% Grátis</span>
         <span class="kicker">${g.genre} · ${g.fileSize}</span>
       </div>
       <h2>${g.name}</h2>
@@ -2082,8 +2060,8 @@ function openModal(id){
         <button class="btn btn-ghost" onclick="toggleWish('${g.id}')">
           <i data-lucide="heart"></i>Wishlist
         </button>
-        <a href="${g.steamUrl}" target="_blank" class="btn btn-ghost" title="Ver na Loja Oficial">
-          <i data-lucide="globe"></i>Loja Oficial
+        <a href="${g.steamUrl}" target="_blank" class="btn btn-ghost" title="Ver Informações Oficiais">
+          <i data-lucide="globe"></i>Página Oficial
         </a>
       </div>
     </div>`;
@@ -2147,7 +2125,7 @@ function renderWishlist(){
     const g=byId(id);
     return`<div class="drawer-item">
       <img src="${g.cover}" alt="${g.name}" loading="lazy" decoding="async">
-      <div class="inf"><h4>${g.name}</h4><span class="g">${g.genre}</span><div class="p">${g.fileSize || 'Em breve'}</div></div>
+      <div class="inf"><h4>${g.name}</h4><span class="g">${g.genre}</span><div class="p">${g.fileSize || 'Em breve'} · Grátis</div></div>
       <button class="rm" onclick="toggleWish('${id}')" aria-label="Remover"><i data-lucide="trash-2"></i></button>
     </div>`;
   }).join('');
@@ -2159,18 +2137,18 @@ function renderCart(){
   $('#cartTitle').textContent=`Downloads Selecionados (${state.cart.length})`;
   const list=$('#cartList'),foot=$('#cartFoot');
   if(!state.cart.length){
-    list.innerHTML=`<div class="drawer-empty"><i data-lucide="shopping-cart"></i><p>Nenhum item no carrinho.</p></div>`;
+    list.innerHTML=`<div class="drawer-empty"><i data-lucide="shopping-cart"></i><p>Nenhum item selecionado.</p></div>`;
     foot.innerHTML=`<button class="btn btn-primary" onclick="closeDrawers()">Explorar jogos</button>`;
   }else{
     list.innerHTML=state.cart.map(id=>{
       const g=byId(id);
       return`<div class="drawer-item">
         <img src="${g.cover}" alt="${g.name}" loading="lazy" decoding="async">
-        <div class="inf"><h4>${g.name}</h4><span class="g">${g.genre}</span><div class="p">${g.fileSize}</div></div>
+        <div class="inf"><h4>${g.name}</h4><span class="g">${g.genre}</span><div class="p">${g.fileSize} · 100% Grátis</div></div>
         <button class="rm" onclick="state.cart=state.cart.filter(x=>x!=='${id}'); save(); updateBadges(); renderCart();" aria-label="Remover"><i data-lucide="trash-2"></i></button>
       </div>`;
     }).join('');
-    foot.innerHTML=`<button class="btn btn-primary" onclick="state.cart.forEach(id=>triggerDownload(byId(id).magnet, byId(id).name, 'magnet')); state.cart=[]; save(); updateBadges(); closeDrawers();"><i data-lucide="zap"></i>Baixar Todos os Addons</button>`;
+    foot.innerHTML=`<button class="btn btn-primary" onclick="state.cart.forEach(id=>triggerDownload(byId(id).magnet, byId(id).name, 'magnet')); state.cart=[]; save(); updateBadges(); closeDrawers();"><i data-lucide="zap"></i>Baixar Todos os Addons Selecionados</button>`;
   }
   refreshIcons();
 }
