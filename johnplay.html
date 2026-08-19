@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JohnPlay — Portal Gamer, Addons Hydra & Promoções Steam/Epic</title>
+<title>JohnPlay — Portal Gamer, Addons Hydra & Subway Surfers Player</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23a06bff'/><text x='16' y='22' font-family='Arial' font-weight='900' font-size='15' fill='%23150827' text-anchor='middle'>JP</text></svg>">
 
 <!-- DNS Prefetch & Preconnect for Ultra-Fast CDN Asset Delivery -->
@@ -12,11 +12,13 @@
 <link rel="preconnect" href="https://shared.fastly.steamstatic.com">
 <link rel="preconnect" href="https://shared.akamai.steamstatic.com">
 <link rel="preconnect" href="https://i.postimg.cc">
+<link rel="preconnect" href="https://ubg98.github.io">
 <link rel="preconnect" href="https://unpkg.com">
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://shared.fastly.steamstatic.com">
 <link rel="dns-prefetch" href="https://shared.akamai.steamstatic.com">
 <link rel="dns-prefetch" href="https://i.postimg.cc">
+<link rel="dns-prefetch" href="https://ubg98.github.io">
 
 <!-- Preload Subway Surfers Poster for Zero-Lag Hero Render -->
 <link rel="preload" as="image" href="https://i.postimg.cc/jRyrpVmX/subwaysurfers.png">
@@ -246,21 +248,34 @@
   .special-card .body h4{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .special-card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
 
+  /* ---------- SUBWAY SURFERS IN-SITE EMBEDDED PLAYER ---------- */
+  .game-player-section{margin-top:28px;background:var(--panel);border:1px solid var(--border-hi);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 18px 48px rgba(0,0,0,.45)}
+  .player-topbar{padding:14px 20px;background:var(--panel-2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .player-topbar .title-box{display:flex;align-items:center;gap:10px}
+  .player-topbar .title-box h3{font-family:'Barlow Condensed',sans-serif;font-size:24px;text-transform:uppercase;line-height:1}
+  .player-topbar .controls-help{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .player-actions{display:flex;align-items:center;gap:8px}
+  
+  .game-viewport{position:relative;width:100%;height:680px;background:#0b0713;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .game-iframe{width:100%;height:100%;border:none;display:none}
+  .game-iframe.loaded{display:block}
+  
+  .game-splash{position:absolute;inset:0;background:linear-gradient(rgba(11,7,19,.75),rgba(11,7,19,.9)),url('https://i.postimg.cc/jRyrpVmX/subwaysurfers.png') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;z-index:10}
+  .game-splash.hidden{display:none}
+  .play-large-btn{padding:16px 38px;font-size:20px;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:.05em;border-radius:14px;background:var(--emerald);color:#031d13;display:flex;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(16,185,129,.4);transition:transform .2s, background .2s}
+  .play-large-btn:hover{transform:scale(1.04);background:#34d399}
+  .play-large-btn svg{width:26px;height:26px}
+
+  /* Fullscreen Viewport Mode */
+  .game-player-section:fullscreen{border-radius:0;border:none}
+  .game-player-section:fullscreen .game-viewport{height:calc(100vh - 60px)}
+
   /* ---------- Browser games ---------- */
   .bg-hero{margin-top:26px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;position:relative;overflow:hidden}
   .bg-hero::before{content:'';position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;background:var(--accent-dim);filter:blur(10px)}
   .bg-hero h2{font-family:'Barlow Condensed',sans-serif;font-size:52px;text-transform:uppercase;line-height:1}
   .bg-hero p{color:var(--muted);max-width:480px;margin-top:10px}
   .bg-hero .z{position:relative}
-
-  /* Subway Surfers Featured Banner */
-  .subway-banner{margin-top:22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;display:grid;grid-template-columns:1.2fr 1fr}
-  .subway-media{position:relative;min-height:360px;background:#140e24;overflow:hidden}
-  .subway-media img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .4s ease;will-change:transform}
-  .subway-banner:hover .subway-media img{transform:scale(1.03)}
-  .subway-media::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,var(--panel) 100%)}
-  .subway-content{padding:34px 38px;display:flex;flex-direction:column;justify-content:center;gap:12px}
-  .subway-content h3{font-family:'Barlow Condensed',sans-serif;font-size:46px;text-transform:uppercase;line-height:1}
 
   /* ---------- Emuladores & Apps ---------- */
   .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:22px}
@@ -388,7 +403,7 @@
     .foot-grid{grid-template-columns:1fr 1fr}
     .topstrip{display:none}
     .stats{grid-template-columns:1fr}
-    .subway-banner{grid-template-columns:1fr}
+    .game-viewport{height:480px}
     .bg-hero h2{font-size:38px}
     .app-hero h2{font-size:32px}
   }
@@ -398,7 +413,7 @@
 
 <div class="topstrip">
   <div class="wrap">
-    <span><span class="live-dot"></span><b>487.230</b> jogadores online agora · Hydra Addons Engine 100% Ativo</span>
+    <span><span class="live-dot"></span><b>487.230</b> jogadores online agora · Subway Surfers Player Embutido</span>
     <div class="right">
       <a href="#apps">Baixar o JohnPlay</a>
       <a href="#" onclick="openSourcesModal(); return false;">Fontes Hydra (7)</a>
@@ -416,7 +431,7 @@
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="#loja" data-nav="loja" class="on">Loja & Addons</a>
-      <a href="#browser" data-nav="browser">Jogos de Navegador</a>
+      <a href="#browser" data-nav="browser">Jogar Subway Surfers</a>
       <a href="#emuladores" data-nav="emuladores">Emuladores</a>
       <a href="#promo" data-nav="promo">Promoções Steam & Epic</a>
       <a href="#apps" data-nav="apps">Apps & Otimizações</a>
@@ -536,42 +551,65 @@
     </div>
   </section>
 
-  <!-- ============ PÁGINA: JOGOS DE NAVEGADOR ============ -->
+  <!-- ============ PÁGINA: JOGOS DE NAVEGADOR COM GAME PLAYER EMBUTIDO ============ -->
   <section class="page" id="page-browser">
     <div class="wrap">
       
       <!-- SUBWAY SURFERS HERO -->
       <div class="bg-hero">
         <div class="z">
-          <div class="kicker">Instantâneo · Oficial Poki</div>
-          <h2>Subway Surfers</h2>
-          <p>Corra pelos trilhos de trem com Jake, Tricky e Fresh! Desvie dos vagões e fuja do inspetor rabugento direto no seu navegador sem instalar nada.</p>
+          <div class="kicker">Game Player Embutido · 100% no JohnPlay</div>
+          <h2>Subway Surfers World Tour</h2>
+          <p>Jogue direto aqui no navegador com som, 60 FPS e suporte a tela cheia. Sem anúncios chatos e sem precisar sair do site!</p>
         </div>
-        <a href="https://poki.com/en/g/subway-surfers" target="_blank" class="btn btn-primary z">
-          <i data-lucide="play"></i>Jogar Subway Surfers Agora (Poki Oficial)
-        </a>
+        <button class="btn btn-primary z" onclick="launchSubwayPlayer()">
+          <i data-lucide="play"></i>Jogar Subway Surfers Agora
+        </button>
       </div>
 
-      <!-- Subway Surfers Featured Showcase Banner With User's Exact Image -->
-      <div class="subway-banner">
-        <div class="subway-media">
-          <img src="https://i.postimg.cc/jRyrpVmX/subwaysurfers.png" alt="Subway Surfers Capa Oficial" decoding="async">
+      <!-- IN-SITE GAME PLAYER EMBED CONTAINER -->
+      <div class="game-player-section" id="gamePlayerSection">
+        <div class="player-topbar">
+          <div class="title-box">
+            <span class="disc-chip" style="background:var(--emerald);color:#031d13">PLAYER AO VIVO</span>
+            <h3>Subway Surfers (HTML5 WebGL)</h3>
+          </div>
+          <div class="controls-help">
+            <i data-lucide="gamepad-2" style="width:16px;height:16px;color:var(--accent)"></i>
+            <b>Controles:</b> Setas [⬅️ ➡️] Mover · [⬆️] Pular · [⬇️] Rolar · [Espaço] Skate
+          </div>
+          <div class="player-actions">
+            <button class="btn btn-ghost" style="height:36px;padding:0 14px;font-size:12px" onclick="reloadSubwayPlayer()" title="Reiniciar Jogo">
+              <i data-lucide="rotate-ccw"></i>Reiniciar
+            </button>
+            <button class="btn btn-primary" style="height:36px;padding:0 14px;font-size:12px" onclick="togglePlayerFullscreen()" title="Modo Tela Cheia">
+              <i data-lucide="maximize"></i>Tela Cheia
+            </button>
+          </div>
         </div>
-        <div class="subway-content">
-          <span class="kicker">Jogo de Navegador Selecionado · SYBO Games</span>
-          <h3>Subway Surfers World Tour</h3>
-          <p style="color:var(--muted);font-size:14px;line-height:1.6">
-            O clássico jogo de corrida infinita em 3D mais popular do mundo. Desvie dos trens em movimento, colete moedas de ouro e use o hoverboard para quebrar seu recorde!
-          </p>
-          <div style="background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--muted)">
-            <b style="color:var(--accent-hi);display:block;margin-bottom:2px">🎮 Controles:</b>
-            Use as Setas ⬅️ ➡️ para desviar, ⬆️ para pular, ⬇️ para rolar e Barra de Espaço para ativar o Skate.
+
+        <div class="game-viewport" id="gameViewport">
+          <!-- Splash Screen with Official Cover -->
+          <div class="game-splash" id="gameSplash">
+            <h2 style="font-family:'Barlow Condensed';font-size:48px;text-transform:uppercase;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.8)">
+              Subway Surfers World Tour
+            </h2>
+            <p style="color:#d1c4e9;max-width:500px;font-size:15px">
+              Clique no botão verde abaixo para inicializar o motor WebGL e começar a correr!
+            </p>
+            <button class="play-large-btn" onclick="launchSubwayPlayer()">
+              <i data-lucide="play"></i>CLIQUE PARA JOGAR AGORA
+            </button>
           </div>
-          <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap">
-            <a href="https://poki.com/en/g/subway-surfers" target="_blank" class="btn btn-primary">
-              <i data-lucide="external-link"></i>Jogar no Poki Oficial
-            </a>
-          </div>
+
+          <!-- HTML5 Game Iframe Player -->
+          <iframe 
+            id="subwayIframe" 
+            class="game-iframe" 
+            src="about:blank"
+            allow="fullscreen; gamepad; autoplay" 
+            allowfullscreen>
+          </iframe>
         </div>
       </div>
     </div>
@@ -702,7 +740,7 @@
       </div>
       <div class="foot-col">
         <h5>Descubra</h5>
-        <a href="#browser">Subway Surfers Poki</a>
+        <a href="#browser">Subway Surfers Embutido</a>
         <a href="#emuladores">Emuladores Retro & 3D</a>
         <a href="#apps">Otimizações & Apps</a>
       </div>
@@ -901,26 +939,6 @@ let GAMES = [
     mirrors: [{ name: 'Magnet Torrent (FitGirl)', type: 'magnet', url: 'magnet:?xt=urn:btih:s3k1r0sh4d0wsd13tw1c3f1tg1rl00000000000000&dn=Sekiro+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
     specs: { os: 'Windows 7/8/10 64-bit', cpu: 'Intel Core i3-2100', ram: '4 GB RAM', gpu: 'GTX 760', storage: '25 GB' }
   },
-  {
-    id: 'lies-of-p-deluxe',
-    name: 'Lies of P: Deluxe Edition (v1.5.0)',
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
-    genre: 'RPG',
-    tags: ['Souls-like', 'Sombrio', 'Ação', 'Pinóquio'],
-    price: 249.90,
-    discount: 30,
-    fileSize: '34.5 GB',
-    rating: 4.8,
-    release: '2024-02-15',
-    sold: 11500,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1627720/library_600x900.jpg',
-    desc: 'Acorde na cidade em ruínas de Krat e desvende os mistérios dos fantoches assassinos.',
-    steamUrl: 'https://store.steampowered.com/app/1627720/Lies_of_P/',
-    magnet: 'magnet:?xt=urn:btih:l13s0fpd3lux3f1tg1rl000000000000000000000000&dn=Lies+of+P+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:l13s0fpd3lux3f1tg1rl000000000000000000000000&dn=Lies+of+P+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Core i3-6300', ram: '8 GB RAM', gpu: 'GTX 960 4GB', storage: '50 GB' }
-  },
 
   // --- DODI REPACKS (CAPAS OFICIAIS STEAM) ---
   {
@@ -994,26 +1012,6 @@ let GAMES = [
     ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 1500X / Core i7-4770K', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '100 GB SSD' }
   },
-  {
-    id: 'horizon-forbidden-west',
-    name: 'Horizon Forbidden West: Complete Edition',
-    source: 'dodi',
-    sourceName: 'DODI Repacks',
-    genre: 'Mundo Aberto',
-    tags: ['Mundo Aberto', 'Sci-Fi', 'Aventura', 'Robôs'],
-    price: 249.90,
-    discount: 20,
-    fileSize: '95.4 GB',
-    rating: 4.8,
-    release: '2024-03-21',
-    sold: 13200,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2420110/library_600x900.jpg',
-    desc: 'Acompanhe Aloy enquanto ela desbrava uma fronteira majestosa e perigosa que oculta novas e misteriosas ameaças.',
-    steamUrl: 'https://store.steampowered.com/app/2420110/Horizon_Forbidden_West_Complete_Edition/',
-    magnet: 'magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (DODI)', type: 'magnet', url: 'magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'i3-8100 / Ryzen 3 1300X', ram: '16 GB RAM', gpu: 'GTX 1650 4GB', storage: '150 GB SSD' }
-  },
 
   // --- STEAMRIP (DIRECT PLAY / CAPAS OFICIAIS STEAM) ---
   {
@@ -1085,26 +1083,6 @@ let GAMES = [
       { name: 'QiWi Mirror', type: 'ddl', url: 'https://qiwi.gg/file/palworld' }
     ],
     specs: { os: 'Windows 10 64-bit', cpu: 'i5-3570K 3.4 GHz', ram: '16 GB RAM', gpu: 'GeForce GTX 1050 (2GB)', storage: '40 GB' }
-  },
-  {
-    id: 'helldivers-2',
-    name: 'Helldivers 2 (Super Citizen Edition)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Ação',
-    tags: ['Co-op', 'Tiro', 'Sci-Fi', 'Multiplayer'],
-    price: 199.90,
-    discount: 0,
-    fileSize: '70.0 GB',
-    rating: 4.8,
-    release: '2024-02-08',
-    sold: 26000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/library_600x900.jpg',
-    desc: 'A última linha de ataque da galáxia. Junte-se aos Helldivers na luta pela liberdade contra hordas alienígenas.',
-    steamUrl: 'https://store.steampowered.com/app/553850/HELLDIVERS_2/',
-    magnet: 'magnet:?xt=urn:btih:h3lld1v3rs2st34mr1p00000000000000000000000000&dn=Helldivers+2+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:h3lld1v3rs2st34mr1p00000000000000000000000000&dn=Helldivers+2+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i7-4790K', ram: '8 GB RAM', gpu: 'GTX 1050 Ti', storage: '100 GB' }
   },
 
   // --- FREE GOG GAMES (DRM-FREE / CAPAS OFICIAIS STEAM) ---
@@ -1414,6 +1392,35 @@ const APPS=[
    desc:'Limpa a memória RAM em tempo real para evitar travamentos e stutterings em jogos pesados.', url:'https://github.com/henrypp/memreduct/releases'},
 ];
 
+/* ================= SUBWAY SURFERS IN-SITE EMBEDDED PLAYER ================= */
+function launchSubwayPlayer(){
+  const iframe=$('#subwayIframe'),splash=$('#gameSplash');
+  if(!iframe.src || iframe.src==='about:blank'){
+    iframe.src='https://ubg98.github.io/SubwaySurfers/';
+  }
+  splash.classList.add('hidden');
+  iframe.classList.add('loaded');
+  iframe.focus();
+  $('#gamePlayerSection').scrollIntoView({behavior:'smooth'});
+  toast('Subway Surfers inicializado no player!', 'play');
+}
+
+function reloadSubwayPlayer(){
+  const iframe=$('#subwayIframe');
+  iframe.src='https://ubg98.github.io/SubwaySurfers/';
+  iframe.focus();
+  toast('Player reiniciado', 'rotate-ccw');
+}
+
+function togglePlayerFullscreen(){
+  const sec=$('#gamePlayerSection');
+  if(!document.fullscreenElement){
+    sec.requestFullscreen().catch(()=>{});
+  }else{
+    document.exitFullscreen().catch(()=>{});
+  }
+}
+
 /* ================= ESTADO & PERSISTÊNCIA ================= */
 const state={
   wishlist:new Set(),
@@ -1582,7 +1589,6 @@ async function fetchLiveSteamSpecials(){
       throw new Error('Nenhum item retornado');
     }
   }catch(err){
-    // Fallback if CORS prevents direct browser fetch
     grid.innerHTML = `
       <div class="special-card">
         <div class="thumb">
@@ -1650,6 +1656,13 @@ function navigate(){
   $$('#navLinks a').forEach(a=>a.classList.toggle('on',a.dataset.nav===h));
   window.scrollTo({top:0});
   if(h==='promo') fetchLiveSteamSpecials();
+  if(h==='browser'){
+    setTimeout(()=>{
+      if(!$('#subwayIframe').src || $('#subwayIframe').src==='about:blank'){
+        // Ready player
+      }
+    }, 100);
+  }
 }
 window.addEventListener('hashchange',navigate, {passive:true});
 
