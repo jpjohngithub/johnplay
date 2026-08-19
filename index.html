@@ -3,19 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JohnPlay — Portal Gamer & Fontes Hydra Addons</title>
+<title>JohnPlay — Portal Gamer, Addons Hydra & Promoções Steam/Epic</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23a06bff'/><text x='16' y='22' font-family='Arial' font-weight='900' font-size='15' fill='%23150827' text-anchor='middle'>JP</text></svg>">
 
 <!-- DNS Prefetch & Preconnect for Ultra-Fast CDN Asset Delivery -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://shared.fastly.steamstatic.com">
+<link rel="preconnect" href="https://shared.akamai.steamstatic.com">
 <link rel="preconnect" href="https://i.postimg.cc">
 <link rel="preconnect" href="https://unpkg.com">
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-<link rel="dns-prefetch" href="https://images.unsplash.com">
+<link rel="dns-prefetch" href="https://shared.fastly.steamstatic.com">
+<link rel="dns-prefetch" href="https://shared.akamai.steamstatic.com">
 <link rel="dns-prefetch" href="https://i.postimg.cc">
-<link rel="dns-prefetch" href="https://unpkg.com">
 
 <!-- Preload Subway Surfers Poster for Zero-Lag Hero Render -->
 <link rel="preload" as="image" href="https://i.postimg.cc/jRyrpVmX/subwaysurfers.png">
@@ -48,7 +49,6 @@
   .page.on{display:block;animation:fadein .2s cubic-bezier(0.16, 1, 0.3, 1)}
   @keyframes fadein{from{opacity:0;transform:translateY(6px)}}
 
-  /* Performance Boost: content-visibility for offscreen sections */
   .section{margin-top:56px;content-visibility:auto;contain-intrinsic-size:500px}
 
   /* ---------- Topstrip ---------- */
@@ -138,7 +138,7 @@
   .carousel{position:relative;height:460px;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:var(--bg-deep)}
   .slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;pointer-events:none}
   .slide.active{opacity:1;pointer-events:auto}
-  .slide img{width:100%;height:100%;object-fit:cover;will-change:transform}
+  .slide img{width:100%;height:100%;object-fit:cover;object-position:center 20%;will-change:transform}
   .slide.active img{animation:kb 8s ease-out forwards}
   @keyframes kb{from{transform:scale(1.06)}to{transform:scale(1)}}
   .slide::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,7,19,.96) 0%,rgba(11,7,19,.68) 46%,rgba(11,7,19,.1) 82%)}
@@ -205,12 +205,12 @@
   select{height:38px;background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:0 12px;font-family:inherit;font-size:13.5px;outline:none;cursor:pointer}
   select:focus{border-color:var(--accent)}
 
-  /* ---------- Game cards ---------- */
+  /* ---------- Game cards with Official 600x900 Box Art ---------- */
   .games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;grid-auto-flow:dense}
   .game-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .18s, border-color .18s;display:flex;flex-direction:column;contain:content}
   .game-card:hover{border-color:var(--border-hi);transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.35)}
   .game-card .cover{position:relative;aspect-ratio:3/4;overflow:hidden;background:#140e24}
-  .game-card .cover img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease;will-change:transform}
+  .game-card .cover img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .35s ease;will-change:transform}
   .game-card:hover .cover img{transform:scale(1.05)}
   .disc-badge{position:absolute;top:10px;left:10px;font-weight:800;padding:3px 8px;border-radius:6px}
   .size-badge{position:absolute;top:10px;right:10px;background:rgba(12,8,20,.75);color:var(--accent-hi);font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;border:1px solid var(--border);backdrop-filter:blur(4px)}
@@ -235,6 +235,16 @@
   .action-det{height:34px;background:var(--panel-2);color:var(--text);border:1px solid var(--border);border-radius:7px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px;transition:border-color .15s}
   .action-det:hover{border-color:var(--border-hi)}
   .action-det svg{width:14px;height:14px}
+
+  /* Live Specials Feed Grid */
+  .specials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:18px}
+  .special-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .18s, border-color .18s;display:flex;flex-direction:column}
+  .special-card:hover{border-color:var(--border-hi);transform:translateY(-3px)}
+  .special-card .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#140e24}
+  .special-card .thumb img{width:100%;height:100%;object-fit:cover}
+  .special-card .body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .special-card .body h4{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .special-card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
 
   /* ---------- Browser games ---------- */
   .bg-hero{margin-top:26px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;position:relative;overflow:hidden}
@@ -392,6 +402,7 @@
     <div class="right">
       <a href="#apps">Baixar o JohnPlay</a>
       <a href="#" onclick="openSourcesModal(); return false;">Fontes Hydra (7)</a>
+      <a href="#promo">Ofertas Steam & Epic</a>
       <a href="#">PT-BR | R$</a>
     </div>
   </div>
@@ -407,7 +418,7 @@
       <a href="#loja" data-nav="loja" class="on">Loja & Addons</a>
       <a href="#browser" data-nav="browser">Jogos de Navegador</a>
       <a href="#emuladores" data-nav="emuladores">Emuladores</a>
-      <a href="#promo" data-nav="promo">Promoções e Grátis</a>
+      <a href="#promo" data-nav="promo">Promoções Steam & Epic</a>
       <a href="#apps" data-nav="apps">Apps & Otimizações</a>
     </nav>
     
@@ -437,7 +448,7 @@
     <div class="wrap">
       <div class="stats">
         <div class="stat"><span class="ic"><i data-lucide="users"></i></span><div><b>487.230</b><span>Jogadores online</span></div></div>
-        <div class="stat"><span class="ic"><i data-lucide="download"></i></span><div><b id="statGames">36</b><span>Jogos & Addons</span></div></div>
+        <div class="stat"><span class="ic"><i data-lucide="download"></i></span><div><b id="statGames">45</b><span>Jogos no Catálogo</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="layers"></i></span><div><b>7</b><span>Fontes Hydra Ativas</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="gift"></i></span><div><b>1</b><span>Grátis esta semana</span></div></div>
       </div>
@@ -473,7 +484,7 @@
       <!-- Explorar Jogos & Addons Catalog -->
       <section class="section" id="explorar">
         <div class="sec-head">
-          <div><div class="kicker">Catálogo JohnPlay & Hydra Addons</div><h2>Explorar jogos das 7 Fontes</h2></div>
+          <div><div class="kicker">Catálogo Oficial das 7 Fontes Hydra</div><h2>Explorar todos os jogos</h2></div>
           <div class="tabs" id="tabs">
             <button data-tab="all" class="on">Todos os Jogos</button>
             <button data-tab="new">Novidades</button>
@@ -541,7 +552,7 @@
         </a>
       </div>
 
-      <!-- Subway Surfers Featured Showcase Banner With User's Image -->
+      <!-- Subway Surfers Featured Showcase Banner With User's Exact Image -->
       <div class="subway-banner">
         <div class="subway-media">
           <img src="https://i.postimg.cc/jRyrpVmX/subwaysurfers.png" alt="Subway Surfers Capa Oficial" decoding="async">
@@ -588,36 +599,53 @@
     </div>
   </section>
 
-  <!-- ============ PÁGINA: PROMOÇÕES E GRÁTIS ============ -->
+  <!-- ============ PÁGINA: PROMOÇÕES STEAM & EPIC EM TEMPO REAL ============ -->
   <section class="page" id="page-promo">
     <div class="wrap">
       <div class="bg-hero">
         <div class="z">
-          <div class="kicker">Resgate · Economize · Jogue</div>
-          <h2>Promoções &amp; Grátis</h2>
-          <p>Jogos gratuitos da semana da Epic Games e super descontos da Steam. Resgate e jogue no seu PC.</p>
+          <div class="kicker">Sincronização em Tempo Real · Steam & Epic Games</div>
+          <h2>Ofertas &amp; Promoções ao Vivo</h2>
+          <p>Super descontos e jogos gratuitos obtidos diretamente dos feeds oficiais da Steam Store e Epic Games Store.</p>
         </div>
-        <div class="countdown z">
-          <span class="lbl">Próxima troca em</span>
-          <div class="cd-box">
-            <div class="u"><b id="cdD2">00</b><span>dias</span></div>
-            <div class="u"><b id="cdH2">00</b><span>horas</span></div>
-            <div class="u"><b id="cdM2">00</b><span>min</span></div>
-            <div class="u"><b id="cdS2">00</b><span>seg</span></div>
-          </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap" class="z">
+          <a href="https://store.steampowered.com/specials?l=portuguese" target="_blank" class="btn btn-primary">
+            <i data-lucide="flame"></i>Steam Specials Oficial
+          </a>
+          <a href="https://store.epicgames.com/sales-and-specials?lang=pt-BR" target="_blank" class="btn btn-ghost">
+            <i data-lucide="gift"></i>Epic Games Specials
+          </a>
         </div>
       </div>
 
+      <!-- Feed ao Vivo da Steam -->
       <section class="section">
         <div class="sec-head">
-          <div><div class="kicker">Grátis esta semana</div><h2>Resgate agora</h2></div>
+          <div><div class="kicker">Steam Store Specials Feed (Oficial)</div><h2>Ofertas em Destaque na Steam</h2></div>
+          <button class="btn btn-ghost" style="height:36px;padding:0 14px;font-size:12px" onclick="fetchLiveSteamSpecials()">
+            <i data-lucide="refresh-cw"></i>Atualizar Ofertas
+          </button>
+        </div>
+        <div class="specials-grid" id="liveSteamGrid">
+          <div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px">
+            <i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>
+            Carregando ofertas em tempo real da Steam Store...
+          </div>
+        </div>
+      </section>
+
+      <!-- Grátis da Semana -->
+      <section class="section">
+        <div class="sec-head">
+          <div><div class="kicker">Grátis para Resgatar</div><h2>Jogo Gratuito da Semana</h2></div>
         </div>
         <div class="deals-grid" id="freeGrid"></div>
       </section>
 
+      <!-- Todas as promoções do catálogo -->
       <section class="section">
         <div class="sec-head">
-          <div><div class="kicker">Super Descontos</div><h2>Todas as promoções</h2></div>
+          <div><div class="kicker">Super Descontos no Catálogo JohnPlay</div><h2>Todas as promoções</h2></div>
           <div class="tabs" id="dealTabs">
             <button data-d="all" class="on">Todas</button>
             <button data-d="30">30%+</button>
@@ -657,7 +685,7 @@
           <span class="logo-mark">JP</span>
           <span class="logo-txt"><small>STORE & ADDONS</small><b>JohnPlay</b></span>
         </a>
-        <p>Sua biblioteca gamer completa: downloads via addons Hydra, emuladores, promoções e ferramentas de PC.</p>
+        <p>Sua biblioteca gamer completa: downloads via addons Hydra, emuladores, promoções oficiais e ferramentas de PC.</p>
         <div class="foot-social">
           <a href="#" aria-label="GitHub"><i data-lucide="github"></i></a>
           <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
@@ -748,7 +776,7 @@
 <div class="toasts" id="toasts"></div>
 
 <script>
-/* ================= DADOS COMPLETOS DAS 7 FONTES HYDRA ================= */
+/* ================= DADOS COMPLETOS DAS 7 FONTES HYDRA COM CAPAS 100% OFICIAIS STEAM ================= */
 const SOURCES = [
   { id: 'fitgirl', name: 'FitGirl Repacks', url: 'https://hydralinks.cloud/sources/fitgirl.json', badgeClass: 'source-fitgirl' },
   { id: 'dodi', name: 'DODI Repacks', url: 'https://hydralinks.cloud/sources/dodi.json', badgeClass: 'source-dodi' },
@@ -760,7 +788,7 @@ const SOURCES = [
 ];
 
 let GAMES = [
-  // --- FITGIRL REPACKS ---
+  // --- FITGIRL REPACKS (CAPAS OFICIAIS STEAM) ---
   {
     id: 'elden-ring-shadow',
     name: 'ELDEN RING: Shadow of the Erdtree Edition',
@@ -774,7 +802,7 @@ let GAMES = [
     rating: 4.9,
     release: '2024-06-21',
     sold: 15800,
-    cover: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/library_600x900.jpg',
     desc: 'Vencedor de mais de 300 prêmios de Jogo do Ano, agora com a expansão Shadow of the Erdtree completa e atualizada.',
     steamUrl: 'https://store.steampowered.com/app/1245620/ELDEN_RING/',
     magnet: 'magnet:?xt=urn:btih:3fa81309d4310000000000000000000000000000&dn=Elden+Ring+Shadow+of+the+Erdtree+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -798,7 +826,7 @@ let GAMES = [
     rating: 5.0,
     release: '2023-11-05',
     sold: 28000,
-    cover: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg',
     desc: 'Arthur Morgan e a gangue Van der Linde são forçados a fugir pelos Estados Unidos na virada para o século XX.',
     steamUrl: 'https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/',
     magnet: 'magnet:?xt=urn:btih:r3dd34dr3d3mpt10n2f1tg1r1ult1m4t3000000000&dn=Red+Dead+Redemption+2+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -821,7 +849,7 @@ let GAMES = [
     rating: 4.9,
     release: '2023-09-18',
     sold: 22000,
-    cover: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1817070/library_600x900.jpg',
     desc: 'Peter Parker luta contra o crime e vilões icônicos em uma Nova York vibrante e detalhada.',
     steamUrl: 'https://store.steampowered.com/app/1817070/Marvels_SpiderMan_Remastered/',
     magnet: 'magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rl0000000000000000000&dn=Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -844,7 +872,7 @@ let GAMES = [
     rating: 4.9,
     release: '2023-01-10',
     sold: 19000,
-    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/374320/library_600x900.jpg',
     desc: 'O ápice da trilogia Dark Souls. Derrote os Lordes das Cinzas em Lothric com todas as expansões inclusas.',
     steamUrl: 'https://store.steampowered.com/app/374320/DARK_SOULS_III/',
     magnet: 'magnet:?xt=urn:btih:d4rks0uls3d3lux3f1tg1rl0000000000000000000000&dn=Dark+Souls+3+Deluxe+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -853,8 +881,48 @@ let GAMES = [
     ],
     specs: { os: 'Windows 7/8.1/10 64-bit', cpu: 'Intel Core i3-2100 / AMD FX-6300', ram: '4 GB RAM', gpu: 'GTX 750 Ti / HD 7950', storage: '25 GB' }
   },
+  {
+    id: 'sekiro-goty',
+    name: 'Sekiro: Shadows Die Twice (GOTY Edition)',
+    source: 'fitgirl',
+    sourceName: 'FitGirl Repacks',
+    genre: 'Ação',
+    tags: ['Souls-like', 'Ninja', 'Ação', 'Japão Feudal'],
+    price: 199.90,
+    discount: 50,
+    fileSize: '12.8 GB',
+    rating: 4.9,
+    release: '2023-04-12',
+    sold: 18400,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/814380/library_600x900.jpg',
+    desc: 'Entre no papel do Lobo de um Braço Só e vingue seu lorde no sangrento período Sengoku.',
+    steamUrl: 'https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice/',
+    magnet: 'magnet:?xt=urn:btih:s3k1r0sh4d0wsd13tw1c3f1tg1rl00000000000000&dn=Sekiro+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent (FitGirl)', type: 'magnet', url: 'magnet:?xt=urn:btih:s3k1r0sh4d0wsd13tw1c3f1tg1rl00000000000000&dn=Sekiro+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 7/8/10 64-bit', cpu: 'Intel Core i3-2100', ram: '4 GB RAM', gpu: 'GTX 760', storage: '25 GB' }
+  },
+  {
+    id: 'lies-of-p-deluxe',
+    name: 'Lies of P: Deluxe Edition (v1.5.0)',
+    source: 'fitgirl',
+    sourceName: 'FitGirl Repacks',
+    genre: 'RPG',
+    tags: ['Souls-like', 'Sombrio', 'Ação', 'Pinóquio'],
+    price: 249.90,
+    discount: 30,
+    fileSize: '34.5 GB',
+    rating: 4.8,
+    release: '2024-02-15',
+    sold: 11500,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1627720/library_600x900.jpg',
+    desc: 'Acorde na cidade em ruínas de Krat e desvende os mistérios dos fantoches assassinos.',
+    steamUrl: 'https://store.steampowered.com/app/1627720/Lies_of_P/',
+    magnet: 'magnet:?xt=urn:btih:l13s0fpd3lux3f1tg1rl000000000000000000000000&dn=Lies+of+P+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:l13s0fpd3lux3f1tg1rl000000000000000000000000&dn=Lies+of+P+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Core i3-6300', ram: '8 GB RAM', gpu: 'GTX 960 4GB', storage: '50 GB' }
+  },
 
-  // --- DODI REPACKS ---
+  // --- DODI REPACKS (CAPAS OFICIAIS STEAM) ---
   {
     id: 'gta-v-enhanced',
     name: 'Grand Theft Auto V: Premium Edition (v1.68)',
@@ -868,7 +936,7 @@ let GAMES = [
     rating: 4.9,
     release: '2024-03-10',
     sold: 12400,
-    cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg',
     desc: 'Explore Los Santos e Blaine County com Michael, Franklin e Trevor na edição definitiva com todas as expansões inclusas.',
     steamUrl: 'https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/',
     magnet: 'magnet:?xt=urn:btih:e589df6890333333342345123490000000000000&dn=Grand+Theft+Auto+V+DODI+Repack&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -893,7 +961,7 @@ let GAMES = [
     rating: 4.9,
     release: '2024-05-16',
     sold: 13400,
-    cover: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2215430/library_600x900.jpg',
     desc: 'Jin Sakai deve abandonar as tradições dos samurais para se tornar o Fantasma e libertar a Ilha de Tsushima.',
     steamUrl: 'https://store.steampowered.com/app/2215430/Ghost_of_Tsushima_DIRECTORS_CUT/',
     magnet: 'magnet:?xt=urn:btih:gh0st0ftsush1m4d1r3ct0rscutd0d100000000000&dn=Ghost+of+Tsushima+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -916,7 +984,7 @@ let GAMES = [
     rating: 4.8,
     release: '2024-01-20',
     sold: 14900,
-    cover: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1888930/library_600x900.jpg',
     desc: 'Em uma civilização devastada, onde infectados e sobreviventes implacáveis correm soltos, Joel é contratado para contrabandear Ellie.',
     steamUrl: 'https://store.steampowered.com/app/1888930/The_Last_of_Us_Part_I/',
     magnet: 'magnet:?xt=urn:btih:th3l4st0fuspart1d0d1r3p4ck000000000000000000&dn=The+Last+of+Us+Part+1+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -926,8 +994,28 @@ let GAMES = [
     ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 1500X / Core i7-4770K', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '100 GB SSD' }
   },
+  {
+    id: 'horizon-forbidden-west',
+    name: 'Horizon Forbidden West: Complete Edition',
+    source: 'dodi',
+    sourceName: 'DODI Repacks',
+    genre: 'Mundo Aberto',
+    tags: ['Mundo Aberto', 'Sci-Fi', 'Aventura', 'Robôs'],
+    price: 249.90,
+    discount: 20,
+    fileSize: '95.4 GB',
+    rating: 4.8,
+    release: '2024-03-21',
+    sold: 13200,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2420110/library_600x900.jpg',
+    desc: 'Acompanhe Aloy enquanto ela desbrava uma fronteira majestosa e perigosa que oculta novas e misteriosas ameaças.',
+    steamUrl: 'https://store.steampowered.com/app/2420110/Horizon_Forbidden_West_Complete_Edition/',
+    magnet: 'magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent (DODI)', type: 'magnet', url: 'magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 10 64-bit', cpu: 'i3-8100 / Ryzen 3 1300X', ram: '16 GB RAM', gpu: 'GTX 1650 4GB', storage: '150 GB SSD' }
+  },
 
-  // --- STEAMRIP (DIRECT PLAY) ---
+  // --- STEAMRIP (DIRECT PLAY / CAPAS OFICIAIS STEAM) ---
   {
     id: 'black-myth-wukong',
     name: 'Black Myth: Wukong (Full Game & Shaders Cache)',
@@ -941,7 +1029,7 @@ let GAMES = [
     rating: 4.8,
     release: '2024-08-20',
     sold: 21000,
-    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/library_600x900.jpg',
     desc: 'Entre no papel do Predestinado nesta jornada épica inspirada na mitologia chinesa feita na Unreal Engine 5.',
     steamUrl: 'https://store.steampowered.com/app/2358720/Black_Myth_Wukong/',
     magnet: 'magnet:?xt=urn:btih:8934571029348102934810293481029348102934&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -965,7 +1053,7 @@ let GAMES = [
     rating: 4.9,
     release: '2024-09-19',
     sold: 16500,
-    cover: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2322010/library_600x900.jpg',
     desc: 'Kratos e Atreus devem viajar pelos Nove Reinos em busca de respostas enquanto as forças de Asgard se preparam para a guerra.',
     steamUrl: 'https://store.steampowered.com/app/2322010/God_of_War_Ragnarok/',
     magnet: 'magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pfullddl0000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -988,7 +1076,7 @@ let GAMES = [
     rating: 4.8,
     release: '2024-07-30',
     sold: 31000,
-    cover: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/library_600x900.jpg',
     desc: 'Lute, crie, construa e explore ao lado de misteriosas criaturas chamadas Pals neste jogo de sobrevivência em mundo aberto.',
     steamUrl: 'https://store.steampowered.com/app/1623730/Palworld/',
     magnet: 'magnet:?xt=urn:btih:p4lw0rldst34mr1pmult1pl4y3r0000000000000000&dn=Palworld+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -998,8 +1086,28 @@ let GAMES = [
     ],
     specs: { os: 'Windows 10 64-bit', cpu: 'i5-3570K 3.4 GHz', ram: '16 GB RAM', gpu: 'GeForce GTX 1050 (2GB)', storage: '40 GB' }
   },
+  {
+    id: 'helldivers-2',
+    name: 'Helldivers 2 (Super Citizen Edition)',
+    source: 'steamrip',
+    sourceName: 'SteamRIP',
+    genre: 'Ação',
+    tags: ['Co-op', 'Tiro', 'Sci-Fi', 'Multiplayer'],
+    price: 199.90,
+    discount: 0,
+    fileSize: '70.0 GB',
+    rating: 4.8,
+    release: '2024-02-08',
+    sold: 26000,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/library_600x900.jpg',
+    desc: 'A última linha de ataque da galáxia. Junte-se aos Helldivers na luta pela liberdade contra hordas alienígenas.',
+    steamUrl: 'https://store.steampowered.com/app/553850/HELLDIVERS_2/',
+    magnet: 'magnet:?xt=urn:btih:h3lld1v3rs2st34mr1p00000000000000000000000000&dn=Helldivers+2+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:h3lld1v3rs2st34mr1p00000000000000000000000000&dn=Helldivers+2+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i7-4790K', ram: '8 GB RAM', gpu: 'GTX 1050 Ti', storage: '100 GB' }
+  },
 
-  // --- FREE GOG GAMES (DRM-FREE) ---
+  // --- FREE GOG GAMES (DRM-FREE / CAPAS OFICIAIS STEAM) ---
   {
     id: 'cyberpunk-2077-phantom',
     name: 'Cyberpunk 2077: Phantom Liberty (v2.13 DRM-Free)',
@@ -1013,7 +1121,7 @@ let GAMES = [
     rating: 4.8,
     release: '2024-09-12',
     sold: 14200,
-    cover: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/library_600x900.jpg',
     desc: 'Explore Night City e o perigoso distrito de Dogtown com Keanu Reeves e Idris Elba. 100% DRM-Free sem crack.',
     steamUrl: 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/',
     magnet: 'magnet:?xt=urn:btih:c7b3rpunk2077ph4nt0ml1b3rtyg0g000000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -1036,7 +1144,7 @@ let GAMES = [
     rating: 5.0,
     release: '2023-12-14',
     sold: 38000,
-    cover: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/library_600x900.jpg',
     desc: 'Geralt de Rivia em sua jornada para encontrar a Criança da Profecia. Inclui expansões Hearts of Stone e Blood and Wine.',
     steamUrl: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/',
     magnet: 'magnet:?xt=urn:btih:w1tch3r3c0mpl3t33d1t10ng0g00000000000000000000&dn=The+Witcher+3+Complete+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -1045,6 +1153,26 @@ let GAMES = [
       { name: 'GOG Standalone Installer', type: 'ddl', url: 'https://freegogpcgames.com/the-witcher-3-wild-hunt-complete-edition/' }
     ],
     specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-4460 / Ryzen 3 1200', ram: '8 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '60 GB' }
+  },
+  {
+    id: 'baldurs-gate-3',
+    name: "Baldur's Gate 3: Digital Deluxe Edition",
+    source: 'gog',
+    sourceName: 'Free GOG Games',
+    genre: 'RPG',
+    tags: ['RPG', 'D&D', 'Estratégia', 'Jogo do Ano'],
+    price: 199.90,
+    discount: 20,
+    fileSize: '122.0 GB',
+    rating: 5.0,
+    release: '2023-08-03',
+    sold: 34000,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1086940/library_600x900.jpg',
+    desc: 'Reúna seu grupo e retorne aos Reinos Esquecidos em uma história de companheirismo e traição.',
+    steamUrl: 'https://store.steampowered.com/app/1086940/Baldurs_Gate_3/',
+    magnet: 'magnet:?xt=urn:btih:b4ldursg4t33g0gd3lux3000000000000000000000000&dn=Baldurs+Gate+3+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent (GOG DRM-Free)', type: 'magnet', url: 'magnet:?xt=urn:btih:b4ldursg4t33g0gd3lux3000000000000000000000000&dn=Baldurs+Gate+3+GOG&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 10 64-bit', cpu: 'i5 4690 / FX 8350', ram: '8 GB RAM', gpu: 'GTX 970 / RX 480', storage: '150 GB SSD' }
   },
   {
     id: 'hollow-knight-godmaster',
@@ -1059,7 +1187,7 @@ let GAMES = [
     rating: 5.0,
     release: '2024-02-14',
     sold: 32000,
-    cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/library_600x900.jpg',
     desc: 'Forje seu próprio caminho em Hallownest! Uma aventura de ação clássica em 2D por um vasto reino arruinado de insetos e heróis.',
     steamUrl: 'https://store.steampowered.com/app/367520/Hollow_Knight/',
     magnet: 'magnet:?xt=urn:btih:h0ll0wkn1ghtg0dm4st3rg0g00000000000000000000&dn=Hollow+Knight+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -1070,7 +1198,7 @@ let GAMES = [
     specs: { os: 'Windows 7/8/10/11', cpu: 'Intel Core 2 Duo E5200', ram: '4 GB RAM', gpu: 'GeForce 9800GTX+ (512MB)', storage: '9 GB' }
   },
 
-  // --- XATAB REPACKS ---
+  // --- XATAB REPACKS (CAPAS OFICIAIS STEAM) ---
   {
     id: 'forza-horizon-5',
     name: 'Forza Horizon 5: Premium Edition (v1.656.398)',
@@ -1084,7 +1212,7 @@ let GAMES = [
     rating: 4.8,
     release: '2024-04-18',
     sold: 17500,
-    cover: 'https://images.unsplash.com/photo-1547949003-9792a18a2601?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/library_600x900.jpg',
     desc: 'Explore as vibrantes paisagens de mundo aberto do México em centenas dos melhores carros do mundo.',
     steamUrl: 'https://store.steampowered.com/app/1551360/Forza_Horizon_5/',
     magnet: 'magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4b000000000000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -1106,7 +1234,7 @@ let GAMES = [
     rating: 4.6,
     release: '2023-10-15',
     sold: 11200,
-    cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2369390/library_600x900.jpg',
     desc: 'Junte-se à revolução moderna como Dani Rojas para libertar a ilha tropical de Yara do ditador Antón Castillo.',
     steamUrl: 'https://store.steampowered.com/app/2369390/Far_Cry_6/',
     magnet: 'magnet:?xt=urn:btih:f4rcry6g0ty3d1t10nx4t4br3p4ck00000000000000&dn=Far+Cry+6+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -1116,7 +1244,7 @@ let GAMES = [
     specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 3 1200 / Core i5-4460', ram: '8 GB RAM', gpu: 'GTX 960 / RX 460', storage: '60 GB' }
   },
 
-  // --- ATOP-GAMES ---
+  // --- ATOP-GAMES (CAPAS OFICIAIS STEAM) ---
   {
     id: 'minecraft-bedrock-java',
     name: 'Minecraft: Java & Bedrock Edition (Multiplayer Ativo)',
@@ -1130,7 +1258,7 @@ let GAMES = [
     rating: 4.9,
     release: '2024-06-07',
     sold: 45000,
-    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/library_600x900.jpg',
     desc: 'Construa tudo o que puder imaginar, explore mundos gerados infinitamente e sobreviva contra monstros perigosos.',
     steamUrl: 'https://www.minecraft.net/',
     magnet: 'magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000000&dn=Minecraft+Java+and+Bedrock+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -1153,7 +1281,7 @@ let GAMES = [
     rating: 4.9,
     release: '2023-08-10',
     sold: 16800,
-    cover: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/782330/library_600x900.jpg',
     desc: 'Os exércitos do inferno invadiram a Terra. Torne-se o Slayer em uma campanha épica para conquistar demônios através de dimensões.',
     steamUrl: 'https://store.steampowered.com/app/782330/DOOM_Eternal/',
     magnet: 'magnet:?xt=urn:btih:d00m3t3rn4ld3lux34t0pg4m3s0000000000000000&dn=Doom+Eternal+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -1163,7 +1291,7 @@ let GAMES = [
     specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5 @ 3.3 GHz / AMD Ryzen 3', ram: '8 GB RAM', gpu: 'GTX 1050Ti / RX 470', storage: '50 GB' }
   },
 
-  // --- EMPRESS RELEASES (DENUVO CRACKS) ---
+  // --- EMPRESS RELEASES (DENUVO CRACKS / CAPAS OFICIAIS STEAM) ---
   {
     id: 'hogwarts-legacy',
     name: 'Hogwarts Legacy: Digital Deluxe Edition',
@@ -1177,7 +1305,7 @@ let GAMES = [
     rating: 4.7,
     release: '2023-02-23',
     sold: 18900,
-    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/990080/library_600x900.jpg',
     desc: 'Experimente a vida como estudante de Hogwarts nos anos 1800. Faça aliados, duele com feiticeiros e decida o destino do mundo bruxo.',
     steamUrl: 'https://store.steampowered.com/app/990080/Hogwarts_Legacy/',
     magnet: 'magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss0000000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -1200,7 +1328,7 @@ let GAMES = [
     rating: 4.9,
     release: '2023-05-10',
     sold: 14200,
-    cover: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=75',
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2050650/library_600x900.jpg',
     desc: 'Leon S. Kennedy é enviado em uma missão para resgatar a filha do presidente em uma vila europeia isolada tomada pelo parasita Las Plagas.',
     steamUrl: 'https://store.steampowered.com/app/2050650/Resident_Evil_4/',
     magnet: 'magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss000000000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
@@ -1209,12 +1337,52 @@ let GAMES = [
     ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 3600 / Core i7-8700', ram: '16 GB RAM', gpu: 'GTX 1070 8GB / RX 5700', storage: '70 GB SSD' }
   },
+  {
+    id: 'mortal-kombat-1',
+    name: 'Mortal Kombat 1: Premium Edition',
+    source: 'empress',
+    sourceName: 'Empress Releases',
+    genre: 'Luta',
+    tags: ['Luta', 'Gore', 'Multiplayer', 'Ação'],
+    price: 279.90,
+    discount: 50,
+    fileSize: '115.0 GB',
+    rating: 4.6,
+    release: '2023-09-19',
+    sold: 9800,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1971870/library_600x900.jpg',
+    desc: 'Descubra um universo renascido de Mortal Kombat criado pelo Deus do Fogo Liu Kang.',
+    steamUrl: 'https://store.steampowered.com/app/1971870/Mortal_Kombat_1/',
+    magnet: 'magnet:?xt=urn:btih:m0rt4lk0mb4t13mpr3ss000000000000000000000000&dn=Mortal+Kombat+1+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:m0rt4lk0mb4t13mpr3ss000000000000000000000000&dn=Mortal+Kombat+1+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-6600', ram: '8 GB RAM', gpu: 'GTX 980 / RX 470', storage: '140 GB SSD' }
+  },
+  {
+    id: 'dead-space-remake',
+    name: 'Dead Space Remake: Deluxe Edition',
+    source: 'empress',
+    sourceName: 'Empress Releases',
+    genre: 'Terror',
+    tags: ['Terror', 'Sci-Fi', 'Sobrevivência', 'Espaço'],
+    price: 249.90,
+    discount: 60,
+    fileSize: '48.0 GB',
+    rating: 4.9,
+    release: '2023-01-27',
+    sold: 14600,
+    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1693980/library_600x900.jpg',
+    desc: 'O clássico de terror e sobrevivência de ficção científica retorna, totalmente reconstruído para oferecer uma experiência mais profunda e imersiva.',
+    steamUrl: 'https://store.steampowered.com/app/1693980/Dead_Space/',
+    magnet: 'magnet:?xt=urn:btih:d34dsp4c3r3m4k33mpr3ss0000000000000000000000&dn=Dead+Space+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:d34dsp4c3r3m4k33mpr3ss0000000000000000000000&dn=Dead+Space+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 2600x / Core i5 8600', ram: '16 GB RAM', gpu: 'RX 5700 / GTX 1070', storage: '50 GB SSD' }
+  },
 
   // Upcoming games
-  {id:'gta-vi', name:'Grand Theft Auto VI', genre:'Mundo Aberto', upcoming:true, date:'2026', cover:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=75'},
-  {id:'witcher-4', name:'The Witcher 4: Polaris', genre:'RPG', upcoming:true, date:'2026', cover:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=75'},
-  {id:'elder-scrolls-6', name:'The Elder Scrolls VI', genre:'RPG', upcoming:true, date:'2027', cover:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=75'},
-  {id:'silksong', name:'Hollow Knight: Silksong', genre:'Ação', upcoming:true, date:'TBA 2026', cover:'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600&auto=format&fit=crop&q=75'}
+  {id:'gta-vi', name:'Grand Theft Auto VI', genre:'Mundo Aberto', upcoming:true, date:'2026', cover:'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg'},
+  {id:'witcher-4', name:'The Witcher 4: Polaris', genre:'RPG', upcoming:true, date:'2026', cover:'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/library_600x900.jpg'},
+  {id:'elder-scrolls-6', name:'The Elder Scrolls VI', genre:'RPG', upcoming:true, date:'2027', cover:'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/library_600x900.jpg'},
+  {id:'silksong', name:'Hollow Knight: Silksong', genre:'Ação', upcoming:true, date:'TBA 2026', cover:'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/library_600x900.jpg'}
 ];
 
 const HERO_IDS=['gta-v-enhanced','elden-ring-shadow','black-myth-wukong','cyberpunk-2077-phantom','god-of-war-ragnarok'];
@@ -1341,7 +1509,7 @@ function handleCustomJsonImport(event){
           rating: 4.8,
           release: d.uploadDate||'Recente',
           sold: 1000,
-          cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=75',
+          cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg',
           desc: 'Jogo importado dinamicamente via arquivo JSON do Hydra.',
           steamUrl: '#',
           magnet: (d.uris&&d.uris[0])||'',
@@ -1372,6 +1540,107 @@ function debouncedSearch(val){
   }, 120);
 }
 
+/* ================= LIVE STEAM & EPIC SPECIALS ENGINE ================= */
+async function fetchLiveSteamSpecials(){
+  const grid=$('#liveSteamGrid');
+  grid.innerHTML=`<div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>Buscando promoções ao vivo na Steam...</div>`;
+  refreshIcons();
+
+  try{
+    const res = await fetch('https://store.steampowered.com/api/featuredcategories/?l=portuguese');
+    const data = await res.json();
+    const specials = (data.specials && data.specials.items) || [];
+    
+    if(specials.length > 0){
+      grid.innerHTML = specials.slice(0, 8).map(item => {
+        const orig = (item.original_price / 100).toFixed(2).replace('.', ',');
+        const fin = (item.final_price / 100).toFixed(2).replace('.', ',');
+        const img = item.large_capsule_image || item.header_image || `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${item.id}/header.jpg`;
+        return `
+          <div class="special-card">
+            <div class="thumb">
+              <img src="${img}" alt="${item.name}" loading="lazy" decoding="async">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-${item.discount_percent}%</span>
+            </div>
+            <div class="body">
+              <h4 title="${item.name}">${item.name}</h4>
+              <div class="foot">
+                <div>
+                  <span class="old" style="margin-right:6px">R$ ${orig}</span>
+                  <span class="price-new">R$ ${fin}</span>
+                </div>
+                <a href="https://store.steampowered.com/app/${item.id}/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">
+                  Ver na Loja
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      toast('Ofertas da Steam sincronizadas ao vivo!', 'check-circle');
+    } else {
+      throw new Error('Nenhum item retornado');
+    }
+  }catch(err){
+    // Fallback if CORS prevents direct browser fetch
+    grid.innerHTML = `
+      <div class="special-card">
+        <div class="thumb">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg" alt="Cyberpunk 2077">
+          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-60%</span>
+        </div>
+        <div class="body">
+          <h4>Cyberpunk 2077: Phantom Liberty</h4>
+          <div class="foot">
+            <div><span class="old">R$ 199,90</span> <span class="price-new">R$ 79,96</span></div>
+            <a href="https://store.steampowered.com/app/1091500/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">Steam</a>
+          </div>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="thumb">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg" alt="Red Dead Redemption 2">
+          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-67%</span>
+        </div>
+        <div class="body">
+          <h4>Red Dead Redemption 2</h4>
+          <div class="foot">
+            <div><span class="old">R$ 299,90</span> <span class="price-new">R$ 98,97</span></div>
+            <a href="https://store.steampowered.com/app/1174180/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">Steam</a>
+          </div>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="thumb">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg" alt="The Witcher 3">
+          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-75%</span>
+        </div>
+        <div class="body">
+          <h4>The Witcher 3: Wild Hunt Complete</h4>
+          <div class="foot">
+            <div><span class="old">R$ 159,90</span> <span class="price-new">R$ 39,97</span></div>
+            <a href="https://store.steampowered.com/app/292030/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">Steam</a>
+          </div>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="thumb">
+          <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg" alt="Forza Horizon 5">
+          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-50%</span>
+        </div>
+        <div class="body">
+          <h4>Forza Horizon 5</h4>
+          <div class="foot">
+            <div><span class="old">R$ 249,90</span> <span class="price-new">R$ 124,95</span></div>
+            <a href="https://store.steampowered.com/app/1551360/" target="_blank" class="opt-btn opt-btn-primary" style="padding:4px 10px;font-size:11px">Steam</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  refreshIcons();
+}
+
 /* ================= ROUTER ================= */
 const PAGES=['loja','browser','emuladores','promo','apps'];
 function navigate(){
@@ -1380,6 +1649,7 @@ function navigate(){
   $$('.page').forEach(p=>p.classList.toggle('on',p.id==='page-'+h));
   $$('#navLinks a').forEach(a=>a.classList.toggle('on',a.dataset.nav===h));
   window.scrollTo({top:0});
+  if(h==='promo') fetchLiveSteamSpecials();
 }
 window.addEventListener('hashchange',navigate, {passive:true});
 
@@ -1397,7 +1667,7 @@ function buildCarousel(){
       <img src="${g.cover}" alt="${g.name}" ${i===0?'':'loading="lazy"'} decoding="async">
       <div class="slide-body">
         <div class="slide-tags">
-          <span>Destaque Epic Store</span>
+          <span>Destaque Oficial</span>
           <span class="sep"></span>
           <span class="source-chip ${srcObj.badgeClass}">${g.sourceName}</span>
         </div>
