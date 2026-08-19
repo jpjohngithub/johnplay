@@ -1,21 +1,18 @@
 import type { BrowserGame } from '../types';
 
 export const BROWSER_GAMES: BrowserGame[] = [
-  // ==========================================
-  // POKI HITS OFICIAIS (poki.com)
-  // ==========================================
   {
     id: 'subway-surfers',
     title: 'Subway Surfers (Oficial Poki)',
     platform: 'Poki',
     genre: 'Corrida / Parkour 3D',
     thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/f54a88390886b6a3788a101b0f5efd46.png',
-    description: 'O clássico supremo dos runners mundiais! Corra pelos trilhos de trem com Jake, Tricky e Fresh, fuja do inspetor e desvie dos vagões.',
+    description: 'O maior clássico runner 3D dos videogames! Corra pelos trilhos com Jake, Tricky e Fresh, desvie dos trens e fuja do inspetor.',
     controls: 'Use as Setas [⬅️ ➡️] para mudar de pista, [⬆️] para pular e [⬇️] para rolar.',
-    gameUrl: 'https://poki.com/pt/g/subway-surfers',
+    gameUrl: 'https://poki.com/en/g/subway-surfers',
     developer: 'SYBO Games',
     rating: 4.9,
-    tags: ['Poki', 'Mais Jogados', '3D', 'Corrida', 'Ação', 'Hit']
+    tags: ['Poki', 'Mais Jogados', '3D', 'Corrida', 'Ação', 'Destaque']
   },
   {
     id: 'monkey-mart',
@@ -23,12 +20,12 @@ export const BROWSER_GAMES: BrowserGame[] = [
     platform: 'Poki',
     genre: 'Simulação / Gestão',
     thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/8e422df56e9c9ff4c28108a7051ae1f7.png',
-    description: 'Construa e gerencie seu próprio supermercado no mundo dos macacos! Plante bananas, milho, venda produtos e contrate funcionários.',
-    controls: 'Use [W, A, S, D] ou [Setas do Teclado] para mover seu macaco.',
+    description: 'Gerencie seu próprio supermercado no mundo dos macacos! Plante bananas, milho, atenda clientes e expanda a loja.',
+    controls: 'Use [W, A, S, D] ou [Setas do Teclado] para mover o macaco.',
     gameUrl: 'https://poki.com/pt/g/monkey-mart',
     developer: 'TinyDobbins',
     rating: 4.8,
-    tags: ['Poki', 'Mais Jogados', 'Gestão', 'Simulação', 'Casual', 'Hit']
+    tags: ['Poki', 'Gestão', 'Simulação', 'Casual']
   },
   {
     id: 'moto-x3m',
@@ -36,12 +33,12 @@ export const BROWSER_GAMES: BrowserGame[] = [
     platform: 'Poki',
     genre: 'Acrobacias / Motocross',
     thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/c22fe11c1d9cbfa9bcad39bc8ec73d09.png',
-    description: 'Pilote sua moto em 22 níveis cheios de perigo com serras gigantescas, dinamites, loops de 360 graus e rampas monumentais.',
-    controls: '[⬆️ ou W] Acelerar, [⬇️ ou S] Frear, [⬅️ ➡️ ou A/D] Inclinar e fazer mortais no ar.',
+    description: 'Pilote sua moto em 22 níveis cheios de obstáculos, serras gigantescas, explosivos e mortais no ar.',
+    controls: '[⬆️ ou W] Acelerar, [⬇️ ou S] Frear, [⬅️ ➡️ ou A/D] Inclinadores.',
     gameUrl: 'https://poki.com/pt/g/moto-x3m',
     developer: 'MadPuffers',
     rating: 4.9,
-    tags: ['Poki', 'Mais Jogados', 'Motos & Carros', 'Física', 'Acrobacia']
+    tags: ['Poki', 'Motos & Carros', 'Física', 'Acrobacia']
   },
   {
     id: 'drive-mad',
@@ -49,12 +46,12 @@ export const BROWSER_GAMES: BrowserGame[] = [
     platform: 'Poki',
     genre: 'Carros / Quebra-Cabeça de Física',
     thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/bb04dfae8c5c7ce1a54532ff4d52bc66.png',
-    description: 'Dirija caminhões e veículos malucos através de pontes que desmoronam, rampas vertiginosas e desafios de acrobacia sem capotar.',
-    controls: '[W / S] ou [Setas ⬆️ ⬇️] para acelerar e dar ré.',
+    description: 'Dirija caminhões e veículos em pontes instáveis, rampas e circuitos cheios de desafios sem capotar.',
+    controls: '[W / S] ou [Setas ⬆️ ⬇️] para acelerar e ré.',
     gameUrl: 'https://poki.com/pt/g/drive-mad',
     developer: 'Martin Magni (Fancade)',
     rating: 4.9,
-    tags: ['Poki', 'Mais Jogados', 'Motos & Carros', 'Física', 'Desafio']
+    tags: ['Poki', 'Motos & Carros', 'Física', 'Desafio']
   },
   {
     id: 'retro-bowl',
@@ -62,383 +59,50 @@ export const BROWSER_GAMES: BrowserGame[] = [
     platform: 'Poki',
     genre: 'Esportes / Futebol Americano Retrô',
     thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/5e8e19c00b0f49fa5eb86c99c6d3bcbe.png',
-    description: 'O jogo de esporte em pixel art definitivo! Administre a franquia, monte táticas vencedoras e comande o quarterback rumo ao anel de campeão.',
+    description: 'Administre sua equipe de futebol americano em estilo 8-bit, escolha jogadas táticas e vença o campeonato.',
     controls: '[Mouse] Mira e passe da bola, [Setas / W,S] Desviar da defesa.',
     gameUrl: 'https://poki.com/pt/g/retro-bowl',
     developer: 'New Star Games',
     rating: 4.9,
-    tags: ['Poki', 'Mais Jogados', 'Esportes & Futebol', 'Pixel Art', 'Estratégia']
+    tags: ['Poki', 'Esportes & Futebol', 'Pixel Art', 'Estratégia']
   },
   {
     id: '1v1-lol',
     title: '1v1.LOL (Oficial Poki)',
     platform: 'Poki',
-    genre: 'Tiro 3D / Construção e Batalha',
+    genre: 'Tiro 3D / Construção',
     thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/7f2ee691bb425cbf04ae7ae113a36db5.png',
-    description: 'Treine tiros de shotgun, rifles de precisão e construção rápida de paredes e rampas no simulador Battle Royale mais popular da web.',
-    controls: '[W, A, S, D] Mover, [Mouse] Atirar e Construir, [Z, X, C, V] Paredes e Rampas.',
+    description: 'Treine tiros de precisão e construção rápida de rampas e paredes na arena battle royale 3D.',
+    controls: '[W, A, S, D] Mover, [Mouse] Atirar e Construir.',
     gameUrl: 'https://poki.com/pt/g/1v1-lol-game',
     developer: 'JustPlay',
     rating: 4.7,
-    tags: ['Poki', 'Tiro', 'Battle Royale', '3D', 'Multijogador']
+    tags: ['Poki', 'Tiro', 'Battle Royale', '3D']
   },
-  {
-    id: 'stickman-hook',
-    title: 'Stickman Hook (Oficial Poki)',
-    platform: 'Poki',
-    genre: 'Física / Habilidade',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/8e5cb15629c424a1b02390ff5b00c920.png',
-    description: 'Balance como o homem-aranha por centenas de fases coloridas usando ganchos elásticos para atingir a linha de chegada em alta velocidade.',
-    controls: 'Segure [ESPAÇO] ou [Botão Esquerdo do Mouse] para prender o gancho.',
-    gameUrl: 'https://poki.com/pt/g/stickman-hook',
-    developer: 'Madbox',
-    rating: 4.8,
-    tags: ['Poki', 'Mais Jogados', 'Física', 'Casual', 'Acrobacia']
-  },
-  {
-    id: 'level-devil',
-    title: 'Level Devil: Not a Troll Game',
-    platform: 'Poki',
-    genre: 'Plataforma / Desafio / Troll',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/fbb78bdf1b353ce0a3e3c04294a500b9.png',
-    description: 'Um jogo de plataforma onde NADA é o que parece! Buracos invisíveis surgem do nada, espinhos se movem e as portas fogem de você.',
-    controls: '[Setas ⬅️ ➡️ ou A/D] para andar e [Espaço / Seta ⬆️] para pular.',
-    gameUrl: 'https://poki.com/pt/g/level-devil',
-    developer: 'Unept',
-    rating: 4.9,
-    tags: ['Poki', 'Mais Jogados', 'Plataforma', 'Desafio', 'Engraçado']
-  },
-  {
-    id: 'paper-io-2',
-    title: 'Paper.io 2 (Oficial Poki)',
-    platform: 'Poki',
-    genre: 'Estratégia / IO Battle',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/f1ae7c3bcbc565f487cb1fb4e8156aa7.png',
-    description: 'Pinte o mapa com a sua cor e conquiste 100% da arena! Intercepte e corte o rastro dos oponentes para eliminá-los.',
-    controls: '[Mouse] ou [Setas do Teclado] para guiar seu bloco de papel.',
-    gameUrl: 'https://poki.com/pt/g/paper-io-2',
-    developer: 'Voodoo',
-    rating: 4.7,
-    tags: ['Poki', 'Web IO', 'Competitivo', 'Estratégia', 'Casual']
-  },
-  {
-    id: 'temple-run-2',
-    title: 'Temple Run 2 (Oficial Poki)',
-    platform: 'Poki',
-    genre: 'Corrida 3D / Aventura',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/bb04dfae8c5c7ce1a54532ff4d52bc66.png',
-    description: 'Navegue por penhascos perigosos, tirolesas nas nuvens, minas e florestas exuberantes enquanto tenta escapar com o ídolo amaldiçoado.',
-    controls: '[Setas ⬅️ ➡️] Curvas, [⬆️] Pular, [⬇️] Escorregar, [A/D] Inclinar.',
-    gameUrl: 'https://poki.com/pt/g/temple-run-2',
-    developer: 'Imangi Studios',
-    rating: 4.8,
-    tags: ['Poki', '3D', 'Corrida', 'Aventura', 'Popular']
-  },
-  {
-    id: 'narrow-one',
-    title: 'Narrow.One (Arco e Flecha 3D)',
-    platform: 'Poki',
-    genre: 'Tiro 3D / Captura de Bandeira',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/545ae4972e2cfbc3f98ba761e389d4ff.png',
-    description: 'Combate medieval multiplayer em ritmo acelerado com arcos e flechas em castelos 3D! Capture a bandeira inimiga com seu clã.',
-    controls: '[W, A, S, D] Mover, [Mouse] Mirar e atirar as flechas.',
-    gameUrl: 'https://poki.com/pt/g/narrow-one',
-    developer: 'Pelican Party Studios',
-    rating: 4.9,
-    tags: ['Poki', 'Tiro', '3D', 'Multijogador', 'Ação']
-  },
-  {
-    id: 'smash-karts',
-    title: 'Smash Karts (Oficial Poki)',
-    platform: 'Poki',
-    genre: 'Kart / Combate 3D',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/5f1ec2f0b78cb47c617b07fc0b04bc53.png',
-    description: 'Batalhas de kart 3D explosivas estilo Mario Kart! Colete caixas misteriosas de armas, mísseis e bombas para explodir seus rivais.',
-    controls: '[W, A, S, D / Setas] Dirigir o kart, [Espaço] Disparar armas e foguetes.',
-    gameUrl: 'https://poki.com/pt/g/smash-karts',
-    developer: 'Tall Team',
-    rating: 4.9,
-    tags: ['Poki', 'Motos & Carros', '3D', 'Multijogador', 'Ação']
-  },
-  {
-    id: 'rooftop-snipers',
-    title: 'Rooftop Snipers (2 Jogadores)',
-    platform: 'Poki',
-    genre: 'Ação / 2 Jogadores',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/c22fe11c1d9cbfa9bcad39bc8ec73d09.png',
-    description: 'Duelo épico de atiradores de elite no topo dos prédios com física maluca de ragdoll! Derrube o adversário do terraço para vencer.',
-    controls: 'Jogador 1: [W] Pular, [E] Atirar | Jogador 2: [I] Pular, [O] Atirar.',
-    gameUrl: 'https://poki.com/pt/g/rooftop-snipers',
-    developer: 'Michael Heyman',
-    rating: 4.8,
-    tags: ['Poki', '2 Jogadores', 'Tiro', 'Engraçado', 'Física']
-  },
-  {
-    id: 'basketball-stars',
-    title: 'Basketball Stars (2 Jogadores)',
-    platform: 'Poki',
-    genre: 'Esportes / Basquete',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/bb04dfae8c5c7ce1a54532ff4d52bc66.png',
-    description: 'Enterradas insanas, roubos de bola e arremessos de 3 pontos com as lendas do basquete mundial! Jogue sozinho ou em 2 Jogadores.',
-    controls: '[W, A, S, D / Setas] Mover, [B / L] Arremessar e Roubar, [V / K] Super enterrada.',
-    gameUrl: 'https://poki.com/pt/g/basketball-stars',
-    developer: 'MadPuffers',
-    rating: 4.9,
-    tags: ['Poki', 'Esportes & Futebol', '2 Jogadores', 'Competitivo', 'Hit']
-  },
-  {
-    id: 'football-legends',
-    title: 'Football Legends 2026',
-    platform: 'Poki',
-    genre: 'Esportes / Futebol 2P',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/7f2ee691bb425cbf04ae7ae113a36db5.png',
-    description: 'Escolha seu clube de futebol favorito e dispute o torneio com super chutes especiais e cabeçadas épicas!',
-    controls: '[Setas] Mover e pular, [X] Chutar, [Z] Super chute especial.',
-    gameUrl: 'https://poki.com/pt/g/football-legends',
-    developer: 'MadPuffers',
-    rating: 4.8,
-    tags: ['Poki', 'Esportes & Futebol', '2 Jogadores', 'Popular']
-  },
-  {
-    id: 'crossy-road',
-    title: 'Crossy Road (Oficial Poki)',
-    platform: 'Poki',
-    genre: 'Arcade / Casual 3D',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/fbb78bdf1b353ce0a3e3c04294a500b9.png',
-    description: 'Por que a galinha atravessou a rua? Atravesse rodovias movimentadas, rios e trilhos de trem no sucesso mundial em 3D voxel.',
-    controls: '[Setas do Teclado ou W,A,S,D] para avançar e desviar do tráfego.',
-    gameUrl: 'https://poki.com/pt/g/crossy-road',
-    developer: 'Hipster Whale',
-    rating: 4.8,
-    tags: ['Poki', 'Mais Jogados', '3D', 'Casual', 'Arcade']
-  },
-
-  // ==========================================
-  // JOGOS 360 HITS CLÁSSICOS (jogos360.com.br)
-  // ==========================================
   {
     id: 'fogo-e-agua-1',
     title: 'Fogo e Água 1: Templo da Floresta (Jogos 360)',
     platform: 'Jogos 360',
     genre: 'Quebra-Cabeça / Cooperativo 2P',
     thumbnail: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600&auto=format&fit=crop&q=60',
-    description: 'O maior clássico cooperativo da história dos jogos de navegador! Controle o Garoto Fogo e a Garota Água e resolva todos os enigmas.',
-    controls: 'Garoto Fogo: [Setas do Teclado] | Garota Água: [W, A, S, D].',
+    description: 'Controle o Garoto Fogo e a Garota Água para resolver os enigmas do templo florestal em 2 jogadores.',
+    controls: 'Fogo: [Setas] | Água: [W, A, S, D].',
     gameUrl: 'https://www.jogos360.com.br/fogo_e_agua.html',
     developer: 'Oslo Albet',
     rating: 4.9,
-    tags: ['Jogos 360', '2 Jogadores', 'Quebra-Cabeça & Lógica', 'Clássico', 'Hit']
+    tags: ['Jogos 360', '2 Jogadores', 'Quebra-Cabeça & Lógica']
   },
-  {
-    id: 'fogo-e-agua-2',
-    title: 'Fogo e Água 2: Templo da Luz (Jogos 360)',
-    platform: 'Jogos 360',
-    genre: 'Quebra-Cabeça / 2 Jogadores',
-    thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=60',
-    description: 'Use espelhos e raios de luz para acionar alavancas e abrir portas no segundo capítulo lendário de Fogo e Água.',
-    controls: 'Fogo: [Setas] | Água: [W, A, S, D].',
-    gameUrl: 'https://www.jogos360.com.br/fireboy_and_watergirl_2_light_temple.html',
-    developer: 'Oslo Albet',
-    rating: 4.9,
-    tags: ['Jogos 360', '2 Jogadores', 'Quebra-Cabeça & Lógica', 'Popular']
-  },
-  {
-    id: 'bad-ice-cream-1',
-    title: 'Bad Ice-Cream (Jogos 360)',
-    platform: 'Jogos 360',
-    genre: 'Arcade / 2 Jogadores / Frutas',
-    thumbnail: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=60',
-    description: 'Quebre e crie blocos de gelo para pegar todas as frutas da fase enquanto foge dos monstros famintos no clássico da Nitrome.',
-    controls: 'Jogador 1: [Setas] e [Espaço] para soprar gelo | Jogador 2: [W,A,S,D] e [F].',
-    gameUrl: 'https://www.jogos360.com.br/bad_ice_cream.html',
-    developer: 'Nitrome',
-    rating: 4.9,
-    tags: ['Jogos 360', '2 Jogadores', 'Arcade', 'Clássico', 'Hit']
-  },
-  {
-    id: 'bad-ice-cream-2',
-    title: 'Bad Ice-Cream 2 (Jogos 360)',
-    platform: 'Jogos 360',
-    genre: 'Arcade / 2 Jogadores',
-    thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=60',
-    description: 'Mais fases, novos sabores de sorvete e inimigos inéditos para congelar e quebrar em dupla.',
-    controls: 'J1: [Setas + Espaço] | J2: [W,A,S,D + F].',
-    gameUrl: 'https://www.jogos360.com.br/bad_ice_cream_2.html',
-    developer: 'Nitrome',
-    rating: 4.8,
-    tags: ['Jogos 360', '2 Jogadores', 'Arcade', 'Popular']
-  },
-  {
-    id: 'bleach-vs-naruto',
-    title: 'Bleach vs Naruto 3.3 (Jogos 360)',
-    platform: 'Jogos 360',
-    genre: 'Luta / Anime / 2 Jogadores',
-    thumbnail: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=60',
-    description: 'O jogo de luta anime mais jogado da internet! Escolha Naruto, Sasuke, Ichigo, Madara, Aizen e lute com combos e transformações épicas.',
-    controls: 'J1: [A/D] Mover, [S] Defesa, [J] Ataque, [K] Pulo, [L] Esquiva, [U,I,O] Especiais.',
-    gameUrl: 'https://www.jogos360.com.br/bleach_vs_naruto_3_3.html',
-    developer: '5Dplay',
-    rating: 4.9,
-    tags: ['Jogos 360', 'Luta & Ação', '2 Jogadores', 'Anime', 'Hit']
-  },
-  {
-    id: 'penalty-shooters-2',
-    title: 'Penalty Shooters 2 (Jogos 360)',
-    platform: 'Jogos 360',
-    genre: 'Esportes / Pênaltis de Futebol',
-    thumbnail: 'https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=600&auto=format&fit=crop&q=60',
-    description: 'Dispute copas do mundo e campeonatos de clubes! Chute na gaveta com curva e faça defesas milagrosas como goleiro.',
-    controls: '[Mouse] Segure e solte para mirar e chutar a bola.',
-    gameUrl: 'https://www.jogos360.com.br/penalty_shooters_2.html',
-    developer: 'Physical Form',
-    rating: 4.8,
-    tags: ['Jogos 360', 'Esportes & Futebol', 'Futebol', 'Competitivo']
-  },
-  {
-    id: 'sinuca-8-ball',
-    title: '8 Ball Billiards Classic (Sinuca)',
-    platform: 'Jogos 360',
-    genre: 'Esportes / Sinuca 2P',
-    thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=60',
-    description: 'Jogue sinuca clássica bola 8 com física hiper realista contra o computador ou contra um amigo no mesmo PC.',
-    controls: '[Mouse] Mirar o taco, puxar para dar força e dar a tacada.',
-    gameUrl: 'https://www.jogos360.com.br/8_ball_billiards_classic.html',
-    developer: 'Famobi',
-    rating: 4.8,
-    tags: ['Jogos 360', 'Esportes & Futebol', '2 Jogadores', 'Sinuca', 'Casual']
-  },
-  {
-    id: 'papas-pizzeria',
-    title: "Papa's Pizzeria (Jogos 360)",
-    platform: 'Jogos 360',
-    genre: 'Culinária / Gestão de Restaurante',
-    thumbnail: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=60',
-    description: 'Atenda clientes exigentes, abra a massa, adicione os recheios certos, asse no ponto perfeito e corte a pizza para faturar gorjetas.',
-    controls: '[Mouse] Clique e arraste ingredientes e ferramentas.',
-    gameUrl: 'https://www.jogos360.com.br/papas_pizzeria.html',
-    developer: 'Flipline Studios',
-    rating: 4.9,
-    tags: ['Jogos 360', 'Culinária', 'Gestão', 'Clássico', 'Hit']
-  },
-  {
-    id: 'bob-the-robber',
-    title: 'Bob o Ladrão (Bob the Robber)',
-    platform: 'Jogos 360',
-    genre: 'Furtividade / Aventura',
-    thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=60',
-    description: 'Ajude Bob a invadir mansões e bancos protegidos! Desative câmeras de segurança, abra cofres secretos e fuja dos guardas.',
-    controls: '[W, A, S, D ou Setas] Mover, esconder nas sombras e arrombar portas.',
-    gameUrl: 'https://www.jogos360.com.br/bob_the_robber.html',
-    developer: 'Funtome',
-    rating: 4.8,
-    tags: ['Jogos 360', 'Furtividade', 'Aventura', 'Popular']
-  },
-  {
-    id: 'vex-7',
-    title: 'Vex 7 (Parkour Stickman)',
-    platform: 'Jogos 360',
-    genre: 'Parkour / Habilidade',
-    thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=60',
-    description: 'Corra, pule entre paredes e desvie de serras mortais no mais famoso jogo de parkour da internet.',
-    controls: '[W, A, S, D / Setas] Correr, pular, escorregar e nadar.',
-    gameUrl: 'https://www.jogos360.com.br/vex_7.html',
-    developer: 'Agame',
-    rating: 4.8,
-    tags: ['Jogos 360', 'Parkour', 'Desafio', 'Ação']
-  },
-  {
-    id: 'pou-web',
-    title: 'Pou (Oficial Jogos 360)',
-    platform: 'Jogos 360',
-    genre: 'Casual / Bichinho Virtual',
-    thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=60',
-    description: 'Alimente, dê banho, brinque de minigames e cuide do seu alienígena de estimação favorito direto no navegador.',
-    controls: '[Mouse] Interagir com o Pou e jogar minigames.',
-    gameUrl: 'https://www.jogos360.com.br/pou.html',
-    developer: 'Zakeh',
-    rating: 4.8,
-    tags: ['Jogos 360', 'Casual', 'Bichinho Virtual', 'Clássico']
-  },
-  {
-    id: 'red-ball-4',
-    title: 'Red Ball 4 (Vol. 1)',
-    platform: 'Jogos 360',
-    genre: 'Aventura / Física',
-    thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=60',
-    description: 'Role e pule pelas colinas para impedir que os malvados quadrados cinzas transformem o planeta Terra em um cubo!',
-    controls: '[W, A, D ou Setas] Rolar e pular sobre os monstros.',
-    gameUrl: 'https://www.jogos360.com.br/red_ball_4.html',
-    developer: 'FDG Entertainment',
-    rating: 4.9,
-    tags: ['Jogos 360', 'Aventura', 'Física', 'Popular']
-  },
-
-  // ==========================================
-  // MULTIPLAYER WEB IO & CRAZYGAMES HITS
-  // ==========================================
   {
     id: 'slither-io',
-    title: 'Slither.io (Cobrinha Multiplayer)',
+    title: 'Slither.io (Oficial IO)',
     platform: 'Web IO',
     genre: 'IO Battle / Multijogador Online',
     thumbnail: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600&auto=format&fit=crop&q=60',
-    description: 'Devore esferas brilhantes para se tornar a maior cobra do servidor mundial. Cerque e elimine outras cobras para crescer mais rápido.',
-    controls: '[Mouse] Direção | [Clique Esquerdo / Espaço] Turbo de aceleração.',
+    description: 'Cresça devorando esferas luminosas na maior arena de cobrinhas da internet mundial.',
+    controls: '[Mouse] Direção | [Clique Esquerdo] Turbo.',
     gameUrl: 'https://slither.io/',
     developer: 'Steve Howse',
     rating: 4.9,
-    tags: ['Web IO', 'Multijogador', 'Competitivo', 'Hit']
-  },
-  {
-    id: 'agar-io',
-    title: 'Agar.io (Oficial)',
-    platform: 'Web IO',
-    genre: 'IO Battle / Estratégia',
-    thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=60',
-    description: 'O jogo que criou o gênero .IO! Controle sua célula, engula células menores, divida-se em partes e domine a arena.',
-    controls: '[Mouse] Mover | [Espaço] Dividir célula | [W] Ejetar massa.',
-    gameUrl: 'https://agar.io/',
-    developer: 'Matheus Valadares (Miniclip)',
-    rating: 4.8,
-    tags: ['Web IO', 'Multijogador', 'Estratégia', 'Clássico']
-  },
-  {
-    id: 'gartic-phone',
-    title: 'Gartic Phone (Telefone Sem Fio)',
-    platform: 'Web IO',
-    genre: 'Festa / Desenho / Amigos',
-    thumbnail: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop&q=60',
-    description: 'O jogo social mais hilário da internet! Escreva frases malucas, desenhe as ideias dos amigos e veja o resultado final.',
-    controls: '[Mouse] Desenhe no quadro e digite suas respostas no teclado.',
-    gameUrl: 'https://garticphone.com/pt',
-    developer: 'Onrizon Games',
-    rating: 4.9,
-    tags: ['Web IO', '2 Jogadores', 'Festa', 'Desenho', 'Hit']
-  },
-  {
-    id: 'krunker-io',
-    title: 'Krunker.io (FPS 3D Pixel)',
-    platform: 'Web IO',
-    genre: 'Tiro FPS 3D / Competitivo',
-    thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=60',
-    description: 'FPS multiplayer estilo CS:GO em pixel art que roda direto no navegador com 144+ FPS e combate ultra veloz.',
-    controls: '[W,A,S,D] Mover, [Mouse] Mirar e atirar, [Espaço] Pular, [Shift] Agachar.',
-    gameUrl: 'https://krunker.io/',
-    developer: 'Yendis Entertainment',
-    rating: 4.8,
-    tags: ['Web IO', 'Tiro', '3D', 'Multijogador', 'Hit']
-  },
-  {
-    id: 'shell-shockers',
-    title: 'Shell Shockers (FPS dos Ovos)',
-    platform: 'Web IO',
-    genre: 'Tiro FPS 3D / Ovos de Combate',
-    thumbnail: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&auto=format&fit=crop&q=60',
-    description: 'Assuma o controle de um ovo armado até os dentes e quebre seus oponentes com espingardas, rifles e granadas.',
-    controls: '[W, A, S, D] Mover, [Mouse] Atirar, [E] Trocar arma, [Q] Granadas.',
-    gameUrl: 'https://shellshock.io/',
-    developer: 'Blue Wizard Digital',
-    rating: 4.8,
-    tags: ['Web IO', 'Tiro', '3D', 'Multijogador']
+    tags: ['Web IO', 'Multijogador', 'Competitivo']
   }
 ];
