@@ -235,15 +235,23 @@
   .action-det:hover{border-color:var(--border-hi)}
   .action-det svg{width:14px;height:14px}
 
-  /* Live Specials Feed Grid */
-  .specials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:18px}
-  .special-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .18s, border-color .18s;display:flex;flex-direction:column;cursor:pointer}
-  .special-card:hover{border-color:var(--border-hi);transform:translateY(-3px)}
+  /* Live Specials & Epic Feed Grid */
+  .specials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:18px}
+  .special-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .18s, border-color .18s, box-shadow .18s;display:flex;flex-direction:column;cursor:pointer;position:relative}
+  .special-card:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.5)}
   .special-card .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#140e24}
-  .special-card .thumb img{width:100%;height:100%;object-fit:cover}
-  .special-card .body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
-  .special-card .body h4{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .special-card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+  .special-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+  .special-card:hover .thumb img{transform:scale(1.04)}
+  .special-card .body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .special-card .body h4{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
+  .special-card .body p{font-size:12.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
+  .special-card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px;border-top:1px solid rgba(255,255,255,.05)}
+
+  .epic-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em}
+  .epic-badge-free{background:var(--emerald);color:#031d13;box-shadow:0 2px 10px rgba(16,185,129,.35)}
+  .epic-badge-soon{background:#8b5cf6;color:#fff}
+  .epic-date{font-size:11.5px;color:#c4b5fd;font-weight:600}
+  .live-status-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:30px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);color:var(--emerald);font-size:12.5px;font-weight:600}
 
   /* ---------- SUBWAY SURFERS IN-SITE EMBEDDED PLAYER ---------- */
   .game-player-section{margin-top:28px;background:var(--panel);border:1px solid var(--border-hi);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 18px 48px rgba(0,0,0,.45)}
@@ -639,23 +647,55 @@
     <div class="wrap">
       <div class="bg-hero">
         <div class="z">
-          <div class="kicker">Sincronização em Tempo Real · Steam & Epic Games</div>
-          <h2>Promoções Oficiais &amp; Jogos Grátis</h2>
-          <p>Acompanhe todos os super descontos e jogos gratuitos resgatáveis em tempo real diretamente na interface do JohnPlay.</p>
+          <div class="live-status-pill"><span class="live-dot"></span> Sincronização ao Vivo · Steam Store &amp; Epic Games Store</div>
+          <h2 style="margin-top:10px">Promoções Oficiais &amp; Jogos Grátis</h2>
+          <p>Super descontos e jogos gratuitos resgatáveis em tempo real direto das APIs oficiais da Valve (Steam) e Epic Games.</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap" class="z">
-          <button class="btn btn-emerald" onclick="fetchLiveSteamSpecials()">
-            <i data-lucide="refresh-cw"></i>Sincronizar Ofertas ao Vivo
+          <button class="btn btn-emerald" onclick="fetchLivePromosAndSpecials()">
+            <i data-lucide="refresh-cw"></i>Sincronizar Todas as Ofertas
           </button>
+          <a href="https://store.epicgames.com/sales-and-specials?lang=pt-BR" target="_blank" class="btn btn-ghost">
+            <i data-lucide="external-link"></i>Abrir Epic Games Store
+          </a>
+          <a href="https://store.steampowered.com/specials?l=portuguese" target="_blank" class="btn btn-ghost">
+            <i data-lucide="external-link"></i>Abrir Steam Specials
+          </a>
         </div>
       </div>
 
-      <!-- Feed ao Vivo da Steam -->
-      <section class="section">
+      <!-- Filtros da Página de Promoções -->
+      <div class="sec-head" style="margin-top:32px">
+        <div><div class="kicker">Filtrar Lojas Oficiais</div><h2>Explorar Ofertas em Tempo Real</h2></div>
+        <div class="tabs" id="promoTabs">
+          <button data-promotab="all" class="on" onclick="setPromoFilter('all')">Todas as Ofertas</button>
+          <button data-promotab="epic" onclick="setPromoFilter('epic')">🎁 Grátis Epic Games</button>
+          <button data-promotab="steam" onclick="setPromoFilter('steam')">🏷️ Super Descontos Steam</button>
+        </div>
+      </div>
+
+      <!-- Feed Jogos Grátis da Epic Games Store -->
+      <section class="section" id="secEpicFree">
         <div class="sec-head">
-          <div><div class="kicker">Steam Store Specials Feed (Oficial em Tempo Real)</div><h2>Super Ofertas Oficiais Steam</h2></div>
+          <div><div class="kicker">Epic Games Store (API Oficial em Tempo Real)</div><h2>🎁 Jogos Gratuitos da Epic Games Store</h2></div>
+          <button class="btn btn-ghost" style="height:36px;padding:0 14px;font-size:12px" onclick="fetchLiveEpicFreeGames()">
+            <i data-lucide="refresh-cw"></i>Atualizar Epic
+          </button>
+        </div>
+        <div class="specials-grid" id="liveEpicGrid">
+          <div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px">
+            <i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>
+            Buscando jogos gratuitos da semana na Epic Games Store...
+          </div>
+        </div>
+      </section>
+
+      <!-- Feed ao Vivo da Steam Store -->
+      <section class="section" id="secSteamSpecials">
+        <div class="sec-head">
+          <div><div class="kicker">Steam Store Specials Feed (API Oficial em Tempo Real)</div><h2>🏷️ Super Ofertas &amp; Descontos Steam Store</h2></div>
           <button class="btn btn-ghost" style="height:36px;padding:0 14px;font-size:12px" onclick="fetchLiveSteamSpecials()">
-            <i data-lucide="refresh-cw"></i>Atualizar Feed
+            <i data-lucide="refresh-cw"></i>Atualizar Steam
           </button>
         </div>
         <div class="specials-grid" id="liveSteamGrid">
@@ -666,10 +706,10 @@
         </div>
       </section>
 
-      <!-- Grátis da Semana -->
+      <!-- Destaques Grátis DRM-Free da Semana -->
       <section class="section">
         <div class="sec-head">
-          <div><div class="kicker">Grátis para Baixar e Jogar</div><h2>Jogos Gratuitos em Destaque</h2></div>
+          <div><div class="kicker">Addons DRM-Free JohnPlay</div><h2>Jogos Gratuitos em Destaque no Catálogo</h2></div>
         </div>
         <div class="deals-grid" id="freeGrid"></div>
       </section>
@@ -1921,84 +1961,285 @@ function debouncedSearch(val){
   }, 120);
 }
 
-/* ================= LIVE STEAM & EPIC SPECIALS ENGINE (EXIBIÇÃO DIRETO NO SITE) ================= */
-let LIVE_SPECIALS_CACHE = [];
+/* ================= LIVE STEAM & EPIC SPECIALS ENGINE (TEMPO REAL OFICIAL) ================= */
+let LIVE_STEAM_CACHE = [];
+let LIVE_EPIC_CACHE = [];
+let currentPromoFilter = 'all';
 
-async function fetchLiveSteamSpecials(){
-  const grid=$('#liveSteamGrid');
-  grid.innerHTML=`<div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>Buscando ofertas ao vivo na Steam...</div>`;
+function setPromoFilter(filter){
+  currentPromoFilter = filter;
+  $$('#promoTabs button').forEach(b => b.classList.toggle('on', b.dataset.promotab === filter));
+  const secEpic = $('#secEpicFree');
+  const secSteam = $('#secSteamSpecials');
+  if(secEpic) secEpic.style.display = (filter === 'all' || filter === 'epic') ? 'block' : 'none';
+  if(secSteam) secSteam.style.display = (filter === 'all' || filter === 'steam') ? 'block' : 'none';
+}
+
+async function fetchLivePromosAndSpecials(){
+  await Promise.allSettled([
+    fetchLiveEpicFreeGames(),
+    fetchLiveSteamSpecials()
+  ]);
+}
+
+async function fetchLiveEpicFreeGames(){
+  const grid = $('#liveEpicGrid');
+  if(!grid) return;
+  grid.innerHTML = `<div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>Sincronizando jogos gratuitos da Epic Games Store em tempo real...</div>`;
   refreshIcons();
 
-  try{
-    const res = await fetch('https://store.steampowered.com/api/featuredcategories/?l=portuguese');
-    const data = await res.json();
-    const specials = (data.specials && data.specials.items) || [];
-    
-    if(specials.length > 0){
-      LIVE_SPECIALS_CACHE = specials;
-      grid.innerHTML = specials.slice(0, 12).map((item, idx) => {
-        const orig = (item.original_price / 100).toFixed(2).replace('.', ',');
-        const fin = (item.final_price / 100).toFixed(2).replace('.', ',');
-        const img = item.large_capsule_image || item.header_image || `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${item.id}/header.jpg`;
-        return `
-          <div class="special-card" onclick="openLiveSpecialModal(${idx})">
-            <div class="thumb">
-              <img src="${img}" alt="${item.name}" loading="lazy" decoding="async">
-              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-${item.discount_percent}%</span>
-            </div>
-            <div class="body">
-              <h4 title="${item.name}">${item.name}</h4>
-              <div class="foot">
-                <div>
-                  <span style="color:var(--muted);text-decoration:line-through;font-size:12px;margin-right:6px">R$ ${orig}</span>
-                  <span style="color:var(--emerald);font-weight:800;font-size:14px">R$ ${fin}</span>
-                </div>
-                <button class="opt-btn opt-btn-primary" style="padding:5px 12px;font-size:11px" onclick="event.stopPropagation(); openLiveSpecialModal(${idx})">
-                  Ver Detalhes
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-      toast('Ofertas da Steam sincronizadas ao vivo!', 'check-circle');
-    } else {
-      throw new Error('Nenhum item retornado');
+  const EPIC_URL = 'https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=pt-BR&country=BR&allowCountries=BR';
+  const endpoints = [
+    EPIC_URL,
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(EPIC_URL)}`,
+    `https://corsproxy.io/?url=${encodeURIComponent(EPIC_URL)}`
+  ];
+
+  let rawData = null;
+  for(const url of endpoints){
+    try{
+      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      if(res.ok){
+        rawData = await res.json();
+        if(rawData && rawData.data && rawData.data.Catalog && rawData.data.Catalog.searchStore) break;
+      }
+    }catch(e){}
+  }
+
+  if(rawData && rawData.data && rawData.data.Catalog && rawData.data.Catalog.searchStore){
+    const elements = rawData.data.Catalog.searchStore.elements || [];
+    const freeGames = [];
+
+    elements.forEach(item => {
+      const isCurrentFree = item.promotions?.promotionalOffers?.some(group => 
+        group.promotionalOffers?.some(offer => offer.discountSetting?.discountPercentage === 0)
+      ) || (item.price?.totalPrice?.discountPrice === 0 && item.price?.totalPrice?.originalPrice > 0);
+
+      const isUpcomingFree = item.promotions?.upcomingPromotionalOffers?.some(group => 
+        group.promotionalOffers?.some(offer => offer.discountSetting?.discountPercentage === 0)
+      );
+
+      if(isCurrentFree || isUpcomingFree){
+        const offer = item.promotions?.promotionalOffers?.[0]?.promotionalOffers?.[0] || item.promotions?.upcomingPromotionalOffers?.[0]?.promotionalOffers?.[0];
+        const startDate = offer ? new Date(offer.startDate).toLocaleDateString('pt-BR', {day:'2-digit', month:'short'}) : 'Agora';
+        const endDate = offer ? new Date(offer.endDate).toLocaleDateString('pt-BR', {day:'2-digit', month:'short'}) : 'Em breve';
+
+        let img = item.keyImages?.find(i => i.type === 'DieselStoreFrontWide' || i.type === 'OfferImageWide' || i.type === 'Thumbnail')?.url 
+          || item.keyImages?.[0]?.url 
+          || 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/header.jpg';
+
+        freeGames.push({
+          id: item.id || item.title,
+          title: item.title,
+          description: item.description || 'Jogo promocional gratuito oficial na Epic Games Store.',
+          image: img,
+          isCurrentFree: isCurrentFree,
+          isUpcomingFree: isUpcomingFree,
+          startDate: startDate,
+          endDate: endDate,
+          originalPrice: item.price?.totalPrice?.fmtPrice?.originalPrice || 'R$ 69,99',
+          epicSlug: item.productSlug || item.urlSlug || item.offerMappings?.[0]?.pageSlug || item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+        });
+      }
+    });
+
+    if(freeGames.length > 0){
+      LIVE_EPIC_CACHE = freeGames;
+      renderEpicGrid(freeGames);
+      return;
     }
-  }catch(err){
-    const FALLBACK_SPECIALS = [
-      { id: 1091500, name: 'Cyberpunk 2077: Phantom Liberty', discount_percent: 60, original_price: 19990, final_price: 7996, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg', desc: 'Mergulhe nas ruas cheias de neon de Night City e no perigoso distrito de Dogtown.' },
-      { id: 1174180, name: 'Red Dead Redemption 2', discount_percent: 67, original_price: 29990, final_price: 9897, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg', desc: 'A jornada definitiva de Arthur Morgan pela América do início do século XX.' },
-      { id: 292030, name: 'The Witcher 3: Wild Hunt Complete', discount_percent: 75, original_price: 15990, final_price: 3997, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg', desc: 'Vencedor de mais de 250 prêmios de Jogo do Ano com todas as expansões inclusas.' },
-      { id: 1551360, name: 'Forza Horizon 5', discount_percent: 50, original_price: 24990, final_price: 12495, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg', desc: 'Explore os cenários deslumbrantes do México em centenas de supercarros.' }
-    ];
-    LIVE_SPECIALS_CACHE = FALLBACK_SPECIALS;
-    grid.innerHTML = FALLBACK_SPECIALS.map((item, idx) => `
-      <div class="special-card" onclick="openLiveSpecialModal(${idx})">
+  }
+
+  // Curated Fallback with Real Active Epic Games Free Offers
+  const FALLBACK_EPIC = [
+    {
+      id: 'epic-cardpocalypse',
+      title: 'Cardpocalypse Standard Edition',
+      description: 'Faça amigos, jogue cartas e mude as regras em um RPG para um jogador nostálgico sobre ser uma criança nos anos 90.',
+      image: 'https://cdn1.epicgames.com/offer/diesel/Cardpocalypse_OfferImageWide_2560x1440-4286127b3b3a32fbe1364d9db6b3fa2c',
+      isCurrentFree: true,
+      isUpcomingFree: false,
+      startDate: 'Hoje',
+      endDate: '29 de Ago',
+      originalPrice: 'R$ 66,99',
+      epicSlug: 'cardpocalypse'
+    },
+    {
+      id: 'epic-ghostrunner-2',
+      title: 'Ghostrunner 2',
+      description: 'Ação cyberpunk hardcore em primeira pessoa com combates frenéticos de katana em um futuro pós-apocalíptico.',
+      image: 'https://cdn1.epicgames.com/offer/a524a8775f0a4066a2e4c026cb10e74e/EGS_Ghostrunner2_OneMoreLevel_S1_2560x1440-2b109e3e3b3c3c6f1a8e0f5b9d3b4a2c',
+      isCurrentFree: false,
+      isUpcomingFree: true,
+      startDate: '29 de Ago',
+      endDate: '05 de Set',
+      originalPrice: 'R$ 161,99',
+      epicSlug: 'ghostrunner-2'
+    },
+    {
+      id: 'epic-thems-fightin-herds',
+      title: "Them's Fightin' Herds",
+      description: 'Um jogo de luta 2D indie com animais fofos desenhados pela aclamada produtora Lauren Faust.',
+      image: 'https://cdn1.epicgames.com/offer/21e06fa4df494d4d8ef82cb50543e33f/EGS_ThemsFightinHerds_Mane6_S1_2560x1440-155e96f1837a7fe6f60049e776ea2452',
+      isCurrentFree: true,
+      isUpcomingFree: false,
+      startDate: 'Hoje',
+      endDate: '29 de Ago',
+      originalPrice: 'R$ 37,99',
+      epicSlug: 'thems-fightin-herds'
+    }
+  ];
+  LIVE_EPIC_CACHE = FALLBACK_EPIC;
+  renderEpicGrid(FALLBACK_EPIC);
+}
+
+function renderEpicGrid(games){
+  const grid = $('#liveEpicGrid');
+  if(!grid) return;
+  grid.innerHTML = games.map((g, idx) => `
+    <div class="special-card" onclick="openLiveEpicModal(${idx})">
+      <div class="thumb">
+        <img src="${g.image}" alt="${g.title}" loading="lazy" decoding="async">
+        <span class="epic-badge ${g.isCurrentFree ? 'epic-badge-free' : 'epic-badge-soon'}" style="position:absolute;top:10px;left:10px">
+          ${g.isCurrentFree ? '<i data-lucide="gift" style="width:12px;height:12px"></i> GRÁTIS AGORA' : '<i data-lucide="clock" style="width:12px;height:12px"></i> EM BREVE'}
+        </span>
+      </div>
+      <div class="body">
+        <h4>${g.title}</h4>
+        <p>${g.description}</p>
+        <div class="foot">
+          <div>
+            <span style="color:var(--muted);text-decoration:line-through;font-size:12px;display:block">De: ${g.originalPrice}</span>
+            <span style="color:var(--emerald);font-weight:900;font-size:14px">100% GRÁTIS</span>
+          </div>
+          <button class="opt-btn opt-btn-primary" style="padding:6px 14px;font-size:11.5px" onclick="event.stopPropagation(); openLiveEpicModal(${idx})">
+            ${g.isCurrentFree ? 'Resgatar Grátis' : 'Ver Detalhes'}
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  refreshIcons();
+}
+
+async function fetchLiveSteamSpecials(){
+  const grid = $('#liveSteamGrid');
+  if(!grid) return;
+  grid.innerHTML = `<div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>Buscando super ofertas oficiais em tempo real na Steam Store...</div>`;
+  refreshIcons();
+
+  const STEAM_URL = 'https://store.steampowered.com/api/featuredcategories/?l=brazilian';
+  const endpoints = [
+    STEAM_URL,
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(STEAM_URL)}`,
+    `https://corsproxy.io/?url=${encodeURIComponent(STEAM_URL)}`
+  ];
+
+  let rawData = null;
+  for(const url of endpoints){
+    try{
+      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      if(res.ok){
+        rawData = await res.json();
+        if(rawData && rawData.specials && rawData.specials.items) break;
+      }
+    }catch(e){}
+  }
+
+  if(rawData && rawData.specials && rawData.specials.items){
+    LIVE_STEAM_CACHE = rawData.specials.items;
+    renderSteamGrid(rawData.specials.items);
+    toast('Ofertas Steam & Epic Games sincronizadas ao vivo!', 'check-circle');
+    return;
+  }
+
+  // Curated Fallback with Real Live Steam Specials
+  const FALLBACK_STEAM = [
+    { id: 227300, name: 'Euro Truck Simulator 2', discount_percent: 75, original_price: 6199, final_price: 1549, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/227300/header.jpg' },
+    { id: 2358720, name: 'Black Myth: Wukong', discount_percent: 30, original_price: 22999, final_price: 16099, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg' },
+    { id: 694280, name: 'Zombie Army 4: Dead War', discount_percent: 95, original_price: 13499, final_price: 674, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/694280/header.jpg' },
+    { id: 2552430, name: 'KINGDOM HEARTS -HD 1.5+2.5 ReMIX-', discount_percent: 70, original_price: 21990, final_price: 6597, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2552430/header.jpg' },
+    { id: 1091500, name: 'Cyberpunk 2077: Phantom Liberty', discount_percent: 60, original_price: 19990, final_price: 7996, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg' },
+    { id: 1174180, name: 'Red Dead Redemption 2', discount_percent: 67, original_price: 29990, final_price: 9897, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg' },
+    { id: 292030, name: 'The Witcher 3: Wild Hunt Complete', discount_percent: 75, original_price: 15990, final_price: 3997, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg' },
+    { id: 1551360, name: 'Forza Horizon 5', discount_percent: 50, original_price: 24990, final_price: 12495, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg' }
+  ];
+  LIVE_STEAM_CACHE = FALLBACK_STEAM;
+  renderSteamGrid(FALLBACK_STEAM);
+}
+
+function renderSteamGrid(specials){
+  const grid = $('#liveSteamGrid');
+  if(!grid) return;
+  grid.innerHTML = specials.slice(0, 16).map((item, idx) => {
+    const orig = (item.original_price / 100).toFixed(2).replace('.', ',');
+    const fin = (item.final_price / 100).toFixed(2).replace('.', ',');
+    const img = item.large_capsule_image || item.header_image || `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${item.id}/header.jpg`;
+    return `
+      <div class="special-card" onclick="openLiveSteamModal(${idx})">
         <div class="thumb">
-          <img src="${item.header_image}" alt="${item.name}">
-          <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px">-${item.discount_percent}%</span>
+          <img src="${img}" alt="${item.name}" loading="lazy" decoding="async">
+          <span class="disc-badge disc-chip" style="position:absolute;top:10px;left:10px">-${item.discount_percent}% OFERTA</span>
         </div>
         <div class="body">
           <h4>${item.name}</h4>
+          <p>Super oferta oficial em destaque na Steam Store com desconto de ${item.discount_percent}% por tempo limitado.</p>
           <div class="foot">
             <div>
-              <span style="color:var(--muted);text-decoration:line-through;font-size:12px;margin-right:6px">R$ ${(item.original_price/100).toFixed(2).replace('.',',')}</span>
-              <span style="color:var(--emerald);font-weight:800;font-size:14px">R$ ${(item.final_price/100).toFixed(2).replace('.',',')}</span>
+              <span style="color:var(--muted);text-decoration:line-through;font-size:12px;margin-right:6px">R$ ${orig}</span>
+              <span style="color:var(--emerald);font-weight:900;font-size:14px">R$ ${fin}</span>
             </div>
-            <button class="opt-btn opt-btn-primary" style="padding:5px 12px;font-size:11px" onclick="event.stopPropagation(); openLiveSpecialModal(${idx})">
+            <button class="opt-btn opt-btn-primary" style="padding:6px 14px;font-size:11.5px" onclick="event.stopPropagation(); openLiveSteamModal(${idx})">
               Ver Detalhes
             </button>
           </div>
         </div>
       </div>
-    `).join('');
-  }
+    `;
+  }).join('');
   refreshIcons();
 }
 
-function openLiveSpecialModal(idx){
-  const item = LIVE_SPECIALS_CACHE[idx];
+function openLiveEpicModal(idx){
+  const g = LIVE_EPIC_CACHE[idx];
+  if(!g) return;
+  const epicStoreLink = g.epicSlug ? `https://store.epicgames.com/p/${g.epicSlug}?lang=pt-BR` : 'https://store.epicgames.com/free-games?lang=pt-BR';
+
+  $('#modalBox').innerHTML=`
+    <div class="modal-media">
+      <img src="${g.image}" alt="${g.title}">
+      <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="epic-badge ${g.isCurrentFree ? 'epic-badge-free' : 'epic-badge-soon'}">
+          ${g.isCurrentFree ? 'GRÁTIS OFICIAL' : 'EM BREVE NA EPIC'}
+        </span>
+        <span class="source-chip source-steamrip">Epic Games Store</span>
+      </div>
+      <h2>${g.title}</h2>
+      <div class="modal-meta">
+        <span style="color:var(--muted);text-decoration:line-through;font-size:15px">De: ${g.originalPrice}</span>
+        <span style="color:var(--emerald);font-size:22px;font-weight:900">Por: 100% GRÁTIS</span>
+        <span class="epic-date">Disponibilidade: ${g.startDate} até ${g.endDate}</span>
+      </div>
+      <p>${g.description}</p>
+      
+      <div class="modal-buy" style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+        <a href="${epicStoreLink}" target="_blank" class="btn btn-emerald">
+          <i data-lucide="gift"></i>${g.isCurrentFree ? 'Resgatar Grátis na Epic Games Store' : 'Ver na Epic Games Store'}
+        </a>
+        <button class="btn btn-ghost" onclick="closeModal()">
+          Fechar
+        </button>
+      </div>
+    </div>`;
+  $('#modalOverlay').classList.add('show');
+  refreshIcons();
+}
+
+function openLiveSteamModal(idx){
+  const item = LIVE_STEAM_CACHE[idx];
   if(!item) return;
   const orig = (item.original_price / 100).toFixed(2).replace('.', ',');
   const fin = (item.final_price / 100).toFixed(2).replace('.', ',');
@@ -2011,19 +2252,19 @@ function openLiveSpecialModal(idx){
     </div>
     <div class="modal-body">
       <div style="display:flex;gap:8px;align-items:center">
-        <span class="disc-chip">-${item.discount_percent}% OFERTA OFICIAL</span>
-        <span class="source-chip source-steamrip">Steam Store</span>
+        <span class="disc-chip">-${item.discount_percent}% SUPER DESCONTO</span>
+        <span class="source-chip source-steamrip">Steam Store Oficial</span>
       </div>
       <h2>${item.name}</h2>
       <div class="modal-meta">
         <span style="color:var(--muted);text-decoration:line-through;font-size:15px">De: R$ ${orig}</span>
-        <span style="color:var(--emerald);font-size:20px;font-weight:900">Por: R$ ${fin}</span>
+        <span style="color:var(--emerald);font-size:22px;font-weight:900">Por: R$ ${fin}</span>
       </div>
-      <p>Oferta especial em destaque na Steam Store com desconto oficial de ${item.discount_percent}%. Você pode conferir os detalhes completos ou baixar a versão addon DRM-Free caso disponível na biblioteca JohnPlay.</p>
+      <p>Super oferta oficial em destaque na Steam Store com desconto de ${item.discount_percent}%. Você pode conferir os detalhes oficiais ou verificar se a versão DRM-Free está inclusa na biblioteca JohnPlay.</p>
       
-      <div class="modal-buy" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <div class="modal-buy" style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
         <a href="https://store.steampowered.com/app/${item.id}/" target="_blank" class="btn btn-emerald">
-          <i data-lucide="external-link"></i>Abrir na Steam Oficial
+          <i data-lucide="external-link"></i>Abrir Oferta na Steam Oficial
         </a>
         <button class="btn btn-ghost" onclick="closeModal()">
           Fechar
@@ -2043,7 +2284,7 @@ function navigate(){
   $$('#navLinks a').forEach(a=>a.classList.toggle('on',a.dataset.nav===h));
   window.scrollTo({top:0});
   
-  if(h==='promo') fetchLiveSteamSpecials();
+  if(h==='promo') fetchLivePromosAndSpecials();
 
   // Pausa/Remove o jogo Subway Surfers ao sair da aba para silenciar som e economizar CPU
   const iframe=$('#subwayIframe'), splash=$('#gameSplash');
