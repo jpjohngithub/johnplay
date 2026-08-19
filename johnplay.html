@@ -1997,20 +1997,15 @@ async function searchLiveHydraLibrary(query){
 
   const STEAM_SEARCH_URL = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(query)}&l=portuguese&cc=BR`;
   const endpoints = [
-    STEAM_SEARCH_URL,
     `https://api.allorigins.win/raw?url=${encodeURIComponent(STEAM_SEARCH_URL)}`,
-    `https://corsproxy.io/?url=${encodeURIComponent(STEAM_SEARCH_URL)}`
+    `https://corsproxy.io/?url=${encodeURIComponent(STEAM_SEARCH_URL)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(STEAM_SEARCH_URL)}`
   ];
 
   let rawData = null;
   for(const url of endpoints){
-    try{
-      const res = await fetch(url);
-      if(res.ok){
-        rawData = await res.json();
-        if(rawData && rawData.items && Array.isArray(rawData.items)) break;
-      }
-    }catch(e){}
+    rawData = await fetchFastWithTimeout(url, 2200);
+    if(rawData && rawData.items && Array.isArray(rawData.items)) break;
   }
 
   if(rawData && rawData.items && rawData.items.length > 0){
@@ -2087,28 +2082,89 @@ async function fetchLivePromosAndSpecials(){
   ]);
 }
 
+const FALLBACK_EPIC = [
+  {
+    id: 'epic-cardpocalypse',
+    title: 'Cardpocalypse Standard Edition',
+    description: 'Faça amigos, jogue cartas e mude as regras em um RPG para um jogador nostálgico sobre ser uma criança nos anos 90.',
+    image: 'https://cdn1.epicgames.com/offer/diesel/Cardpocalypse_OfferImageWide_2560x1440-4286127b3b3a32fbe1364d9db6b3fa2c',
+    isCurrentFree: true,
+    isUpcomingFree: false,
+    startDate: 'Hoje',
+    endDate: '29 de Ago',
+    originalPrice: 'R$ 66,99',
+    epicSlug: 'cardpocalypse'
+  },
+  {
+    id: 'epic-ghostrunner-2',
+    title: 'Ghostrunner 2',
+    description: 'Ação cyberpunk hardcore em primeira pessoa com combates frenéticos de katana em um futuro pós-apocalíptico.',
+    image: 'https://cdn1.epicgames.com/offer/a524a8775f0a4066a2e4c026cb10e74e/EGS_Ghostrunner2_OneMoreLevel_S1_2560x1440-2b109e3e3b3c3c6f1a8e0f5b9d3b4a2c',
+    isCurrentFree: false,
+    isUpcomingFree: true,
+    startDate: '29 de Ago',
+    endDate: '05 de Set',
+    originalPrice: 'R$ 161,99',
+    epicSlug: 'ghostrunner-2'
+  },
+  {
+    id: 'epic-thems-fightin-herds',
+    title: "Them's Fightin' Herds",
+    description: 'Um jogo de luta 2D indie com animais fofos desenhados pela aclamada produtora Lauren Faust.',
+    image: 'https://cdn1.epicgames.com/offer/21e06fa4df494d4d8ef82cb50543e33f/EGS_ThemsFightinHerds_Mane6_S1_2560x1440-155e96f1837a7fe6f60049e776ea2452',
+    isCurrentFree: true,
+    isUpcomingFree: false,
+    startDate: 'Hoje',
+    endDate: '29 de Ago',
+    originalPrice: 'R$ 37,99',
+    epicSlug: 'thems-fightin-herds'
+  }
+];
+
+const FALLBACK_STEAM = [
+  { id: 227300, name: 'Euro Truck Simulator 2', discount_percent: 75, original_price: 6199, final_price: 1549, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/227300/header.jpg' },
+  { id: 2358720, name: 'Black Myth: Wukong', discount_percent: 30, original_price: 22999, final_price: 16099, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg' },
+  { id: 694280, name: 'Zombie Army 4: Dead War', discount_percent: 95, original_price: 13499, final_price: 674, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/694280/header.jpg' },
+  { id: 2552430, name: 'KINGDOM HEARTS -HD 1.5+2.5 ReMIX-', discount_percent: 70, original_price: 21990, final_price: 6597, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2552430/header.jpg' },
+  { id: 1091500, name: 'Cyberpunk 2077: Phantom Liberty', discount_percent: 60, original_price: 19990, final_price: 7996, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg' },
+  { id: 1174180, name: 'Red Dead Redemption 2', discount_percent: 67, original_price: 29990, final_price: 9897, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg' },
+  { id: 292030, name: 'The Witcher 3: Wild Hunt Complete', discount_percent: 75, original_price: 15990, final_price: 3997, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg' },
+  { id: 1551360, name: 'Forza Horizon 5', discount_percent: 50, original_price: 24990, final_price: 12495, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg' }
+];
+
+async function fetchFastWithTimeout(url, timeoutMs = 2500){
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { signal: controller.signal, headers: { 'Accept': 'application/json' } });
+    clearTimeout(id);
+    if(res.ok) return await res.json();
+  } catch(e){
+    clearTimeout(id);
+  }
+  return null;
+}
+
 async function fetchLiveEpicFreeGames(){
   const grid = $('#liveEpicGrid');
   if(!grid) return;
-  grid.innerHTML = `<div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>Sincronizando jogos gratuitos da Epic Games Store em tempo real...</div>`;
-  refreshIcons();
 
+  // 1. Renderiza INSTANTANEAMENTE o cache/dados para ZERO espera na tela
+  if(!LIVE_EPIC_CACHE.length) LIVE_EPIC_CACHE = FALLBACK_EPIC;
+  renderEpicGrid(LIVE_EPIC_CACHE);
+
+  // 2. Busca atualização em background ultra-rápida (2.5s timeout)
   const EPIC_URL = 'https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=pt-BR&country=BR&allowCountries=BR';
   const endpoints = [
-    EPIC_URL,
     `https://api.allorigins.win/raw?url=${encodeURIComponent(EPIC_URL)}`,
-    `https://corsproxy.io/?url=${encodeURIComponent(EPIC_URL)}`
+    `https://corsproxy.io/?url=${encodeURIComponent(EPIC_URL)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(EPIC_URL)}`
   ];
 
   let rawData = null;
   for(const url of endpoints){
-    try{
-      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-      if(res.ok){
-        rawData = await res.json();
-        if(rawData && rawData.data && rawData.data.Catalog && rawData.data.Catalog.searchStore) break;
-      }
-    }catch(e){}
+    rawData = await fetchFastWithTimeout(url, 2200);
+    if(rawData && rawData.data && rawData.data.Catalog && rawData.data.Catalog.searchStore) break;
   }
 
   if(rawData && rawData.data && rawData.data.Catalog && rawData.data.Catalog.searchStore){
@@ -2126,7 +2182,7 @@ async function fetchLiveEpicFreeGames(){
 
       if(isCurrentFree || isUpcomingFree){
         const offer = item.promotions?.promotionalOffers?.[0]?.promotionalOffers?.[0] || item.promotions?.upcomingPromotionalOffers?.[0]?.promotionalOffers?.[0];
-        const startDate = offer ? new Date(offer.startDate).toLocaleDateString('pt-BR', {day:'2-digit', month:'short'}) : 'Agora';
+        const startDate = offer ? new Date(offer.startDate).toLocaleDateString('pt-BR', {day:'2-digit', month:'short'}) : 'Hoje';
         const endDate = offer ? new Date(offer.endDate).toLocaleDateString('pt-BR', {day:'2-digit', month:'short'}) : 'Em breve';
 
         let img = item.keyImages?.find(i => i.type === 'DieselStoreFrontWide' || i.type === 'OfferImageWide' || i.type === 'Thumbnail')?.url 
@@ -2151,126 +2207,36 @@ async function fetchLiveEpicFreeGames(){
     if(freeGames.length > 0){
       LIVE_EPIC_CACHE = freeGames;
       renderEpicGrid(freeGames);
-      return;
     }
   }
-
-  // Curated Fallback with Real Active Epic Games Free Offers
-  const FALLBACK_EPIC = [
-    {
-      id: 'epic-cardpocalypse',
-      title: 'Cardpocalypse Standard Edition',
-      description: 'Faça amigos, jogue cartas e mude as regras em um RPG para um jogador nostálgico sobre ser uma criança nos anos 90.',
-      image: 'https://cdn1.epicgames.com/offer/diesel/Cardpocalypse_OfferImageWide_2560x1440-4286127b3b3a32fbe1364d9db6b3fa2c',
-      isCurrentFree: true,
-      isUpcomingFree: false,
-      startDate: 'Hoje',
-      endDate: '29 de Ago',
-      originalPrice: 'R$ 66,99',
-      epicSlug: 'cardpocalypse'
-    },
-    {
-      id: 'epic-ghostrunner-2',
-      title: 'Ghostrunner 2',
-      description: 'Ação cyberpunk hardcore em primeira pessoa com combates frenéticos de katana em um futuro pós-apocalíptico.',
-      image: 'https://cdn1.epicgames.com/offer/a524a8775f0a4066a2e4c026cb10e74e/EGS_Ghostrunner2_OneMoreLevel_S1_2560x1440-2b109e3e3b3c3c6f1a8e0f5b9d3b4a2c',
-      isCurrentFree: false,
-      isUpcomingFree: true,
-      startDate: '29 de Ago',
-      endDate: '05 de Set',
-      originalPrice: 'R$ 161,99',
-      epicSlug: 'ghostrunner-2'
-    },
-    {
-      id: 'epic-thems-fightin-herds',
-      title: "Them's Fightin' Herds",
-      description: 'Um jogo de luta 2D indie com animais fofos desenhados pela aclamada produtora Lauren Faust.',
-      image: 'https://cdn1.epicgames.com/offer/21e06fa4df494d4d8ef82cb50543e33f/EGS_ThemsFightinHerds_Mane6_S1_2560x1440-155e96f1837a7fe6f60049e776ea2452',
-      isCurrentFree: true,
-      isUpcomingFree: false,
-      startDate: 'Hoje',
-      endDate: '29 de Ago',
-      originalPrice: 'R$ 37,99',
-      epicSlug: 'thems-fightin-herds'
-    }
-  ];
-  LIVE_EPIC_CACHE = FALLBACK_EPIC;
-  renderEpicGrid(FALLBACK_EPIC);
-}
-
-function renderEpicGrid(games){
-  const grid = $('#liveEpicGrid');
-  if(!grid) return;
-  grid.innerHTML = games.map((g, idx) => `
-    <div class="special-card" onclick="openLiveEpicModal(${idx})">
-      <div class="thumb">
-        <img src="${g.image}" alt="${g.title}" loading="lazy" decoding="async">
-        <span class="epic-badge ${g.isCurrentFree ? 'epic-badge-free' : 'epic-badge-soon'}" style="position:absolute;top:10px;left:10px">
-          ${g.isCurrentFree ? '<i data-lucide="gift" style="width:12px;height:12px"></i> GRÁTIS AGORA' : '<i data-lucide="clock" style="width:12px;height:12px"></i> EM BREVE'}
-        </span>
-      </div>
-      <div class="body">
-        <h4>${g.title}</h4>
-        <p>${g.description}</p>
-        <div class="foot">
-          <div>
-            <span style="color:var(--muted);text-decoration:line-through;font-size:12px;display:block">De: ${g.originalPrice}</span>
-            <span style="color:var(--emerald);font-weight:900;font-size:14px">100% GRÁTIS</span>
-          </div>
-          <button class="opt-btn opt-btn-primary" style="padding:6px 14px;font-size:11.5px" onclick="event.stopPropagation(); openLiveEpicModal(${idx})">
-            ${g.isCurrentFree ? 'Resgatar Grátis' : 'Ver Detalhes'}
-          </button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-  refreshIcons();
 }
 
 async function fetchLiveSteamSpecials(){
   const grid = $('#liveSteamGrid');
   if(!grid) return;
-  grid.innerHTML = `<div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:28px;height:28px;margin:0 auto 10px;display:block"></i>Buscando super ofertas oficiais em tempo real na Steam Store...</div>`;
-  refreshIcons();
 
+  // 1. Renderiza INSTANTANEAMENTE o cache/dados para ZERO espera na tela
+  if(!LIVE_STEAM_CACHE.length) LIVE_STEAM_CACHE = FALLBACK_STEAM;
+  renderSteamGrid(LIVE_STEAM_CACHE);
+
+  // 2. Busca atualização em background ultra-rápida (2.5s timeout)
   const STEAM_URL = 'https://store.steampowered.com/api/featuredcategories/?l=brazilian';
   const endpoints = [
-    STEAM_URL,
     `https://api.allorigins.win/raw?url=${encodeURIComponent(STEAM_URL)}`,
-    `https://corsproxy.io/?url=${encodeURIComponent(STEAM_URL)}`
+    `https://corsproxy.io/?url=${encodeURIComponent(STEAM_URL)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(STEAM_URL)}`
   ];
 
   let rawData = null;
   for(const url of endpoints){
-    try{
-      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-      if(res.ok){
-        rawData = await res.json();
-        if(rawData && rawData.specials && rawData.specials.items) break;
-      }
-    }catch(e){}
+    rawData = await fetchFastWithTimeout(url, 2200);
+    if(rawData && rawData.specials && rawData.specials.items) break;
   }
 
   if(rawData && rawData.specials && rawData.specials.items){
     LIVE_STEAM_CACHE = rawData.specials.items;
     renderSteamGrid(rawData.specials.items);
-    toast('Ofertas Steam & Epic Games sincronizadas ao vivo!', 'check-circle');
-    return;
   }
-
-  // Curated Fallback with Real Live Steam Specials
-  const FALLBACK_STEAM = [
-    { id: 227300, name: 'Euro Truck Simulator 2', discount_percent: 75, original_price: 6199, final_price: 1549, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/227300/header.jpg' },
-    { id: 2358720, name: 'Black Myth: Wukong', discount_percent: 30, original_price: 22999, final_price: 16099, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg' },
-    { id: 694280, name: 'Zombie Army 4: Dead War', discount_percent: 95, original_price: 13499, final_price: 674, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/694280/header.jpg' },
-    { id: 2552430, name: 'KINGDOM HEARTS -HD 1.5+2.5 ReMIX-', discount_percent: 70, original_price: 21990, final_price: 6597, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2552430/header.jpg' },
-    { id: 1091500, name: 'Cyberpunk 2077: Phantom Liberty', discount_percent: 60, original_price: 19990, final_price: 7996, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg' },
-    { id: 1174180, name: 'Red Dead Redemption 2', discount_percent: 67, original_price: 29990, final_price: 9897, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg' },
-    { id: 292030, name: 'The Witcher 3: Wild Hunt Complete', discount_percent: 75, original_price: 15990, final_price: 3997, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg' },
-    { id: 1551360, name: 'Forza Horizon 5', discount_percent: 50, original_price: 24990, final_price: 12495, header_image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg' }
-  ];
-  LIVE_STEAM_CACHE = FALLBACK_STEAM;
-  renderSteamGrid(FALLBACK_STEAM);
 }
 
 function renderSteamGrid(specials){
