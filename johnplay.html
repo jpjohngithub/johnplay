@@ -1646,9 +1646,50 @@ function navigate(){
   $$('.page').forEach(p=>p.classList.toggle('on',p.id==='page-'+h));
   $$('#navLinks a').forEach(a=>a.classList.toggle('on',a.dataset.nav===h));
   window.scrollTo({top:0});
+  
   if(h==='promo') fetchLiveSteamSpecials();
+
+  // Pausa/Remove o jogo Subway Surfers ao sair da aba para silenciar som e economizar CPU
+  const iframe=$('#subwayIframe'), splash=$('#gameSplash');
+  if(h!=='browser'){
+    if(iframe && iframe.src && iframe.src!=='about:blank'){
+      iframe.src='about:blank';
+      iframe.classList.remove('loaded');
+      if(splash){
+        splash.classList.remove('hidden');
+        const title=splash.querySelector('h2');
+        const desc=splash.querySelector('p');
+        const btn=splash.querySelector('.play-large-btn');
+        if(title) title.textContent='Jogo Pausado';
+        if(desc) desc.textContent='Você trocou de aba. O jogo foi pausado para silenciar o áudio e economizar memória.';
+        if(btn) btn.innerHTML='<i data-lucide="play"></i>RETOMAR SUBWAY SURFERS';
+        refreshIcons();
+      }
+    }
+  }
 }
 window.addEventListener('hashchange',navigate, {passive:true});
+
+// Pausa quando a aba do próprio navegador for minimizada ou trocada
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){
+    const iframe=$('#subwayIframe'), splash=$('#gameSplash');
+    if(iframe && iframe.src && iframe.src!=='about:blank'){
+      iframe.src='about:blank';
+      iframe.classList.remove('loaded');
+      if(splash){
+        splash.classList.remove('hidden');
+        const title=splash.querySelector('h2');
+        const desc=splash.querySelector('p');
+        const btn=splash.querySelector('.play-large-btn');
+        if(title) title.textContent='Jogo Pausado';
+        if(desc) desc.textContent='Você minimizou ou saiu da janela. Clique abaixo para retomar.';
+        if(btn) btn.innerHTML='<i data-lucide="play"></i>RETOMAR SUBWAY SURFERS';
+        refreshIcons();
+      }
+    }
+  }
+});
 
 /* ================= CARROSSEL HERO ================= */
 const CAR_DUR=6500;let carIdx=0,carStart=performance.now(),carElapsed=0,carPaused=false;
