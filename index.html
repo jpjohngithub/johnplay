@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JohnPlay — Portal Gamer & Loja de Addons Hydra</title>
+<title>JohnPlay — Portal Gamer & Fontes Hydra Addons</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23a06bff'/><text x='16' y='22' font-family='Arial' font-weight='900' font-size='15' fill='%23150827' text-anchor='middle'>JP</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
@@ -223,7 +223,7 @@
   .bg-hero p{color:var(--muted);max-width:480px;margin-top:10px}
   .bg-hero .z{position:relative}
 
-  /* Subway Surfers Featured Banner with User Provided Cover */
+  /* Subway Surfers Featured Banner With User's Provided Image */
   .subway-banner{margin-top:22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;display:grid;grid-template-columns:1.2fr 1fr}
   .subway-media{position:relative;min-height:360px;background:var(--bg-deep);overflow:hidden}
   .subway-media img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .5s ease}
@@ -419,7 +419,7 @@
     <div class="wrap">
       <div class="stats">
         <div class="stat"><span class="ic"><i data-lucide="users"></i></span><div><b>487.230</b><span>Jogadores online</span></div></div>
-        <div class="stat"><span class="ic"><i data-lucide="download"></i></span><div><b id="statGames">32</b><span>Jogos & Addons</span></div></div>
+        <div class="stat"><span class="ic"><i data-lucide="download"></i></span><div><b id="statGames">36</b><span>Jogos & Addons</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="layers"></i></span><div><b>7</b><span>Fontes Hydra Ativas</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="gift"></i></span><div><b>1</b><span>Grátis esta semana</span></div></div>
       </div>
@@ -455,7 +455,7 @@
       <!-- Explorar Jogos & Addons Catalog -->
       <section class="section" id="explorar">
         <div class="sec-head">
-          <div><div class="kicker">Catálogo JohnPlay & Hydra Addons</div><h2>Explorar jogos</h2></div>
+          <div><div class="kicker">Catálogo JohnPlay & Hydra Addons</div><h2>Explorar jogos das 7 Fontes</h2></div>
           <div class="tabs" id="tabs">
             <button data-tab="all" class="on">Todos os Jogos</button>
             <button data-tab="new">Novidades</button>
@@ -695,8 +695,12 @@
 
     <div class="sources-list" id="sourcesModalList"></div>
 
-    <div style="margin-top:20px;padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end">
-      <button class="btn btn-primary" onclick="closeSourcesModal()">Concluído</button>
+    <div style="margin-top:20px;padding-top:14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <label class="btn btn-ghost" style="height:38px;padding:0 16px;font-size:12px;cursor:pointer">
+        <i data-lucide="upload"></i> Importar JSON Customizado
+        <input type="file" id="customJsonInput" accept=".json" style="display:none" onchange="handleCustomJsonImport(event)">
+      </label>
+      <button class="btn btn-primary" style="height:38px;padding:0 18px" onclick="closeSourcesModal()">Concluído</button>
     </div>
   </div>
 </div>
@@ -726,7 +730,7 @@
 <div class="toasts" id="toasts"></div>
 
 <script>
-/* ================= DADOS COMPLETOS HYDRA & GAMES ================= */
+/* ================= DADOS COMPLETOS DAS 7 FONTES HYDRA ================= */
 const SOURCES = [
   { id: 'fitgirl', name: 'FitGirl Repacks', url: 'https://hydralinks.cloud/sources/fitgirl.json', badgeClass: 'source-fitgirl' },
   { id: 'dodi', name: 'DODI Repacks', url: 'https://hydralinks.cloud/sources/dodi.json', badgeClass: 'source-dodi' },
@@ -737,32 +741,8 @@ const SOURCES = [
   { id: 'empress', name: 'Empress Releases', url: 'https://hydralinks.cloud/sources/empress.json', badgeClass: 'source-empress' }
 ];
 
-const GAMES = [
-  {
-    id: 'gta-v-enhanced',
-    name: 'Grand Theft Auto V: Premium Edition (v1.68)',
-    source: 'dodi',
-    sourceName: 'DODI Repacks',
-    genre: 'Mundo Aberto',
-    tags: ['Mundo Aberto', 'Ação', 'Crime', 'Clássico'],
-    price: 199.90,
-    discount: 50,
-    fileSize: '59.4 GB',
-    rating: 4.9,
-    release: '2024-03-10',
-    sold: 12400,
-    cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=60',
-    desc: 'Explore Los Santos e Blaine County com Michael, Franklin e Trevor na edição definitiva com todas as expansões inclusas.',
-    steamUrl: 'https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/',
-    magnet: 'magnet:?xt=urn:btih:e589df6890333333342345123490000000000000&dn=Grand+Theft+Auto+V+DODI+Repack&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (qBittorrent / Hydra Engine)', type: 'magnet', url: 'magnet:?xt=urn:btih:e589df6890333333342345123490000000000000&dn=Grand+Theft+Auto+V+DODI+Repack&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'QiWi Direct Download (Alta Velocidade)', type: 'ddl', url: 'https://qiwi.gg/file/gtav-enhanced-dodi' },
-      { name: 'DataNodes Mirror', type: 'ddl', url: 'https://datanodes.to/gtav-dodi' },
-      { name: '1fichier Direct Mirror', type: 'ddl', url: 'https://1fichier.com/?gtav-dodi' }
-    ],
-    specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-3470 / AMD FX-8350', ram: '8 GB RAM', gpu: 'GTX 660 / HD 7870', storage: '100 GB' }
-  },
+let GAMES = [
+  // --- FITGIRL REPACKS ---
   {
     id: 'elden-ring-shadow',
     name: 'ELDEN RING: Shadow of the Erdtree Edition',
@@ -788,76 +768,6 @@ const GAMES = [
     specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-8400 / Ryzen 3 3300X', ram: '12 GB RAM', gpu: 'GTX 1060 3GB / RX 580 4GB', storage: '60 GB SSD' }
   },
   {
-    id: 'black-myth-wukong',
-    name: 'Black Myth: Wukong (Full Game & Shaders Cache)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Ação',
-    tags: ['Ação', 'Mitologia', 'Souls-like', 'Aventura'],
-    price: 229.90,
-    discount: 0,
-    fileSize: '118.5 GB',
-    rating: 4.8,
-    release: '2024-08-20',
-    sold: 21000,
-    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=60',
-    desc: 'Entre no papel do Predestinado nesta jornada épica inspirada na mitologia chinesa feita na Unreal Engine 5.',
-    steamUrl: 'https://store.steampowered.com/app/2358720/Black_Myth_Wukong/',
-    magnet: 'magnet:?xt=urn:btih:8934571029348102934810293481029348102934&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (SteamRIP Direct Play)', type: 'magnet', url: 'magnet:?xt=urn:btih:8934571029348102934810293481029348102934&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'QiWi Direct Play Archive', type: 'ddl', url: 'https://qiwi.gg/file/wukong-steamrip' },
-      { name: 'MegaUp Mirror', type: 'ddl', url: 'https://megaup.net/wukong' }
-    ],
-    specs: { os: 'Windows 10/11 64-bit', cpu: 'Core i5-8400 / Ryzen 5 1600', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580 8GB', storage: '130 GB SSD' }
-  },
-  {
-    id: 'cyberpunk-2077-phantom',
-    name: 'Cyberpunk 2077: Phantom Liberty (v2.13 DRM-Free)',
-    source: 'gog',
-    sourceName: 'Free GOG Games',
-    genre: 'RPG',
-    tags: ['RPG', 'Cyberpunk', 'Mundo Aberto', 'FPS'],
-    price: 199.90,
-    discount: 60,
-    fileSize: '68.2 GB',
-    rating: 4.8,
-    release: '2024-09-12',
-    sold: 14200,
-    cover: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=800&auto=format&fit=crop&q=60',
-    desc: 'Explore Night City e o perigoso distrito de Dogtown com Keanu Reeves e Idris Elba. 100% DRM-Free sem crack.',
-    steamUrl: 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/',
-    magnet: 'magnet:?xt=urn:btih:c7b3rpunk2077ph4nt0ml1b3rtyg0g000000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (GOG DRM-Free Setup)', type: 'magnet', url: 'magnet:?xt=urn:btih:c7b3rpunk2077ph4nt0ml1b3rtyg0g000000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'GOG Offline Installer (Parte 1-14)', type: 'ddl', url: 'https://freegogpcgames.com/cyberpunk-2077/' }
-    ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Core i7-6700 / Ryzen 5 1600', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580 8GB', storage: '70 GB SSD' }
-  },
-  {
-    id: 'god-of-war-ragnarok',
-    name: 'God of War Ragnarök: Valhalla Included',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Ação',
-    tags: ['Ação', 'Mitologia Nórdica', 'História', 'Aventura'],
-    price: 249.90,
-    discount: 15,
-    fileSize: '102.0 GB',
-    rating: 4.9,
-    release: '2024-09-19',
-    sold: 16500,
-    cover: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=800&auto=format&fit=crop&q=60',
-    desc: 'Kratos e Atreus devem viajar pelos Nove Reinos em busca de respostas enquanto as forças de Asgard se preparam para a guerra.',
-    steamUrl: 'https://store.steampowered.com/app/2322010/God_of_War_Ragnarok/',
-    magnet: 'magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pfullddl0000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (SteamRIP Direct Play)', type: 'magnet', url: 'magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pfullddl0000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'QiWi Fast DDL', type: 'ddl', url: 'https://qiwi.gg/file/gow-ragnarok' }
-    ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-4670k / Ryzen 3 1200', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 5500 XT 8GB', storage: '190 GB SSD' }
-  },
-  {
     id: 'red-dead-redemption-2',
     name: 'Red Dead Redemption 2: Ultimate Edition (v1491.50)',
     source: 'fitgirl',
@@ -876,32 +786,81 @@ const GAMES = [
     magnet: 'magnet:?xt=urn:btih:r3dd34dr3d3mpt10n2f1tg1r1ult1m4t3000000000&dn=Red+Dead+Redemption+2+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
     mirrors: [
       { name: 'Magnet Torrent (FitGirl Selective Download)', type: 'magnet', url: 'magnet:?xt=urn:btih:r3dd34dr3d3mpt10n2f1tg1r1ult1m4t3000000000&dn=Red+Dead+Redemption+2+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'MultiUpload Mirror Parts', type: 'ddl', url: 'https://multiupload.biz/rdr2' }
+      { name: 'DataNodes Mirror', type: 'ddl', url: 'https://datanodes.to/rdr2' }
     ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i7-4770K / Ryzen 5 1500X', ram: '12 GB RAM', gpu: 'GTX 1060 6GB / RX 480 4GB', storage: '150 GB' }
   },
   {
-    id: 'hogwarts-legacy',
-    name: 'Hogwarts Legacy: Digital Deluxe Edition',
-    source: 'empress',
-    sourceName: 'Empress Releases',
-    genre: 'RPG',
-    tags: ['RPG', 'Mundo Aberto', 'Magia', 'Aventura'],
+    id: 'spiderman-remastered',
+    name: "Marvel's Spider-Man Remastered (v2.616.0.0)",
+    source: 'fitgirl',
+    sourceName: 'FitGirl Repacks',
+    genre: 'Ação',
+    tags: ['Ação', 'Super-Heróis', 'Mundo Aberto', 'Aventura'],
     price: 249.90,
-    discount: 50,
-    fileSize: '69.7 GB',
-    rating: 4.7,
-    release: '2023-02-23',
-    sold: 18900,
-    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=60',
-    desc: 'Experimente a vida como estudante de Hogwarts nos anos 1800. Faça aliados, duele com feiticeiros e decida o destino do mundo bruxo.',
-    steamUrl: 'https://store.steampowered.com/app/990080/Hogwarts_Legacy/',
-    magnet: 'magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss0000000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
+    discount: 40,
+    fileSize: '41.8 GB',
+    rating: 4.9,
+    release: '2023-09-18',
+    sold: 22000,
+    cover: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=800&auto=format&fit=crop&q=60',
+    desc: 'Peter Parker luta contra o crime e vilões icônicos em uma Nova York vibrante e detalhada.',
+    steamUrl: 'https://store.steampowered.com/app/1817070/Marvels_SpiderMan_Remastered/',
+    magnet: 'magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rl0000000000000000000&dn=Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
     mirrors: [
-      { name: 'Magnet Torrent (Empress Crack Edition)', type: 'magnet', url: 'magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss0000000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: '1fichier Direct Archive', type: 'ddl', url: 'https://1fichier.com/?hogwarts-empress' }
+      { name: 'Magnet Torrent (FitGirl Repack)', type: 'magnet', url: 'magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rl0000000000000000000&dn=Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'DataNodes Fast Mirror', type: 'ddl', url: 'https://datanodes.to/spiderman-fitgirl' }
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i7-8700 / Ryzen 5 3600', ram: '16 GB RAM', gpu: 'GTX 1080 Ti / RX 5700 XT', storage: '85 GB SSD' }
+    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i3-4160', ram: '8 GB RAM', gpu: 'GTX 950 / Radeon R7 370', storage: '75 GB' }
+  },
+  {
+    id: 'dark-souls-3-deluxe',
+    name: 'Dark Souls III: Deluxe Edition (v1.15 + All DLCs)',
+    source: 'fitgirl',
+    sourceName: 'FitGirl Repacks',
+    genre: 'RPG',
+    tags: ['Souls-like', 'RPG', 'Fantasia Sombria', 'Difícil'],
+    price: 189.90,
+    discount: 50,
+    fileSize: '18.5 GB',
+    rating: 4.9,
+    release: '2023-01-10',
+    sold: 19000,
+    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=60',
+    desc: 'O ápice da trilogia Dark Souls. Derrote os Lordes das Cinzas em Lothric com todas as expansões inclusas.',
+    steamUrl: 'https://store.steampowered.com/app/374320/DARK_SOULS_III/',
+    magnet: 'magnet:?xt=urn:btih:d4rks0uls3d3lux3f1tg1rl0000000000000000000000&dn=Dark+Souls+3+Deluxe+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (FitGirl)', type: 'magnet', url: 'magnet:?xt=urn:btih:d4rks0uls3d3lux3f1tg1rl0000000000000000000000&dn=Dark+Souls+3+Deluxe+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }
+    ],
+    specs: { os: 'Windows 7/8.1/10 64-bit', cpu: 'Intel Core i3-2100 / AMD FX-6300', ram: '4 GB RAM', gpu: 'GTX 750 Ti / HD 7950', storage: '25 GB' }
+  },
+
+  // --- DODI REPACKS ---
+  {
+    id: 'gta-v-enhanced',
+    name: 'Grand Theft Auto V: Premium Edition (v1.68)',
+    source: 'dodi',
+    sourceName: 'DODI Repacks',
+    genre: 'Mundo Aberto',
+    tags: ['Mundo Aberto', 'Ação', 'Crime', 'Clássico'],
+    price: 199.90,
+    discount: 50,
+    fileSize: '59.4 GB',
+    rating: 4.9,
+    release: '2024-03-10',
+    sold: 12400,
+    cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=60',
+    desc: 'Explore Los Santos e Blaine County com Michael, Franklin e Trevor na edição definitiva com todas as expansões inclusas.',
+    steamUrl: 'https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/',
+    magnet: 'magnet:?xt=urn:btih:e589df6890333333342345123490000000000000&dn=Grand+Theft+Auto+V+DODI+Repack&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (qBittorrent / Hydra Engine)', type: 'magnet', url: 'magnet:?xt=urn:btih:e589df6890333333342345123490000000000000&dn=Grand+Theft+Auto+V+DODI+Repack&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'QiWi Direct Download', type: 'ddl', url: 'https://qiwi.gg/file/gtav-enhanced-dodi' },
+      { name: 'DataNodes Mirror', type: 'ddl', url: 'https://datanodes.to/gtav-dodi' },
+      { name: '1fichier Direct Mirror', type: 'ddl', url: 'https://1fichier.com/?gtav-dodi' }
+    ],
+    specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-3470 / AMD FX-8350', ram: '8 GB RAM', gpu: 'GTX 660 / HD 7870', storage: '100 GB' }
   },
   {
     id: 'ghost-of-tsushima',
@@ -927,71 +886,147 @@ const GAMES = [
     specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-8600 / Ryzen 5 3600', ram: '16 GB RAM', gpu: 'GTX 1070 8GB / RX 5600 XT', storage: '75 GB SSD' }
   },
   {
-    id: 'resident-evil-4-remake',
-    name: 'Resident Evil 4 Remake (v1.0.5 + Separate Ways DLC)',
-    source: 'empress',
-    sourceName: 'Empress Releases',
-    genre: 'Terror',
-    tags: ['Terror', 'Sobrevivência', 'Ação', 'Zumbis'],
-    price: 199.90,
-    discount: 40,
-    fileSize: '54.1 GB',
-    rating: 4.9,
-    release: '2023-05-10',
-    sold: 14200,
-    cover: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop&q=60',
-    desc: 'Leon S. Kennedy é enviado em uma missão para resgatar a filha do presidente em uma vila europeia isolada tomada pelo parasita Las Plagas.',
-    steamUrl: 'https://store.steampowered.com/app/2050650/Resident_Evil_4/',
-    magnet: 'magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss000000000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (Empress Release)', type: 'magnet', url: 'magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss000000000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }
-    ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 3600 / Core i7-8700', ram: '16 GB RAM', gpu: 'GTX 1070 8GB / RX 5700', storage: '70 GB SSD' }
-  },
-  {
-    id: 'forza-horizon-5',
-    name: 'Forza Horizon 5: Premium Edition (v1.656.398)',
-    source: 'xatab',
-    sourceName: 'Xatab Repacks',
-    genre: 'Corrida',
-    tags: ['Corrida', 'Mundo Aberto', 'Automobilismo', 'Multiplayer'],
+    id: 'the-last-of-us-part-1',
+    name: 'The Last of Us Part I (v1.1.3 + Left Behind)',
+    source: 'dodi',
+    sourceName: 'DODI Repacks',
+    genre: 'Ação',
+    tags: ['Zumbis', 'História Emocionante', 'Sobrevivência', 'Ação'],
     price: 249.90,
-    discount: 50,
-    fileSize: '110.0 GB',
+    discount: 30,
+    fileSize: '65.2 GB',
     rating: 4.8,
-    release: '2024-04-18',
-    sold: 17500,
-    cover: 'https://images.unsplash.com/photo-1547949003-9792a18a2601?w=800&auto=format&fit=crop&q=60',
-    desc: 'Explore as vibrantes paisagens de mundo aberto do México em centenas dos melhores carros do mundo.',
-    steamUrl: 'https://store.steampowered.com/app/1551360/Forza_Horizon_5/',
-    magnet: 'magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4b000000000000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
+    release: '2024-01-20',
+    sold: 14900,
+    cover: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop&q=60',
+    desc: 'Em uma civilização devastada, onde infectados e sobreviventes implacáveis correm soltos, Joel é contratado para contrabandear Ellie.',
+    steamUrl: 'https://store.steampowered.com/app/1888930/The_Last_of_Us_Part_I/',
+    magnet: 'magnet:?xt=urn:btih:th3l4st0fuspart1d0d1r3p4ck000000000000000000&dn=The+Last+of+Us+Part+1+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
     mirrors: [
-      { name: 'Magnet Torrent (Xatab High Seed)', type: 'magnet', url: 'magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4b000000000000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }
+      { name: 'Magnet Torrent (DODI Repack)', type: 'magnet', url: 'magnet:?xt=urn:btih:th3l4st0fuspart1d0d1r3p4ck000000000000000000&dn=The+Last+of+Us+Part+1+DODI&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'QiWi Mirror', type: 'ddl', url: 'https://qiwi.gg/file/tlou1-dodi' }
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-8400 / AMD Ryzen 5 1500X', ram: '16 GB RAM', gpu: 'GTX 1070 / RX 590', storage: '120 GB SSD' }
+    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 1500X / Core i7-4770K', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '100 GB SSD' }
+  },
+
+  // --- STEAMRIP (DIRECT PLAY) ---
+  {
+    id: 'black-myth-wukong',
+    name: 'Black Myth: Wukong (Full Game & Shaders Cache)',
+    source: 'steamrip',
+    sourceName: 'SteamRIP',
+    genre: 'Ação',
+    tags: ['Ação', 'Mitologia', 'Souls-like', 'Aventura'],
+    price: 229.90,
+    discount: 0,
+    fileSize: '118.5 GB',
+    rating: 4.8,
+    release: '2024-08-20',
+    sold: 21000,
+    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=60',
+    desc: 'Entre no papel do Predestinado nesta jornada épica inspirada na mitologia chinesa feita na Unreal Engine 5.',
+    steamUrl: 'https://store.steampowered.com/app/2358720/Black_Myth_Wukong/',
+    magnet: 'magnet:?xt=urn:btih:8934571029348102934810293481029348102934&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (SteamRIP Direct Play)', type: 'magnet', url: 'magnet:?xt=urn:btih:8934571029348102934810293481029348102934&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'QiWi Direct Play Archive', type: 'ddl', url: 'https://qiwi.gg/file/wukong-steamrip' },
+      { name: 'MegaUp Mirror', type: 'ddl', url: 'https://megaup.net/wukong' }
+    ],
+    specs: { os: 'Windows 10/11 64-bit', cpu: 'Core i5-8400 / Ryzen 5 1600', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580 8GB', storage: '130 GB SSD' }
   },
   {
-    id: 'minecraft-bedrock-java',
-    name: 'Minecraft: Java & Bedrock Edition (Multiplayer Ativo)',
-    source: 'atop',
-    sourceName: 'Atop-Games',
-    genre: 'Aventura',
-    tags: ['Sandbox', 'Construção', 'Sobrevivência', 'Mundo Aberto'],
-    price: 149.90,
-    discount: 0,
-    fileSize: '1.2 GB',
+    id: 'god-of-war-ragnarok',
+    name: 'God of War Ragnarök: Valhalla Included',
+    source: 'steamrip',
+    sourceName: 'SteamRIP',
+    genre: 'Ação',
+    tags: ['Ação', 'Mitologia Nórdica', 'História', 'Aventura'],
+    price: 249.90,
+    discount: 15,
+    fileSize: '102.0 GB',
     rating: 4.9,
-    release: '2024-06-07',
-    sold: 45000,
-    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=60',
-    desc: 'Construa tudo o que puder imaginar, explore mundos gerados infinitamente e sobreviva contra monstros perigosos.',
-    steamUrl: 'https://www.minecraft.net/',
-    magnet: 'magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000000&dn=Minecraft+Java+and+Bedrock+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
+    release: '2024-09-19',
+    sold: 16500,
+    cover: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=800&auto=format&fit=crop&q=60',
+    desc: 'Kratos e Atreus devem viajar pelos Nove Reinos em busca de respostas enquanto as forças de Asgard se preparam para a guerra.',
+    steamUrl: 'https://store.steampowered.com/app/2322010/God_of_War_Ragnarok/',
+    magnet: 'magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pfullddl0000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
     mirrors: [
-      { name: 'Download Direto (.exe Launcher)', type: 'ddl', url: 'https://atop-games.com/minecraft-launcher' },
-      { name: 'Magnet Torrent Mirror', type: 'magnet', url: 'magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000000&dn=Minecraft+Java+and+Bedrock+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce' }
+      { name: 'Magnet Torrent (SteamRIP Direct Play)', type: 'magnet', url: 'magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pfullddl0000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'QiWi Fast DDL', type: 'ddl', url: 'https://qiwi.gg/file/gow-ragnarok' }
     ],
-    specs: { os: 'Windows 10/11', cpu: 'Intel Core i3-3210 / AMD A8-7600', ram: '4 GB RAM', gpu: 'Intel HD Graphics 4000 / Radeon R5', storage: '4 GB' }
+    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-4670k / Ryzen 3 1200', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 5500 XT 8GB', storage: '190 GB SSD' }
+  },
+  {
+    id: 'palworld-multiplayer',
+    name: 'Palworld (v0.3.6 Multiplayer Ready)',
+    source: 'steamrip',
+    sourceName: 'SteamRIP',
+    genre: 'Aventura',
+    tags: ['Multiplayer', 'Criaturas', 'Sobrevivência', 'Base Building'],
+    price: 89.90,
+    discount: 0,
+    fileSize: '19.4 GB',
+    rating: 4.8,
+    release: '2024-07-30',
+    sold: 31000,
+    cover: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=60',
+    desc: 'Lute, crie, construa e explore ao lado de misteriosas criaturas chamadas Pals neste jogo de sobrevivência em mundo aberto.',
+    steamUrl: 'https://store.steampowered.com/app/1623730/Palworld/',
+    magnet: 'magnet:?xt=urn:btih:p4lw0rldst34mr1pmult1pl4y3r0000000000000000&dn=Palworld+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (SteamRIP)', type: 'magnet', url: 'magnet:?xt=urn:btih:p4lw0rldst34mr1pmult1pl4y3r0000000000000000&dn=Palworld+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'QiWi Mirror', type: 'ddl', url: 'https://qiwi.gg/file/palworld' }
+    ],
+    specs: { os: 'Windows 10 64-bit', cpu: 'i5-3570K 3.4 GHz', ram: '16 GB RAM', gpu: 'GeForce GTX 1050 (2GB)', storage: '40 GB' }
+  },
+
+  // --- FREE GOG GAMES (DRM-FREE) ---
+  {
+    id: 'cyberpunk-2077-phantom',
+    name: 'Cyberpunk 2077: Phantom Liberty (v2.13 DRM-Free)',
+    source: 'gog',
+    sourceName: 'Free GOG Games',
+    genre: 'RPG',
+    tags: ['RPG', 'Cyberpunk', 'Mundo Aberto', 'FPS'],
+    price: 199.90,
+    discount: 60,
+    fileSize: '68.2 GB',
+    rating: 4.8,
+    release: '2024-09-12',
+    sold: 14200,
+    cover: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=800&auto=format&fit=crop&q=60',
+    desc: 'Explore Night City e o perigoso distrito de Dogtown com Keanu Reeves e Idris Elba. 100% DRM-Free sem crack.',
+    steamUrl: 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/',
+    magnet: 'magnet:?xt=urn:btih:c7b3rpunk2077ph4nt0ml1b3rtyg0g000000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (GOG DRM-Free Setup)', type: 'magnet', url: 'magnet:?xt=urn:btih:c7b3rpunk2077ph4nt0ml1b3rtyg0g000000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'GOG Offline Installer (Parte 1-14)', type: 'ddl', url: 'https://freegogpcgames.com/cyberpunk-2077/' }
+    ],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Core i7-6700 / Ryzen 5 1600', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580 8GB', storage: '70 GB SSD' }
+  },
+  {
+    id: 'witcher-3-complete',
+    name: 'The Witcher 3: Wild Hunt Complete Edition (Next-Gen)',
+    source: 'gog',
+    sourceName: 'Free GOG Games',
+    genre: 'RPG',
+    tags: ['RPG', 'Mundo Aberto', 'História Rica', 'Fantasia'],
+    price: 159.90,
+    discount: 75,
+    fileSize: '51.4 GB',
+    rating: 5.0,
+    release: '2023-12-14',
+    sold: 38000,
+    cover: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=60',
+    desc: 'Geralt de Rivia em sua jornada para encontrar a Criança da Profecia. Inclui expansões Hearts of Stone e Blood and Wine.',
+    steamUrl: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/',
+    magnet: 'magnet:?xt=urn:btih:w1tch3r3c0mpl3t33d1t10ng0g00000000000000000000&dn=The+Witcher+3+Complete+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (GOG Next-Gen)', type: 'magnet', url: 'magnet:?xt=urn:btih:w1tch3r3c0mpl3t33d1t10ng0g00000000000000000000&dn=The+Witcher+3+Complete+GOG&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'GOG Standalone Installer', type: 'ddl', url: 'https://freegogpcgames.com/the-witcher-3-wild-hunt-complete-edition/' }
+    ],
+    specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-4460 / Ryzen 3 1200', ram: '8 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '60 GB' }
   },
   {
     id: 'hollow-knight-godmaster',
@@ -1016,51 +1051,145 @@ const GAMES = [
     ],
     specs: { os: 'Windows 7/8/10/11', cpu: 'Intel Core 2 Duo E5200', ram: '4 GB RAM', gpu: 'GeForce 9800GTX+ (512MB)', storage: '9 GB' }
   },
+
+  // --- XATAB REPACKS ---
   {
-    id: 'witcher-3-complete',
-    name: 'The Witcher 3: Wild Hunt Complete Edition (Next-Gen)',
-    source: 'gog',
-    sourceName: 'Free GOG Games',
-    genre: 'RPG',
-    tags: ['RPG', 'Mundo Aberto', 'História Rica', 'Fantasia'],
-    price: 159.90,
-    discount: 75,
-    fileSize: '51.4 GB',
-    rating: 5.0,
-    release: '2023-12-14',
-    sold: 38000,
-    cover: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=60',
-    desc: 'Geralt de Rivia em sua jornada para encontrar a Criança da Profecia. Inclui expansões Hearts of Stone e Blood and Wine com Ray Tracing.',
-    steamUrl: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/',
-    magnet: 'magnet:?xt=urn:btih:w1tch3r3c0mpl3t33d1t10ng0g00000000000000000000&dn=The+Witcher+3+Complete+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
+    id: 'forza-horizon-5',
+    name: 'Forza Horizon 5: Premium Edition (v1.656.398)',
+    source: 'xatab',
+    sourceName: 'Xatab Repacks',
+    genre: 'Corrida',
+    tags: ['Corrida', 'Mundo Aberto', 'Automobilismo', 'Multiplayer'],
+    price: 249.90,
+    discount: 50,
+    fileSize: '110.0 GB',
+    rating: 4.8,
+    release: '2024-04-18',
+    sold: 17500,
+    cover: 'https://images.unsplash.com/photo-1547949003-9792a18a2601?w=800&auto=format&fit=crop&q=60',
+    desc: 'Explore as vibrantes paisagens de mundo aberto do México em centenas dos melhores carros do mundo.',
+    steamUrl: 'https://store.steampowered.com/app/1551360/Forza_Horizon_5/',
+    magnet: 'magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4b000000000000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
     mirrors: [
-      { name: 'Magnet Torrent (GOG Next-Gen)', type: 'magnet', url: 'magnet:?xt=urn:btih:w1tch3r3c0mpl3t33d1t10ng0g00000000000000000000&dn=The+Witcher+3+Complete+GOG&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'GOG Standalone Installer', type: 'ddl', url: 'https://freegogpcgames.com/the-witcher-3-wild-hunt-complete-edition/' }
+      { name: 'Magnet Torrent (Xatab High Seed)', type: 'magnet', url: 'magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4b000000000000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }
     ],
-    specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-4460 / Ryzen 3 1200', ram: '8 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '60 GB' }
+    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-8400 / AMD Ryzen 5 1500X', ram: '16 GB RAM', gpu: 'GTX 1070 / RX 590', storage: '120 GB SSD' }
   },
   {
-    id: 'spiderman-remastered',
-    name: "Marvel's Spider-Man Remastered (v2.616.0.0)",
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
+    id: 'far-cry-6',
+    name: 'Far Cry 6: Game of the Year Edition',
+    source: 'xatab',
+    sourceName: 'Xatab Repacks',
     genre: 'Ação',
-    tags: ['Ação', 'Super-Heróis', 'Mundo Aberto', 'Aventura'],
+    tags: ['FPS', 'Mundo Aberto', 'Ação', 'Guerra'],
     price: 249.90,
-    discount: 40,
-    fileSize: '41.8 GB',
-    rating: 4.9,
-    release: '2023-09-18',
-    sold: 22000,
-    cover: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=800&auto=format&fit=crop&q=60',
-    desc: 'Peter Parker luta contra o crime e vilões icônicos em uma Nova York vibrante e detalhada.',
-    steamUrl: 'https://store.steampowered.com/app/1817070/Marvels_SpiderMan_Remastered/',
-    magnet: 'magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rl0000000000000000000&dn=Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
+    discount: 60,
+    fileSize: '52.0 GB',
+    rating: 4.6,
+    release: '2023-10-15',
+    sold: 11200,
+    cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=60',
+    desc: 'Junte-se à revolução moderna como Dani Rojas para libertar a ilha tropical de Yara do ditador Antón Castillo.',
+    steamUrl: 'https://store.steampowered.com/app/2369390/Far_Cry_6/',
+    magnet: 'magnet:?xt=urn:btih:f4rcry6g0ty3d1t10nx4t4br3p4ck00000000000000&dn=Far+Cry+6+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
     mirrors: [
-      { name: 'Magnet Torrent (FitGirl Repack)', type: 'magnet', url: 'magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rl0000000000000000000&dn=Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'DataNodes Fast Mirror', type: 'ddl', url: 'https://datanodes.to/spiderman-fitgirl' }
+      { name: 'Magnet Torrent (Xatab)', type: 'magnet', url: 'magnet:?xt=urn:btih:f4rcry6g0ty3d1t10nx4t4br3p4ck00000000000000&dn=Far+Cry+6+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i3-4160', ram: '8 GB RAM', gpu: 'GTX 950 / Radeon R7 370', storage: '75 GB' }
+    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 3 1200 / Core i5-4460', ram: '8 GB RAM', gpu: 'GTX 960 / RX 460', storage: '60 GB' }
+  },
+
+  // --- ATOP-GAMES ---
+  {
+    id: 'minecraft-bedrock-java',
+    name: 'Minecraft: Java & Bedrock Edition (Multiplayer Ativo)',
+    source: 'atop',
+    sourceName: 'Atop-Games',
+    genre: 'Aventura',
+    tags: ['Sandbox', 'Construção', 'Sobrevivência', 'Mundo Aberto'],
+    price: 149.90,
+    discount: 0,
+    fileSize: '1.2 GB',
+    rating: 4.9,
+    release: '2024-06-07',
+    sold: 45000,
+    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=60',
+    desc: 'Construa tudo o que puder imaginar, explore mundos gerados infinitamente e sobreviva contra monstros perigosos.',
+    steamUrl: 'https://www.minecraft.net/',
+    magnet: 'magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000000&dn=Minecraft+Java+and+Bedrock+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Download Direto (.exe Launcher)', type: 'ddl', url: 'https://atop-games.com/minecraft-launcher' },
+      { name: 'Magnet Torrent Mirror', type: 'magnet', url: 'magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000000&dn=Minecraft+Java+and+Bedrock+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce' }
+    ],
+    specs: { os: 'Windows 10/11', cpu: 'Intel Core i3-3210 / AMD A8-7600', ram: '4 GB RAM', gpu: 'Intel HD Graphics 4000 / Radeon R5', storage: '4 GB' }
+  },
+  {
+    id: 'doom-eternal-deluxe',
+    name: 'DOOM Eternal: Deluxe Edition (The Ancient Gods 1 & 2)',
+    source: 'atop',
+    sourceName: 'Atop-Games',
+    genre: 'Ação',
+    tags: ['FPS', 'Ação Frenética', 'Demônios', 'Trilha Pesada'],
+    price: 199.90,
+    discount: 50,
+    fileSize: '45.0 GB',
+    rating: 4.9,
+    release: '2023-08-10',
+    sold: 16800,
+    cover: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=800&auto=format&fit=crop&q=60',
+    desc: 'Os exércitos do inferno invadiram a Terra. Torne-se o Slayer em uma campanha épica para conquistar demônios através de dimensões.',
+    steamUrl: 'https://store.steampowered.com/app/782330/DOOM_Eternal/',
+    magnet: 'magnet:?xt=urn:btih:d00m3t3rn4ld3lux34t0pg4m3s0000000000000000&dn=Doom+Eternal+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Download Direto (.iso)', type: 'ddl', url: 'https://atop-games.com/doom-eternal' }
+    ],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5 @ 3.3 GHz / AMD Ryzen 3', ram: '8 GB RAM', gpu: 'GTX 1050Ti / RX 470', storage: '50 GB' }
+  },
+
+  // --- EMPRESS RELEASES (DENUVO CRACKS) ---
+  {
+    id: 'hogwarts-legacy',
+    name: 'Hogwarts Legacy: Digital Deluxe Edition',
+    source: 'empress',
+    sourceName: 'Empress Releases',
+    genre: 'RPG',
+    tags: ['RPG', 'Mundo Aberto', 'Magia', 'Aventura'],
+    price: 249.90,
+    discount: 50,
+    fileSize: '69.7 GB',
+    rating: 4.7,
+    release: '2023-02-23',
+    sold: 18900,
+    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=60',
+    desc: 'Experimente a vida como estudante de Hogwarts nos anos 1800. Faça aliados, duele com feiticeiros e decida o destino do mundo bruxo.',
+    steamUrl: 'https://store.steampowered.com/app/990080/Hogwarts_Legacy/',
+    magnet: 'magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss0000000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (Empress Crack Edition)', type: 'magnet', url: 'magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss0000000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: '1fichier Direct Archive', type: 'ddl', url: 'https://1fichier.com/?hogwarts-empress' }
+    ],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i7-8700 / Ryzen 5 3600', ram: '16 GB RAM', gpu: 'GTX 1080 Ti / RX 5700 XT', storage: '85 GB SSD' }
+  },
+  {
+    id: 'resident-evil-4-remake',
+    name: 'Resident Evil 4 Remake (v1.0.5 + Separate Ways DLC)',
+    source: 'empress',
+    sourceName: 'Empress Releases',
+    genre: 'Terror',
+    tags: ['Terror', 'Sobrevivência', 'Ação', 'Zumbis'],
+    price: 199.90,
+    discount: 40,
+    fileSize: '54.1 GB',
+    rating: 4.9,
+    release: '2023-05-10',
+    sold: 14200,
+    cover: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop&q=60',
+    desc: 'Leon S. Kennedy é enviado em uma missão para resgatar a filha do presidente em uma vila europeia isolada tomada pelo parasita Las Plagas.',
+    steamUrl: 'https://store.steampowered.com/app/2050650/Resident_Evil_4/',
+    magnet: 'magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss000000000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (Empress Release)', type: 'magnet', url: 'magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss000000000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }
+    ],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 3600 / Core i7-8700', ram: '16 GB RAM', gpu: 'GTX 1070 8GB / RX 5700', storage: '70 GB SSD' }
   },
 
   // Upcoming games
@@ -1118,6 +1247,11 @@ try{
   state.wishlist=new Set(JSON.parse(localStorage.getItem('jp-wish')||'[]'));
   state.cart=JSON.parse(localStorage.getItem('jp-cart')||'[]');
   state.redeemed=new Set(JSON.parse(localStorage.getItem('jp-free')||'[]'));
+  const savedGames=localStorage.getItem('jp-custom-games');
+  if(savedGames){
+    const parsed=JSON.parse(savedGames);
+    GAMES=[...parsed, ...GAMES];
+  }
 }catch(e){}
 
 function save(){
@@ -1165,6 +1299,49 @@ function triggerDownload(url, title, type='magnet'){
 function copyMagnet(magnetUri, title){
   navigator.clipboard.writeText(magnetUri);
   toast(`Magnet Link de "${title}" copiado com sucesso!`,'copy');
+}
+
+function handleCustomJsonImport(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=(e)=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      const downloads=data.downloads||data;
+      if(Array.isArray(downloads)){
+        const newGames=downloads.map((d,idx)=>({
+          id: 'custom-'+Date.now()+'-'+idx,
+          name: d.title||d.name||'Jogo Importado',
+          source: 'custom',
+          sourceName: data.name||'Fonte Customizada',
+          genre: 'Geral',
+          tags: ['Addon', 'Custom'],
+          price: 199.90,
+          discount: 0,
+          fileSize: d.fileSize||'Desconhecido',
+          rating: 4.8,
+          release: d.uploadDate||'Recente',
+          sold: 1000,
+          cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800',
+          desc: 'Jogo importado dinamicamente via arquivo JSON do Hydra.',
+          steamUrl: '#',
+          magnet: (d.uris&&d.uris[0])||'',
+          mirrors: (d.uris||[]).map((u,i)=>({name:`Espelho ${i+1}`, type:u.startsWith('magnet')?'magnet':'ddl', url:u})),
+          specs: { os:'Windows 10 64-bit', cpu:'Quad-Core CPU', ram:'8 GB RAM', gpu:'DirectX 11 GPU', storage:'50 GB' }
+        }));
+        GAMES=[...newGames, ...GAMES];
+        localStorage.setItem('jp-custom-games',JSON.stringify(newGames));
+        buildFilters();
+        renderGrid();
+        closeSourcesModal();
+        toast(`${newGames.length} jogos importados com sucesso!`,'package-check');
+      }
+    }catch(err){
+      toast('Erro ao processar arquivo JSON do Hydra','alert-triangle');
+    }
+  };
+  reader.readAsText(file);
 }
 
 /* ================= ROUTER ================= */
@@ -1292,7 +1469,7 @@ function renderDeals(){
   refreshIcons();
 }
 
-/* ================= FILTROS & CATÁLOGO ================= */
+/* ================= FILTROS & CATÁLOGO DAS 7 FONTES ================= */
 function buildFilters(){
   const store=GAMES.filter(g=>!g.upcoming);
   
@@ -1408,6 +1585,7 @@ function renderGrid(){
   }
   refreshIcons();
   $('#resultCount').innerHTML=`<b>${list.length}</b> ${list.length===1?'jogo encontrado':'jogos encontrados'}`;
+  $('#statGames').innerText=list.length;
 }
 
 /* ================= LOJA: EM BREVE ================= */
