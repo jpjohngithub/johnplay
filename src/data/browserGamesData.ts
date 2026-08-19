@@ -3,10 +3,10 @@ import type { BrowserGame } from '../types';
 export const BROWSER_GAMES: BrowserGame[] = [
   {
     id: 'subway-surfers',
-    title: 'Subway Surfers',
+    title: 'Subway Surfers World Tour',
     platform: 'Poki',
     genre: 'Corrida 3D / Parkour',
-    thumbnail: 'https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/f54a88390886b6a3788a101b0f5efd46.png',
+    thumbnail: 'https://i.postimg.cc/jRyrpVmX/subwaysurfers.png',
     description: 'O maior clássico runner 3D do mundo! Corra pelos trilhos de trem com Jake, Tricky e Fresh, desvie dos vagões e fuja do inspetor rabugento e do seu cachorro.',
     controls: 'Use as Setas [⬅️ ➡️] para mudar de pista, [⬆️] para pular e [⬇️] para rolar.',
     gameUrl: 'https://poki.com/en/g/subway-surfers',

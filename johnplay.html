@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JohnPlay — Portal Gamer & Loja de Addons</title>
+<title>JohnPlay — Portal Gamer & Loja de Addons Hydra</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23a06bff'/><text x='16' y='22' font-family='Arial' font-weight='900' font-size='15' fill='%23150827' text-anchor='middle'>JP</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
@@ -50,12 +50,11 @@
   .nav-links a:hover{color:var(--text);background:var(--panel-2)}
   .nav-links a.on{color:var(--text);background:var(--panel-2);box-shadow:inset 0 -2px 0 var(--accent)}
   
-  /* Search box in header */
+  /* Search box */
   .nav-search{position:relative;flex:1;max-width:320px;margin-left:10px}
   .nav-search input{width:100%;height:38px;background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:0 36px 0 34px;font-family:inherit;font-size:13px;color:var(--text);outline:none;transition:.2s}
   .nav-search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
   .nav-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)}
-  .nav-search .clear-search{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:4px;display:none;place-items:center;color:var(--muted);cursor:pointer}
 
   .nav-actions{display:flex;gap:6px;align-items:center;margin-left:auto}
   .icon-btn{position:relative;width:41px;height:41px;border-radius:10px;display:grid;place-items:center;color:var(--muted);transition:.18s;cursor:pointer}
@@ -121,14 +120,13 @@
   .slide img{width:100%;height:100%;object-fit:cover}
   .slide.active img{animation:kb 8s ease-out forwards}
   @keyframes kb{from{transform:scale(1.09)}to{transform:scale(1)}}
-  .slide::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,7,19,.95) 0%,rgba(11,7,19,.65) 45%,rgba(11,7,19,.1) 80%)}
+  .slide::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,7,19,.96) 0%,rgba(11,7,19,.68) 46%,rgba(11,7,19,.1) 82%)}
   .slide-body{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;max-width:620px;padding:0 54px}
   .slide-tags{display:flex;gap:8px;align-items:center;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
   .slide-tags .sep{width:26px;height:1px;background:var(--accent);opacity:.6}
-  .slide-title{font-family:'Barlow Condensed',sans-serif;font-size:64px;font-weight:700;text-transform:uppercase;line-height:.95;margin-bottom:14px}
+  .slide-title{font-family:'Barlow Condensed',sans-serif;font-size:60px;font-weight:700;text-transform:uppercase;line-height:.95;margin-bottom:14px}
   .slide-desc{color:#c9bfe0;font-size:15px;max-width:480px;margin-bottom:18px;line-height:1.4}
   .slide-meta{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
-  .slide-price{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;margin-bottom:22px;flex-wrap:wrap}
   .slide-buy{display:flex;gap:12px;flex-wrap:wrap}
   .car-arrows{position:absolute;right:16px;bottom:16px;z-index:3;display:flex;gap:8px}
   .car-arrows button{width:38px;height:38px;border-radius:9px;background:rgba(12,8,20,.65);border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;color:var(--text);transition:.18s;backdrop-filter:blur(6px)}
@@ -194,7 +192,7 @@
   .game-card .cover{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--bg-deep)}
   .game-card .cover img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
   .game-card:hover .cover img{transform:scale(1.07)}
-  .disc-badge,.free-badge{position:absolute;top:10px;left:10px;background:var(--accent);color:var(--accent-ink);font-weight:800;padding:3px 8px;border-radius:6px}
+  .disc-badge{position:absolute;top:10px;left:10px;font-weight:800;padding:3px 8px;border-radius:6px}
   .size-badge{position:absolute;top:10px;right:10px;background:rgba(12,8,20,.75);color:var(--accent-hi);font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;border:1px solid var(--border);backdrop-filter:blur(4px)}
   .wish-btn{position:absolute;bottom:10px;right:10px;width:34px;height:34px;border-radius:8px;background:rgba(12,8,20,.66);border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;color:#e4ddf2;opacity:0;transition:.18s;backdrop-filter:blur(4px)}
   .game-card:hover .wish-btn,.wish-btn.on{opacity:1}
@@ -224,29 +222,15 @@
   .bg-hero h2{font-family:'Barlow Condensed',sans-serif;font-size:52px;text-transform:uppercase;line-height:1}
   .bg-hero p{color:var(--muted);max-width:480px;margin-top:10px}
   .bg-hero .z{position:relative}
-  .bg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-top:22px}
-  .bg-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:.2s}
-  .bg-card:hover{border-color:var(--border-hi);transform:translateY(-4px)}
-  .bg-card .top{aspect-ratio:16/9;background:var(--bg-deep);display:grid;place-items:center;position:relative;overflow:hidden}
-  .bg-card .top .big{color:var(--accent);opacity:.85;transition:transform .4s}
-  .bg-card:hover .top .big{transform:scale(1.15)}
-  .bg-card .top .big svg{width:64px;height:64px;stroke-width:1.4}
-  .bg-card .best{position:absolute;top:12px;right:12px;background:rgba(12,8,20,.7);border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--muted);padding:4px 10px;backdrop-filter:blur(4px)}
-  .bg-card .best b{color:var(--accent-hi)}
-  .bg-card .bd{padding:16px 17px 18px;display:flex;flex-direction:column;gap:8px}
-  .bg-card .bd h3{font-size:17px}
-  .bg-card .bd p{color:var(--muted);font-size:13.5px;flex:1}
-  .play-btn{height:42px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:9px;transition:.18s;cursor:pointer}
-  .play-btn:hover{background:var(--accent-hi)}
-  .play-btn svg{width:16px;height:16px}
 
-  /* Subway Surfers Featured Showcase in Browser Page */
-  .subway-banner{margin-top:22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;display:grid;grid-template-columns:1fr 1.2fr}
-  .subway-media{position:relative;min-height:300px;background:var(--bg-deep)}
-  .subway-media img{width:100%;height:100%;object-fit:cover;filter:brightness(.85)}
+  /* Subway Surfers Featured Banner with User Provided Cover */
+  .subway-banner{margin-top:22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;display:grid;grid-template-columns:1.2fr 1fr}
+  .subway-media{position:relative;min-height:360px;background:var(--bg-deep);overflow:hidden}
+  .subway-media img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .5s ease}
+  .subway-banner:hover .subway-media img{transform:scale(1.04)}
   .subway-media::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,var(--panel) 100%)}
   .subway-content{padding:34px 38px;display:flex;flex-direction:column;justify-content:center;gap:12px}
-  .subway-content h3{font-family:'Barlow Condensed',sans-serif;font-size:42px;text-transform:uppercase;line-height:1}
+  .subway-content h3{font-family:'Barlow Condensed',sans-serif;font-size:46px;text-transform:uppercase;line-height:1}
 
   /* ---------- Emuladores & Apps ---------- */
   .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:22px}
@@ -270,28 +254,39 @@
   .app-hero h2{font-family:'Barlow Condensed',sans-serif;font-size:44px;text-transform:uppercase;line-height:1}
   .app-hero p{color:var(--muted);margin-top:8px;max-width:520px}
 
-  /* ---------- Modal / game modal ---------- */
+  /* ---------- Modal / game modal (Hydra Style Dynamic Options) ---------- */
   .overlay{position:fixed;inset:0;background:rgba(6,3,12,.85);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .25s}
   .overlay.show{display:flex;opacity:1}
-  .modal{background:var(--panel);border:1px solid var(--border-hi);border-radius:16px;max-width:920px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1.1fr;transform:translateY(14px);transition:transform .25s}
+  .modal{background:var(--panel);border:1px solid var(--border-hi);border-radius:16px;max-width:960px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1.15fr;transform:translateY(14px);transition:transform .25s}
   .overlay.show .modal{transform:none}
   .modal-media{position:relative;min-height:380px}
   .modal-media img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
   .modal-close{position:absolute;top:14px;right:14px;z-index:5;width:36px;height:36px;border-radius:9px;background:rgba(12,8,20,.7);border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;color:var(--text);transition:.15s;cursor:pointer}
   .modal-close:hover{background:var(--danger);border-color:var(--danger)}
   .modal-close svg{width:17px;height:17px}
-  .modal-body{padding:30px 30px 26px;display:flex;flex-direction:column;gap:14px}
-  .modal-body h2{font-family:'Barlow Condensed',sans-serif;font-size:44px;text-transform:uppercase;line-height:1}
+  .modal-body{padding:28px 30px 24px;display:flex;flex-direction:column;gap:14px}
+  .modal-body h2{font-family:'Barlow Condensed',sans-serif;font-size:40px;text-transform:uppercase;line-height:1}
   .modal-meta{display:flex;gap:16px;color:var(--muted);font-size:13px;flex-wrap:wrap;align-items:center}
-  .modal-body>p{color:#c9bfe0;font-size:14.5px;line-height:1.5}
+  .modal-body>p{color:#c9bfe0;font-size:14px;line-height:1.45}
   
+  /* Dynamic Download Options Box (Hydra Style) */
+  .download-options-box{background:var(--panel-2);border:1px solid var(--border-hi);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .dl-option-row{display:flex;align-items:center;justify-content:space-between;background:rgba(16,11,26,.8);border:1px solid var(--border);border-radius:9px;padding:10px 14px;gap:10px}
+  .dl-option-row .opt-info h5{font-size:13.5px;color:var(--text);display:flex;align-items:center;gap:6px}
+  .dl-option-row .opt-info p{font-size:11px;color:var(--muted)}
+  .dl-option-row .opt-actions{display:flex;align-items:center;gap:6px}
+  .opt-btn{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;cursor:pointer;transition:.15s}
+  .opt-btn-primary{background:var(--emerald);color:#031d13}
+  .opt-btn-primary:hover{background:#34d399}
+  .opt-btn-secondary{background:var(--accent);color:var(--accent-ink)}
+  .opt-btn-secondary:hover{background:var(--accent-hi)}
+  .opt-btn-ghost{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--border)}
+  .opt-btn-ghost:hover{background:rgba(255,255,255,.14)}
+
   /* System specs box inside modal */
   .modal-specs{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .modal-specs .spec-item span{color:var(--muted);display:block;font-size:10.5px;text-transform:uppercase;font-weight:700}
   .modal-specs .spec-item b{color:var(--text);font-size:12px}
-
-  .modal-buy{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:12px;flex-wrap:wrap}
-  .modal-price{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px}
 
   /* Sources Modal */
   .sources-modal{max-width:680px;grid-template-columns:1fr;padding:26px}
@@ -325,33 +320,6 @@
   .drawer-total b{font-size:20px;color:var(--accent-hi)}
   .drawer-foot .btn{justify-content:center}
 
-  /* ---------- Mini-Games Arcade Player ---------- */
-  .game-modal{max-width:560px;grid-template-columns:1fr;padding:0;overflow:hidden}
-  .gm-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border);gap:12px}
-  .gm-head h3{font-family:'Barlow Condensed',sans-serif;font-size:26px;text-transform:uppercase;line-height:1}
-  .gm-head .hud{display:flex;gap:14px;font-size:13px;color:var(--muted)}
-  .gm-head .hud b{color:var(--accent-hi);font-variant-numeric:tabular-nums}
-  .gm-head .actions{display:flex;gap:6px}
-  .gm-body{padding:20px;display:grid;place-items:center;min-height:340px;background:var(--bg-deep)}
-  #snakeCv{border-radius:10px;border:1px solid var(--border);max-width:100%;touch-action:none}
-  .gm-hint{padding:0 20px 18px;font-size:12.5px;color:var(--muted);text-align:center}
-  .mem-grid{display:grid;grid-template-columns:repeat(4,68px);gap:10px}
-  .mem-card{width:68px;height:68px;border-radius:10px;cursor:pointer;position:relative;transform-style:preserve-3d;transition:transform .35s}
-  .mem-card.flipped{transform:rotateY(180deg)}
-  .mem-face{position:absolute;inset:0;border-radius:10px;display:grid;place-items:center;backface-visibility:hidden;border:1px solid var(--border)}
-  .mem-back{background:var(--panel-2);color:var(--muted)}
-  .mem-back svg{width:22px;height:22px;opacity:.5}
-  .mem-front{background:var(--accent-dim);border-color:var(--accent);color:var(--accent-hi);transform:rotateY(180deg)}
-  .mem-front svg{width:28px;height:28px}
-  .mem-card.matched .mem-front{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-  .aim-area{position:relative;width:100%;height:340px;border-radius:10px;border:1px solid var(--border);background:var(--bg-deep);overflow:hidden;cursor:crosshair}
-  .aim-target{position:absolute;width:46px;height:46px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px var(--accent-dim),0 4px 14px rgba(0,0,0,.4);cursor:pointer;transform:translate(-50%,-50%);animation:tin .18s ease;display:grid;place-items:center;color:var(--accent-ink)}
-  .aim-target svg{width:20px;height:20px}
-  .gm-over{position:absolute;inset:0;background:rgba(11,7,19,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:3;backdrop-filter:blur(3px)}
-  .gm-over h4{font-family:'Barlow Condensed',sans-serif;font-size:34px;text-transform:uppercase;line-height:1}
-  .gm-over p{color:var(--muted);font-size:14px}
-  .gm-over .btn{height:42px;padding:0 22px}
-
   /* ---------- Toasts ---------- */
   .toasts{position:fixed;bottom:22px;right:22px;z-index:300;display:flex;flex-direction:column;gap:10px}
   .toast{display:flex;align-items:center;gap:11px;background:var(--panel-2);border:1px solid var(--border-hi);border-left:3px solid var(--accent);border-radius:11px;padding:13px 18px 13px 15px;font-size:13.5px;font-weight:600;box-shadow:0 12px 34px rgba(0,0,0,.45);animation:tin .3s ease;max-width:360px}
@@ -381,12 +349,10 @@
     .browse-layout{grid-template-columns:1fr}
     .filters{position:static}
     .stats{grid-template-columns:repeat(2,1fr)}
-    .mem-grid{grid-template-columns:repeat(4,60px)}
-    .mem-card{width:60px;height:60px}
   }
   @media(max-width:720px){
     .slide-body{padding:0 26px}
-    .slide-title{font-size:42px}
+    .slide-title{font-size:38px}
     .carousel{height:430px}
     .modal{grid-template-columns:1fr}
     .modal-media{min-height:230px;aspect-ratio:16/9}
@@ -404,7 +370,7 @@
 
 <div class="topstrip">
   <div class="wrap">
-    <span><span class="live-dot"></span><b id="livePlayersCount">487.230</b> jogadores online agora · Hydra Addons Engine 100% Ativo</span>
+    <span><span class="live-dot"></span><b>487.230</b> jogadores online agora · Hydra Addons Engine 100% Ativo</span>
     <div class="right">
       <a href="#apps">Baixar o JohnPlay</a>
       <a href="#" onclick="openSourcesModal(); return false;">Fontes Hydra (7)</a>
@@ -429,7 +395,7 @@
     
     <div class="nav-search">
       <i data-lucide="search"></i>
-      <input type="text" id="globalSearchInput" placeholder="Buscar jogos, repacks, emuladores..." oninput="handleSearch(this.value)">
+      <input type="text" id="globalSearchInput" placeholder="Buscar jogos, repacks, fontes..." oninput="handleSearch(this.value)">
     </div>
 
     <div class="nav-actions">
@@ -439,7 +405,7 @@
       <button class="icon-btn" id="wishNavBtn" aria-label="Lista de desejos">
         <i data-lucide="heart"></i><span class="badge" id="wishCount" style="display:none">0</span>
       </button>
-      <button class="icon-btn" id="cartBtn" aria-label="Carrinho">
+      <button class="icon-btn" id="cartBtn" aria-label="Downloads Selecionados">
         <i data-lucide="shopping-cart"></i><span class="badge" id="cartCount" style="display:none">0</span>
       </button>
       <span class="avatar"><i data-lucide="user"></i></span>
@@ -452,7 +418,7 @@
   <section class="page on" id="page-loja">
     <div class="wrap">
       <div class="stats">
-        <div class="stat"><span class="ic"><i data-lucide="users"></i></span><div><b id="statOnline">487.230</b><span>Jogadores online</span></div></div>
+        <div class="stat"><span class="ic"><i data-lucide="users"></i></span><div><b>487.230</b><span>Jogadores online</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="download"></i></span><div><b id="statGames">32</b><span>Jogos & Addons</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="layers"></i></span><div><b>7</b><span>Fontes Hydra Ativas</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="gift"></i></span><div><b>1</b><span>Grátis esta semana</span></div></div>
@@ -545,7 +511,7 @@
   <section class="page" id="page-browser">
     <div class="wrap">
       
-      <!-- SUBWAY SURFERS POKI HERO BANNER -->
+      <!-- SUBWAY SURFERS HERO -->
       <div class="bg-hero">
         <div class="z">
           <div class="kicker">Instantâneo · Oficial Poki</div>
@@ -553,33 +519,32 @@
           <p>Corra pelos trilhos de trem com Jake, Tricky e Fresh! Desvie dos vagões e fuja do inspetor rabugento direto no seu navegador sem instalar nada.</p>
         </div>
         <a href="https://poki.com/en/g/subway-surfers" target="_blank" class="btn btn-primary z">
-          <i data-lucide="play"></i>Jogar Subway Surfers Oficial (Poki)
+          <i data-lucide="play"></i>Jogar Subway Surfers Agora (Poki Oficial)
         </a>
       </div>
 
-      <!-- Subway Surfers Showcase Card -->
+      <!-- Subway Surfers Featured Showcase Banner With User's Image -->
       <div class="subway-banner">
         <div class="subway-media">
-          <img src="https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/f54a88390886b6a3788a101b0f5efd46.png" alt="Subway Surfers Cover">
+          <img src="https://i.postimg.cc/jRyrpVmX/subwaysurfers.png" alt="Subway Surfers Capa Oficial">
         </div>
         <div class="subway-content">
           <span class="kicker">Jogo de Navegador Selecionado · SYBO Games</span>
-          <h3>Subway Surfers 3D</h3>
-          <p style="color:var(--muted);font-size:14px;line-height:1.5">
-            O clássico runner mobile mais jogado da história. Controles: Use as setas [⬅️ ➡️] para mudar de pista, [⬆️] para pular e [⬇️] para rolar.
+          <h3>Subway Surfers World Tour</h3>
+          <p style="color:var(--muted);font-size:14px;line-height:1.6">
+            O clássico jogo de corrida infinita em 3D mais popular do mundo. Desvie dos trens em movimento, colete moedas de ouro e use o hoverboard para quebrar seu recorde!
           </p>
-          <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap">
+          <div style="background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--muted)">
+            <b style="color:var(--accent-hi);display:block;margin-bottom:2px">🎮 Controles:</b>
+            Use as Setas ⬅️ ➡️ para desviar, ⬆️ para pular, ⬇️ para rolar e Barra de Espaço para ativar o Skate.
+          </div>
+          <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap">
             <a href="https://poki.com/en/g/subway-surfers" target="_blank" class="btn btn-primary">
-              <i data-lucide="external-link"></i>Abrir no Poki Oficial
+              <i data-lucide="external-link"></i>Jogar no Poki Oficial
             </a>
           </div>
         </div>
       </div>
-
-      <div class="sec-head" style="margin-top:44px">
-        <div><div class="kicker">Arcade Embutido</div><h2>Mini-Jogos Clássicos</h2></div>
-      </div>
-      <div class="bg-grid" id="browserGames"></div>
     </div>
   </section>
 
@@ -710,7 +675,7 @@
   </div>
 </footer>
 
-<!-- Modal de Detalhes do Jogo (Com Download Addon Magnet, Specs e Links) -->
+<!-- Modal de Detalhes do Jogo (Com Opções Dinâmicas de Download Estilo Hydra) -->
 <div class="overlay" id="modalOverlay"><div class="modal" id="modalBox"></div></div>
 
 <!-- Modal Gerenciar Fontes Hydra -->
@@ -736,18 +701,18 @@
   </div>
 </div>
 
-<!-- Carrinho -->
+<!-- Carrinho / Downloads Ativos Drawer -->
 <div class="drawer-overlay" id="cartOverlay"></div>
 <aside class="drawer" id="cartDrawer">
   <div class="drawer-head">
-    <h3 id="cartTitle">Carrinho</h3>
+    <h3 id="cartTitle">Downloads Selecionados</h3>
     <button class="icon-btn" data-close-drawer aria-label="Fechar"><i data-lucide="x"></i></button>
   </div>
   <div class="drawer-list" id="cartList"></div>
   <div class="drawer-foot" id="cartFoot"></div>
 </aside>
 
-<!-- Wishlist -->
+<!-- Wishlist Drawer -->
 <div class="drawer-overlay" id="wishOverlay"></div>
 <aside class="drawer" id="wishDrawer">
   <div class="drawer-head">
@@ -787,9 +752,15 @@ const GAMES = [
     release: '2024-03-10',
     sold: 12400,
     cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=60',
-    desc: 'Explore Los Santos e Blaine County com Michael, Franklin e Trevor na edição definitiva com todas as DLCs inclusas.',
+    desc: 'Explore Los Santos e Blaine County com Michael, Franklin e Trevor na edição definitiva com todas as expansões inclusas.',
     steamUrl: 'https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/',
     magnet: 'magnet:?xt=urn:btih:e589df6890333333342345123490000000000000&dn=Grand+Theft+Auto+V+DODI+Repack&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (qBittorrent / Hydra Engine)', type: 'magnet', url: 'magnet:?xt=urn:btih:e589df6890333333342345123490000000000000&dn=Grand+Theft+Auto+V+DODI+Repack&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'QiWi Direct Download (Alta Velocidade)', type: 'ddl', url: 'https://qiwi.gg/file/gtav-enhanced-dodi' },
+      { name: 'DataNodes Mirror', type: 'ddl', url: 'https://datanodes.to/gtav-dodi' },
+      { name: '1fichier Direct Mirror', type: 'ddl', url: 'https://1fichier.com/?gtav-dodi' }
+    ],
     specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-3470 / AMD FX-8350', ram: '8 GB RAM', gpu: 'GTX 660 / HD 7870', storage: '100 GB' }
   },
   {
@@ -809,6 +780,11 @@ const GAMES = [
     desc: 'Vencedor de mais de 300 prêmios de Jogo do Ano, agora com a expansão Shadow of the Erdtree completa e atualizada.',
     steamUrl: 'https://store.steampowered.com/app/1245620/ELDEN_RING/',
     magnet: 'magnet:?xt=urn:btih:3fa81309d4310000000000000000000000000000&dn=Elden+Ring+Shadow+of+the+Erdtree+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (FitGirl Fast Tracker)', type: 'magnet', url: 'magnet:?xt=urn:btih:3fa81309d4310000000000000000000000000000&dn=Elden+Ring+Shadow+of+the+Erdtree+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'MultiUpload Mirrors', type: 'ddl', url: 'https://multiupload.biz/eldenring' },
+      { name: 'DataNodes Ultra Mirror', type: 'ddl', url: 'https://datanodes.to/eldenring-fitgirl' }
+    ],
     specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-8400 / Ryzen 3 3300X', ram: '12 GB RAM', gpu: 'GTX 1060 3GB / RX 580 4GB', storage: '60 GB SSD' }
   },
   {
@@ -828,6 +804,11 @@ const GAMES = [
     desc: 'Entre no papel do Predestinado nesta jornada épica inspirada na mitologia chinesa feita na Unreal Engine 5.',
     steamUrl: 'https://store.steampowered.com/app/2358720/Black_Myth_Wukong/',
     magnet: 'magnet:?xt=urn:btih:8934571029348102934810293481029348102934&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (SteamRIP Direct Play)', type: 'magnet', url: 'magnet:?xt=urn:btih:8934571029348102934810293481029348102934&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'QiWi Direct Play Archive', type: 'ddl', url: 'https://qiwi.gg/file/wukong-steamrip' },
+      { name: 'MegaUp Mirror', type: 'ddl', url: 'https://megaup.net/wukong' }
+    ],
     specs: { os: 'Windows 10/11 64-bit', cpu: 'Core i5-8400 / Ryzen 5 1600', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580 8GB', storage: '130 GB SSD' }
   },
   {
@@ -847,6 +828,10 @@ const GAMES = [
     desc: 'Explore Night City e o perigoso distrito de Dogtown com Keanu Reeves e Idris Elba. 100% DRM-Free sem crack.',
     steamUrl: 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/',
     magnet: 'magnet:?xt=urn:btih:c7b3rpunk2077ph4nt0ml1b3rtyg0g000000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (GOG DRM-Free Setup)', type: 'magnet', url: 'magnet:?xt=urn:btih:c7b3rpunk2077ph4nt0ml1b3rtyg0g000000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'GOG Offline Installer (Parte 1-14)', type: 'ddl', url: 'https://freegogpcgames.com/cyberpunk-2077/' }
+    ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Core i7-6700 / Ryzen 5 1600', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580 8GB', storage: '70 GB SSD' }
   },
   {
@@ -866,6 +851,10 @@ const GAMES = [
     desc: 'Kratos e Atreus devem viajar pelos Nove Reinos em busca de respostas enquanto as forças de Asgard se preparam para a guerra.',
     steamUrl: 'https://store.steampowered.com/app/2322010/God_of_War_Ragnarok/',
     magnet: 'magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pfullddl0000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (SteamRIP Direct Play)', type: 'magnet', url: 'magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pfullddl0000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'QiWi Fast DDL', type: 'ddl', url: 'https://qiwi.gg/file/gow-ragnarok' }
+    ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-4670k / Ryzen 3 1200', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 5500 XT 8GB', storage: '190 GB SSD' }
   },
   {
@@ -885,6 +874,10 @@ const GAMES = [
     desc: 'Arthur Morgan e a gangue Van der Linde são forçados a fugir pelos Estados Unidos na virada para o século XX.',
     steamUrl: 'https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/',
     magnet: 'magnet:?xt=urn:btih:r3dd34dr3d3mpt10n2f1tg1r1ult1m4t3000000000&dn=Red+Dead+Redemption+2+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (FitGirl Selective Download)', type: 'magnet', url: 'magnet:?xt=urn:btih:r3dd34dr3d3mpt10n2f1tg1r1ult1m4t3000000000&dn=Red+Dead+Redemption+2+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'MultiUpload Mirror Parts', type: 'ddl', url: 'https://multiupload.biz/rdr2' }
+    ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i7-4770K / Ryzen 5 1500X', ram: '12 GB RAM', gpu: 'GTX 1060 6GB / RX 480 4GB', storage: '150 GB' }
   },
   {
@@ -901,9 +894,13 @@ const GAMES = [
     release: '2023-02-23',
     sold: 18900,
     cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=60',
-    desc: 'Experimente a vida como estudante de Hogwarts nos anos 1800. Faça aliados, duele com feiticeiros das trevas e decida o destino do mundo bruxo.',
+    desc: 'Experimente a vida como estudante de Hogwarts nos anos 1800. Faça aliados, duele com feiticeiros e decida o destino do mundo bruxo.',
     steamUrl: 'https://store.steampowered.com/app/990080/Hogwarts_Legacy/',
     magnet: 'magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss0000000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (Empress Crack Edition)', type: 'magnet', url: 'magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss0000000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: '1fichier Direct Archive', type: 'ddl', url: 'https://1fichier.com/?hogwarts-empress' }
+    ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Intel i7-8700 / Ryzen 5 3600', ram: '16 GB RAM', gpu: 'GTX 1080 Ti / RX 5700 XT', storage: '85 GB SSD' }
   },
   {
@@ -923,6 +920,10 @@ const GAMES = [
     desc: 'Jin Sakai deve abandonar as tradições dos samurais para se tornar o Fantasma e libertar a Ilha de Tsushima.',
     steamUrl: 'https://store.steampowered.com/app/2215430/Ghost_of_Tsushima_DIRECTORS_CUT/',
     magnet: 'magnet:?xt=urn:btih:gh0st0ftsush1m4d1r3ct0rscutd0d100000000000&dn=Ghost+of+Tsushima+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (DODI Repack)', type: 'magnet', url: 'magnet:?xt=urn:btih:gh0st0ftsush1m4d1r3ct0rscutd0d100000000000&dn=Ghost+of+Tsushima+DODI&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'QiWi Mirror', type: 'ddl', url: 'https://qiwi.gg/file/tsushima' }
+    ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-8600 / Ryzen 5 3600', ram: '16 GB RAM', gpu: 'GTX 1070 8GB / RX 5600 XT', storage: '75 GB SSD' }
   },
   {
@@ -942,6 +943,9 @@ const GAMES = [
     desc: 'Leon S. Kennedy é enviado em uma missão para resgatar a filha do presidente em uma vila europeia isolada tomada pelo parasita Las Plagas.',
     steamUrl: 'https://store.steampowered.com/app/2050650/Resident_Evil_4/',
     magnet: 'magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss000000000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (Empress Release)', type: 'magnet', url: 'magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss000000000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }
+    ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 3600 / Core i7-8700', ram: '16 GB RAM', gpu: 'GTX 1070 8GB / RX 5700', storage: '70 GB SSD' }
   },
   {
@@ -961,6 +965,9 @@ const GAMES = [
     desc: 'Explore as vibrantes paisagens de mundo aberto do México em centenas dos melhores carros do mundo.',
     steamUrl: 'https://store.steampowered.com/app/1551360/Forza_Horizon_5/',
     magnet: 'magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4b000000000000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (Xatab High Seed)', type: 'magnet', url: 'magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4b000000000000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }
+    ],
     specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-8400 / AMD Ryzen 5 1500X', ram: '16 GB RAM', gpu: 'GTX 1070 / RX 590', storage: '120 GB SSD' }
   },
   {
@@ -980,6 +987,10 @@ const GAMES = [
     desc: 'Construa tudo o que puder imaginar, explore mundos gerados infinitamente e sobreviva contra monstros perigosos.',
     steamUrl: 'https://www.minecraft.net/',
     magnet: 'magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000000&dn=Minecraft+Java+and+Bedrock+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Download Direto (.exe Launcher)', type: 'ddl', url: 'https://atop-games.com/minecraft-launcher' },
+      { name: 'Magnet Torrent Mirror', type: 'magnet', url: 'magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000000&dn=Minecraft+Java+and+Bedrock+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce' }
+    ],
     specs: { os: 'Windows 10/11', cpu: 'Intel Core i3-3210 / AMD A8-7600', ram: '4 GB RAM', gpu: 'Intel HD Graphics 4000 / Radeon R5', storage: '4 GB' }
   },
   {
@@ -999,14 +1010,64 @@ const GAMES = [
     desc: 'Forje seu próprio caminho em Hallownest! Uma aventura de ação clássica em 2D por um vasto reino arruinado de insetos e heróis.',
     steamUrl: 'https://store.steampowered.com/app/367520/Hollow_Knight/',
     magnet: 'magnet:?xt=urn:btih:h0ll0wkn1ghtg0dm4st3rg0g00000000000000000000&dn=Hollow+Knight+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'GOG DRM-Free Installer Completo', type: 'ddl', url: 'https://freegogpcgames.com/hollow-knight/' },
+      { name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:h0ll0wkn1ghtg0dm4st3rg0g00000000000000000000&dn=Hollow+Knight+GOG&tr=udp://tracker.opentrackr.org:1337/announce' }
+    ],
     specs: { os: 'Windows 7/8/10/11', cpu: 'Intel Core 2 Duo E5200', ram: '4 GB RAM', gpu: 'GeForce 9800GTX+ (512MB)', storage: '9 GB' }
+  },
+  {
+    id: 'witcher-3-complete',
+    name: 'The Witcher 3: Wild Hunt Complete Edition (Next-Gen)',
+    source: 'gog',
+    sourceName: 'Free GOG Games',
+    genre: 'RPG',
+    tags: ['RPG', 'Mundo Aberto', 'História Rica', 'Fantasia'],
+    price: 159.90,
+    discount: 75,
+    fileSize: '51.4 GB',
+    rating: 5.0,
+    release: '2023-12-14',
+    sold: 38000,
+    cover: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=60',
+    desc: 'Geralt de Rivia em sua jornada para encontrar a Criança da Profecia. Inclui expansões Hearts of Stone e Blood and Wine com Ray Tracing.',
+    steamUrl: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/',
+    magnet: 'magnet:?xt=urn:btih:w1tch3r3c0mpl3t33d1t10ng0g00000000000000000000&dn=The+Witcher+3+Complete+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (GOG Next-Gen)', type: 'magnet', url: 'magnet:?xt=urn:btih:w1tch3r3c0mpl3t33d1t10ng0g00000000000000000000&dn=The+Witcher+3+Complete+GOG&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'GOG Standalone Installer', type: 'ddl', url: 'https://freegogpcgames.com/the-witcher-3-wild-hunt-complete-edition/' }
+    ],
+    specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-4460 / Ryzen 3 1200', ram: '8 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '60 GB' }
+  },
+  {
+    id: 'spiderman-remastered',
+    name: "Marvel's Spider-Man Remastered (v2.616.0.0)",
+    source: 'fitgirl',
+    sourceName: 'FitGirl Repacks',
+    genre: 'Ação',
+    tags: ['Ação', 'Super-Heróis', 'Mundo Aberto', 'Aventura'],
+    price: 249.90,
+    discount: 40,
+    fileSize: '41.8 GB',
+    rating: 4.9,
+    release: '2023-09-18',
+    sold: 22000,
+    cover: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=800&auto=format&fit=crop&q=60',
+    desc: 'Peter Parker luta contra o crime e vilões icônicos em uma Nova York vibrante e detalhada.',
+    steamUrl: 'https://store.steampowered.com/app/1817070/Marvels_SpiderMan_Remastered/',
+    magnet: 'magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rl0000000000000000000&dn=Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
+    mirrors: [
+      { name: 'Magnet Torrent (FitGirl Repack)', type: 'magnet', url: 'magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rl0000000000000000000&dn=Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' },
+      { name: 'DataNodes Fast Mirror', type: 'ddl', url: 'https://datanodes.to/spiderman-fitgirl' }
+    ],
+    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i3-4160', ram: '8 GB RAM', gpu: 'GTX 950 / Radeon R7 370', storage: '75 GB' }
   },
 
   // Upcoming games
   {id:'gta-vi', name:'Grand Theft Auto VI', genre:'Mundo Aberto', upcoming:true, date:'2026', cover:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600'},
   {id:'witcher-4', name:'The Witcher 4: Polaris', genre:'RPG', upcoming:true, date:'2026', cover:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600'},
   {id:'elder-scrolls-6', name:'The Elder Scrolls VI', genre:'RPG', upcoming:true, date:'2027', cover:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600'},
-  {id:'silksong', name:'Hollow Knight: Silksong', genre:'Ação', upcoming:true, date:'TBA 2026', cover:'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600'},
+  {id:'silksong', name:'Hollow Knight: Silksong', genre:'Ação', upcoming:true, date:'TBA 2026', cover:'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600'}
 ];
 
 const HERO_IDS=['gta-v-enhanced','elden-ring-shadow','black-myth-wukong','cyberpunk-2077-phantom','god-of-war-ragnarok'];
@@ -1038,13 +1099,6 @@ const APPS=[
    desc:'Limpa a memória RAM em tempo real para evitar travamentos e stutterings em jogos pesados.', url:'https://github.com/henrypp/memreduct/releases'},
 ];
 
-/* Browser mini-games */
-const BGAMES = [
-  {id:'snake', name:'Serpente Neon', icon:'worm', desc:'O clássico arcade reinventado: cresça, desvie e bata seu recorde em velocidade crescente.'},
-  {id:'memory',name:'Memória Johns', icon:'brain', desc:'Encontre os 8 pares o mais rápido possível. Menos movimentos = mais pontos.'},
-  {id:'aim',   name:'Treino de Mira', icon:'crosshair', desc:'30 segundos, alvos infinitos. Quantos você acerta antes do tempo acabar?'},
-];
-
 /* ================= ESTADO & PERSISTÊNCIA ================= */
 const state={
   wishlist:new Set(),
@@ -1073,8 +1127,6 @@ function save(){
     localStorage.setItem('jp-free',JSON.stringify([...state.redeemed]));
   }catch(e){}
 }
-const best=k=>+(localStorage.getItem('jp-best-'+k)||0);
-const setBest=(k,v)=>localStorage.setItem('jp-best-'+k,v);
 
 /* ================= HELPERS ================= */
 const $=s=>document.querySelector(s);
@@ -1098,19 +1150,21 @@ function toast(msg,icon='check-circle'){
   setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),300)},3200);
 }
 
-function triggerMagnetDownload(magnetUri, title){
+/* DYNAMIC DOWNLOAD TRIGGER FUNCTION */
+function triggerDownload(url, title, type='magnet'){
   const a=document.createElement('a');
-  a.href=magnetUri;
-  a.target='_self';
+  a.href=url;
+  a.target=(type==='magnet' ? '_self' : '_blank');
+  if(type!=='magnet') a.rel='noopener noreferrer';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  toast(`Download do addon de "${title}" iniciado no seu cliente torrent (Hydra Engine)!`,'zap');
+  toast(`Download do addon "${title}" disparado com sucesso!`,'zap');
 }
 
 function copyMagnet(magnetUri, title){
   navigator.clipboard.writeText(magnetUri);
-  toast(`Magnet Link de "${title}" copiado!`,'copy');
+  toast(`Magnet Link de "${title}" copiado com sucesso!`,'copy');
 }
 
 /* ================= ROUTER ================= */
@@ -1121,7 +1175,6 @@ function navigate(){
   $$('.page').forEach(p=>p.classList.toggle('on',p.id==='page-'+h));
   $$('#navLinks a').forEach(a=>a.classList.toggle('on',a.dataset.nav===h));
   window.scrollTo({top:0});
-  stopGame();
 }
 window.addEventListener('hashchange',navigate);
 
@@ -1151,8 +1204,8 @@ function buildCarousel(){
           <span>${g.tags[0]}</span>
         </div>
         <div class="slide-buy">
-          <button class="btn btn-emerald" onclick="triggerMagnetDownload('${g.magnet}','${g.name}')">
-            <i data-lucide="zap"></i>Baixar Addon (Magnet)
+          <button class="btn btn-emerald" onclick="openModal('${g.id}')">
+            <i data-lucide="download"></i>Opções de Download (Hydra)
           </button>
           <button class="btn btn-ghost" onclick="openModal('${g.id}')">
             <i data-lucide="info"></i>Ver Detalhes & Specs
@@ -1216,7 +1269,7 @@ function renderDeals(){
       <div class="deal-info">
         <h3>${free.name}</h3>
         <div class="g">${free.genre} · DRM-Free GOG Oficial</div>
-        <button class="redeem-btn ${state.redeemed.has(free.id)?'done':''}" onclick="event.stopPropagation(); triggerMagnetDownload('${free.magnet}','${free.name}')">
+        <button class="redeem-btn" onclick="event.stopPropagation(); openModal('${free.id}')">
           <i data-lucide="download"></i>Baixar Jogo Grátis
         </button>
       </div>
@@ -1334,11 +1387,11 @@ function cardHTML(g){
           <span class="card-price">${priceHTML(g)}</span>
         </div>
         <div class="card-actions">
-          <button class="action-dl" onclick="event.stopPropagation(); triggerMagnetDownload('${g.magnet}','${g.name}')">
-            <i data-lucide="zap"></i>Baixar
+          <button class="action-dl" onclick="event.stopPropagation(); openModal('${g.id}')">
+            <i data-lucide="download"></i>Opções
           </button>
           <button class="action-det" onclick="event.stopPropagation(); openModal('${g.id}')">
-            <i data-lucide="info"></i>Detalhes
+            <i data-lucide="info"></i>Specs
           </button>
         </div>
       </div>
@@ -1394,7 +1447,7 @@ function renderPromo(){
         <div class="deal-info">
           <h3>${g.name}</h3>
           <div class="g">${g.genre} · DRM-Free GOG Oficial</div>
-          <button class="redeem-btn" onclick="event.stopPropagation(); triggerMagnetDownload('${g.magnet}','${g.name}')">
+          <button class="redeem-btn" onclick="event.stopPropagation(); openModal('${g.id}')">
             <i data-lucide="download"></i>Baixar Jogo Grátis
           </button>
         </div>
@@ -1467,213 +1520,36 @@ function renderApps(){
   refreshIcons();
 }
 
-/* ================= JOGOS DE NAVEGADOR ================= */
-function renderBrowserGames(){
-  $('#browserGames').innerHTML=BGAMES.map(g=>`
-    <article class="bg-card">
-      <div class="top">
-        <span class="big"><i data-lucide="${g.icon}"></i></span>
-        <span class="best">Recorde: <b>${best(g.id)||'—'}</b></span>
-      </div>
-      <div class="bd">
-        <h3>${g.name}</h3>
-        <p>${g.desc}</p>
-        <button class="play-btn" onclick="gameModal('${g.id}')"><i data-lucide="play"></i>Jogar Agora</button>
-      </div>
-    </article>`).join('');
-  refreshIcons();
-}
-
-/* Mini-games Engine */
-const game={running:false,loop:null,timer:null};
-function stopGame(){
-  game.running=false;
-  clearInterval(game.loop);clearInterval(game.timer);
-}
-function gameModal(id){
-  stopGame();closeModal();
-  const meta=BGAMES.find(g=>g.id===id);
-  $('#modalBox').innerHTML=`
-    <div class="modal game-modal">
-      <div class="gm-head">
-        <h3>${meta.name}</h3>
-        <div class="hud" id="gmHud"></div>
-        <div class="actions">
-          <button class="icon-btn" id="gmRestart" aria-label="Reiniciar"><i data-lucide="rotate-ccw"></i></button>
-          <button class="icon-btn" onclick="closeModal()" aria-label="Fechar"><i data-lucide="x"></i></button>
-        </div>
-      </div>
-      <div class="gm-body" id="gmBody"></div>
-      <div class="gm-hint" id="gmHint"></div>
-    </div>`;
-  $('#modalOverlay').classList.add('show');
-  refreshIcons();
-  $('#gmRestart').addEventListener('click',()=>startGame(id));
-  startGame(id);
-}
-function hud(pairs){
-  $('#gmHud').innerHTML=pairs.map(p=>`<span>${p[0]} <b>${p[1]}</b></span>`).join('');
-}
-function startGame(id){
-  stopGame();
-  ({snake:startSnake,memory:startMemory,aim:startAim})[id]();
-}
-
-function startSnake(){
-  const cv=document.createElement('canvas');
-  cv.width=400;cv.height=400;cv.id='snakeCv';
-  $('#gmBody').innerHTML='';$('#gmBody').appendChild(cv);
-  $('#gmHint').textContent='Setas ou W A S D para mover. No celular, toque nos cantos da tela.';
-  const ctx=cv.getContext('2d'),N=20,S=20;
-  let snake,dir,ndir,food,score,speed,alive;
-  function reset(){
-    snake=[{x:9,y:10},{x:8,y:10},{x:7,y:10}];
-    dir={x:1,y:0};ndir=dir;score=0;speed=130;alive=true;
-    spawn();hud([['Pontos',score],['Recorde',best('snake')||0]]);
-    clearInterval(game.loop);game.loop=setInterval(tick,speed);
-    game.running=true;draw();
-  }
-  function spawn(){
-    do{food={x:Math.floor(Math.random()*N),y:Math.floor(Math.random()*N)}}
-    while(snake.some(s=>s.x===food.x&&s.y===food.y));
-  }
-  function tick(){
-    dir=ndir;
-    const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
-    if(h.x<0||h.y<0||h.x>=N||h.y>=N||snake.some(s=>s.x===h.x&&s.y===h.y)){over();return}
-    snake.unshift(h);
-    if(h.x===food.x&&h.y===food.y){
-      score+=10;spawn();hud([['Pontos',score],['Recorde',best('snake')||0]]);
-      if(score%50===0){speed=Math.max(60,speed-12);clearInterval(game.loop);game.loop=setInterval(tick,speed)}
-    }else snake.pop();
-    draw();
-  }
-  function draw(){
-    ctx.fillStyle='#0b0713';ctx.fillRect(0,0,400,400);
-    ctx.strokeStyle='rgba(160,107,255,.07)';
-    for(let i=0;i<=N;i++){ctx.beginPath();ctx.moveTo(i*S,0);ctx.lineTo(i*S,400);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*S);ctx.lineTo(400,i*S);ctx.stroke()}
-    ctx.fillStyle='#a06bff';
-    ctx.beginPath();ctx.arc(food.x*S+10,food.y*S+10,7,0,7);ctx.fill();
-    snake.forEach((s,i)=>{
-      ctx.fillStyle=i===0?'#b98cff':'#a06bff';
-      ctx.globalAlpha=i===0?1:Math.max(.35,1-i*.06);
-      ctx.beginPath();ctx.roundRect(s.x*S+1.5,s.y*S+1.5,S-3,S-3,5);ctx.fill();
-      ctx.globalAlpha=1;
-    });
-  }
-  function over(){
-    alive=false;stopGame();draw();
-    if(score>best('snake')){setBest('snake',score);toast('Novo recorde na Serpente: '+score+'!','trophy')}
-    const ov=document.createElement('div');
-    ov.className='gm-over';
-    ov.innerHTML=`<h4>Fim de jogo</h4><p>Pontuação: <b style="color:var(--accent-hi)">${score}</b> · Recorde: ${best('snake')}</p><button class="btn btn-primary" onclick="this.parentElement.remove(); reset()">Jogar de novo</button>`;
-    $('#gmBody').style.position='relative';
-    $('#gmBody').appendChild(ov);
-    renderBrowserGames();
-  }
-  document.addEventListener('keydown',snakeKeys);
-  function snakeKeys(e){
-    if(!alive)return;
-    const m={ArrowUp:{x:0,y:-1},ArrowDown:{x:0,y:1},ArrowLeft:{x:-1,y:0},ArrowRight:{x:1,y:0},w:{x:0,y:-1},s:{x:0,y:1},a:{x:-1,y:0},d:{x:1,y:0}};
-    const nd=m[e.key];
-    if(nd&&$('#modalOverlay').classList.contains('show')){
-      e.preventDefault();
-      if(nd.x!==-dir.x||nd.y!==-dir.y)ndir=nd;
-    }
-  }
-  reset();
-}
-
-function startMemory(){
-  const MEM_ICONS=['rocket','ghost','crown','gem','sword','shield','flame','skull'];
-  const icons=[...MEM_ICONS,...MEM_ICONS].sort(()=>Math.random()-.5);
-  $('#gmBody').innerHTML=`
-    <div class="mem-grid" id="memGrid">
-      ${icons.map((ic,i)=>`
-        <div class="mem-card" data-ic="${ic}">
-          <div class="mem-face mem-back"><i data-lucide="circle"></i></div>
-          <div class="mem-face mem-front"><i data-lucide="${ic}"></i></div>
-        </div>`).join('')}
-    </div>`;
-  $('#gmHint').textContent='Encontre os 8 pares no menor número de movimentos.';
-  refreshIcons();
-  let open=[],moves=0,matched=0,lock=false;
-  hud([['Pares','0/8'],['Movimentos',0]]);
-  $('#memGrid').addEventListener('click',e=>{
-    const c=e.target.closest('.mem-card');
-    if(!c||lock||c.classList.contains('flipped'))return;
-    c.classList.add('flipped');open.push(c);
-    if(open.length===2){
-      moves++;lock=true;
-      hud([['Pares',matched+'/8'],['Movimentos',moves]]);
-      const[a,b]=open;
-      if(a.dataset.ic===b.dataset.ic){
-        setTimeout(()=>{
-          a.classList.add('matched');b.classList.add('matched');
-          open=[];lock=false;matched++;
-          hud([['Pares',matched+'/8'],['Movimentos',moves]]);
-          if(matched===8){
-            toast('Você venceu o jogo da memória!','trophy');
-          }
-        },350);
-      }else{
-        setTimeout(()=>{a.classList.remove('flipped');b.classList.remove('flipped');open=[];lock=false},700);
-      }
-    }
-  });
-}
-
-function startAim(){
-  $('#gmBody').innerHTML=`
-    <div class="aim-area" id="aimArea">
-      <div class="gm-over" id="aimStart">
-        <h4>Treino de Mira</h4><p>Clique nos alvos por 30 segundos.</p>
-        <button class="btn btn-primary" onclick="initAimGame()">Começar</button>
-      </div>
-    </div>`;
-  $('#gmHint').textContent='Cada alvo vale 1 ponto.';
-  hud([['Pontos',0],['Recorde',best('aim')||0]]);
-}
-
-function initAimGame(){
-  $('#aimStart').remove();
-  const area=$('#aimArea');
-  let score=0,time=30;
-  hud([['Pontos',0],['Tempo','30s']]);
-  game.timer=setInterval(()=>{
-    time--;
-    hud([['Pontos',score],['Tempo',time+'s']]);
-    if(time<=0){
-      stopGame();
-      area.querySelectorAll('.aim-target').forEach(t=>t.remove());
-      toast('Treino de mira finalizado: '+score+' pontos!','trophy');
-      startAim();
-    }
-  },1000);
-  game.running=true;
-  function spawnTarget(){
-    const t=document.createElement('button');
-    t.className='aim-target';
-    t.style.left=(10+Math.random()*80)+'%';
-    t.style.top=(10+Math.random()*80)+'%';
-    t.innerHTML='<i data-lucide="crosshair"></i>';
-    area.appendChild(t);refreshIcons();
-    t.onclick=(ev)=>{
-      ev.stopPropagation();score++;
-      hud([['Pontos',score],['Tempo',time+'s']]);
-      t.remove();spawnTarget();
-    };
-  }
-  spawnTarget();spawnTarget();
-}
-
-/* ================= MODAL DETALHES ================= */
+/* ================= MODAL DETALHES COM OPÇÕES DINÂMICAS HYDRA ================= */
 function openModal(id){
   const g=byId(id);if(!g)return;
-  stopGame();
   const srcObj=SOURCES.find(s=>s.id===g.source)||{badgeClass:'source-fitgirl'};
-  const inCart=state.cart.includes(id);
-  const on=state.wishlist.has(id);
+
+  // Generate dynamic download option rows (Hydra style)
+  const mirrorsList = g.mirrors && g.mirrors.length > 0 ? g.mirrors : [
+    { name: `Magnet Torrent (${g.sourceName})`, type: 'magnet', url: g.magnet }
+  ];
+
+  const mirrorsHTML = mirrorsList.map((m, idx) => `
+    <div class="dl-option-row">
+      <div class="opt-info">
+        <h5>
+          <i data-lucide="${m.type==='magnet'?'zap':'download'}" style="width:16px;height:16px;color:var(--emerald)"></i>
+          ${m.name}
+        </h5>
+        <p>${m.type==='magnet' ? 'Download direto P2P de alta velocidade (qBittorrent / Hydra Engine)' : 'Espelho de download direto (Servidor Web)'}</p>
+      </div>
+      <div class="opt-actions">
+        <button class="opt-btn opt-btn-primary" onclick="triggerDownload('${m.url}','${g.name}','${m.type}')">
+          <i data-lucide="download"></i>Baixar
+        </button>
+        ${m.type==='magnet' ? `
+          <button class="opt-btn opt-btn-ghost" onclick="copyMagnet('${m.url}','${g.name}')" title="Copiar Magnet Link">
+            <i data-lucide="copy"></i>
+          </button>` : ''}
+      </div>
+    </div>
+  `).join('');
 
   $('#modalBox').innerHTML=`
     <div class="modal-media">
@@ -1689,7 +1565,20 @@ function openModal(id){
       <div class="modal-meta">
         <span class="rate">${starIcon} ${g.rating.toFixed(1)}</span>
         <span>Lançamento: ${g.release}</span>
+        <span>${g.tags.join(' · ')}</span>
       </div>
+      
+      <!-- Dynamic Download Options Box -->
+      <div class="download-options-box">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-hi);display:flex;align-items:center;gap:6px">
+            <i data-lucide="layers" style="width:14px;height:14px"></i> Opções de Download Disponíveis (${mirrorsList.length})
+          </span>
+          <span style="font-size:11px;color:var(--emerald);font-weight:700">100% Funcional</span>
+        </div>
+        ${mirrorsHTML}
+      </div>
+
       <p>${g.desc}</p>
       
       <!-- Requisitos de sistema -->
@@ -1702,11 +1591,8 @@ function openModal(id){
       </div>
 
       <div class="modal-buy">
-        <button class="btn btn-emerald" onclick="triggerMagnetDownload('${g.magnet}','${g.name}')">
-          <i data-lucide="zap"></i>Baixar Addon (Magnet)
-        </button>
-        <button class="btn btn-ghost" onclick="copyMagnet('${g.magnet}','${g.name}')" title="Copiar Magnet Link">
-          <i data-lucide="copy"></i>Copiar Magnet
+        <button class="btn btn-ghost" onclick="toggleWish('${g.id}')">
+          <i data-lucide="heart"></i>Wishlist
         </button>
         <a href="${g.steamUrl}" target="_blank" class="btn btn-ghost" title="Ver na Loja Oficial">
           <i data-lucide="globe"></i>Loja Oficial
@@ -1717,7 +1603,7 @@ function openModal(id){
   refreshIcons();
 }
 
-function closeModal(){$('#modalOverlay').classList.remove('show');stopGame()}
+function closeModal(){$('#modalOverlay').classList.remove('show')}
 $('#modalOverlay').addEventListener('click',e=>{if(e.target.id==='modalOverlay')closeModal()});
 
 /* ================= SOURCES MODAL ================= */
@@ -1796,7 +1682,7 @@ function renderCart(){
         <button class="rm" onclick="state.cart=state.cart.filter(x=>x!=='${id}'); save(); updateBadges(); renderCart();" aria-label="Remover"><i data-lucide="trash-2"></i></button>
       </div>`;
     }).join('');
-    foot.innerHTML=`<button class="btn btn-primary" onclick="state.cart.forEach(id=>triggerMagnetDownload(byId(id).magnet, byId(id).name)); state.cart=[]; save(); updateBadges(); closeDrawers();"><i data-lucide="zap"></i>Baixar Todos os Addons</button>`;
+    foot.innerHTML=`<button class="btn btn-primary" onclick="state.cart.forEach(id=>triggerDownload(byId(id).magnet, byId(id).name, 'magnet')); state.cart=[]; save(); updateBadges(); closeDrawers();"><i data-lucide="zap"></i>Baixar Todos os Addons</button>`;
   }
   refreshIcons();
 }
@@ -1838,7 +1724,6 @@ renderDeals();
 buildFilters();
 renderGrid();
 renderUpcoming();
-renderBrowserGames();
 renderEmulators();
 renderApps();
 renderPromo();
