@@ -6,67 +6,63 @@
   }
   
   body {
-    background-color: #0b0d13;
+    background-color: #06080f;
     color: #e2e8f0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     overflow-x: hidden;
   }
 }
 
-/* Custom glowing effects and gaming scrollbars */
+/* Custom Launcher Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0d111a;
+  background: #080b14;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a3348;
-  border-radius: 4px;
+  background: #1e293b;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #6366f1;
 }
 
-/* Cyber glow helpers */
-.glow-purple {
-  box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.4);
+/* Epic / Steam Style Glassmorphic Card */
+.steam-card {
+  background: linear-gradient(180deg, rgba(18, 24, 38, 0.75) 0%, rgba(10, 14, 23, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.glow-cyan {
-  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.4);
+.steam-card:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.25);
 }
 
-.glow-emerald {
-  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.4);
+.epic-hero {
+  background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15), transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.15), transparent 50%),
+              #0a0e1a;
 }
 
-.text-gradient-purple {
-  background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #6366f1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 50%, #10b981 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-fire {
-  background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #ef4444 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gaming-grid-bg {
-  background-size: 40px 40px;
+/* Cyber ambient grid */
+.launcher-grid-bg {
+  background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}

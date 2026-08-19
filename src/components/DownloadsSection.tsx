@@ -1,13 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { 
-  Download, 
   Search, 
-  Filter, 
   HardDrive, 
   Star, 
   Database,
   ArrowUpDown,
-  Sparkles,
   Check,
   CheckCircle2,
   Copy,
@@ -15,7 +12,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Flame,
-  Info
+  Info,
+  Layers
 } from 'lucide-react';
 import type { GameDownloadItem, RepackSourceId, HydraSourceInfo } from '../types';
 
@@ -42,22 +40,21 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
   const [heroIndex, setHeroIndex] = useState(0);
 
   const categories = [
-    'Todos',
-    'AAA Hits',
-    'RPG',
-    'Ação',
-    'Mundo Aberto',
-    'PC Fraco',
-    'Souls-like',
-    'Terror',
-    'Corrida',
-    'FPS',
-    'Indie'
+    { id: 'Todos', label: '🔥 Todos os Jogos' },
+    { id: 'AAA Hits', label: '👑 AAA Hits da Galera' },
+    { id: 'RPG', label: '⚔️ RPG & Souls-like' },
+    { id: 'Mundo Aberto', label: '🌍 Mundo Aberto' },
+    { id: 'Ação', label: '💥 Ação & Aventura' },
+    { id: 'PC Fraco', label: '💻 PC Fraco (Leves)' },
+    { id: 'Terror', label: '🧟 Terror' },
+    { id: 'Corrida', label: '🏎️ Corrida' },
+    { id: 'FPS', label: '🎯 Tiro & FPS' },
+    { id: 'Indie', label: '✨ Indie Clássico' }
   ];
 
-  // Epic Games style featured games list for hero banner
+  // Featured games for the top Epic Games Store Spotlight
   const featuredGames = useMemo(() => {
-    return games.slice(0, 5);
+    return games.slice(0, 6);
   }, [games]);
 
   const currentHero = featuredGames[heroIndex] || games[0];
@@ -102,13 +99,13 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
 
   const getSourceBadgeColor = (source: RepackSourceId) => {
     switch (source) {
-      case 'fitgirl': return 'bg-pink-500/20 text-pink-300 border-pink-500/40';
-      case 'steamrip': return 'bg-blue-500/20 text-blue-300 border-blue-500/40';
-      case 'dodi': return 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
-      case 'gog': return 'bg-purple-500/20 text-purple-300 border-purple-500/40';
-      case 'xatab': return 'bg-amber-500/20 text-amber-300 border-amber-500/40';
-      case 'atop': return 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40';
-      case 'empress': return 'bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-500/40';
+      case 'fitgirl': return 'bg-pink-500/20 text-pink-300 border-pink-500/50';
+      case 'steamrip': return 'bg-blue-500/20 text-blue-300 border-blue-500/50';
+      case 'dodi': return 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50';
+      case 'gog': return 'bg-purple-500/20 text-purple-300 border-purple-500/50';
+      case 'xatab': return 'bg-amber-500/20 text-amber-300 border-amber-500/50';
+      case 'atop': return 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50';
+      case 'empress': return 'bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-500/50';
       default: return 'bg-slate-700 text-slate-200 border-slate-600';
     }
   };
@@ -136,7 +133,7 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
       link.click();
       document.body.removeChild(link);
 
-      setToastMessage(`Iniciando download do addon de "${game.title}" igual no Hydra!`);
+      setToastMessage(`Iniciando download do addon de "${game.title}" no seu cliente torrent (Hydra Engine)!`);
       setTimeout(() => setToastMessage(null), 4000);
     }
   };
@@ -146,33 +143,34 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
       
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-[#0f172a] border border-emerald-500/60 shadow-2xl shadow-emerald-950/80 flex items-center gap-3 animate-in slide-in-from-bottom-5 duration-300 backdrop-blur-xl">
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-[#0f172a] border border-emerald-500/70 shadow-2xl shadow-emerald-950/80 flex items-center gap-3 animate-in slide-in-from-bottom-5 duration-300 backdrop-blur-2xl">
           <CheckCircle2 className="w-6 h-6 text-emerald-400 flex-shrink-0 animate-bounce" />
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Hydra Download Engine</h4>
+            <h4 className="text-xs font-black text-white uppercase tracking-wider">Hydra Launcher Engine</h4>
             <p className="text-xs text-emerald-300">{toastMessage}</p>
           </div>
         </div>
       )}
 
-      {/* EPIC GAMES STORE FEATURED SPOTLIGHT CAROUSEL */}
+      {/* EPIC GAMES STORE / STEAM FEATURED SPOTLIGHT CAROUSEL */}
       {currentHero && (
-        <div className="relative rounded-3xl overflow-hidden bg-[#0e121e] border border-purple-900/40 shadow-2xl shadow-purple-950/40 transition-all">
-          {/* Background Hero Image with Backdrop Gradient */}
-          <div className="relative h-[380px] sm:h-[440px] w-full overflow-hidden">
+        <div className="relative rounded-3xl overflow-hidden bg-[#0c0f1a] border border-purple-900/50 shadow-2xl shadow-purple-950/50 transition-all">
+          
+          {/* Hero Banner with Dynamic Gradient Backdrop */}
+          <div className="relative min-h-[420px] sm:min-h-[460px] w-full flex flex-col justify-end p-6 sm:p-10">
             <img
               src={currentHero.coverImage}
               alt={currentHero.title}
-              className="w-full h-full object-cover object-center filter brightness-[0.45] contrast-125 scale-105 transition-all duration-700"
+              className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.4] contrast-125 scale-105 transition-all duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0b0e17] via-[#0b0e17]/80 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0b0e17] via-transparent to-black/30"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#06080f] via-[#06080f]/80 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#06080f] via-transparent to-black/40"></div>
 
-            {/* Top Badge Overlay */}
-            <div className="absolute top-6 left-6 sm:left-10 flex flex-wrap items-center gap-2.5 z-10">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold shadow-lg shadow-purple-900/50 uppercase tracking-wider">
-                <Flame className="w-3.5 h-3.5 text-yellow-300" />
-                Destaque da Semana
+            {/* Top Badges */}
+            <div className="relative z-10 flex flex-wrap items-center gap-2.5 mb-4">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-black shadow-lg shadow-purple-900/50 uppercase tracking-widest">
+                <Flame className="w-3.5 h-3.5 text-yellow-300 fill-yellow-300" />
+                Destaque Epic Store
               </span>
               <span className={`text-xs font-bold px-3 py-1 rounded-full border backdrop-blur-md ${getSourceBadgeColor(currentHero.source)}`}>
                 {currentHero.sourceName}
@@ -185,9 +183,9 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
               )}
             </div>
 
-            {/* Left Content Area */}
-            <div className="absolute bottom-8 left-6 sm:left-10 right-6 sm:right-auto max-w-2xl z-10 space-y-4">
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight drop-shadow-lg leading-tight">
+            {/* Main Title & Bio */}
+            <div className="relative z-10 max-w-2xl space-y-4">
+              <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight drop-shadow-2xl leading-tight">
                 {currentHero.title}
               </h1>
 
@@ -195,14 +193,14 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
                 {currentHero.description}
               </p>
 
-              {/* Tags & Storage */}
+              {/* Specs Chips */}
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-semibold text-purple-300 bg-purple-950/60 px-3 py-1 rounded-lg border border-purple-800/40 flex items-center gap-1.5">
+                <span className="text-xs font-bold text-purple-300 bg-purple-950/70 px-3 py-1 rounded-xl border border-purple-800/40 flex items-center gap-1.5">
                   <HardDrive className="w-3.5 h-3.5 text-purple-400" />
                   {currentHero.fileSize}
                 </span>
                 {currentHero.category.map((cat, i) => (
-                  <span key={i} className="text-xs font-medium text-slate-300 bg-slate-800/70 px-2.5 py-1 rounded-lg border border-slate-700/50">
+                  <span key={i} className="text-xs font-semibold text-slate-300 bg-slate-800/80 px-3 py-1 rounded-xl border border-slate-700/50">
                     {cat}
                   </span>
                 ))}
@@ -212,73 +210,95 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <button
                   onClick={(e) => handleStartDownload(currentHero, e)}
-                  className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm shadow-xl shadow-emerald-950/60 flex items-center gap-2 transition-all hover:scale-105 cursor-pointer uppercase tracking-wider"
+                  className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-400 hover:from-emerald-400 hover:to-cyan-300 text-slate-950 font-black text-sm shadow-2xl shadow-emerald-950/80 flex items-center gap-2.5 transition-all hover:scale-105 cursor-pointer uppercase tracking-wider"
                 >
-                  <Download className="w-4 h-4 stroke-[3]" />
-                  <span>Download do Addon (Hydra Engine)</span>
+                  <Zap className="w-4 h-4 fill-slate-950" />
+                  <span>Download do Addon (Magnet Direto)</span>
                 </button>
 
                 <button
                   onClick={() => onSelectGame(currentHero)}
-                  className="px-5 py-3 rounded-2xl bg-slate-800/90 hover:bg-slate-700 text-white font-bold text-sm border border-slate-700 shadow-md flex items-center gap-2 transition-all hover:scale-105 cursor-pointer"
+                  className="px-5 py-3.5 rounded-2xl bg-slate-800/90 hover:bg-slate-700 text-white font-bold text-sm border border-slate-700 shadow-md flex items-center gap-2 transition-all hover:scale-105 cursor-pointer"
                 >
                   <Info className="w-4 h-4 text-cyan-400" />
-                  <span>Detalhes & Specs</span>
+                  <span>Ver Detalhes & Specs</span>
+                </button>
+
+                <button
+                  onClick={(e) => handleCopyMagnet(currentHero, e)}
+                  className="p-3.5 rounded-2xl bg-black/60 hover:bg-black/90 text-purple-300 border border-purple-800/50 transition-all cursor-pointer hover:scale-105"
+                  title="Copiar Magnet Link"
+                >
+                  <Copy className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Carousel Navigation Arrows */}
-            <div className="absolute bottom-6 right-6 z-20 hidden sm:flex items-center gap-2">
-              <button
-                onClick={() => setHeroIndex((prev) => (prev === 0 ? featuredGames.length - 1 : prev - 1))}
-                className="p-3 rounded-2xl bg-black/60 hover:bg-black/90 text-white border border-slate-700/60 transition-all cursor-pointer hover:scale-110"
-                title="Anterior"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <span className="text-xs text-slate-400 font-mono px-2">
-                {heroIndex + 1} / {featuredGames.length}
-              </span>
-              <button
-                onClick={() => setHeroIndex((prev) => (prev === featuredGames.length - 1 ? 0 : prev + 1))}
-                className="p-3 rounded-2xl bg-black/60 hover:bg-black/90 text-white border border-slate-700/60 transition-all cursor-pointer hover:scale-110"
-                title="Próximo"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
+            {/* Thumbnail Selectors (Epic Games Style Bottom Right Carousel) */}
+            <div className="relative z-10 mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                {featuredGames.map((item, idx) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setHeroIndex(idx)}
+                    className={`h-12 w-20 rounded-xl overflow-hidden border-2 transition-all cursor-pointer flex-shrink-0 ${
+                      heroIndex === idx 
+                        ? 'border-purple-500 shadow-lg shadow-purple-900/50 scale-105' 
+                        : 'border-slate-800 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={item.coverImage} alt={item.title} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <button
+                  onClick={() => setHeroIndex((prev) => (prev === 0 ? featuredGames.length - 1 : prev - 1))}
+                  className="p-2.5 rounded-xl bg-black/60 hover:bg-black/90 text-white border border-slate-700/60 transition-all cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setHeroIndex((prev) => (prev === featuredGames.length - 1 ? 0 : prev + 1))}
+                  className="p-2.5 rounded-xl bg-black/60 hover:bg-black/90 text-white border border-slate-700/60 transition-all cursor-pointer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* STEAM & EPIC STORE HEADER CONTROL BAR */}
+      {/* STEAM & EPIC STORE FILTER & SHELF BAR */}
       <div className="space-y-4">
-        {/* Source Filter Tabs */}
+        
+        {/* Source Pills Bar */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-purple-400" />
+            <Layers className="w-4 h-4 text-purple-400" />
             <span className="text-xs font-black uppercase tracking-wider text-slate-300">
-              Fontes Hydra Addon ({sources.length}):
+              Fontes da Biblioteca Addons ({sources.length}):
             </span>
           </div>
+
           <button
             onClick={onOpenSourcesModal}
-            className="text-xs text-purple-300 hover:text-purple-100 font-semibold flex items-center gap-1.5 hover:underline cursor-pointer"
+            className="text-xs text-purple-300 hover:text-white font-bold flex items-center gap-1.5 hover:underline cursor-pointer"
           >
             <Database className="w-3.5 h-3.5 text-purple-400" />
             Gerenciar Fontes JSON
           </button>
         </div>
 
-        {/* Source Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
           <button
             onClick={() => setSelectedSource('all')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-black whitespace-nowrap transition-all cursor-pointer ${
               selectedSource === 'all'
                 ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/50 scale-[1.02]'
-                : 'bg-[#121727] text-slate-400 hover:text-white border border-slate-800'
+                : 'bg-[#0f1424] text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
             Todas as Fontes Addon ({games.length})
@@ -291,14 +311,14 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
               <button
                 key={src.id}
                 onClick={() => setSelectedSource(src.id)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-2 transition-all cursor-pointer ${
+                className={`px-3.5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-2 transition-all cursor-pointer ${
                   isSelected
                     ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-900/50 scale-[1.02]'
-                    : 'bg-[#121727] text-slate-400 hover:text-white border border-slate-800'
+                    : 'bg-[#0f1424] text-slate-400 hover:text-white border border-slate-800'
                 }`}
               >
                 <span>{src.name}</span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-black ${
                   isSelected ? 'bg-black/30 text-white' : 'bg-slate-800 text-slate-400'
                 }`}>
                   {count}
@@ -308,21 +328,20 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
           })}
         </div>
 
-        {/* Categories & Sort Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#101424] border border-slate-800">
+        {/* Categories Pills and Sort Selector */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#0c101c] border border-slate-800">
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-            <Filter className="w-3.5 h-3.5 text-slate-400 flex-shrink-0 ml-1 mr-1" />
             {categories.map((cat) => (
               <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
-                  selectedCategory === cat
-                    ? 'bg-purple-900/70 text-purple-200 border border-purple-600/60 shadow-md'
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  selectedCategory === cat.id
+                    ? 'bg-purple-900/80 text-purple-200 border border-purple-500/60 shadow-md'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
                 }`}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -332,7 +351,7 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="bg-[#182033] border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-1.5 focus:outline-none focus:border-purple-500 cursor-pointer font-medium"
+              className="bg-[#131929] border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-purple-500 cursor-pointer font-bold"
             >
               <option value="recent">Mais Recentes</option>
               <option value="rating">Melhor Avaliação ⭐</option>
@@ -344,19 +363,19 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
         </div>
       </div>
 
-      {/* STEAM / EPIC GAMES STORE GRID */}
+      {/* STEAM / EPIC GAMES STORE VERTICAL POSTER GRID */}
       {filteredGames.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
           {filteredGames.map((game) => {
             return (
               <div
                 key={game.id}
-                className="group relative rounded-2xl bg-[#101423] border border-slate-800/90 hover:border-purple-500/70 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-purple-950/50 hover:-translate-y-1.5"
+                className="group relative rounded-3xl bg-[#0b0f19] border border-slate-800/90 hover:border-purple-500/70 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-purple-950/60 hover:-translate-y-2"
               >
-                {/* Poster Cover Header */}
+                {/* Poster Cover */}
                 <div 
                   onClick={() => onSelectGame(game)}
-                  className="relative h-52 w-full overflow-hidden bg-slate-900 cursor-pointer"
+                  className="relative h-60 w-full overflow-hidden bg-slate-900 cursor-pointer"
                 >
                   <img
                     src={game.coverImage}
@@ -364,29 +383,29 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90 group-hover:brightness-100"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#101423] via-transparent to-black/40"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-black/40"></div>
                   
                   {/* Source Badge */}
-                  <span className={`absolute top-3 left-3 text-[10px] font-bold px-2.5 py-0.5 rounded-full border backdrop-blur-md ${getSourceBadgeColor(game.source)}`}>
+                  <span className={`absolute top-3 left-3 text-[10px] font-black px-2.5 py-0.5 rounded-full border backdrop-blur-md ${getSourceBadgeColor(game.source)}`}>
                     {game.sourceName}
                   </span>
 
                   {/* Size Badge */}
-                  <span className="absolute top-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/80 border border-slate-700 text-purple-300 flex items-center gap-1 backdrop-blur-md">
+                  <span className="absolute top-3 right-3 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-black/80 border border-slate-700 text-purple-300 flex items-center gap-1 backdrop-blur-md">
                     <HardDrive className="w-3 h-3" />
                     {game.fileSize}
                   </span>
 
                   {/* Rating Badge */}
                   {game.rating && (
-                    <div className="absolute bottom-2 left-3 flex items-center gap-1 text-xs font-bold text-amber-300 bg-black/70 px-2 py-0.5 rounded-md backdrop-blur-sm border border-amber-500/30">
+                    <div className="absolute bottom-2 left-3 flex items-center gap-1 text-xs font-bold text-amber-300 bg-black/70 px-2.5 py-0.5 rounded-md backdrop-blur-sm border border-amber-500/30">
                       <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                       <span>{game.rating}</span>
                     </div>
                   )}
                 </div>
 
-                {/* Card Content */}
+                {/* Card Body */}
                 <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                   <div>
                     <h3 
@@ -397,10 +416,10 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
                       {game.title}
                     </h3>
                     
-                    {/* Category Pills */}
+                    {/* Category Tags */}
                     <div className="flex flex-wrap gap-1 mt-1.5">
                       {game.category.slice(0, 2).map((cat, i) => (
-                        <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-slate-800/80 text-slate-400 font-medium">
+                        <span key={i} className="text-[10px] px-2 py-0.5 rounded-md bg-slate-800/80 text-slate-400 font-semibold">
                           {cat}
                         </span>
                       ))}
@@ -417,7 +436,7 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
                       {/* Button 1: Download Direct (Hydra Engine Magnet Launcher) */}
                       <button
                         onClick={(e) => handleStartDownload(game, e)}
-                        className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-950/60 hover:scale-[1.02] transition-all cursor-pointer"
+                        className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-950/60 hover:scale-[1.02] transition-all cursor-pointer uppercase tracking-wider"
                         title="Baixar jogo diretamente via Addon (Hydra Engine)"
                       >
                         <Zap className="w-3.5 h-3.5 text-yellow-300 fill-yellow-300" />
@@ -459,7 +478,7 @@ export const DownloadsSection: React.FC<DownloadsSectionProps> = ({
           })}
         </div>
       ) : (
-        <div className="p-12 text-center rounded-2xl bg-[#101423] border border-slate-800 space-y-3">
+        <div className="p-12 text-center rounded-3xl bg-[#0c101c] border border-slate-800 space-y-3">
           <Search className="w-10 h-10 text-slate-600 mx-auto" />
           <h3 className="text-base font-bold text-slate-300">Nenhum jogo encontrado</h3>
           <p className="text-xs text-slate-500 max-w-sm mx-auto">
