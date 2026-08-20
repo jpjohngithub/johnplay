@@ -969,30 +969,6 @@
 <!-- Modal de Detalhes do Jogo (Com Opções Dinâmicas de Download Estilo Hydra) -->
 <div class="overlay" id="modalOverlay"><div class="modal" id="modalBox"></div></div>
 
-<!-- Modal Web Downloader Webtor (Sem abrir Stremio ou outros apps) -->
-<div class="overlay" id="webDownloaderOverlay" style="z-index:99999">
-  <div class="modal" style="max-width:820px;grid-template-columns:1fr;padding:24px;border:1px solid var(--accent);background:var(--panel-2)">
-    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:16px">
-      <div>
-        <h3 id="wdTitle" style="font-family:'Barlow Condensed';font-size:26px;text-transform:uppercase;color:var(--text);display:flex;align-items:center;gap:8px">
-          <i data-lucide="cloud-download" style="color:var(--emerald);width:24px;height:24px"></i> Download Web Direto
-        </h3>
-        <p id="wdSub" style="font-size:12px;color:var(--muted);margin-top:2px">Serviço de download em nuvem via Webtor · Sem precisar de aplicativo externo</p>
-      </div>
-      <button class="modal-close" onclick="closeWebDownloader()"><i data-lucide="x"></i></button>
-    </div>
-    
-    <div id="wdContainer" style="min-height:460px;border-radius:12px;overflow:hidden;background:#05070e;border:1px solid var(--border);display:flex;align-items:center;justify-content:center">
-      <!-- Webtor Stream & Downloader Iframe -->
-    </div>
-    
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;flex-wrap:wrap;gap:10px">
-      <span style="font-size:12px;color:var(--muted)">💡 O download dos arquivos do jogo é processado em nuvem diretamente pelo navegador.</span>
-      <button class="btn btn-ghost" onclick="closeWebDownloader()"><i data-lucide="x"></i>Fechar Gerenciador</button>
-    </div>
-  </div>
-</div>
-
 <!-- Modal Gerenciar Fontes Hydra -->
 <div class="overlay" id="sourcesModalOverlay">
   <div class="modal sources-modal">
@@ -9084,39 +9060,6 @@ function copyMagnetLink(magnetUri, sourceName) {
   });
 }
 
-/* ================= IN-PAGE WEBTOR DOWNLOADER ENGINE ================= */
-function openWebDownloader(magnetUri, gameName, sourceName) {
-  if (!magnetUri || !magnetUri.startsWith('magnet:')) {
-    toast(`⚠️ Link Magnet indisponível para esta fonte.`, 'warning');
-    return;
-  }
-  const clean = getCleanSearchTitle(gameName) || gameName;
-  const overlay = $('#webDownloaderOverlay');
-  if (!overlay) return;
-
-  $('#wdTitle').innerHTML = `<i data-lucide="cloud-download" style="color:var(--emerald);width:24px;height:24px;display:inline-block;vertical-align:middle;margin-right:6px"></i> ${escapeHtml(clean)}`;
-  $('#wdSub').innerHTML = `Fonte: <b>${escapeHtml(sourceName)}</b> · Download direto em nuvem via Webtor (Sem abrir Stremio/Apps)`;
-
-  const webtorEmbedUrl = `https://webtor.io/pt/?magnet=${encodeURIComponent(magnetUri)}`;
-  $('#wdContainer').innerHTML = `<iframe src="${webtorEmbedUrl}" style="width:100%;height:460px;border:none;border-radius:10px" allow="autoplay; fullscreen" loading="lazy"></iframe>`;
-
-  overlay.classList.add('show');
-  refreshIcons();
-  toast(`⚡ Abrindo gerenciador de download web para "${clean}"...`, 'download');
-}
-
-function closeWebDownloader() {
-  const overlay = $('#webDownloaderOverlay');
-  if (overlay) {
-    overlay.classList.remove('show');
-    $('#wdContainer').innerHTML = '';
-  }
-}
-
-$('#webDownloaderOverlay').addEventListener('click', e => {
-  if (e.target.id === 'webDownloaderOverlay') closeWebDownloader();
-});
-
 /* ================= MODAL DETALHES COM OPÇÕES DINÂMICAS HYDRA ================= */
 function openModal(id){
   const g=byId(id);if(!g)return;
@@ -9210,14 +9153,11 @@ function openModal(id){
         <p>${m.desc}</p>
       </div>
       <div class="opt-actions">
-        <button class="opt-btn opt-btn-primary" onclick="openWebDownloader('${m.magnet}', '${escapeHtml(g.name)}', '${escapeHtml(m.name)}')" title="Baixar direto no navegador via Webtor sem abrir Stremio ou outros apps">
-          <i data-lucide="cloud-download"></i>Baixar no Navegador
-        </button>
-        <a href="${m.siteUrl}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-ghost" style="text-decoration:none" title="Abrir página no site oficial">
-          <i data-lucide="external-link"></i>Site
+        <a href="${m.siteUrl}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-primary" style="text-decoration:none" title="Abrir página oficial do jogo no site do addon">
+          <i data-lucide="download"></i>Acessar Addon
         </a>
-        <button class="opt-btn opt-btn-ghost" onclick="copyMagnetLink('${m.magnet}', '${escapeHtml(m.name)}')" title="Copiar Link Magnet">
-          <i data-lucide="copy"></i>Magnet
+        <button class="opt-btn opt-btn-ghost" onclick="copyMagnetLink('${m.magnet}', '${escapeHtml(m.name)}')" title="Copiar Link Magnet para cliente Torrent">
+          <i data-lucide="copy"></i>Copiar Magnet
         </button>
       </div>
     </div>
