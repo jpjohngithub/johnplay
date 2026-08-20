@@ -778,7 +778,7 @@
           </div>
         </div>
 
-        <div class="game-viewport" id="gameViewport" style="height:820px">
+        <div class="game-viewport" id="gameViewport" style="height:820px;position:relative">
           <!-- HTML5 Game & Website Iframe Player -->
           <iframe 
             id="webStationIframe" 
@@ -787,6 +787,114 @@
             allow="fullscreen; gamepad; autoplay; clipboard-write" 
             allowfullscreen>
           </iframe>
+
+          <!-- YOUTUBE PLAYABLES DEDICATED STATION VIEWPORT -->
+          <div id="ytStationView" style="display:none;position:absolute;inset:0;background:linear-gradient(180deg,#140909,#0c0606);overflow-y:auto;padding:32px 24px;z-index:10">
+            <div style="max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
+              
+              <!-- YT Banner Card -->
+              <div style="background:linear-gradient(135deg,rgba(255,0,0,.25),rgba(20,9,9,.8));border:1px solid rgba(255,0,0,.35);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px">
+                <div>
+                  <div style="display:inline-flex;align-items:center;gap:6px;background:#ff0000;color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;margin-bottom:10px">
+                    <i data-lucide="youtube" style="width:14px;height:14px"></i> GOOGLE / YOUTUBE PLAYABLES
+                  </div>
+                  <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:36px;text-transform:uppercase;color:#fff;line-height:1">Mais de 75+ Jogos Gratuitos do YouTube</h2>
+                  <p style="color:#e4c7c7;font-size:14px;margin-top:6px;max-width:560px">
+                    Jogue instantaneamente no YouTube sem necessidade de download ou instalação. Clique no botão ao lado para abrir a Central Oficial!
+                  </p>
+                </div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                  <button class="btn btn-primary" onclick="openYouTubeApp()" style="background:#ff0000;color:#fff;border:none;box-shadow:0 6px 24px rgba(255,0,0,.45);height:44px;padding:0 22px;font-size:14px">
+                    <i data-lucide="play"></i>Jogar no YouTube Playables
+                  </button>
+                  <a href="https://www.youtube.com/playables" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="height:44px;padding:0 18px;font-size:13px">
+                    <i data-lucide="external-link"></i>Abrir em Nova Aba
+                  </a>
+                </div>
+              </div>
+
+              <!-- Top YouTube Playables Games Grid -->
+              <div>
+                <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:24px;text-transform:uppercase;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:8px">
+                  <i data-lucide="sparkles" style="width:18px;height:18px;color:#ff4444"></i> Jogos em Alta no YouTube Playables
+                </h3>
+                
+                <div class="browser-grid" style="margin:0">
+                  <div class="browser-game-card" onclick="openYouTubeGame('Angry Birds Showdown')">
+                    <div class="thumb" style="background:#2a1111">
+                      <img src="https://images.crazygames.com/angry-birds/20231201103233/angry-birds-cover?auto=format%2Ccompress&q=65&fit=crop&w=480" alt="Angry Birds Showdown">
+                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+                    </div>
+                    <div class="bbody">
+                      <h4>Angry Birds Showdown</h4>
+                      <span>YouTube Playables · Ação</span>
+                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+                    </div>
+                  </div>
+
+                  <div class="browser-game-card" onclick="openYouTubeGame('Cut the Rope')">
+                    <div class="thumb" style="background:#112a11">
+                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/b980a905a396ea4d4c55ecdf81e9b28b.png" alt="Cut the Rope">
+                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+                    </div>
+                    <div class="bbody">
+                      <h4>Cut the Rope</h4>
+                      <span>YouTube Playables · Puzzle</span>
+                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+                    </div>
+                  </div>
+
+                  <div class="browser-game-card" onclick="openYouTubeGame('Trivia Crack')">
+                    <div class="thumb" style="background:#2a2511">
+                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/46487ffdb66580f4f0393b3f9dc2c366.png" alt="Trivia Crack">
+                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+                    </div>
+                    <div class="bbody">
+                      <h4>Trivia Crack (Perguntados)</h4>
+                      <span>YouTube Playables · Quiz</span>
+                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+                    </div>
+                  </div>
+
+                  <div class="browser-game-card" onclick="openYouTubeGame('Tomb of the Mask')">
+                    <div class="thumb" style="background:#111b2a">
+                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/4d2a6a12ee49ea76bb06198f1f7d5494.png" alt="Tomb of the Mask">
+                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+                    </div>
+                    <div class="bbody">
+                      <h4>Tomb of the Mask</h4>
+                      <span>YouTube Playables · Arcade</span>
+                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+                    </div>
+                  </div>
+
+                  <div class="browser-game-card" onclick="openYouTubeGame('Stack Bounce')">
+                    <div class="thumb" style="background:#2a112a">
+                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/387431f4a9b2d3080ffbfa6b8f36c535.png" alt="Stack Bounce">
+                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+                    </div>
+                    <div class="bbody">
+                      <h4>Stack Bounce</h4>
+                      <span>YouTube Playables · 3D Casual</span>
+                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+                    </div>
+                  </div>
+
+                  <div class="browser-game-card" onclick="openYouTubeGame('Magic Tiles 3')">
+                    <div class="thumb" style="background:#112a28">
+                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/3bfdc9e7fa1a4e1d141e6e814a706b8c.png" alt="Magic Tiles 3">
+                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+                    </div>
+                    <div class="bbody">
+                      <h4>Magic Tiles 3</h4>
+                      <span>YouTube Playables · Ritmo</span>
+                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -7437,6 +7545,16 @@ const WEB_PLATFORMS = {
 
 let currentPlatform = 'subway';
 
+function openYouTubeApp(){
+  window.open('https://www.youtube.com/playables', '_blank');
+  toast('YouTube Playables iniciado!', 'youtube');
+}
+
+function openYouTubeGame(gameName){
+  window.open('https://www.youtube.com/playables', '_blank');
+  toast(`Iniciando ${gameName} no YouTube Playables!`, 'play');
+}
+
 function selectWebPlatform(key){
   const p = WEB_PLATFORMS[key] || WEB_PLATFORMS['subway'];
   currentPlatform = key;
@@ -7452,6 +7570,7 @@ function selectWebPlatform(key){
   const controlsEl = $('#playerPlatformControls');
   const extBtn = $('#playerExternalBtn');
   const iframe = $('#webStationIframe');
+  const ytStation = $('#ytStationView');
 
   if(titleEl) titleEl.textContent = p.name;
   if(badgeEl){
@@ -7462,17 +7581,31 @@ function selectWebPlatform(key){
   if(controlsEl) controlsEl.innerHTML = `<i data-lucide="gamepad-2" style="width:16px;height:16px;color:var(--accent)"></i> <b>Controles:</b> ${p.controls}`;
   if(extBtn) extBtn.href = p.url;
 
-  if(iframe){
-    iframe.src = p.url;
-    iframe.focus();
+  if(key === 'youtube'){
+    if(iframe) {
+      iframe.style.display = 'none';
+      iframe.src = 'about:blank';
+    }
+    if(ytStation) ytStation.style.display = 'block';
+  } else {
+    if(ytStation) ytStation.style.display = 'none';
+    if(iframe){
+      iframe.style.display = 'block';
+      iframe.src = p.url;
+      iframe.focus();
+    }
   }
 
   $('#gamePlayerSection').scrollIntoView({behavior:'smooth'});
-  toast(`${p.name.split('—')[0].trim()} carregado no site!`, 'play');
+  toast(`${p.name.split('—')[0].trim()} selecionado!`, 'play');
   refreshIcons();
 }
 
 function reloadWebPlatform(){
+  if(currentPlatform === 'youtube'){
+    openYouTubeApp();
+    return;
+  }
   const p = WEB_PLATFORMS[currentPlatform] || WEB_PLATFORMS['subway'];
   const iframe = $('#webStationIframe');
   if(iframe){
