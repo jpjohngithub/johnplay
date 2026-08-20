@@ -7659,119 +7659,158 @@ function debouncedSearch(val){
   }
 }
 
+/* ---- Hydra Static Catalog (loaded from hydra-catalog.json, no CORS issues) ---- */
+let HYDRA_CATALOG = [];
+let HYDRA_CATALOG_LOADED = false;
+let HYDRA_LOAD_PROMISE = null;
+
+function loadHydraCatalog() {
+  if (HYDRA_LOAD_PROMISE) return HYDRA_LOAD_PROMISE;
+  HYDRA_LOAD_PROMISE = (async () => {
+    try {
+      const base = document.querySelector('base')?.href || location.href.replace(/\/[^\/]*$/, '/');
+      // Try loading from same-origin (no CORS)
+      const r = await fetch('./hydra-catalog.json', { signal: AbortSignal.timeout(10000) });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const data = await r.json();
+      HYDRA_CATALOG = Array.isArray(data) ? data : [];
+      HYDRA_CATALOG_LOADED = true;
+      console.log('[JohnPlay] Hydra catalog loaded:', HYDRA_CATALOG.length, 'games');
+    } catch (e) {
+      console.warn('[JohnPlay] Hydra catalog not available:', e.message);
+      HYDRA_CATALOG = [];
+      HYDRA_CATALOG_LOADED = true;
+    }
+  })();
+  return HYDRA_LOAD_PROMISE;
+}
+
+// Preload on startup
+loadHydraCatalog();
+
+function convertHydraItem(item) {
+  if (!item || !item.name) return null;
+  const cleanName = item.name.replace(/\{[^}]*\}/g,'').replace(/\[[^\]]*\]/g,'').trim();
+  if (!cleanName) return null;
+
+  const srcName = (item.source || 'FitGirl Repacks').replace(/\{[^}]*\}/g,'').trim();
+  const srcUrl = item.sourceUrl || '';
+  const sl = srcName.toLowerCase();
+  const isFitGirl = sl.includes('fitgirl');
+  const isDODI = sl.includes('dodi');
+  const isSteamRIP = sl.includes('steamrip') || sl.includes('steam rip');
+  const isGOG = sl.includes('gog');
+  const isOnlineFix = sl.includes('online');
+  const isAtop = sl.includes('atop');
+  const isXatab = sl.includes('xatab');
+  const isKaos = sl.includes('kaos');
+  const sourceId = isFitGirl ? 'fitgirl' : isDODI ? 'dodi' : isSteamRIP ? 'steamrip' : isGOG ? 'gog' : isOnlineFix ? 'onlinefix' : isAtop ? 'atop' : isXatab ? 'xatab' : isKaos ? 'kaoskrew' : 'fitgirl';
+
+  const uploadDate = item.uploadDate
+    ? new Date(item.uploadDate).toLocaleDateString('pt-BR', {year:'numeric', month:'short', day:'numeric'})
+    : 'Disponível';
+
+  const foundAppId = typeof findSteamAppId === 'function' ? findSteamAppId(cleanName) : null;
+  const coverUrl = foundAppId
+    ? `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${foundAppId}/library_600x900.jpg`
+    : (item.cover || makeBoxArtSVG(cleanName, 'Ação / Aventura'));
+
+  const cleanSearchTerm = typeof getCleanSearchTitle === 'function' ? getCleanSearchTitle(cleanName) : cleanName;
+  const q = encodeURIComponent(cleanSearchTerm);
+
+  return {
+    id: 'hydra-' + cleanName.toLowerCase().replace(/[^a-z0-9]/g,'-').substring(0,40),
+    steamAppId: foundAppId,
+    name: cleanName,
+    source: sourceId,
+    sourceName: srcName,
+    genre: 'Ação / Aventura',
+    tags: ['Hydra Library', 'Download Ativo', 'PC Game', srcName.split(' ')[0]],
+    fileSize: item.fileSize || 'N/A',
+    rating: 4.8,
+    release: uploadDate,
+    sold: 25000,
+    cover: coverUrl,
+    desc: `${cleanName} — via ${srcName}. Tamanho: ${item.fileSize || 'N/A'}. Adicionado em ${uploadDate}.`,
+    steamUrl: foundAppId ? `https://store.steampowered.com/app/${foundAppId}/` : `https://store.steampowered.com/search/?term=${q}`,
+    magnet: '',
+    mirrors: [
+      { name: `${srcName} (Fonte Hydra Oficial)`, type: 'ddl', url: srcUrl || `https://library.hydra.wiki/search/?q=${q}` },
+      { name: '🌐 Buscar no Hydra Library', type: 'ddl', url: `https://library.hydra.wiki/search/?q=${q}` },
+      { name: 'FitGirl Repacks (Oficial)', type: 'ddl', url: `https://fitgirl-repacks.site/?s=${q}` },
+      { name: 'DODI Repacks (Oficial)', type: 'ddl', url: `https://dodi-repacks.site/?s=${q}` },
+      { name: 'SteamRIP (Direct Play)', type: 'ddl', url: `https://steamrip.com/?s=${q}` },
+      { name: 'Free GOG Games (DRM-Free)', type: 'ddl', url: `https://freegogpcgames.com/?s=${q}` },
+      { name: 'Online-Fix (Multiplayer)', type: 'ddl', url: `https://online-fix.me/index.php?do=search&subaction=search&story=${q}` },
+      { name: 'Atop-Games (Direct)', type: 'ddl', url: `https://atop-games.com/?s=${q}` }
+    ],
+    specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel Core i5 / AMD Ryzen 5', ram: '8 GB RAM', gpu: 'GTX 1060 / RX 580', storage: item.fileSize || 'N/A' }
+  };
+}
+
 async function searchLiveHydraLibrary(query){
   if(!query || query.length < 2) return;
 
   const resultCount = $('#resultCount');
-  if(resultCount){
-    resultCount.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px;color:var(--accent)"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:14px;height:14px"></i> Buscando em todas as bibliotecas Hydra para "<b>${query}</b>"...</span>`;
-    refreshIcons();
+
+  // Wait for catalog to load
+  await loadHydraCatalog();
+
+  if (HYDRA_CATALOG.length === 0) {
+    // Catalog not available - just update UI
+    if (resultCount) {
+      resultCount.innerHTML = `<span>Nenhum jogo encontrado no catálogo para "<b>${query}</b>" — <a href="https://library.hydra.wiki/search/?q=${encodeURIComponent(query)}" target="_blank" style="color:var(--accent)">Buscar no Hydra Library</a></span>`;
+    }
+    return;
   }
 
-  const HYDRA_API_BASE = 'https://api.hydralibrary.com';
-  const PROXY = 'https://proxy.cors.sh/';
-  const endpoint = `${HYDRA_API_BASE}/games?q=${encodeURIComponent(query)}&limit=40`;
+  const q = query.toLowerCase();
 
-  let games = [];
-  let totalFound = 0;
+  // Search in Hydra catalog
+  const hydraMatches = HYDRA_CATALOG.filter(item => {
+    if (!item.name) return false;
+    const name = item.name.toLowerCase();
+    return name.includes(q);
+  });
 
-  try {
-    let data = null;
-
-    const tryFetch = async (url, extraHeaders = {}) => {
-      const r = await fetch(url, {
-        signal: AbortSignal.timeout(7000),
-        headers: { 'Accept': 'application/json', ...extraHeaders }
-      });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    };
-
-    // Attempt 1: via proxy.cors.sh (confirmed working)
-    try {
-      data = await tryFetch(PROXY + endpoint);
-    } catch(e1) {
-      // Attempt 2: direct
-      try {
-        data = await tryFetch(endpoint);
-      } catch(e2) {
-        // Attempt 3: allorigins last resort
-        try {
-          const r = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(endpoint)}`, {signal: AbortSignal.timeout(5000)});
-          data = await r.json();
-        } catch(e3) { /* all failed */ }
-      }
+  if (hydraMatches.length === 0) {
+    if (resultCount) {
+      resultCount.innerHTML = `<span>Nenhum jogo encontrado para "<b>${query}</b>" — <a href="https://library.hydra.wiki/search/?q=${encodeURIComponent(query)}" target="_blank" style="color:var(--accent)">🔍 Buscar no Hydra Library</a></span>`;
     }
+    return;
+  }
 
-    if (data && data.games && Array.isArray(data.games)) {
-      games = data.games;
-      totalFound = data.totalGames || data.filteredCount || games.length;
+  // Add matches to GAMES that aren't already there
+  let addedCount = 0;
+  const existingIds = new Set(GAMES.map(g => g.id));
 
-      let addedCount = 0;
-      games.forEach(item => {
-        if (!item.name) return;
-        const cleanName = item.name.replace(/\{[^}]*\}/g,'').replace(/\[[^\]]*\]/g,'').trim();
-        const nameKey = cleanName.toLowerCase().replace(/\s+/g,'');
+  for (const item of hydraMatches) {
+    const converted = convertHydraItem(item);
+    if (!converted) continue;
+    if (existingIds.has(converted.id)) continue;
 
-        const exists = GAMES.some(g =>
-          g.name.toLowerCase().replace(/\s+/g,'').includes(nameKey.substring(0,12)) ||
-          nameKey.includes(g.name.toLowerCase().replace(/\s+/g,'').substring(0,12))
-        );
-        if (exists) return;
+    // Check by name
+    const cName = converted.name.toLowerCase();
+    const alreadyInGames = GAMES.some(g => {
+      const gName = g.name.toLowerCase();
+      return gName === cName;
+    });
+    if (alreadyInGames) continue;
 
-        const srcName = (item.source || 'FitGirl Repacks').replace(/\{[^}]*\}/g,'').trim();
-        const srcUrl = item.sourceUrl || '';
-        const isFitGirl = srcName.toLowerCase().includes('fitgirl');
-        const isDODI = srcName.toLowerCase().includes('dodi');
-        const isSteamRIP = srcName.toLowerCase().includes('steamrip') || srcName.toLowerCase().includes('steam rip');
-        const isGOG = srcName.toLowerCase().includes('gog');
-        const isOnlineFix = srcName.toLowerCase().includes('online');
-        const sourceId = isFitGirl ? 'fitgirl' : isDODI ? 'dodi' : isSteamRIP ? 'steamrip' : isGOG ? 'gog' : isOnlineFix ? 'onlinefix' : 'fitgirl';
-        const srcObj = SOURCES.find(s => s.id === sourceId) || SOURCES[0];
+    GAMES.push(converted);
+    existingIds.add(converted.id);
+    addedCount++;
+  }
 
-        const uploadDate = item.uploadDate ? new Date(item.uploadDate).toLocaleDateString('pt-BR', {year:'numeric',month:'short',day:'numeric'}) : 'Disponível';
+  if (addedCount > 0) buildFilters();
+  renderGrid();
 
-        const newGame = {
-          id: 'hydra-' + Date.now() + '-' + Math.random().toString(36).substr(2,5),
-          steamAppId: null,
-          name: cleanName,
-          source: sourceId,
-          sourceName: srcName,
-          genre: 'Ação / Aventura',
-          tags: ['Hydra Library', 'Download Ativo', 'PC Game', 'Verificado', srcName.split(' ')[0]],
-          fileSize: item.fileSize || 'Disponível',
-          rating: 4.8,
-          release: uploadDate,
-          sold: 28000,
-          cover: makeBoxArtSVG(cleanName, 'Ação / Aventura'),
-          desc: `${cleanName} — disponível via ${srcName}. Tamanho: ${item.fileSize || 'N/A'}. Publicado em ${uploadDate}.`,
-          steamUrl: `https://store.steampowered.com/search/?term=${encodeURIComponent(cleanName)}`,
-          magnet: '',
-          mirrors: [
-            { name: `${srcName} (Fonte Hydra Oficial)`, type: 'ddl', url: srcUrl || `https://library.hydra.wiki/search/?q=${encodeURIComponent(cleanName)}` },
-            { name: 'Buscar no Hydra Library', type: 'ddl', url: `https://library.hydra.wiki/search/?q=${encodeURIComponent(cleanName)}` },
-            { name: 'FitGirl Repacks', type: 'ddl', url: `https://fitgirl-repacks.site/?s=${encodeURIComponent(cleanName)}` },
-            { name: 'DODI Repacks', type: 'ddl', url: `https://dodi-repacks.site/?s=${encodeURIComponent(cleanName)}` },
-            { name: 'SteamRIP (Direct Play)', type: 'ddl', url: `https://steamrip.com/?s=${encodeURIComponent(cleanName)}` }
-          ],
-          specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel Core i5 / AMD Ryzen 5', ram: '8 GB RAM', gpu: 'GTX 1060 / RX 580', storage: item.fileSize || 'N/A' }
-        };
-
-        GAMES.push(newGame);
-        addedCount++;
-      });
-
-      if (addedCount > 0) buildFilters();
-      renderGrid();
-
-      if (resultCount) {
-        resultCount.innerHTML = `<b>${games.length}</b> jogos encontrados em <b>${Number(totalFound).toLocaleString('pt-BR')}+</b> itens da Hydra Library para "<b>${query}</b>"`;
-      }
-    } else {
-      renderGrid();
-    }
-  } catch(e) {
-    renderGrid();
+  if (resultCount) {
+    const localCount = GAMES.filter(g => {
+      const n = g.name.toLowerCase();
+      return n.includes(q);
+    }).length;
+    resultCount.innerHTML = `<b>${localCount}</b> jogos encontrados para "<b>${query}</b>" — <a href="https://library.hydra.wiki/search/?q=${encodeURIComponent(query)}" target="_blank" style="color:var(--accent);text-decoration:none">🌐 Ver mais no Hydra Library</a>`;
   }
 }
 
@@ -8643,20 +8682,146 @@ function getFiltered(){
   return list;
 }
 
+/* ================= STEAM APP ID DATABASE & COVER RESOLVER ================= */
+const STEAM_DATABASE = {
+  'mecchachameleon': 4704690, 'meccachameleon': 4704690, 'scrapmechanic': 387990,
+  'gta': 271590, 'gtav': 271590, 'gta5': 271590, 'grandtheftautov': 271590, 'grandtheftauto5': 271590,
+  'grandtheftautoiv': 12210, 'gta4': 12210, 'gtaiv': 12210,
+  'grandtheftautosanandreas': 1547000, 'grandtheftautovicecity': 1546990, 'grandtheftautoiii': 1546980,
+  'reddeadredemption2': 1174180, 'rdr2': 1174180, 'reddeadredemption': 2668510, 'rdr1': 2668510,
+  'blackmythwukong': 2358720, 'wukong': 2358720, 'cyberpunk2077': 1091500, 'cyberpunk': 1091500,
+  'thewitcher3': 292030, 'witcher3': 292030, 'thewitcher2': 20920, 'witcher2': 20920, 'thewitcher': 20900,
+  'eldenring': 1245620, 'darksoulsremastered': 570940, 'darksouls3': 374320, 'darksouls2': 335300,
+  'sekiro': 814380, 'liesofp': 1627720, 'godofwar': 1593500, 'godofwarragnarok': 2322010,
+  'marvelsspidermanremastered': 1817070, 'spidermanremastered': 1817070, 'spidermanmilesmorales': 1817190,
+  'horizonzerodawn': 1151640, 'horizonforbiddenwest': 2420110, 'thelastofusparti': 1888930,
+  'thelastofuspart1': 1888930, 'thelastofuspartii': 2531310, 'thelastofuspart2': 2531310,
+  'ghostoftsushima': 2215430, 'unchartedlegacyofthieves': 1659420, 'uncharted': 1659420,
+  'daysgone': 1259420, 'deathstranding': 1850570, 'returnal': 1649240, 'helldivers2': 553850,
+  'batmanarkhamknight': 208650, 'batmanarkhamcity': 200260, 'batmanarkhamasylum': 35140,
+  'batmanarkhamorigins': 209000, 'gothamknights': 1361320, 'residentevil4': 2050650,
+  'residentevil4remake': 2050650, 'residentevilvillage': 1196590, 'residentevil2': 883710,
+  'residentevil3': 952060, 'residentevil7': 418370, 'silenthill2': 2124490, 'deadspace': 1693980,
+  'alanwake2': 1086940, 'control': 870780, 'hogwartslegacy': 990080, 'baldursgate3': 1086940,
+  'starfield': 1716740, 'skyrim': 489830, 'fallout4': 377160, 'falloutnewvegas': 22380,
+  'monsterhunterworld': 582010, 'monsterhunterrise': 1446780, 'monsterhunterwilds': 2246340,
+  'dragonsdogma2': 2054970, 'devilmaycry5': 601150, 'dmc5': 601150, 'fifa19': 1811260,
+  'fifa20': 1811260, 'fifa21': 1811260, 'fifa22': 1506830, 'fifa23': 1811260,
+  'easportsfc24': 2195250, 'fc24': 2195250, 'easportsfc25': 2669320, 'fc25': 2669320,
+  'efootball': 1665460, 'pes2021': 1385730, 'nba2k24': 2338770, 'nba2k25': 2878950,
+  'wwe2k24': 2315690, 'forzahorizon5': 1551360, 'forzahorizon4': 1293830,
+  'needforspeedunbound': 1846380, 'nfsheat': 1222680, 'nfspayback': 1262580,
+  'assettocorsa': 244210, 'assettocorsacompetizione': 805550, 'beamngdrive': 284160,
+  'eurotrucksimulator2': 227300, 'americantrucksimulator': 270880, 'mortalkombat1': 1971870,
+  'mortalkombat11': 976310, 'mortalkombatx': 307780, 'tekken8': 1778820, 'tekken7': 389730,
+  'streetfighter6': 1364780, 'streetfighterv': 310950, 'dragonballsparkingzero': 1790600,
+  'dragonballfighterz': 678950, 'dragonballxenoverse2': 454650, 'dragonballzkakarot': 851890,
+  'narutoshippudenultimateninjastorm4': 349040, 'narutoxborutoultimateninjastormconnections': 2023160,
+  'onepiecepiratewarriors4': 1089090, 'onepieceodyssey': 814000, 'demonslayer': 1490890,
+  'palworld': 1623730, 'lethalcompany': 1966720, 'phasmophobia': 739630,
+  'sonsoftheforest': 1326470, 'theforest': 242760, 'rust': 252490,
+  'arksurvivalascended': 2399830, 'arksurvivalevolved': 346110, 'valheim': 892970,
+  'subnautica': 264710, 'subnauticabelowzero': 848450, 'raft': 648800,
+  'projectzomboid': 108600, '7daystodie': 251570, 'greenhell': 815370,
+  'manorlords': 1363080, 'thesims4': 1222670, 'citiesskylines2': 949230,
+  'citiesskylines': 255710, 'hades': 1145360, 'hades2': 1145350, 'hollowknight': 367520,
+  'hollowknightsilksong': 1030300, 'deadcells': 588650, 'balatro': 2379780,
+  'cuphead': 268910, 'celeste': 504230, 'undertale': 391540, 'riskofrain2': 632360,
+  'vampiresurvivors': 1794680, 'bindingofisaac': 250900, 'slaythespire': 646570,
+  'davethediver': 1868140, 'dredge': 1562430, 'cultofthelamb': 1313140,
+  'seaofstars': 1244090, 'blasphemous2': 2114740, 'blasphemous': 774361,
+  'oriandthewillofthewisps': 1057090, 'oriandtheblindforest': 387290,
+  'legomarvelsuperheroes': 249130, 'legostarwarstheskywalkersaga': 920210, 'legostarwars': 920210,
+  'legobatman3beyondgotham': 313690, 'legobatman3': 313690, 'legodcsupervillains': 829110,
+  'legojurassicworld': 352400, 'legoharrypotteryears14': 21130, 'legoharrypotteryears57': 204120,
+  'legomarvelsavengers': 405310, 'legomarvelsuperheroes2': 647830, 'legolordoftherings': 214510,
+  'legothehobbit': 285160, 'legocityundercover': 578330, 'legotheincredibles': 818320,
+  'legoworlds': 274420, 'legobatman2': 213330, 'legobatman': 21000,
+  'legopiratesofthecaribbean': 9450, 'legoindianajones': 32330,
+  'sonicfrontiers': 1237320, 'sonicsuperstars': 2009490, 'sonicgenerations': 71340,
+  'sonicmania': 584400, 'sonicforces': 637100, 'finalfantasy7remake': 1462040,
+  'finalfantasyxvi': 2515020, 'finalfantasyxv': 637650, 'persona3reload': 2161700,
+  'persona5royal': 1687950, 'persona4golden': 1113000, 'metaphorrefantazio': 2620600,
+  'kingdomhearts3': 2552430, 'callofdutyblackops6': 1938090, 'callofduty': 1938090,
+  'battlefield2042': 1517290, 'battlefieldv': 1238810, 'battlefield1': 1238840,
+  'doometernal': 782330, 'doom': 379720, 'wolfenstein2': 612880, 'metroexodus': 412020,
+  'stalker2': 1643320, 'halflifealyx': 546560, 'portal2': 620, 'left4dead2': 550,
+  'payday3': 1272080, 'payday2': 218620, 'deeprockgalactic': 548430, 'spacemarine2': 2183900
+};
+
+function normalizeKey(str) {
+  return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function findSteamAppId(name) {
+  if (!name) return null;
+  const key = normalizeKey(name);
+  if (STEAM_DATABASE[key]) return STEAM_DATABASE[key];
+  for (const [k, appId] of Object.entries(STEAM_DATABASE)) {
+    if (key.includes(k) || k.includes(key)) {
+      return appId;
+    }
+  }
+  return null;
+}
+
+function getCleanSearchTitle(name) {
+  if (!name) return '';
+  let s = name;
+  s = s.replace(/\{[^}]*\}/g, ' ');
+  s = s.replace(/\[[^\]]*\]/g, ' ');
+  s = s.replace(/\([^)]*\)/g, ' ');
+  s = s.replace(/[®™©]/g, '');
+  s = s.replace(/\b\d{1,2}\s+(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|Janeiro|Fevereiro|Março|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro)\s+\d{4}\b/gi, ' ');
+  s = s.replace(/\b(build\s*\d+|v\d+\.\d+|multi\d+|repack|portable|direct\s*play)\b.*/gi, ' ');
+  s = s.replace(/[:\-–—|]/g, ' ');
+  s = s.replace(/\s+/g, ' ').trim();
+  return s;
+}
+
 function makeBoxArtSVG(title, genre){
-  const t = (title || 'Jogo').replace(/[<>&"]/g, '').substring(0, 28);
-  const gen = (genre || 'Game').replace(/[<>&"]/g, '').substring(0, 20);
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#141126"/><stop offset="50%" stop-color="#0b0f19"/><stop offset="100%" stop-color="#181329"/></linearGradient><radialGradient id="g2" cx="50%" cy="35%" r="55%"><stop offset="0%" stop-color="#6366f1" stop-opacity="0.4"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00dfd8"/><stop offset="100%" stop-color="#7928ca"/></linearGradient></defs><rect width="600" height="900" fill="url(#g1)"/><rect width="600" height="900" fill="url(#g2)"/><rect x="30" y="30" width="130" height="34" rx="8" fill="#1b1d2a" stroke="#373d54" stroke-width="1.5"/><text x="95" y="52" fill="#00dfd8" font-size="12" font-weight="bold" font-family="system-ui,-apple-system,sans-serif" text-anchor="middle" letter-spacing="2">JOHNPLAY</text><circle cx="300" cy="360" r="75" fill="#181b29" stroke="url(#g3)" stroke-width="3"/><path d="M265 360 L335 360 M300 325 L300 395" stroke="#00dfd8" stroke-width="6" stroke-linecap="round"/><circle cx="365" cy="345" r="7" fill="#7928ca"/><circle cx="380" cy="365" r="7" fill="#00dfd8"/><rect x="30" y="650" width="540" height="210" rx="16" fill="#0d111a" fill-opacity="0.9" stroke="#262d40" stroke-width="1.5"/><text x="300" y="725" fill="#ffffff" font-size="26" font-weight="800" font-family="system-ui,-apple-system,sans-serif" text-anchor="middle">${t}</text><text x="300" y="775" fill="#9ca3af" font-size="16" font-weight="600" font-family="system-ui,-apple-system,sans-serif" text-anchor="middle" letter-spacing="1">${gen.toUpperCase()} · HYDRA EDITION</text><rect x="220" y="810" width="160" height="5" rx="2.5" fill="url(#g3)"/></svg>`;
+  const t = (title || 'JOGO').replace(/[<>&"]/g, '').substring(0, 32);
+  const gen = (genre || 'Ação / Aventura').replace(/[<>&"]/g, '').substring(0, 24);
+  const gl = (gen + ' ' + t).toLowerCase();
+  
+  let c1 = '#00dfd8', c2 = '#7928ca', bg1 = '#0b0f19', bg2 = '#161329';
+  let genreIcon = '🎮';
+  
+  if (gl.includes('terror') || gl.includes('horror') || gl.includes('resident') || gl.includes('dead') || gl.includes('silent')) {
+    c1 = '#ff3366'; c2 = '#990022'; bg1 = '#1a050b'; bg2 = '#080103'; genreIcon = '💀';
+  } else if (gl.includes('rpg') || gl.includes('fantasia') || gl.includes('souls') || gl.includes('witcher') || gl.includes('elden')) {
+    c1 = '#f59e0b'; c2 = '#b45309'; bg1 = '#181206'; bg2 = '#0b0803'; genreIcon = '⚔️';
+  } else if (gl.includes('corrida') || gl.includes('racing') || gl.includes('forza') || gl.includes('speed') || gl.includes('esporte') || gl.includes('fifa')) {
+    c1 = '#10b981'; c2 = '#065f46'; bg1 = '#051912'; bg2 = '#020b08'; genreIcon = '🏆';
+  } else if (gl.includes('shooter') || gl.includes('tiro') || gl.includes('war') || gl.includes('duty') || gl.includes('battle')) {
+    c1 = '#06b6d4'; c2 = '#3b82f6'; bg1 = '#041527'; bg2 = '#020a14'; genreIcon = '🎯';
+  }
+
+  const words = t.split(' ');
+  let line1 = t;
+  let line2 = '';
+  if (words.length > 2 && t.length > 14) {
+    const mid = Math.ceil(words.length / 2);
+    line1 = words.slice(0, mid).join(' ');
+    line2 = words.slice(mid).join(' ');
+  }
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900"><defs><linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${bg1}"/><stop offset="50%" stop-color="#0a0d14"/><stop offset="100%" stop-color="${bg2}"/></linearGradient><linearGradient id="gGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/></linearGradient><linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/><stop offset="100%" stop-color="#a0aec0" stop-opacity="0.75"/></linearGradient><radialGradient id="glow" cx="50%" cy="40%" r="45%"><stop offset="0%" stop-color="${c1}" stop-opacity="0.35"/><stop offset="100%" stop-color="#000000" stop-opacity="0"/></radialGradient><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.05"/></pattern></defs><rect width="600" height="900" fill="url(#bgGrad)"/><rect width="600" height="900" fill="url(#grid)"/><rect width="600" height="900" fill="url(#glow)"/><rect x="12" y="12" width="576" height="876" rx="20" fill="none" stroke="${c1}" stroke-width="2" stroke-opacity="0.4"/><rect x="20" y="20" width="560" height="860" rx="16" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.08"/><rect x="30" y="32" width="540" height="46" rx="10" fill="#0d111a" fill-opacity="0.9" stroke="#262d40" stroke-width="1.5"/><circle cx="56" cy="55" r="10" fill="url(#gGrad)"/><text x="56" y="59" fill="#ffffff" font-size="11" font-weight="900" font-family="system-ui,sans-serif" text-anchor="middle">J</text><text x="80" y="60" fill="#ffffff" font-size="14" font-weight="800" font-family="system-ui,sans-serif" letter-spacing="3">JOHNPLAY</text><rect x="420" y="42" width="136" height="26" rx="6" fill="#181e2e" stroke="${c1}" stroke-width="1" stroke-opacity="0.6"/><text x="488" y="59" fill="${c1}" font-size="10" font-weight="800" font-family="system-ui,sans-serif" text-anchor="middle" letter-spacing="1.5">PC EDITION · 4K</text><circle cx="300" cy="360" r="100" fill="#0f1422" stroke="url(#gGrad)" stroke-width="4"/><circle cx="300" cy="360" r="82" fill="#080b12" stroke="#ffffff" stroke-width="1" stroke-opacity="0.1"/><text x="300" y="380" font-size="52" text-anchor="middle">${genreIcon}</text><rect x="30" y="580" width="540" height="270" rx="18" fill="#0a0e17" fill-opacity="0.95" stroke="#1f293d" stroke-width="2"/><rect x="30" y="580" width="540" height="4" rx="2" fill="url(#gGrad)"/>${line2 ? `<text x="300" y="655" fill="url(#metalGrad)" font-size="30" font-weight="900" font-family="system-ui,sans-serif" text-anchor="middle" letter-spacing="0.5">${line1}</text><text x="300" y="698" fill="url(#metalGrad)" font-size="28" font-weight="900" font-family="system-ui,sans-serif" text-anchor="middle" letter-spacing="0.5">${line2}</text>` : `<text x="300" y="675" fill="url(#metalGrad)" font-size="32" font-weight="900" font-family="system-ui,sans-serif" text-anchor="middle" letter-spacing="0.5">${line1}</text>`}<rect x="180" y="730" width="240" height="26" rx="13" fill="#131927" stroke="${c1}" stroke-width="1" stroke-opacity="0.5"/><text x="300" y="747" fill="${c1}" font-size="11" font-weight="700" font-family="system-ui,sans-serif" text-anchor="middle" letter-spacing="1.5">${gen.toUpperCase()}</text><line x1="50" y1="785" x2="550" y2="785" stroke="#222b3e" stroke-width="1"/><text x="80" y="820" fill="#94a3b8" font-size="11" font-weight="700" font-family="system-ui,sans-serif">VERIFICADO HYDRA</text><text x="80" y="836" fill="#64748b" font-size="10" font-family="system-ui,sans-serif">INSTALADOR COMPLETO</text><circle cx="500" cy="820" r="16" fill="#131b2c" stroke="url(#gGrad)" stroke-width="2"/><text x="500" y="825" fill="${c1}" font-size="14" font-weight="900" font-family="system-ui,sans-serif" text-anchor="middle">✓</text></svg>`;
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
 }
 
 function getGameCover(g){
   if(!g) return makeBoxArtSVG('Jogo', 'Ação');
-  if(g.cover && (!g.cover.includes('271590') || (g.name && g.name.toLowerCase().includes('grand theft auto')))){
+  if(g.cover && typeof g.cover === 'string' && !g.cover.startsWith('data:image/svg') && (!g.cover.includes('271590') || (g.name && g.name.toLowerCase().includes('grand theft auto')))){
     return g.cover;
   }
-  if(g.steamAppId && g.steamAppId !== 271590){
-    return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${g.steamAppId}/library_600x900.jpg`;
+  const appId = g.steamAppId || findSteamAppId(g.name);
+  if(appId && appId !== 271590){
+    g.steamAppId = appId;
+    return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/library_600x900.jpg`;
+  }
+  if(appId === 271590 && g.name && g.name.toLowerCase().includes('grand theft auto')){
+    return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg`;
   }
   return makeBoxArtSVG(g.name, g.genre);
 }
@@ -8667,11 +8832,13 @@ function cardHTML(g){
   const on = state.wishlist && state.wishlist.has(g.id);
   const coverImg = getGameCover(g);
   const fallbackSvg = makeBoxArtSVG(g.name, g.genre);
+  const appId = g.steamAppId || findSteamAppId(g.name);
 
   return `
     <article class="game-card" onclick="openModal('${g.id}')">
       <div class="cover">
-        <img src="${coverImg}" alt="${g.name}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${fallbackSvg}'">
+        <img src="${coverImg}" alt="${g.name}" loading="lazy" decoding="async"
+          onerror="if(!this.dataset.retry1 && ${appId ? `'${appId}'` : 'null'}){ this.dataset.retry1='1'; this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/header.jpg'; } else if(!this.dataset.retry2 && ${appId ? `'${appId}'` : 'null'}){ this.dataset.retry2='1'; this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/capsule_616x353.jpg'; } else { this.onerror=null; this.src='${fallbackSvg}'; }">
         <span class="disc-badge source-chip ${srcObj.badgeClass || 'source-fitgirl'}">${g.sourceName || srcObj.name}</span>
         <button class="wish-btn${on?' on':''}" onclick="event.stopPropagation(); toggleWish('${g.id}')" aria-label="Lista de desejos"><i data-lucide="heart"></i></button>
       </div>
@@ -8760,7 +8927,8 @@ function renderApps(){
 function openModal(id){
   const g=byId(id);if(!g)return;
   const srcObj=SOURCES.find(s=>s.id===g.source)||SOURCES[0];
-  const q = encodeURIComponent(g.name.replace(/\([^)]*\)/g, '').replace(/:\s*Enhanced.*|:\s*Shadow.*|:\s*Deluxe.*|:\s*Edition.*/i, '').trim());
+  const cleanSearch = getCleanSearchTitle(g.name);
+  const q = encodeURIComponent(cleanSearch);
 
   const ADDONS_LIST = [
     { name: 'SteamRIP (Direct Play & DDL)', desc: 'Download direto rápido sem instalador (Extrair e Jogar)', url: `https://steamrip.com/?s=${q}`, badge: 'Recomendado / DDL' },
@@ -8770,7 +8938,8 @@ function openModal(id){
     { name: 'Online-Fix (Multiplayer Co-op)', desc: 'Versão com servidores online e co-op com amigos', url: `https://online-fix.me/index.php?do=search&subaction=search&story=${q}`, badge: 'Multiplayer' },
     { name: 'Atop-Games (Direct Play)', desc: 'Espelho de download direto de alta velocidade', url: `https://atop-games.com/?s=${q}`, badge: 'Direct Play' },
     { name: 'Xatab Repacks (Addon)', desc: 'Versão repack clássica e otimizada', url: `https://byxatab.com/index.php?do=search&subaction=search&story=${q}`, badge: 'Repack' },
-    { name: 'KaosKrew Repacks (Addon)', desc: 'Compactação avançada sem perdas', url: `https://kaoskrew.org/?s=${q}`, badge: 'Repack' }
+    { name: 'KaosKrew Repacks (Addon)', desc: 'Compactação avançada sem perdas', url: `https://kaoskrew.org/?s=${q}`, badge: 'Repack' },
+    { name: 'Hydra Wiki Library (Busca Global)', desc: 'Pesquisa ao vivo em todas as 10+ fontes Hydra', url: `https://library.hydra.wiki/search/?q=${q}`, badge: 'Hydra Live' }
   ];
 
   const mirrorsHTML = ADDONS_LIST.map(m => `
@@ -8793,10 +8962,12 @@ function openModal(id){
 
   const modalCover = getGameCover(g);
   const modalFallback = makeBoxArtSVG(g.name, g.genre);
+  const appId = g.steamAppId || findSteamAppId(g.name);
 
   $('#modalBox').innerHTML=`
     <div class="modal-media">
-      <img src="${modalCover}" alt="${g.name}" decoding="async" onerror="this.onerror=null;this.src='${modalFallback}'">
+      <img src="${modalCover}" alt="${g.name}" decoding="async"
+        onerror="if(!this.dataset.retry1 && ${appId ? `'${appId}'` : 'null'}){ this.dataset.retry1='1'; this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/header.jpg'; } else if(!this.dataset.retry2 && ${appId ? `'${appId}'` : 'null'}){ this.dataset.retry2='1'; this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/capsule_616x353.jpg'; } else { this.onerror=null; this.src='${modalFallback}'; }">
       <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
     </div>
     <div class="modal-body">
@@ -8837,7 +9008,7 @@ function openModal(id){
         <button class="btn btn-ghost" onclick="toggleWish('${g.id}')">
           <i data-lucide="heart"></i>Wishlist
         </button>
-        <a href="${g.steamUrl}" target="_blank" class="btn btn-ghost" title="Ver Informações Oficiais">
+        <a href="${g.steamUrl || `https://store.steampowered.com/search/?term=${q}`}" target="_blank" class="btn btn-ghost" title="Ver Informações Oficiais">
           <i data-lucide="globe"></i>Página Oficial
         </a>
       </div>
