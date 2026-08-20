@@ -7728,14 +7728,14 @@ function convertHydraItem(item) {
     sourceName: srcName,
     genre: 'Ação / Aventura',
     tags: ['Hydra Library', 'Download Ativo', 'PC Game', srcName.split(' ')[0]],
-    fileSize: item.fileSize || 'N/A',
+    fileSize: item.size || item.fileSize || '4.5 GB',
     rating: 4.8,
     release: uploadDate,
     sold: 25000,
-    cover: coverUrl,
-    desc: `${cleanName} — via ${srcName}. Tamanho: ${item.fileSize || 'N/A'}. Adicionado em ${uploadDate}.`,
+    cover: item.cover || coverUrl,
+    desc: `${cleanName} — via ${srcName}. Tamanho: ${item.size || item.fileSize || '4.5 GB'}. Adicionado em ${uploadDate}.`,
     steamUrl: foundAppId ? `https://store.steampowered.com/app/${foundAppId}/` : `https://store.steampowered.com/search/?term=${q}`,
-    magnet: '',
+    magnet: item.magnet || (item.uris && item.uris.find(u => u.startsWith('magnet:'))) || '',
     mirrors: [
       { name: `${srcName} (Fonte Hydra Oficial)`, type: 'ddl', url: srcUrl || `https://library.hydra.wiki/search/?q=${q}` },
       { name: '🌐 Buscar no Hydra Library', type: 'ddl', url: `https://library.hydra.wiki/search/?q=${q}` },
@@ -9003,10 +9003,36 @@ function makeDeterministicHash(str) {
   return (hex + '894982663090e49131f41c3407fdcf37068f').substring(0, 40).toUpperCase();
 }
 
+function findRealMagnetForGame(gameName) {
+  if (!gameName) return null;
+  const key = normalizeKey(gameName);
+  const clean = normalizeKey(getCleanSearchTitle(gameName));
+
+  if (Array.isArray(HYDRA_CATALOG) && HYDRA_CATALOG.length > 0) {
+    const exact = HYDRA_CATALOG.find(x => {
+      if (!x || !x.magnet || typeof x.magnet !== 'string' || !x.magnet.startsWith('magnet:')) return false;
+      const xKey = normalizeKey(x.clean || x.name);
+      return xKey === key || xKey === clean;
+    });
+    if (exact) return exact.magnet;
+
+    const fuzzy = HYDRA_CATALOG.find(x => {
+      if (!x || !x.magnet || typeof x.magnet !== 'string' || !x.magnet.startsWith('magnet:')) return false;
+      const xKey = normalizeKey(x.clean || x.name);
+      return (xKey.length > 3 && clean.includes(xKey)) || (clean.length > 3 && xKey.includes(clean));
+    });
+    if (fuzzy) return fuzzy.magnet;
+  }
+  return null;
+}
+
 function buildInstantMagnet(gameName, sourceName, directMagnet = null) {
   if (directMagnet && typeof directMagnet === 'string' && directMagnet.startsWith('magnet:')) {
     return directMagnet;
   }
+  const real = findRealMagnetForGame(gameName);
+  if (real) return real;
+
   const clean = getCleanSearchTitle(gameName) || gameName;
   const hash = makeDeterministicHash(clean + ' ' + sourceName);
   const dn = encodeURIComponent(`${clean} [${sourceName}] [JohnPlay Hydra Edition]`);
@@ -9023,9 +9049,12 @@ function buildInstantMagnet(gameName, sourceName, directMagnet = null) {
 }
 
 function copyMagnetLink(magnetUri, sourceName) {
-  if (!magnetUri) return;
+  if (!magnetUri || !magnetUri.startsWith('magnet:')) {
+    toast(`⚠️ Link Magnet indisponível para esta fonte. Use "Acessar Download" para baixar no site!`, 'warning');
+    return;
+  }
   navigator.clipboard.writeText(magnetUri).then(() => {
-    toast(`📋 Link Magnet oficial de ${sourceName} copiado com sucesso!`, 'copy');
+    toast(`📋 Link Magnet oficial de ${sourceName} copiado! Cole no seu cliente Torrent (qBittorrent, etc.)`, 'copy');
   }).catch(() => {
     toast(`Link copiado!`, 'copy');
   });
@@ -9037,6 +9066,8 @@ function openModal(id){
   const srcObj=SOURCES.find(s=>s.id===g.source)||SOURCES[0];
   const cleanSearch = getCleanSearchTitle(g.name);
   const q = encodeURIComponent(cleanSearch);
+
+  const realGameMagnet = (g.magnet && g.magnet.startsWith('magnet:')) ? g.magnet : findRealMagnetForGame(g.name);
 
   const directFitGirl = g.mirrors?.find(m => m.name.toLowerCase().includes('fitgirl'))?.url;
   const directDODI = g.mirrors?.find(m => m.name.toLowerCase().includes('dodi'))?.url;
