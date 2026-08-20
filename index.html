@@ -241,17 +241,17 @@
 
   /* Live Specials & Epic Feed Grid */
   .specials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:18px}
-  .special-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .18s, border-color .18s, box-shadow .18s;display:flex;flex-direction:column;cursor:pointer;position:relative}
-  .special-card:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.5)}
-  .special-card .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#140e24}
-  .special-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
-  .special-card:hover .thumb img{transform:scale(1.04)}
-  .special-card .body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
-  .special-card .body h4{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
-  .special-card .body p{font-size:12.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
-  .special-card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px;border-top:1px solid rgba(255,255,255,.05)}
+  .special-card, .epic-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .18s, border-color .18s, box-shadow .18s;display:flex;flex-direction:column;cursor:pointer;position:relative}
+  .special-card:hover, .epic-card:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.5)}
+  .special-card .thumb, .epic-card .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#140e24;display:block}
+  .special-card .thumb img, .epic-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;display:block}
+  .special-card:hover .thumb img, .epic-card:hover .thumb img{transform:scale(1.04)}
+  .special-card .body, .epic-card .body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .special-card .body h4, .epic-card .body h4{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
+  .special-card .body p, .epic-card .body p{font-size:12.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
+  .special-card .foot, .epic-card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:8px;border-top:1px solid rgba(255,255,255,.05)}
 
-  .epic-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em}
+  .epic-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em;position:absolute;top:10px;left:10px;z-index:3}
   .epic-badge-free{background:var(--emerald);color:#031d13;box-shadow:0 2px 10px rgba(16,185,129,.35)}
   .epic-badge-soon{background:#8b5cf6;color:#fff}
   .epic-date{font-size:11.5px;color:#c4b5fd;font-weight:600}
@@ -7797,7 +7797,7 @@ const FALLBACK_EPIC = [
     id: 'epic-cardpocalypse',
     title: 'Cardpocalypse Standard Edition',
     description: 'Faça amigos, jogue cartas e mude as regras em um RPG para um jogador nostálgico sobre ser uma criança nos anos 90.',
-    image: 'https://cdn1.epicgames.com/offer/diesel/Cardpocalypse_OfferImageWide_2560x1440-4286127b3b3a32fbe1364d9db6b3fa2c',
+    image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1028440/header.jpg',
     isCurrentFree: true,
     isUpcomingFree: false,
     startDate: 'Hoje',
@@ -7809,7 +7809,7 @@ const FALLBACK_EPIC = [
     id: 'epic-ghostrunner-2',
     title: 'Ghostrunner 2',
     description: 'Ação cyberpunk hardcore em primeira pessoa com combates frenéticos de katana em um futuro pós-apocalíptico.',
-    image: 'https://cdn1.epicgames.com/offer/a524a8775f0a4066a2e4c026cb10e74e/EGS_Ghostrunner2_OneMoreLevel_S1_2560x1440-2b109e3e3b3c3c6f1a8e0f5b9d3b4a2c',
+    image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2144740/header.jpg',
     isCurrentFree: false,
     isUpcomingFree: true,
     startDate: '29 de Ago',
@@ -7821,7 +7821,7 @@ const FALLBACK_EPIC = [
     id: 'epic-thems-fightin-herds',
     title: "Them's Fightin' Herds",
     description: 'Um jogo de luta 2D indie com animais fofos desenhados pela aclamada produtora Lauren Faust.',
-    image: 'https://cdn1.epicgames.com/offer/21e06fa4df494d4d8ef82cb50543e33f/EGS_ThemsFightinHerds_Mane6_S1_2560x1440-155e96f1837a7fe6f60049e776ea2452',
+    image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/574980/header.jpg',
     isCurrentFree: true,
     isUpcomingFree: false,
     startDate: 'Hoje',
@@ -7859,11 +7859,9 @@ async function fetchLiveEpicFreeGames(){
   const grid = $('#liveEpicGrid');
   if(!grid) return;
 
-  // 1. Renderiza INSTANTANEAMENTE o cache/dados para ZERO espera na tela
   if(!LIVE_EPIC_CACHE.length) LIVE_EPIC_CACHE = FALLBACK_EPIC;
   renderEpicGrid(LIVE_EPIC_CACHE);
 
-  // 2. Busca atualização em background ultra-rápida (2.5s timeout)
   const EPIC_URL = 'https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=pt-BR&country=BR&allowCountries=BR';
   const endpoints = [
     `https://api.allorigins.win/raw?url=${encodeURIComponent(EPIC_URL)}`,
@@ -7897,7 +7895,7 @@ async function fetchLiveEpicFreeGames(){
 
         let img = item.keyImages?.find(i => i.type === 'DieselStoreFrontWide' || i.type === 'OfferImageWide' || i.type === 'Thumbnail')?.url 
           || item.keyImages?.[0]?.url 
-          || 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/header.jpg';
+          || 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1028440/header.jpg';
 
         freeGames.push({
           id: item.id || item.title,
@@ -7925,29 +7923,31 @@ function renderEpicGrid(freeGames){
   const grid = $('#liveEpicGrid');
   if(!grid) return;
   const list = freeGames && freeGames.length ? freeGames : FALLBACK_EPIC;
-  grid.innerHTML = list.map((g, idx) => `
-    <div class="epic-card" onclick="openLiveEpicModal(${idx})">
-      <div class="thumb">
-        <img src="${g.image}" alt="${g.title}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://cdn1.epicgames.com/offer/diesel/Cardpocalypse_OfferImageWide_2560x1440-4286127b3b3a32fbe1364d9db6b3fa2c'">
-        <span class="epic-badge ${g.isCurrentFree ? 'epic-badge-free' : 'epic-badge-soon'}" style="position:absolute;top:10px;left:10px">
-          ${g.isCurrentFree ? 'GRÁTIS AGORA' : 'EM BREVE'}
-        </span>
-      </div>
-      <div class="body">
-        <h4>${g.title}</h4>
-        <p>${g.description}</p>
-        <div class="foot">
-          <div>
-            <span style="color:var(--muted);text-decoration:line-through;font-size:12px;margin-right:6px">${g.originalPrice}</span>
-            <span style="color:var(--emerald);font-weight:900;font-size:14px">100% GRÁTIS</span>
-          </div>
-          <button class="opt-btn opt-btn-primary" style="padding:6px 14px;font-size:11.5px" onclick="event.stopPropagation(); openLiveEpicModal(${idx})">
-            Resgatar na Epic
-          </button>
+  grid.innerHTML = list.map((g, idx) => {
+    const fallbackSvg = makeBoxArtSVG(g.title, 'Epic Games Free');
+    return `
+      <div class="special-card epic-card" onclick="openLiveEpicModal(${idx})">
+        <div class="thumb">
+          <img src="${g.image}" alt="${g.title}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${fallbackSvg}'">
+          <span class="epic-badge ${g.isCurrentFree ? 'epic-badge-free' : 'epic-badge-soon'}">
+            ${g.isCurrentFree ? 'GRÁTIS AGORA' : 'EM BREVE'}
+          </span>
         </div>
-      </div>
-    </div>
-  `).join('');
+        <div class="body">
+          <h4>${g.title}</h4>
+          <p>${g.description}</p>
+          <div class="foot">
+            <div>
+              <span style="color:var(--muted);text-decoration:line-through;font-size:12px;margin-right:6px">${g.originalPrice}</span>
+              <span style="color:var(--emerald);font-weight:900;font-size:14px">100% GRÁTIS</span>
+            </div>
+            <button class="btn btn-emerald" style="height:32px;padding:0 14px;font-size:12px;border-radius:7px" onclick="event.stopPropagation(); openLiveEpicModal(${idx})">
+              Resgatar na Epic
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
   refreshIcons();
 }
 
