@@ -562,17 +562,17 @@
   }
 </style>
 </head>
-<body>
+<body data-theme="green">
 
 <div class="topstrip">
   <div class="wrap">
     <span><span class="live-dot"></span><b>487.230</b> jogadores online agora · 100% Addons Gratuitos & Promoções Oficiais</span>
     <div class="right" style="display:flex;align-items:center;gap:16px">
       <div class="theme-switcher">
-        <button class="theme-chip active" id="themeBtnGreen" onclick="setTheme('green')" title="Tema Verde Esmeralda (Padrão)">
+        <button class="theme-chip active" id="themeBtnGreen" data-theme-btn="green" onclick="setTheme('green')" title="Tema Verde Esmeralda (Padrão)">
           <span class="theme-dot" style="background:#10b981"></span> Verde
         </button>
-        <button class="theme-chip" id="themeBtnPurple" onclick="setTheme('purple')" title="Tema Roxo Cyberpunk">
+        <button class="theme-chip" id="themeBtnPurple" data-theme-btn="purple" onclick="setTheme('purple')" title="Tema Roxo Cyberpunk">
           <span class="theme-dot" style="background:#a06bff"></span> Roxo
         </button>
       </div>
@@ -604,9 +604,14 @@
     </div>
 
     <div class="nav-actions">
-      <button class="icon-btn" onclick="toggleTheme()" title="Alternar Cor do Tema (Verde / Roxo)">
-        <i data-lucide="palette"></i>
-      </button>
+      <div class="theme-switcher" style="margin-right:2px">
+        <button class="theme-chip active" data-theme-btn="green" onclick="setTheme('green')" title="Tema Verde Esmeralda (Padrão)">
+          <span class="theme-dot" style="background:#10b981"></span> Verde
+        </button>
+        <button class="theme-chip" data-theme-btn="purple" onclick="setTheme('purple')" title="Tema Roxo Cyberpunk">
+          <span class="theme-dot" style="background:#a06bff"></span> Roxo
+        </button>
+      </div>
       <button class="icon-btn" onclick="openSourcesModal()" title="Gerenciar Fontes Addons JSON">
         <i data-lucide="database"></i>
       </button>
@@ -8695,10 +8700,8 @@ function setTheme(theme, showToast = true){
     localStorage.setItem('jp-theme', t);
   } catch(e){}
   
-  const btnG = $('#themeBtnGreen');
-  const btnP = $('#themeBtnPurple');
-  if(btnG) btnG.classList.toggle('active', t === 'green');
-  if(btnP) btnP.classList.toggle('active', t === 'purple');
+  $$('[data-theme-btn="green"], #themeBtnGreen').forEach(b => b.classList.toggle('active', t === 'green'));
+  $$('[data-theme-btn="purple"], #themeBtnPurple').forEach(b => b.classList.toggle('active', t === 'purple'));
 
   if(showToast){
     toast(`Tema ${t === 'green' ? 'Verde Esmeralda' : 'Roxo Cyberpunk'} ativado!`, 'palette');
