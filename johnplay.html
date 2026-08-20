@@ -598,11 +598,6 @@
       <a href="#apps" data-nav="apps">Apps & Otimizações</a>
     </nav>
     
-    <div class="nav-search">
-      <i data-lucide="search"></i>
-      <input type="text" id="globalSearchInput" placeholder="Buscar jogos, repacks, fontes..." oninput="debouncedSearch(this.value)">
-    </div>
-
     <div class="nav-actions">
       <div class="theme-switcher" style="margin-right:2px">
         <button class="theme-chip active" data-theme-btn="green" onclick="setTheme('green')" title="Tema Verde Esmeralda (Padrão)">
@@ -8966,7 +8961,8 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){closeModal();closeSourcesModal();closeDrawers()}
   if(e.key==='/'&&e.target.tagName!=='INPUT'&&e.target.tagName!=='SELECT'){
     e.preventDefault();
-    $('#globalSearchInput').focus();
+    const catInput = $('#catalogSearchInput');
+    if(catInput) catInput.focus();
   }
 });
 
