@@ -7175,9 +7175,9 @@ let GAMES = [
   }
 ];
 
-const HERO_IDS=['gta-v-enhanced','elden-ring-shadow','black-myth-wukong','cyberpunk-2077-phantom','god-of-war-ragnarok'];
-const FREE_WEEK=['hollow-knight-godmaster'];
-const DEAL_IDS=['cyberpunk-2077-phantom','red-dead-redemption-2','forza-horizon-5'];
+const HERO_IDS=['grand-theft-auto-v-enhanced-edition','elden-ring-shadow-of-the-erdtree-edition','black-myth-wukong','cyberpunk-2077-phantom-liberty-edition','god-of-war-ragnar-k-digital-deluxe'];
+const FREE_WEEK=['hollow-knight-voidheart-edition'];
+const DEAL_IDS=['cyberpunk-2077-phantom-liberty-edition','red-dead-redemption-2-ultimate-edition','forza-horizon-5-premium-edition'];
 
 const EMULATORS=[
   {id:'emu-retroarch', name:'RetroArch', sub:'Multi-Console Universal', era:'Multi-Sistema', size:'190 MB', ver:'1.19.1', rating:4.9, icon:'joystick', url:'https://www.retroarch.com/'},
@@ -7269,8 +7269,8 @@ function save(){
 /* ================= HELPERS & PERFORMANCE ================= */
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
-const byId=id=>GAMES.find(g=>g.id===id);
-const refreshIcons=()=>{ if(window.lucide) lucide.createIcons(); };
+const byId=id=>(GAMES.find(g=>g.id===id) || GAMES.find(g=>g.id.includes(id) || (id && id.includes(g.id))) || GAMES[0]);
+const refreshIcons=()=>{ if(typeof lucide !== 'undefined' && lucide.createIcons) { try{ lucide.createIcons(); }catch(e){} } };
 const starIcon='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
 
 function toast(msg,icon='check-circle'){
@@ -7904,8 +7904,10 @@ setInterval(()=>{
 
 /* ================= LOJA: DESTAQUES (ZERO PREÇOS) ================= */
 function renderDeals(){
+  const dealsGrid=$('#dealsGrid');
+  if(!dealsGrid)return;
   const free=byId(FREE_WEEK[0]);
-  const freeHTML=`
+  const freeHTML=free ? `
     <article class="deal-card" onclick="openModal('${free.id}')">
       <div class="media">
         <span class="free-flag">Destaque Grátis</span>
@@ -7918,9 +7920,10 @@ function renderDeals(){
           <i data-lucide="download"></i>Baixar Addon Grátis
         </button>
       </div>
-    </article>`;
+    </article>` : '';
   const others=DEAL_IDS.map(id=>{
     const g=byId(id);
+    if(!g)return '';
     return`
       <article class="deal-card" onclick="openModal('${g.id}')">
         <div class="media">
@@ -7933,7 +7936,7 @@ function renderDeals(){
         </div>
       </article>`;
   }).join('');
-  $('#dealsGrid').innerHTML=freeHTML+others;
+  dealsGrid.innerHTML=freeHTML+others;
   refreshIcons();
 }
 
