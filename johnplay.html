@@ -7251,11 +7251,6 @@ try{
   state.wishlist=new Set(JSON.parse(localStorage.getItem('jp-wish')||'[]'));
   state.cart=JSON.parse(localStorage.getItem('jp-cart')||'[]');
   state.redeemed=new Set(JSON.parse(localStorage.getItem('jp-free')||'[]'));
-  const savedGames=localStorage.getItem('jp-custom-games');
-  if(savedGames){
-    const parsed=JSON.parse(savedGames);
-    GAMES=[...parsed, ...GAMES];
-  }
 }catch(e){}
 
 function save(){
@@ -8105,20 +8100,25 @@ function getFiltered(){
 }
 
 function cardHTML(g){
-  const srcObj=SOURCES.find(s=>s.id===g.source)||{badgeClass:'source-fitgirl'};
-  const on=state.wishlist.has(g.id);
-  return`
+  if(!g) return '';
+  const srcObj = SOURCES.find(s=>s.id===g.source) || SOURCES[0] || {badgeClass:'source-fitgirl', name:'Hydra Verified'};
+  const on = state.wishlist && state.wishlist.has(g.id);
+  const ratingVal = (typeof g.rating === 'number') ? g.rating.toFixed(1) : '4.9';
+  const sizeVal = g.fileSize || '45.0 GB';
+  const coverImg = g.cover || `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${g.steamAppId || 271590}/library_600x900.jpg`;
+
+  return `
     <article class="game-card" onclick="openModal('${g.id}')">
       <div class="cover">
-        <img src="${g.cover}" alt="${g.name}" loading="lazy" decoding="async">
-        <span class="disc-badge source-chip ${srcObj.badgeClass}">${g.sourceName}</span>
-        <span class="size-badge">${g.fileSize}</span>
+        <img src="${coverImg}" alt="${g.name}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg'">
+        <span class="disc-badge source-chip ${srcObj.badgeClass || 'source-fitgirl'}">${g.sourceName || srcObj.name}</span>
+        <span class="size-badge">${sizeVal}</span>
         <button class="wish-btn${on?' on':''}" onclick="event.stopPropagation(); toggleWish('${g.id}')" aria-label="Lista de desejos"><i data-lucide="heart"></i></button>
       </div>
       <div class="card-body">
         <h3 title="${g.name}">${g.name}</h3>
         <div class="card-foot">
-          <span class="card-rate">${starIcon} ${g.rating.toFixed(1)}</span>
+          <span class="card-rate">${starIcon} ${ratingVal}</span>
           <span class="free-badge">Grátis</span>
         </div>
         <div class="card-actions">
