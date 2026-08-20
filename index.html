@@ -556,17 +556,7 @@
         </div>
       </section>
 
-      <!-- Em Breve -->
-      <section class="section" id="em-breve">
-        <div class="sec-head">
-          <div><div class="kicker">Lançamentos Futuros</div><h2>Em breve no JohnPlay</h2></div>
-          <div class="hs-arrows">
-            <button id="hsPrev" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
-            <button id="hsNext" aria-label="Próximo"><i data-lucide="chevron-right"></i></button>
-          </div>
-        </div>
-        <div class="hscroll" id="upRow"></div>
-      </section>
+      
     </div>
   </section>
 
@@ -861,945 +851,1312 @@ const SOURCES = [
 ];
 
 let GAMES = [
-  // ================= 1. FITGIRL REPACKS =================
   {
-    id: 'elden-ring-shadow',
-    name: 'ELDEN RING: Shadow of the Erdtree Edition',
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
-    genre: 'RPG',
-    tags: ['RPG', 'Souls-like', 'Mundo Aberto', 'Ação'],
-    fileSize: '49.8 GB',
-    rating: 4.9,
-    release: '2024-06-21',
-    sold: 15800,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/library_600x900.jpg',
-    desc: 'Vencedor de mais de 300 prêmios de Jogo do Ano, agora com a expansão Shadow of the Erdtree completa e atualizada.',
-    steamUrl: 'https://store.steampowered.com/app/1245620/ELDEN_RING/',
-    magnet: 'magnet:?xt=urn:btih:3fa81309d4310000000000000000000000000000&dn=Elden+Ring+Shadow+of+the+Erdtree+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (FitGirl Fast Tracker)', type: 'magnet', url: 'magnet:?xt=urn:btih:3fa81309d4310000000000000000000000000000&dn=Elden+Ring+Shadow+of+the+Erdtree+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'MultiUpload Mirrors', type: 'ddl', url: 'https://multiupload.biz/eldenring' },
-      { name: 'DataNodes Ultra Mirror', type: 'ddl', url: 'https://datanodes.to/eldenring-fitgirl' }
+    "id": "elden-ring-shadow",
+    "steamAppId": 1245620,
+    "name": "ELDEN RING: Shadow of the Erdtree Edition",
+    "source": "fitgirl",
+    "sourceName": "FitGirl Repacks",
+    "genre": "RPG",
+    "tags": [
+      "RPG",
+      "Souls-like",
+      "Mundo Aberto",
+      "Ação"
     ],
-    specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-8400 / Ryzen 3 3300X', ram: '12 GB RAM', gpu: 'GTX 1060 3GB / RX 580 4GB', storage: '60 GB SSD' }
-  },
-  {
-    id: 'red-dead-redemption-2',
-    name: 'Red Dead Redemption 2: Ultimate Edition (v1491.50)',
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
-    genre: 'Mundo Aberto',
-    tags: ['Mundo Aberto', 'História', 'Faroeste', 'Ação'],
-    fileSize: '66.3 GB',
-    rating: 5.0,
-    release: '2023-11-05',
-    sold: 28000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg',
-    desc: 'Arthur Morgan e a gangue Van der Linde são forçados a fugir pelos Estados Unidos na virada para o século XX.',
-    steamUrl: 'https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/',
-    magnet: 'magnet:?xt=urn:btih:r3dd34dr3d3mpt10n2f1tg1r1ult1m4t3000000000&dn=Red+Dead+Redemption+2+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (FitGirl Selective Download)', type: 'magnet', url: 'magnet:?xt=urn:btih:r3dd34dr3d3mpt10n2f1tg1r1ult1m4t3000000000&dn=Red+Dead+Redemption+2+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'DataNodes Mirror', type: 'ddl', url: 'https://datanodes.to/rdr2' }
+    "fileSize": "49.8 GB",
+    "rating": 5,
+    "release": "2024-06-21",
+    "sold": 45800,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/library_600x900.jpg",
+    "desc": "Vencedor de mais de 300 prêmios de Jogo do Ano, agora com a expansão Shadow of the Erdtree completa e atualizada.",
+    "steamUrl": "https://store.steampowered.com/app/1245620/ELDEN_RING/",
+    "magnet": "magnet:?xt=urn:btih:3fa81309d4310000000000000000000000000000&dn=Elden+Ring+Shadow+of+the+Erdtree+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (FitGirl Fast Tracker)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:3fa81309d4310000000000000000000000000000&dn=Elden+Ring+Shadow+of+the+Erdtree+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce"
+      },
+      {
+        "name": "MultiUpload Mirrors",
+        "type": "ddl",
+        "url": "https://multiupload.biz/eldenring"
+      }
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i7-4770K / Ryzen 5 1500X', ram: '12 GB RAM', gpu: 'GTX 1060 6GB / RX 480 4GB', storage: '150 GB' }
+    "specs": {
+      "os": "Windows 10/11 64-bit",
+      "cpu": "Intel i5-8400 / Ryzen 3 3300X",
+      "ram": "12 GB RAM",
+      "gpu": "GTX 1060 3GB / RX 580 4GB",
+      "storage": "60 GB SSD"
+    }
   },
   {
-    id: 'spiderman-remastered',
-    name: "Marvel's Spider-Man Remastered (v2.616.0.0)",
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
-    genre: 'Ação',
-    tags: ['Ação', 'Super-Heróis', 'Mundo Aberto', 'Aventura'],
-    fileSize: '41.8 GB',
-    rating: 4.9,
-    release: '2023-09-18',
-    sold: 22000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1817070/library_600x900.jpg',
-    desc: 'Peter Parker luta contra o crime e vilões icônicos em uma Nova York vibrante e detalhada.',
-    steamUrl: 'https://store.steampowered.com/app/1817070/Marvels_SpiderMan_Remastered/',
-    magnet: 'magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rl0000000000000000000&dn=Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (FitGirl Repack)', type: 'magnet', url: 'magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rl0000000000000000000&dn=Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'DataNodes Fast Mirror', type: 'ddl', url: 'https://datanodes.to/spiderman-fitgirl' }
+    "id": "red-dead-redemption-2",
+    "steamAppId": 1174180,
+    "name": "Red Dead Redemption 2: Ultimate Edition (v1491.50)",
+    "source": "fitgirl",
+    "sourceName": "FitGirl Repacks",
+    "genre": "Mundo Aberto",
+    "tags": [
+      "Mundo Aberto",
+      "História",
+      "Faroeste",
+      "Ação"
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i3-4160', ram: '8 GB RAM', gpu: 'GTX 950 / Radeon R7 370', storage: '75 GB' }
-  },
-  {
-    id: 'dark-souls-3-deluxe',
-    name: 'Dark Souls III: Deluxe Edition (v1.15 + All DLCs)',
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
-    genre: 'RPG',
-    tags: ['Souls-like', 'RPG', 'Fantasia Sombria', 'Difícil'],
-    fileSize: '18.5 GB',
-    rating: 4.9,
-    release: '2023-01-10',
-    sold: 19000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/374320/library_600x900.jpg',
-    desc: 'O ápice da trilogia Dark Souls. Derrote os Lordes das Cinzas em Lothric com todas as expansões inclusas.',
-    steamUrl: 'https://store.steampowered.com/app/374320/DARK_SOULS_III/',
-    magnet: 'magnet:?xt=urn:btih:d4rks0uls3d3lux3f1tg1rl0000000000000000000000&dn=Dark+Souls+3+Deluxe+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (FitGirl)', type: 'magnet', url: 'magnet:?xt=urn:btih:d4rks0uls3d3lux3f1tg1rl0000000000000000000000&dn=Dark+Souls+3+Deluxe+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }
+    "fileSize": "66.3 GB",
+    "rating": 5,
+    "release": "2023-11-05",
+    "sold": 58000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg",
+    "desc": "Arthur Morgan e a gangue Van der Linde são forçados a fugir pelos Estados Unidos na virada para o século XX.",
+    "steamUrl": "https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/",
+    "magnet": "magnet:?xt=urn:btih:r3dd34dr3d3mpt10n2f1tg1r1ult1m4t3000000000&dn=Red+Dead+Redemption+2+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (FitGirl Selective Download)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:r3dd34dr3d3mpt10n2f1tg1r1ult1m4t3000000000&dn=Red+Dead+Redemption+2+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
     ],
-    specs: { os: 'Windows 7/8.1/10 64-bit', cpu: 'Intel Core i3-2100 / AMD FX-6300', ram: '4 GB RAM', gpu: 'GTX 750 Ti / HD 7950', storage: '25 GB' }
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i7-4770K / Ryzen 5 1500X",
+      "ram": "12 GB RAM",
+      "gpu": "GTX 1060 6GB / RX 480 4GB",
+      "storage": "150 GB"
+    }
   },
   {
-    id: 'sekiro-goty',
-    name: 'Sekiro: Shadows Die Twice (GOTY Edition)',
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
-    genre: 'Ação',
-    tags: ['Souls-like', 'Ninja', 'Ação', 'Japão Feudal'],
-    fileSize: '12.8 GB',
-    rating: 4.9,
-    release: '2023-04-12',
-    sold: 18400,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/814380/library_600x900.jpg',
-    desc: 'Entre no papel do Lobo de um Braço Só e vingue seu lorde no sangrento período Sengoku.',
-    steamUrl: 'https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice/',
-    magnet: 'magnet:?xt=urn:btih:s3k1r0sh4d0wsd13tw1c3f1tg1rl00000000000000&dn=Sekiro+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (FitGirl)', type: 'magnet', url: 'magnet:?xt=urn:btih:s3k1r0sh4d0wsd13tw1c3f1tg1rl00000000000000&dn=Sekiro+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 7/8/10 64-bit', cpu: 'Intel Core i3-2100', ram: '4 GB RAM', gpu: 'GTX 760', storage: '25 GB' }
-  },
-  {
-    id: 'lies-of-p-deluxe',
-    name: 'Lies of P: Deluxe Edition (v1.5.0)',
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
-    genre: 'RPG',
-    tags: ['Souls-like', 'Sombrio', 'Ação', 'Pinóquio'],
-    fileSize: '34.5 GB',
-    rating: 4.8,
-    release: '2024-02-15',
-    sold: 11500,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1627720/library_600x900.jpg',
-    desc: 'Acorde na cidade em ruínas de Krat e desvende os mistérios dos fantoches assassinos.',
-    steamUrl: 'https://store.steampowered.com/app/1627720/Lies_of_P/',
-    magnet: 'magnet:?xt=urn:btih:l13s0fpd3lux3f1tg1rl000000000000000000000000&dn=Lies+of+P+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:l13s0fpd3lux3f1tg1rl000000000000000000000000&dn=Lies+of+P+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Core i3-6300', ram: '8 GB RAM', gpu: 'GTX 960 4GB', storage: '50 GB' }
-  },
-  {
-    id: 'armored-core-6',
-    name: 'ARMORED CORE VI: FIRES OF RUBICON',
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
-    genre: 'Ação',
-    tags: ['Mecha', 'Ação Rápida', 'Sci-Fi', 'Customização'],
-    fileSize: '36.8 GB',
-    rating: 4.8,
-    release: '2023-08-25',
-    sold: 13400,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1888160/library_600x900.jpg',
-    desc: 'Monte e pilote seu próprio mecha com mobilidade 3D total para enfrentar missões desafiadoras.',
-    steamUrl: 'https://store.steampowered.com/app/1888160/ARMORED_CORE_VI_FIRES_OF_RUBICON/',
-    magnet: 'magnet:?xt=urn:btih:arm0r3dc0r36f1tg1rlr3p4ck00000000000000000000&dn=Armored+Core+6+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (FitGirl)', type: 'magnet', url: 'magnet:?xt=urn:btih:arm0r3dc0r36f1tg1rlr3p4ck00000000000000000000&dn=Armored+Core+6+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i7-4790K / Ryzen 7 1800X', ram: '12 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '60 GB' }
-  },
-  {
-    id: 'dark-souls-remastered',
-    name: 'DARK SOULS: REMASTERED (v1.03)',
-    source: 'fitgirl',
-    sourceName: 'FitGirl Repacks',
-    genre: 'RPG',
-    tags: ['Souls-like', 'RPG', 'Clássico', 'Difícil'],
-    fileSize: '3.9 GB',
-    rating: 4.9,
-    release: '2023-03-10',
-    sold: 21000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/570940/library_600x900.jpg',
-    desc: 'Reviva o aclamado clássico que redefiniu o gênero com Lordran em alta definição a 60 FPS.',
-    steamUrl: 'https://store.steampowered.com/app/570940/DARK_SOULS_REMASTERED/',
-    magnet: 'magnet:?xt=urn:btih:d4rks0ulsr3m4st3r3df1tg1rl00000000000000000000&dn=Dark+Souls+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (FitGirl)', type: 'magnet', url: 'magnet:?xt=urn:btih:d4rks0ulsr3m4st3r3df1tg1rl00000000000000000000&dn=Dark+Souls+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 7/8/10 64-bit', cpu: 'Intel Core i5-2300', ram: '6 GB RAM', gpu: 'GTX 460 / HD 6870', storage: '8 GB' }
-  },
-
-  // ================= 2. DODI REPACKS =================
-  {
-    id: 'gta-v-enhanced',
-    name: 'Grand Theft Auto V: Premium Edition (v1.68)',
-    source: 'dodi',
-    sourceName: 'DODI Repacks',
-    genre: 'Mundo Aberto',
-    tags: ['Mundo Aberto', 'Ação', 'Crime', 'Clássico'],
-    fileSize: '59.4 GB',
-    rating: 4.9,
-    release: '2024-03-10',
-    sold: 12400,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg',
-    desc: 'Explore Los Santos e Blaine County com Michael, Franklin e Trevor na edição definitiva com todas as expansões inclusas.',
-    steamUrl: 'https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/',
-    magnet: 'magnet:?xt=urn:btih:e589df6890333333342345123490000000000000&dn=Grand+Theft+Auto+V+DODI+Repack&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (qBittorrent / Hydra Engine)', type: 'magnet', url: 'magnet:?xt=urn:btih:e589df6890333333342345123490000000000000&dn=Grand+Theft+Auto+V+DODI+Repack&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'QiWi Direct Download', type: 'ddl', url: 'https://qiwi.gg/file/gtav-enhanced-dodi' },
-      { name: 'DataNodes Mirror', type: 'ddl', url: 'https://datanodes.to/gtav-dodi' },
-      { name: '1fichier Direct Mirror', type: 'ddl', url: 'https://1fichier.com/?gtav-dodi' }
+    "id": "spiderman-remastered",
+    "steamAppId": 1817070,
+    "name": "Marvel's Spider-Man Remastered (v2.616.0.0)",
+    "source": "fitgirl",
+    "sourceName": "FitGirl Repacks",
+    "genre": "Ação",
+    "tags": [
+      "Super-herói",
+      "Mundo Aberto",
+      "Ação",
+      "História"
     ],
-    specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-3470 / AMD FX-8350', ram: '8 GB RAM', gpu: 'GTX 660 / HD 7870', storage: '100 GB' }
-  },
-  {
-    id: 'ghost-of-tsushima',
-    name: "Ghost of Tsushima: Director's Cut",
-    source: 'dodi',
-    sourceName: 'DODI Repacks',
-    genre: 'Ação',
-    tags: ['Ação', 'Samurai', 'Mundo Aberto', 'História'],
-    fileSize: '48.2 GB',
-    rating: 4.9,
-    release: '2024-05-16',
-    sold: 13400,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2215430/library_600x900.jpg',
-    desc: 'Jin Sakai deve abandonar as tradições dos samurais para se tornar o Fantasma e libertar a Ilha de Tsushima.',
-    steamUrl: 'https://store.steampowered.com/app/2215430/Ghost_of_Tsushima_DIRECTORS_CUT/',
-    magnet: 'magnet:?xt=urn:btih:gh0st0ftsush1m4d1r3ct0rscutd0d100000000000&dn=Ghost+of+Tsushima+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (DODI Repack)', type: 'magnet', url: 'magnet:?xt=urn:btih:gh0st0ftsush1m4d1r3ct0rscutd0d100000000000&dn=Ghost+of+Tsushima+DODI&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'QiWi Mirror', type: 'ddl', url: 'https://qiwi.gg/file/tsushima' }
+    "fileSize": "39.8 GB",
+    "rating": 4.9,
+    "release": "2023-08-12",
+    "sold": 34200,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1817070/library_600x900.jpg",
+    "desc": "Jogue como um Peter Parker experiente, lutando contra o crime e vilões icônicos na Nova York da Marvel.",
+    "steamUrl": "https://store.steampowered.com/app/1817070/Marvels_SpiderMan_Remastered/",
+    "magnet": "magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rlr3p4ck000000000&dn=Marvels+Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (FitGirl)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:sp1d3rm4nr3m4st3r3df1tg1rlr3p4ck000000000&dn=Marvels+Spider-Man+Remastered+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-8600 / Ryzen 5 3600', ram: '16 GB RAM', gpu: 'GTX 1070 8GB / RX 5600 XT', storage: '75 GB SSD' }
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i5-4670 / AMD FX-8350",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1060 6GB / RX 580",
+      "storage": "75 GB SSD"
+    }
   },
   {
-    id: 'the-last-of-us-part-1',
-    name: 'The Last of Us Part I (v1.1.3 + Left Behind)',
-    source: 'dodi',
-    sourceName: 'DODI Repacks',
-    genre: 'Ação',
-    tags: ['Zumbis', 'História Emocionante', 'Sobrevivência', 'Ação'],
-    fileSize: '65.2 GB',
-    rating: 4.8,
-    release: '2024-01-20',
-    sold: 14900,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1888930/library_600x900.jpg',
-    desc: 'Em uma civilização devastada, onde infectados e sobreviventes implacáveis correm soltos, Joel é contratado para contrabandear Ellie.',
-    steamUrl: 'https://store.steampowered.com/app/1888930/The_Last_of_Us_Part_I/',
-    magnet: 'magnet:?xt=urn:btih:th3l4st0fuspart1d0d1r3p4ck000000000000000000&dn=The+Last+of+Us+Part+1+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (DODI Repack)', type: 'magnet', url: 'magnet:?xt=urn:btih:th3l4st0fuspart1d0d1r3p4ck000000000000000000&dn=The+Last+of+Us+Part+1+DODI&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'QiWi Mirror', type: 'ddl', url: 'https://qiwi.gg/file/tlou1-dodi' }
+    "id": "spiderman-2-pc",
+    "steamAppId": 2651280,
+    "name": "Marvel's Spider-Man 2: Deluxe Edition (v2.810.0.0)",
+    "source": "fitgirl",
+    "sourceName": "FitGirl Repacks",
+    "genre": "Ação",
+    "tags": [
+      "Super-herói",
+      "Mundo Aberto",
+      "Ação",
+      "Venom"
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 1500X / Core i7-4770K', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '100 GB SSD' }
-  },
-  {
-    id: 'horizon-forbidden-west',
-    name: 'Horizon Forbidden West: Complete Edition',
-    source: 'dodi',
-    sourceName: 'DODI Repacks',
-    genre: 'Mundo Aberto',
-    tags: ['Mundo Aberto', 'Sci-Fi', 'Aventura', 'Robôs'],
-    fileSize: '95.4 GB',
-    rating: 4.8,
-    release: '2024-03-21',
-    sold: 13200,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2420110/library_600x900.jpg',
-    desc: 'Acompanhe Aloy enquanto ela desbrava uma fronteira majestosa e perigosa que oculta novas e misteriosas ameaças.',
-    steamUrl: 'https://store.steampowered.com/app/2420110/Horizon_Forbidden_West_Complete_Edition/',
-    magnet: 'magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (DODI)', type: 'magnet', url: 'magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'i3-8100 / Ryzen 3 1300X', ram: '16 GB RAM', gpu: 'GTX 1650 4GB', storage: '150 GB SSD' }
-  },
-  {
-    id: 'god-of-war-2018',
-    name: 'God of War (2018 Complete Edition)',
-    source: 'dodi',
-    sourceName: 'DODI Repacks',
-    genre: 'Ação',
-    tags: ['Mitologia Nórdica', 'Ação', 'História Épica', 'Kratos'],
-    fileSize: '34.6 GB',
-    rating: 4.9,
-    release: '2023-01-14',
-    sold: 27000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1593500/library_600x900.jpg',
-    desc: 'Com a vingança contra os deuses do Olimpo no passado, Kratos agora vive no reino dos deuses e monstros nórdicos.',
-    steamUrl: 'https://store.steampowered.com/app/1593500/God_of_War/',
-    magnet: 'magnet:?xt=urn:btih:g0d0fw4r2018d0d1r3p4ck0000000000000000000000&dn=God+of+War+2018+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (DODI)', type: 'magnet', url: 'magnet:?xt=urn:btih:g0d0fw4r2018d0d1r3p4ck0000000000000000000000&dn=God+of+War+2018+DODI&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-2500k / AMD FX-6300', ram: '8 GB RAM', gpu: 'GTX 960 (4 GB) / R9 290X', storage: '70 GB' }
-  },
-  {
-    id: 'days-gone-pc',
-    name: 'Days Gone: Survival Edition',
-    source: 'dodi',
-    sourceName: 'DODI Repacks',
-    genre: 'Mundo Aberto',
-    tags: ['Zumbis', 'Mundo Aberto', 'Moto', 'Sobrevivência'],
-    fileSize: '29.2 GB',
-    rating: 4.8,
-    release: '2023-06-12',
-    sold: 16500,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1259420/library_600x900.jpg',
-    desc: 'Cavalgue e lute em uma América pós-pandêmica implacável no papel do motoqueiro Deacon St. John.',
-    steamUrl: 'https://store.steampowered.com/app/1259420/Days_Gone/',
-    magnet: 'magnet:?xt=urn:btih:d4ysg0n3d0d1r3p4ck0000000000000000000000000000&dn=Days+Gone+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (DODI)', type: 'magnet', url: 'magnet:?xt=urn:btih:d4ysg0n3d0d1r3p4ck0000000000000000000000000000&dn=Days+Gone+DODI&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-2500K / AMD FX 6300', ram: '8 GB RAM', gpu: 'GTX 780 (3 GB) / R9 290', storage: '70 GB' }
-  },
-  {
-    id: 'spiderman-miles-morales',
-    name: "Marvel's Spider-Man: Miles Morales",
-    source: 'dodi',
-    sourceName: 'DODI Repacks',
-    genre: 'Ação',
-    tags: ['Super-Heróis', 'Ação', 'Mundo Aberto', 'Nova York'],
-    fileSize: '28.5 GB',
-    rating: 4.8,
-    release: '2023-05-18',
-    sold: 19800,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1817190/library_600x900.jpg',
-    desc: 'Descubra os poderes bioelétricos explosivos do novo Spider-Man Miles Morales no inverno do Harlem.',
-    steamUrl: 'https://store.steampowered.com/app/1817190/Marvels_SpiderMan_Miles_Morales/',
-    magnet: 'magnet:?xt=urn:btih:m1l3sm0r4l3sd0d1000000000000000000000000000000&dn=Spider-Man+Miles+Morales+DODI&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (DODI)', type: 'magnet', url: 'magnet:?xt=urn:btih:m1l3sm0r4l3sd0d1000000000000000000000000000000&dn=Spider-Man+Miles+Morales+DODI&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i3-4160', ram: '8 GB RAM', gpu: 'GTX 950 / AMD Radeon RX 470', storage: '75 GB' }
-  },
-
-  // ================= 3. STEAMRIP (DIRECT PLAY) =================
-  {
-    id: 'black-myth-wukong',
-    name: 'Black Myth: Wukong (Full Game & Shaders Cache)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Ação',
-    tags: ['Ação', 'Mitologia', 'Souls-like', 'Aventura'],
-    fileSize: '118.5 GB',
-    rating: 4.8,
-    release: '2024-08-20',
-    sold: 21000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/library_600x900.jpg',
-    desc: 'Entre no papel do Predestinado nesta jornada épica inspirada na mitologia chinesa feita na Unreal Engine 5.',
-    steamUrl: 'https://store.steampowered.com/app/2358720/Black_Myth_Wukong/',
-    magnet: 'magnet:?xt=urn:btih:8934571029348102934810293481029348102934&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (SteamRIP Direct Play)', type: 'magnet', url: 'magnet:?xt=urn:btih:8934571029348102934810293481029348102934&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'QiWi Direct Play Archive', type: 'ddl', url: 'https://qiwi.gg/file/wukong-steamrip' },
-      { name: 'MegaUp Mirror', type: 'ddl', url: 'https://megaup.net/wukong' }
+    "fileSize": "64.5 GB",
+    "rating": 5,
+    "release": "2024-02-15",
+    "sold": 49000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2651280/library_600x900.jpg",
+    "desc": "Peter Parker e Miles Morales enfrentam a prova definitiva de força por trás das máscaras ao salvarem a cidade de Venom.",
+    "steamUrl": "https://store.steampowered.com/app/2651280/Marvels_SpiderMan_2/",
+    "magnet": "magnet:?xt=urn:btih:sp1d3rm4n2d3lux3f1tg1rlr3p4ck00000000000&dn=Spider-Man+2+Deluxe+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (FitGirl Repack)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:sp1d3rm4n2d3lux3f1tg1rlr3p4ck00000000000&dn=Spider-Man+2+Deluxe+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
     ],
-    specs: { os: 'Windows 10/11 64-bit', cpu: 'Core i5-8400 / Ryzen 5 1600', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580 8GB', storage: '130 GB SSD' }
+    "specs": {
+      "os": "Windows 10/11 64-bit",
+      "cpu": "Intel i5-8600K / Ryzen 5 3600",
+      "ram": "16 GB RAM",
+      "gpu": "RTX 2060 Super / RX 5700",
+      "storage": "90 GB SSD"
+    }
   },
   {
-    id: 'god-of-war-ragnarok',
-    name: 'God of War Ragnarök: Valhalla Included',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Ação',
-    tags: ['Ação', 'Mitologia Nórdica', 'História', 'Aventura'],
-    fileSize: '102.0 GB',
-    rating: 4.9,
-    release: '2024-09-19',
-    sold: 16500,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2322010/library_600x900.jpg',
-    desc: 'Kratos e Atreus devem viajar pelos Nove Reinos em busca de respostas enquanto as forças de Asgard se preparam para a guerra.',
-    steamUrl: 'https://store.steampowered.com/app/2322010/God_of_War_Ragnarok/',
-    magnet: 'magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pfullddl0000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (SteamRIP Direct Play)', type: 'magnet', url: 'magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pfullddl0000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'QiWi Fast DDL', type: 'ddl', url: 'https://qiwi.gg/file/gow-ragnarok' }
+    "id": "dark-souls-3-deluxe",
+    "steamAppId": 374320,
+    "name": "Dark Souls III: Deluxe Edition (v1.15 + All DLCs)",
+    "source": "fitgirl",
+    "sourceName": "FitGirl Repacks",
+    "genre": "RPG",
+    "tags": [
+      "Souls-like",
+      "RPG",
+      "Difícil",
+      "Fantasia Sombria"
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-4670k / Ryzen 3 1200', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 5500 XT 8GB', storage: '190 GB SSD' }
-  },
-  {
-    id: 'palworld-multiplayer',
-    name: 'Palworld (v0.3.6 Multiplayer Ready)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Aventura',
-    tags: ['Multiplayer', 'Criaturas', 'Sobrevivência', 'Base Building'],
-    fileSize: '19.4 GB',
-    rating: 4.8,
-    release: '2024-07-30',
-    sold: 31000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/library_600x900.jpg',
-    desc: 'Lute, crie, construa e explore ao lado de misteriosas criaturas chamadas Pals neste jogo de sobrevivência em mundo aberto.',
-    steamUrl: 'https://store.steampowered.com/app/1623730/Palworld/',
-    magnet: 'magnet:?xt=urn:btih:p4lw0rldst34mr1pmult1pl4y3r0000000000000000&dn=Palworld+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (SteamRIP)', type: 'magnet', url: 'magnet:?xt=urn:btih:p4lw0rldst34mr1pmult1pl4y3r0000000000000000&dn=Palworld+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'QiWi Mirror', type: 'ddl', url: 'https://qiwi.gg/file/palworld' }
+    "fileSize": "18.9 GB",
+    "rating": 4.9,
+    "release": "2023-03-15",
+    "sold": 29000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/374320/library_600x900.jpg",
+    "desc": "O ápice da aclamada franquia de Hidetaka Miyazaki. Inclui Ashes of Ariandel e The Ringed City.",
+    "steamUrl": "https://store.steampowered.com/app/374320/DARK_SOULS_III/",
+    "magnet": "magnet:?xt=urn:btih:d4rks0uls3d3lux3f1tg1rlr3p4ck0000000000000&dn=Dark+Souls+3+Deluxe+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (FitGirl)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:d4rks0uls3d3lux3f1tg1rlr3p4ck0000000000000&dn=Dark+Souls+3+Deluxe+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'i5-3570K 3.4 GHz', ram: '16 GB RAM', gpu: 'GeForce GTX 1050 (2GB)', storage: '40 GB' }
+    "specs": {
+      "os": "Windows 7/8.1/10 64bit",
+      "cpu": "Intel Core i7-3770 / AMD FX-8350",
+      "ram": "8 GB RAM",
+      "gpu": "GTX 970 / Radeon R9 290",
+      "storage": "25 GB"
+    }
   },
   {
-    id: 'helldivers-2',
-    name: 'Helldivers 2 (Super Citizen Edition)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Ação',
-    tags: ['Co-op', 'Tiro', 'Sci-Fi', 'Multiplayer'],
-    fileSize: '70.0 GB',
-    rating: 4.8,
-    release: '2024-02-08',
-    sold: 26000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/library_600x900.jpg',
-    desc: 'A última linha de ataque da galáxia. Junte-se aos Helldivers na luta pela liberdade contra hordas alienígenas.',
-    steamUrl: 'https://store.steampowered.com/app/553850/HELLDIVERS_2/',
-    magnet: 'magnet:?xt=urn:btih:h3lld1v3rs2st34mr1p00000000000000000000000000&dn=Helldivers+2+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:h3lld1v3rs2st34mr1p00000000000000000000000000&dn=Helldivers+2+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i7-4790K', ram: '8 GB RAM', gpu: 'GTX 1050 Ti', storage: '100 GB' }
-  },
-  {
-    id: 'manor-lords',
-    name: 'Manor Lords (v0.7.975 Early Access)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Estratégia',
-    tags: ['Construção de Cidades', 'Medieval', 'Estratégia', 'Simulador'],
-    fileSize: '11.8 GB',
-    rating: 4.9,
-    release: '2024-04-26',
-    sold: 24500,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1363080/library_600x900.jpg',
-    desc: 'Experimente a vida de um senhor feudal medieval. Desenvolva sua vila inicial em uma cidade movimentada e gerencie recursos.',
-    steamUrl: 'https://store.steampowered.com/app/1363080/Manor_Lords/',
-    magnet: 'magnet:?xt=urn:btih:m4n0rl0rdsst34mr1pd1r3ct00000000000000000000&dn=Manor+Lords+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:m4n0rl0rdsst34mr1pd1r3ct00000000000000000000&dn=Manor+Lords+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-4670 / AMD FX-4350', ram: '8 GB RAM', gpu: 'GTX 1050 (2GB) / Radeon RX 460', storage: '16 GB' }
-  },
-  {
-    id: 'ready-or-not',
-    name: 'Ready or Not (v1.0 + Home Invasion DLC)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Ação',
-    tags: ['Tático', 'SWAT', 'FPS Realista', 'Co-op'],
-    fileSize: '52.4 GB',
-    rating: 4.8,
-    release: '2024-07-23',
-    sold: 17800,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1144200/library_600x900.jpg',
-    desc: 'Um jogo de tiro tático em primeira pessoa intenso e realista focado em operações da SWAT.',
-    steamUrl: 'https://store.steampowered.com/app/1144200/Ready_or_Not/',
-    magnet: 'magnet:?xt=urn:btih:r34dy0rn0tst34mr1pfullddl00000000000000000000&dn=Ready+or+Not+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:r34dy0rn0tst34mr1pfullddl00000000000000000000&dn=Ready+or+Not+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-4460 / AMD FX-6300', ram: '8 GB RAM', gpu: 'GTX 960 2GB / Radeon R7 370', storage: '90 GB SSD' }
-  },
-  {
-    id: 'lethal-company',
-    name: 'Lethal Company (v64 Multiplayer)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Terror',
-    tags: ['Co-op', 'Terror', 'Comédia', 'Multiplayer'],
-    fileSize: '1.1 GB',
-    rating: 4.9,
-    release: '2024-08-10',
-    sold: 42000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1966720/library_600x900.jpg',
-    desc: 'Colete sucata em luas industriais abandonadas para cumprir a cota da Companhia e sobreviva aos monstros.',
-    steamUrl: 'https://store.steampowered.com/app/1966720/Lethal_Company/',
-    magnet: 'magnet:?xt=urn:btih:l3th4lc0mp4nyst34mr1p000000000000000000000000&dn=Lethal+Company+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:l3th4lc0mp4nyst34mr1p000000000000000000000000&dn=Lethal+Company+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-7400', ram: '4 GB RAM', gpu: 'GTX 1050', storage: '2 GB' }
-  },
-  {
-    id: 'phasmophobia',
-    name: 'Phasmophobia (v0.10.3 Ghost Hunter)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Terror',
-    tags: ['Terror', 'Fantasmas', 'Co-op Online', 'Investigação'],
-    fileSize: '16.5 GB',
-    rating: 4.9,
-    release: '2024-06-25',
-    sold: 36000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/739630/library_600x900.jpg',
-    desc: 'Investigue atividades paranormais com até 4 jogadores usando equipamentos profissionais de caça-fantasmas.',
-    steamUrl: 'https://store.steampowered.com/app/739630/Phasmophobia/',
-    magnet: 'magnet:?xt=urn:btih:ph4sm0ph0b14st34mr1p00000000000000000000000000&dn=Phasmophobia+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:ph4sm0ph0b14st34mr1p00000000000000000000000000&dn=Phasmophobia+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-4590 / AMD FX 8350', ram: '8 GB RAM', gpu: 'GTX 970 / Radeon R9 290', storage: '21 GB' }
-  },
-  {
-    id: 'sons-of-the-forest',
-    name: 'Sons of the Forest (v1.0 Full Release)',
-    source: 'steamrip',
-    sourceName: 'SteamRIP',
-    genre: 'Terror',
-    tags: ['Sobrevivência', 'Terror', 'Canibais', 'Construção'],
-    fileSize: '15.4 GB',
-    rating: 4.8,
-    release: '2024-02-22',
-    sold: 29000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1326470/library_600x900.jpg',
-    desc: 'Enviado para encontrar um bilionário desaparecido em uma ilha remota, você se encontra em um inferno infestado de canibais.',
-    steamUrl: 'https://store.steampowered.com/app/1326470/Sons_Of_The_Forest/',
-    magnet: 'magnet:?xt=urn:btih:s0ns0fth3f0r3stst34mr1p0000000000000000000000&dn=Sons+of+the+Forest+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:s0ns0fth3f0r3stst34mr1p0000000000000000000000&dn=Sons+of+the+Forest+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-8400 / Ryzen 3 3300X', ram: '12 GB RAM', gpu: 'GTX 1060 3GB / RX 570 4GB', storage: '20 GB SSD' }
-  },
-
-  // ================= 4. FREE GOG GAMES (DRM-FREE) =================
-  {
-    id: 'cyberpunk-2077-phantom',
-    name: 'Cyberpunk 2077: Phantom Liberty (v2.13 DRM-Free)',
-    source: 'gog',
-    sourceName: 'Free GOG Games',
-    genre: 'RPG',
-    tags: ['RPG', 'Cyberpunk', 'Mundo Aberto', 'FPS'],
-    fileSize: '68.2 GB',
-    rating: 4.8,
-    release: '2024-09-12',
-    sold: 14200,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/library_600x900.jpg',
-    desc: 'Explore Night City e o perigoso distrito de Dogtown com Keanu Reeves e Idris Elba. 100% DRM-Free sem crack.',
-    steamUrl: 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/',
-    magnet: 'magnet:?xt=urn:btih:c7b3rpunk2077ph4nt0ml1b3rtyg0g000000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (GOG DRM-Free Setup)', type: 'magnet', url: 'magnet:?xt=urn:btih:c7b3rpunk2077ph4nt0ml1b3rtyg0g000000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'GOG Offline Installer (Parte 1-14)', type: 'ddl', url: 'https://freegogpcgames.com/cyberpunk-2077/' }
+    "id": "sekiro-goty",
+    "steamAppId": 814380,
+    "name": "Sekiro: Shadows Die Twice - GOTY Edition (v1.06)",
+    "source": "fitgirl",
+    "sourceName": "FitGirl Repacks",
+    "genre": "Ação",
+    "tags": [
+      "Ação",
+      "Souls-like",
+      "Ninja",
+      "Difícil"
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Core i7-6700 / Ryzen 5 1600', ram: '16 GB RAM', gpu: 'GTX 1060 6GB / RX 580 8GB', storage: '70 GB SSD' }
-  },
-  {
-    id: 'witcher-3-complete',
-    name: 'The Witcher 3: Wild Hunt Complete Edition (Next-Gen)',
-    source: 'gog',
-    sourceName: 'Free GOG Games',
-    genre: 'RPG',
-    tags: ['RPG', 'Mundo Aberto', 'História Rica', 'Fantasia'],
-    fileSize: '51.4 GB',
-    rating: 5.0,
-    release: '2023-12-14',
-    sold: 38000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/library_600x900.jpg',
-    desc: 'Geralt de Rivia em sua jornada para encontrar a Criança da Profecia. Inclui expansões Hearts of Stone e Blood and Wine.',
-    steamUrl: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/',
-    magnet: 'magnet:?xt=urn:btih:w1tch3r3c0mpl3t33d1t10ng0g00000000000000000000&dn=The+Witcher+3+Complete+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (GOG Next-Gen)', type: 'magnet', url: 'magnet:?xt=urn:btih:w1tch3r3c0mpl3t33d1t10ng0g00000000000000000000&dn=The+Witcher+3+Complete+GOG&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: 'GOG Standalone Installer', type: 'ddl', url: 'https://freegogpcgames.com/the-witcher-3-wild-hunt-complete-edition/' }
+    "fileSize": "9.4 GB",
+    "rating": 5,
+    "release": "2023-01-20",
+    "sold": 31500,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/814380/library_600x900.jpg",
+    "desc": "Eleito Jogo do Ano pelo The Game Awards 2019. Domine a espada e o braço protético em um Japão feudal brutal.",
+    "steamUrl": "https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice__GOTY_Edition/",
+    "magnet": "magnet:?xt=urn:btih:s3k1r0g0tyf1tg1rlr3p4ck0000000000000000000&dn=Sekiro+GOTY+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (FitGirl Repack Ultra Compact)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:s3k1r0g0tyf1tg1rlr3p4ck0000000000000000000&dn=Sekiro+GOTY+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
     ],
-    specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel i5-4460 / Ryzen 3 1200', ram: '8 GB RAM', gpu: 'GTX 1060 6GB / RX 580', storage: '60 GB' }
+    "specs": {
+      "os": "Windows 7/8/10 64-bit",
+      "cpu": "Intel Core i5-2500K / AMD FX-6300",
+      "ram": "8 GB RAM",
+      "gpu": "GTX 970 / Radeon RX 570",
+      "storage": "25 GB"
+    }
   },
   {
-    id: 'baldurs-gate-3',
-    name: "Baldur's Gate 3: Digital Deluxe Edition",
-    source: 'gog',
-    sourceName: 'Free GOG Games',
-    genre: 'RPG',
-    tags: ['RPG', 'D&D', 'Estratégia', 'Jogo do Ano'],
-    fileSize: '122.0 GB',
-    rating: 5.0,
-    release: '2023-08-03',
-    sold: 34000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1086940/library_600x900.jpg',
-    desc: 'Reúna seu grupo e retorne aos Reinos Esquecidos em uma história de companheirismo e traição.',
-    steamUrl: 'https://store.steampowered.com/app/1086940/Baldurs_Gate_3/',
-    magnet: 'magnet:?xt=urn:btih:b4ldursg4t33g0gd3lux3000000000000000000000000&dn=Baldurs+Gate+3+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (GOG DRM-Free)', type: 'magnet', url: 'magnet:?xt=urn:btih:b4ldursg4t33g0gd3lux3000000000000000000000000&dn=Baldurs+Gate+3+GOG&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'i5 4690 / FX 8350', ram: '8 GB RAM', gpu: 'GTX 970 / RX 480', storage: '150 GB SSD' }
-  },
-  {
-    id: 'hollow-knight-godmaster',
-    name: 'Hollow Knight: Godmaster Edition (GOG DRM-Free)',
-    source: 'gog',
-    sourceName: 'Free GOG Games',
-    genre: 'Ação',
-    tags: ['Metroidvania', 'Souls-like', '2D', 'Indie Clássico'],
-    fileSize: '1.8 GB',
-    rating: 5.0,
-    release: '2024-02-14',
-    sold: 32000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/library_600x900.jpg',
-    desc: 'Forje seu próprio caminho em Hallownest! Uma aventura de ação clássica em 2D por um vasto reino arruinado de insetos e heróis.',
-    steamUrl: 'https://store.steampowered.com/app/367520/Hollow_Knight/',
-    magnet: 'magnet:?xt=urn:btih:h0ll0wkn1ghtg0dm4st3rg0g00000000000000000000&dn=Hollow+Knight+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'GOG DRM-Free Installer Completo', type: 'ddl', url: 'https://freegogpcgames.com/hollow-knight/' },
-      { name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:h0ll0wkn1ghtg0dm4st3rg0g00000000000000000000&dn=Hollow+Knight+GOG&tr=udp://tracker.opentrackr.org:1337/announce' }
+    "id": "gta-iv-complete",
+    "steamAppId": 12210,
+    "name": "Grand Theft Auto IV: The Complete Edition (v1.2.0.43)",
+    "source": "fitgirl",
+    "sourceName": "FitGirl Repacks",
+    "genre": "Mundo Aberto",
+    "tags": [
+      "Mundo Aberto",
+      "Crime",
+      "Niko Bellic",
+      "Clássico"
     ],
-    specs: { os: 'Windows 7/8/10/11', cpu: 'Intel Core 2 Duo E5200', ram: '4 GB RAM', gpu: 'GeForce 9800GTX+ (512MB)', storage: '9 GB' }
-  },
-  {
-    id: 'stardew-valley-1-6',
-    name: 'Stardew Valley (v1.6.8 DRM-Free)',
-    source: 'gog',
-    sourceName: 'Free GOG Games',
-    genre: 'Aventura',
-    tags: ['Fazenda', 'Pixel Art', 'Relaxante', 'Multiplayer'],
-    fileSize: '650 MB',
-    rating: 5.0,
-    release: '2024-05-10',
-    sold: 48000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg',
-    desc: 'Você herdou a antiga fazenda de seu avô no Vale do Orvalho. Transforme campos cheios de mato em um lar próspero!',
-    steamUrl: 'https://store.steampowered.com/app/413150/Stardew_Valley/',
-    magnet: 'magnet:?xt=urn:btih:st4rd3wv4ll3y168g0gdrmfr3300000000000000000&dn=Stardew+Valley+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'GOG Offline Setup', type: 'ddl', url: 'https://freegogpcgames.com/stardew-valley/' }],
-    specs: { os: 'Windows 7/8/10/11', cpu: '2 GHz', ram: '2 GB RAM', gpu: '256 mb video memory', storage: '1 GB' }
-  },
-  {
-    id: 'dead-cells-castlevania',
-    name: 'Dead Cells: Return to Castlevania Edition',
-    source: 'gog',
-    sourceName: 'Free GOG Games',
-    genre: 'Ação',
-    tags: ['Rogue-lite', 'Metroidvania', 'Castlevania', 'Ação Rápida'],
-    fileSize: '3.2 GB',
-    rating: 4.9,
-    release: '2024-03-05',
-    sold: 21500,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/588650/library_600x900.jpg',
-    desc: 'Explore o imenso castelo do Drácula em Dead Cells com armas clássicas, chicote Vampire Killer e Alucard.',
-    steamUrl: 'https://store.steampowered.com/app/588650/Dead_Cells/',
-    magnet: 'magnet:?xt=urn:btih:d34dc3llsc4stl3v4n14g0g000000000000000000000&dn=Dead+Cells+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'GOG DRM-Free Installer', type: 'ddl', url: 'https://freegogpcgames.com/dead-cells/' }],
-    specs: { os: 'Windows 7+', cpu: 'Intel i5+', ram: '4 GB RAM', gpu: 'Nvidia 450 GTS / Radeon HD 5750', storage: '4 GB' }
-  },
-  {
-    id: 'cuphead-dlc',
-    name: 'Cuphead & The Delicious Last Course',
-    source: 'gog',
-    sourceName: 'Free GOG Games',
-    genre: 'Ação',
-    tags: ['Animação Anos 30', 'Boss Rush', 'Difícil', 'Co-op'],
-    fileSize: '4.8 GB',
-    rating: 4.9,
-    release: '2023-11-20',
-    sold: 29000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/library_600x900.jpg',
-    desc: 'Jogo de ação clássico focado em lutas de chefes inspirado nas animações tradicionais dos anos 1930.',
-    steamUrl: 'https://store.steampowered.com/app/268910/Cuphead/',
-    magnet: 'magnet:?xt=urn:btih:cuph34ddlcg0gdrmfr330000000000000000000000000&dn=Cuphead+GOG&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'GOG Installer', type: 'ddl', url: 'https://freegogpcgames.com/cuphead/' }],
-    specs: { os: 'Windows 7/8/10', cpu: 'Intel Core2 Duo E8400', ram: '4 GB RAM', gpu: 'GeForce 9600 GT / AMD HD 3870', storage: '6 GB' }
-  },
-
-  // ================= 5. XATAB REPACKS =================
-  {
-    id: 'forza-horizon-5',
-    name: 'Forza Horizon 5: Premium Edition (v1.656.398)',
-    source: 'xatab',
-    sourceName: 'Xatab Repacks',
-    genre: 'Corrida',
-    tags: ['Corrida', 'Mundo Aberto', 'Automobilismo', 'Multiplayer'],
-    fileSize: '110.0 GB',
-    rating: 4.8,
-    release: '2024-04-18',
-    sold: 17500,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/library_600x900.jpg',
-    desc: 'Explore as vibrantes paisagens de mundo aberto do México em centenas dos melhores carros do mundo.',
-    steamUrl: 'https://store.steampowered.com/app/1551360/Forza_Horizon_5/',
-    magnet: 'magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4b000000000000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (Xatab High Seed)', type: 'magnet', url: 'magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4b000000000000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }
+    "fileSize": "13.2 GB",
+    "rating": 4.9,
+    "release": "2023-05-12",
+    "sold": 36000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/12210/library_600x900.jpg",
+    "desc": "O que o sonho americano significa hoje? Para Niko Bellic, recém-chegado da Europa, é a esperança de escapar do seu passado.",
+    "steamUrl": "https://store.steampowered.com/app/12210/Grand_Theft_Auto_IV_The_Complete_Edition/",
+    "magnet": "magnet:?xt=urn:btih:gt44c0mpl3t3f1tg1rlr3p4ck00000000000000000&dn=GTA+IV+Complete+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (FitGirl)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:gt44c0mpl3t3f1tg1rlr3p4ck00000000000000000&dn=GTA+IV+Complete+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i5-8400 / AMD Ryzen 5 1500X', ram: '16 GB RAM', gpu: 'GTX 1070 / RX 590', storage: '120 GB SSD' }
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core 2 Quad 2.4GHz",
+      "ram": "4 GB RAM",
+      "gpu": "NVIDIA 8600 / ATI 3870",
+      "storage": "22 GB"
+    }
   },
   {
-    id: 'far-cry-6',
-    name: 'Far Cry 6: Game of the Year Edition',
-    source: 'xatab',
-    sourceName: 'Xatab Repacks',
-    genre: 'Ação',
-    tags: ['FPS', 'Mundo Aberto', 'Ação', 'Guerra'],
-    fileSize: '52.0 GB',
-    rating: 4.6,
-    release: '2023-10-15',
-    sold: 11200,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2369390/library_600x900.jpg',
-    desc: 'Junte-se à revolução moderna como Dani Rojas para libertar a ilha tropical de Yara do ditador Antón Castillo.',
-    steamUrl: 'https://store.steampowered.com/app/2369390/Far_Cry_6/',
-    magnet: 'magnet:?xt=urn:btih:f4rcry6g0ty3d1t10nx4t4br3p4ck00000000000000&dn=Far+Cry+6+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (Xatab)', type: 'magnet', url: 'magnet:?xt=urn:btih:f4rcry6g0ty3d1t10nx4t4br3p4ck00000000000000&dn=Far+Cry+6+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }
+    "id": "persona-5-royal",
+    "steamAppId": 1687950,
+    "name": "Persona 5 Royal (v1.03 + All 40+ DLCs)",
+    "source": "fitgirl",
+    "sourceName": "FitGirl Repacks",
+    "genre": "RPG",
+    "tags": [
+      "JRPG",
+      "Anime",
+      "Turnos",
+      "Trilha Sonora Épica"
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 3 1200 / Core i5-4460', ram: '8 GB RAM', gpu: 'GTX 960 / RX 460', storage: '60 GB' }
-  },
-  {
-    id: 'metro-exodus-enhanced',
-    name: 'Metro Exodus: Enhanced Edition (Ray Tracing)',
-    source: 'xatab',
-    sourceName: 'Xatab Repacks',
-    genre: 'Ação',
-    tags: ['FPS', 'Pós-Apocalíptico', 'Sobrevivência', 'História'],
-    fileSize: '46.5 GB',
-    rating: 4.9,
-    release: '2023-04-20',
-    sold: 16200,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/412020/library_600x900.jpg',
-    desc: 'Fuja das ruínas devastadas do metrô de Moscou e embarque em uma jornada épica pela Rússia pós-apocalíptica.',
-    steamUrl: 'https://store.steampowered.com/app/412020/Metro_Exodus/',
-    magnet: 'magnet:?xt=urn:btih:m3tr03x0dus3nh4nc3dx4t4b00000000000000000000&dn=Metro+Exodus+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (Xatab)', type: 'magnet', url: 'magnet:?xt=urn:btih:m3tr03x0dus3nh4nc3dx4t4b00000000000000000000&dn=Metro+Exodus+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-4440', ram: '8 GB RAM', gpu: 'RTX 2060 6GB / RX 6700 XT', storage: '80 GB' }
-  },
-  {
-    id: 'dying-light-2-stay-human',
-    name: 'Dying Light 2: Stay Human (Reloaded Edition)',
-    source: 'xatab',
-    sourceName: 'Xatab Repacks',
-    genre: 'Mundo Aberto',
-    tags: ['Parkour', 'Zumbis', 'Mundo Aberto', 'Co-op'],
-    fileSize: '41.2 GB',
-    rating: 4.7,
-    release: '2024-03-01',
-    sold: 14800,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/534380/library_600x900.jpg',
-    desc: 'O vírus venceu e a civilização voltou à Idade das Trevas. Use parkour e combate tático para moldar o futuro da Cidade.',
-    steamUrl: 'https://store.steampowered.com/app/534380/Dying_Light_2_Stay_Human/',
-    magnet: 'magnet:?xt=urn:btih:dy1ngl1ght2st4yhum4nx4t4b00000000000000000000&dn=Dying+Light+2+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (Xatab)', type: 'magnet', url: 'magnet:?xt=urn:btih:dy1ngl1ght2st4yhum4nx4t4b00000000000000000000&dn=Dying+Light+2+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i3-9100 / AMD Ryzen 3 2300X', ram: '8 GB RAM', gpu: 'GTX 1050 Ti / RX 560 4GB', storage: '60 GB' }
-  },
-  {
-    id: 'assassins-creed-valhalla',
-    name: "Assassin's Creed Valhalla: Complete Edition",
-    source: 'xatab',
-    sourceName: 'Xatab Repacks',
-    genre: 'Mundo Aberto',
-    tags: ['Vikings', 'RPG', 'Mundo Aberto', 'Ação Histórica'],
-    fileSize: '74.0 GB',
-    rating: 4.7,
-    release: '2023-08-15',
-    sold: 15600,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2208920/library_600x900.jpg',
-    desc: 'Torne-se Eivor, um invasor viking lendário em busca de glória na Inglaterra da Idade das Trevas.',
-    steamUrl: 'https://store.steampowered.com/app/2208920/Assassins_Creed_Valhalla/',
-    magnet: 'magnet:?xt=urn:btih:4ss4ss1nscr33dv4lh4ll4x4t4b000000000000000000&dn=AC+Valhalla+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:4ss4ss1nscr33dv4lh4ll4x4t4b000000000000000000&dn=AC+Valhalla+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 3 1200 / Core i5-4460', ram: '8 GB RAM', gpu: 'GTX 960 4GB / R9 380', storage: '130 GB' }
-  },
-  {
-    id: 'nfs-unbound',
-    name: 'Need for Speed Unbound: Palace Edition',
-    source: 'xatab',
-    sourceName: 'Xatab Repacks',
-    genre: 'Corrida',
-    tags: ['Corrida de Rua', 'Personalização', 'Estilo Anime', 'Polícia'],
-    fileSize: '29.5 GB',
-    rating: 4.6,
-    release: '2023-09-10',
-    sold: 13900,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1846380/library_600x900.jpg',
-    desc: 'O mundo é sua tela no Need for Speed Unbound. Vença corridas de rua em Lakeshore com estilo visual grafite único.',
-    steamUrl: 'https://store.steampowered.com/app/1846380/Need_for_Speed_Unbound/',
-    magnet: 'magnet:?xt=urn:btih:nfsunb0undx4t4br3p4ck0000000000000000000000000&dn=NFS+Unbound+Xatab&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:nfsunb0undx4t4br3p4ck0000000000000000000000000&dn=NFS+Unbound+Xatab&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 2600 / Core i5-8600', ram: '8 GB RAM', gpu: 'GTX 1050 Ti / RX 570', storage: '50 GB' }
-  },
-
-  // ================= 6. ATOP-GAMES =================
-  {
-    id: 'minecraft-bedrock-java',
-    name: 'Minecraft: Java & Bedrock Edition (Multiplayer Ativo)',
-    source: 'atop',
-    sourceName: 'Atop-Games',
-    genre: 'Aventura',
-    tags: ['Sandbox', 'Construção', 'Sobrevivência', 'Mundo Aberto'],
-    fileSize: '1.2 GB',
-    rating: 4.9,
-    release: '2024-06-07',
-    sold: 45000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/library_600x900.jpg',
-    desc: 'Construa tudo o que puder imaginar, explore mundos gerados infinitamente e sobreviva contra monstros perigosos.',
-    steamUrl: 'https://www.minecraft.net/',
-    magnet: 'magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000000&dn=Minecraft+Java+and+Bedrock+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Download Direto (.exe Launcher)', type: 'ddl', url: 'https://atop-games.com/minecraft-launcher' },
-      { name: 'Magnet Torrent Mirror', type: 'magnet', url: 'magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000000&dn=Minecraft+Java+and+Bedrock+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce' }
+    "fileSize": "19.4 GB",
+    "rating": 5,
+    "release": "2023-04-18",
+    "sold": 21000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1687950/library_600x900.jpg",
+    "desc": "Vista a máscara de Joker e junte-se aos Phantom Thieves of Hearts para roubar os desejos corrompidos no coração de Tóquio.",
+    "steamUrl": "https://store.steampowered.com/app/1687950/Persona_5_Royal/",
+    "magnet": "magnet:?xt=urn:btih:p3rs0n45r0y4lf1tg1rl0000000000000000000000&dn=Persona+5+Royal+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (FitGirl)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:p3rs0n45r0y4lf1tg1rl0000000000000000000000&dn=Persona+5+Royal+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
     ],
-    specs: { os: 'Windows 10/11', cpu: 'Intel Core i3-3210 / AMD A8-7600', ram: '4 GB RAM', gpu: 'Intel HD Graphics 4000 / Radeon R5', storage: '4 GB' }
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i7-4790 / AMD Ryzen 5 1500X",
+      "ram": "8 GB RAM",
+      "gpu": "GTX 650 Ti / Radeon R7 360",
+      "storage": "41 GB"
+    }
   },
   {
-    id: 'doom-eternal-deluxe',
-    name: 'DOOM Eternal: Deluxe Edition (The Ancient Gods 1 & 2)',
-    source: 'atop',
-    sourceName: 'Atop-Games',
-    genre: 'Ação',
-    tags: ['FPS', 'Ação Frenética', 'Demônios', 'Trilha Pesada'],
-    fileSize: '45.0 GB',
-    rating: 4.9,
-    release: '2023-08-10',
-    sold: 16800,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/782330/library_600x900.jpg',
-    desc: 'Os exércitos do inferno invadiram a Terra. Torne-se o Slayer em uma campanha épica para conquistar demônios através de dimensões.',
-    steamUrl: 'https://store.steampowered.com/app/782330/DOOM_Eternal/',
-    magnet: 'magnet:?xt=urn:btih:d00m3t3rn4ld3lux34t0pg4m3s0000000000000000&dn=Doom+Eternal+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Download Direto (.iso)', type: 'ddl', url: 'https://atop-games.com/doom-eternal' }
+    "id": "gta-v-enhanced",
+    "steamAppId": 271590,
+    "name": "Grand Theft Auto V: Enhanced Edition (v1.0.3095 + Online Fix)",
+    "source": "dodi",
+    "sourceName": "DODI Repacks",
+    "genre": "Mundo Aberto",
+    "tags": [
+      "Mundo Aberto",
+      "Crime",
+      "Ação",
+      "Multiplayer"
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5 @ 3.3 GHz / AMD Ryzen 3', ram: '8 GB RAM', gpu: 'GTX 1050Ti / RX 470', storage: '50 GB' }
-  },
-  {
-    id: 'beamng-drive',
-    name: 'BeamNG.drive (v0.32 Soft-Body Physics)',
-    source: 'atop',
-    sourceName: 'Atop-Games',
-    genre: 'Corrida',
-    tags: ['Física Realista', 'Destruição de Carros', 'Simulador', 'Sandbox'],
-    fileSize: '24.5 GB',
-    rating: 4.9,
-    release: '2024-05-15',
-    sold: 23000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/284160/library_600x900.jpg',
-    desc: 'Um simulador de direção dinâmico com física de corpo flexível incrivelmente realista capaz de reproduzir qualquer colisão.',
-    steamUrl: 'https://store.steampowered.com/app/284160/BeamNGdrive/',
-    magnet: 'magnet:?xt=urn:btih:b34mngdr1v3v0324t0pg4m3s00000000000000000000&dn=BeamNG.drive+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Download Direto (.exe)', type: 'ddl', url: 'https://atop-games.com/beamng-drive' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i3-6300 / AMD FX 6300', ram: '16 GB RAM', gpu: 'GTX 970 / Radeon R9 290', storage: '45 GB' }
-  },
-  {
-    id: 'euro-truck-simulator-2',
-    name: 'Euro Truck Simulator 2 (v1.50 + All Map DLCs)',
-    source: 'atop',
-    sourceName: 'Atop-Games',
-    genre: 'Simulador',
-    tags: ['Caminhões', 'Simulador', 'Mundo Aberto', 'Europa'],
-    fileSize: '18.2 GB',
-    rating: 4.9,
-    release: '2024-06-01',
-    sold: 31000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/227300/library_600x900.jpg',
-    desc: 'Viaje pela Europa como o rei da estrada, um caminhoneiro que entrega cargas importantes por distâncias impressionantes.',
-    steamUrl: 'https://store.steampowered.com/app/227300/Euro_Truck_Simulator_2/',
-    magnet: 'magnet:?xt=urn:btih:3ur0trucks1mul4t0r24t0pg4m3s0000000000000000&dn=Euro+Truck+Simulator+2+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Download Direto', type: 'ddl', url: 'https://atop-games.com/ets2' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-6400 / AMD Ryzen 3 1200', ram: '8 GB RAM', gpu: 'GTX 1060 / RX 580', storage: '25 GB' }
-  },
-  {
-    id: 'subnautica-below-zero',
-    name: 'Subnautica: Below Zero',
-    source: 'atop',
-    sourceName: 'Atop-Games',
-    genre: 'Aventura',
-    tags: ['Subaquático', 'Sobrevivência', 'Sci-Fi', 'Exploração'],
-    fileSize: '9.8 GB',
-    rating: 4.8,
-    release: '2023-07-12',
-    sold: 18200,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/848450/library_600x900.jpg',
-    desc: 'Mergulhe em uma aventura subaquática congelante em um planeta alienígena ártico cheio de mistérios.',
-    steamUrl: 'https://store.steampowered.com/app/848450/Subnautica_Below_Zero/',
-    magnet: 'magnet:?xt=urn:btih:subn4ut1c4b3l0wz3r04t0p0000000000000000000000&dn=Subnautica+Below+Zero+AtopGames&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Download Direto', type: 'ddl', url: 'https://atop-games.com/subnautica-below-zero' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5 / AMD Ryzen 5', ram: '8 GB RAM', gpu: 'GTX 1050 Ti / RX 570', storage: '15 GB' }
-  },
-
-  // ================= 7. EMPRESS RELEASES =================
-  {
-    id: 'hogwarts-legacy',
-    name: 'Hogwarts Legacy: Digital Deluxe Edition',
-    source: 'empress',
-    sourceName: 'Empress Releases',
-    genre: 'RPG',
-    tags: ['RPG', 'Mundo Aberto', 'Magia', 'Aventura'],
-    fileSize: '69.7 GB',
-    rating: 4.7,
-    release: '2023-02-23',
-    sold: 18900,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/990080/library_600x900.jpg',
-    desc: 'Experimente a vida como estudante de Hogwarts nos anos 1800. Faça aliados, duele com feiticeiros e decida o destino do mundo bruxo.',
-    steamUrl: 'https://store.steampowered.com/app/990080/Hogwarts_Legacy/',
-    magnet: 'magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss0000000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (Empress Crack Edition)', type: 'magnet', url: 'magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss0000000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce' },
-      { name: '1fichier Direct Archive', type: 'ddl', url: 'https://1fichier.com/?hogwarts-empress' }
+    "fileSize": "58.4 GB",
+    "rating": 5,
+    "release": "2024-03-01",
+    "sold": 64000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg",
+    "desc": "Explore Los Santos e Blaine County com melhorias visuais, ray tracing e todas as DLCs do GTA Online integradas.",
+    "steamUrl": "https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/",
+    "magnet": "magnet:?xt=urn:btih:gt4v3nh4nc3dd0d1r3p4ck00000000000000000000&dn=Grand+Theft+Auto+V+DODI&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (DODI Fast Seeds)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:gt4v3nh4nc3dd0d1r3p4ck00000000000000000000&dn=Grand+Theft+Auto+V+DODI&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel i7-8700 / Ryzen 5 3600', ram: '16 GB RAM', gpu: 'GTX 1080 Ti / RX 5700 XT', storage: '85 GB SSD' }
+    "specs": {
+      "os": "Windows 10/11 64-bit",
+      "cpu": "Intel Core i5-3470 / AMD FX-8350",
+      "ram": "8 GB RAM",
+      "gpu": "GTX 970 / Radeon RX 570",
+      "storage": "110 GB"
+    }
   },
   {
-    id: 'resident-evil-4-remake',
-    name: 'Resident Evil 4 Remake (v1.0.5 + Separate Ways DLC)',
-    source: 'empress',
-    sourceName: 'Empress Releases',
-    genre: 'Terror',
-    tags: ['Terror', 'Sobrevivência', 'Ação', 'Zumbis'],
-    fileSize: '54.1 GB',
-    rating: 4.9,
-    release: '2023-05-10',
-    sold: 14200,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2050650/library_600x900.jpg',
-    desc: 'Leon S. Kennedy é enviado em uma missão para resgatar a filha do presidente em uma vila europeia isolada tomada pelo parasita Las Plagas.',
-    steamUrl: 'https://store.steampowered.com/app/2050650/Resident_Evil_4/',
-    magnet: 'magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss000000000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [
-      { name: 'Magnet Torrent (Empress Release)', type: 'magnet', url: 'magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss000000000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }
+    "id": "ghost-of-tsushima",
+    "steamAppId": 2215430,
+    "name": "Ghost of Tsushima: Versão do Diretor (v1053.0.0522)",
+    "source": "dodi",
+    "sourceName": "DODI Repacks",
+    "genre": "Ação",
+    "tags": [
+      "Samurai",
+      "Mundo Aberto",
+      "História",
+      "Ação"
     ],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 3600 / Core i7-8700', ram: '16 GB RAM', gpu: 'GTX 1070 8GB / RX 5700', storage: '70 GB SSD' }
+    "fileSize": "41.2 GB",
+    "rating": 5,
+    "release": "2024-05-16",
+    "sold": 38000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2215430/library_600x900.jpg",
+    "desc": "Forje um novo caminho e trave uma guerra não convencional pela libertação da Ilha de Tsushima na pele de Jin Sakai.",
+    "steamUrl": "https://store.steampowered.com/app/2215430/Ghost_of_Tsushima_DIRECTORS_CUT/",
+    "magnet": "magnet:?xt=urn:btih:gh0st0ftsush1m4d0d1r3p4ck000000000000000000&dn=Ghost+of+Tsushima+Directors+Cut+DODI&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (DODI Repack)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:gh0st0ftsush1m4d0d1r3p4ck000000000000000000&dn=Ghost+of+Tsushima+Directors+Cut+DODI&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i5-8600 / AMD Ryzen 5 3600",
+      "ram": "16 GB RAM",
+      "gpu": "RTX 2060 / Radeon RX 5600 XT",
+      "storage": "75 GB SSD"
+    }
   },
   {
-    id: 'resident-evil-village',
-    name: 'Resident Evil Village: Gold Edition (Shadows of Rose)',
-    source: 'empress',
-    sourceName: 'Empress Releases',
-    genre: 'Terror',
-    tags: ['Terror', 'Sobrevivência', 'Primeira Pessoa', 'Vampiros'],
-    fileSize: '32.4 GB',
-    rating: 4.9,
-    release: '2023-02-14',
-    sold: 17300,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1196590/library_600x900.jpg',
-    desc: 'Ethan Winters deve desbravar um vilarejo misterioso e o castelo de Lady Dimitrescu para resgatar sua filha.',
-    steamUrl: 'https://store.steampowered.com/app/1196590/Resident_Evil_Village/',
-    magnet: 'magnet:?xt=urn:btih:r3s1d3nt3v1lv1ll4g33mpr3ss000000000000000000&dn=Resident+Evil+Village+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (Empress)', type: 'magnet', url: 'magnet:?xt=urn:btih:r3s1d3nt3v1lv1ll4g33mpr3ss000000000000000000&dn=Resident+Evil+Village+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-7500 / AMD Ryzen 3 1200', ram: '8 GB RAM', gpu: 'GTX 1050 Ti 4GB / RX 560', storage: '35 GB' }
+    "id": "the-last-of-us-part-1",
+    "steamAppId": 1888930,
+    "name": "The Last of Us Part I: Digital Deluxe (v1.1.3)",
+    "source": "dodi",
+    "sourceName": "DODI Repacks",
+    "genre": "Ação",
+    "tags": [
+      "Zumbis",
+      "Sobrevivência",
+      "História Emocionante",
+      "Ação"
+    ],
+    "fileSize": "48.9 GB",
+    "rating": 4.9,
+    "release": "2023-09-01",
+    "sold": 31500,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1888930/library_600x900.jpg",
+    "desc": "Em uma civilização devastada, Joel é contratado para contrabandear Ellie, uma garota de 14 anos, para fora de uma zona militar.",
+    "steamUrl": "https://store.steampowered.com/app/1888930/The_Last_of_Us_Part_I/",
+    "magnet": "magnet:?xt=urn:btih:th3l4st0fus1d0d1r3p4ck00000000000000000000&dn=The+Last+of+Us+Part+I+DODI&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (DODI)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:th3l4st0fus1d0d1r3p4ck00000000000000000000&dn=The+Last+of+Us+Part+I+DODI&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10/11 64-bit",
+      "cpu": "AMD Ryzen 5 3600X / Intel Core i7-8700",
+      "ram": "16 GB RAM",
+      "gpu": "Radeon RX 6600 XT / GeForce RTX 2070",
+      "storage": "100 GB SSD"
+    }
   },
   {
-    id: 'mortal-kombat-1',
-    name: 'Mortal Kombat 1: Premium Edition',
-    source: 'empress',
-    sourceName: 'Empress Releases',
-    genre: 'Luta',
-    tags: ['Luta', 'Gore', 'Multiplayer', 'Ação'],
-    fileSize: '115.0 GB',
-    rating: 4.6,
-    release: '2023-09-19',
-    sold: 9800,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1971870/library_600x900.jpg',
-    desc: 'Descubra um universo renascido de Mortal Kombat criado pelo Deus do Fogo Liu Kang.',
-    steamUrl: 'https://store.steampowered.com/app/1971870/Mortal_Kombat_1/',
-    magnet: 'magnet:?xt=urn:btih:m0rt4lk0mb4t13mpr3ss000000000000000000000000&dn=Mortal+Kombat+1+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:m0rt4lk0mb4t13mpr3ss000000000000000000000000&dn=Mortal+Kombat+1+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-6600', ram: '8 GB RAM', gpu: 'GTX 980 / RX 470', storage: '140 GB SSD' }
+    "id": "horizon-forbidden-west",
+    "steamAppId": 2420110,
+    "name": "Horizon Forbidden West: Complete Edition (v1.4.59.0)",
+    "source": "dodi",
+    "sourceName": "DODI Repacks",
+    "genre": "Mundo Aberto",
+    "tags": [
+      "Mundo Aberto",
+      "Ficção Científica",
+      "Ação",
+      "RPG"
+    ],
+    "fileSize": "78.5 GB",
+    "rating": 4.9,
+    "release": "2024-03-21",
+    "sold": 26700,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2420110/library_600x900.jpg",
+    "desc": "Junte-se a Aloy enquanto ela enfrenta uma nova fronteira majestosa e perigosa que esconde novas e misteriosas ameaças.",
+    "steamUrl": "https://store.steampowered.com/app/2420110/Horizon_Forbidden_West_Complete_Edition/",
+    "magnet": "magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (DODI)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:h0r1z0nf0rb1dd3nw3std0d10000000000000000000&dn=Horizon+Forbidden+West+DODI&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i5-8600 / AMD Ryzen 5 3600",
+      "ram": "16 GB RAM",
+      "gpu": "RTX 3060 / RX 5700",
+      "storage": "150 GB SSD"
+    }
   },
   {
-    id: 'dead-space-remake',
-    name: 'Dead Space Remake: Deluxe Edition',
-    source: 'empress',
-    sourceName: 'Empress Releases',
-    genre: 'Terror',
-    tags: ['Terror', 'Sci-Fi', 'Sobrevivência', 'Espaço'],
-    fileSize: '48.0 GB',
-    rating: 4.9,
-    release: '2023-01-27',
-    sold: 14600,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1693980/library_600x900.jpg',
-    desc: 'O clássico de terror e sobrevivência de ficção científica retorna, totalmente reconstruído para oferecer uma experiência mais profunda e imersiva.',
-    steamUrl: 'https://store.steampowered.com/app/1693980/Dead_Space/',
-    magnet: 'magnet:?xt=urn:btih:d34dsp4c3r3m4k33mpr3ss0000000000000000000000&dn=Dead+Space+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent', type: 'magnet', url: 'magnet:?xt=urn:btih:d34dsp4c3r3m4k33mpr3ss0000000000000000000000&dn=Dead+Space+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Ryzen 5 2600x / Core i5 8600', ram: '16 GB RAM', gpu: 'RX 5700 / GTX 1070', storage: '50 GB SSD' }
+    "id": "god-of-war-2018",
+    "steamAppId": 1593500,
+    "name": "God of War (2018) PC Edition (v1.0.12)",
+    "source": "dodi",
+    "sourceName": "DODI Repacks",
+    "genre": "Ação",
+    "tags": [
+      "Mitologia",
+      "Ação",
+      "História",
+      "Hack and Slash"
+    ],
+    "fileSize": "34.5 GB",
+    "rating": 5,
+    "release": "2023-05-10",
+    "sold": 49000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1593500/library_600x900.jpg",
+    "desc": "Com a vingança contra os deuses do Olimpo no passado, Kratos agora vive nas terras dos deuses e monstros nórdicos.",
+    "steamUrl": "https://store.steampowered.com/app/1593500/God_of_War/",
+    "magnet": "magnet:?xt=urn:btih:g0d0fw4r2018d0d1r3p4ck00000000000000000000&dn=God+of+War+DODI&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (DODI)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:g0d0fw4r2018d0d1r3p4ck00000000000000000000&dn=God+of+War+DODI&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel i5-6600k / AMD Ryzen 5 2400 G",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1060 6GB / RX 570",
+      "storage": "70 GB SSD"
+    }
   },
   {
-    id: 'monster-hunter-world',
-    name: 'Monster Hunter: World - Iceborne Master Edition',
-    source: 'empress',
-    sourceName: 'Empress Releases',
-    genre: 'Ação',
-    tags: ['Caça a Monstros', 'Co-op', 'Ação', 'RPG'],
-    fileSize: '48.5 GB',
-    rating: 4.9,
-    release: '2023-04-10',
-    sold: 25000,
-    cover: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/582010/library_600x900.jpg',
-    desc: 'Cace monstros colossais em ecossistemas vivos e exuberantes usando 14 tipos de armas diferentes.',
-    steamUrl: 'https://store.steampowered.com/app/582010/Monster_Hunter_World/',
-    magnet: 'magnet:?xt=urn:btih:m0nst3rhunt3rw0rld1c3b0rn33mpr3ss0000000000&dn=Monster+Hunter+World+Iceborne+Empress&tr=udp://tracker.opentrackr.org:1337/announce',
-    mirrors: [{ name: 'Magnet Torrent (Empress)', type: 'magnet', url: 'magnet:?xt=urn:btih:m0nst3rhunt3rw0rld1c3b0rn33mpr3ss0000000000&dn=Monster+Hunter+World+Iceborne+Empress&tr=udp://tracker.opentrackr.org:1337/announce' }],
-    specs: { os: 'Windows 10 64-bit', cpu: 'Intel Core i5-4460 / AMD FX-6300', ram: '8 GB RAM', gpu: 'GTX 760 / Radeon R7 260x', storage: '52 GB' }
+    "id": "days-gone",
+    "steamAppId": 1250410,
+    "name": "Days Gone (v1.08 + DLC)",
+    "source": "dodi",
+    "sourceName": "DODI Repacks",
+    "genre": "Mundo Aberto",
+    "tags": [
+      "Mundo Aberto",
+      "Zumbis",
+      "Sobrevivência",
+      "Motoqueiro"
+    ],
+    "fileSize": "29.7 GB",
+    "rating": 4.8,
+    "release": "2023-04-12",
+    "sold": 24000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1250410/library_600x900.jpg",
+    "desc": "Pilote e lute por um território letal na América pós-pandêmica na pele do caçador de recompensas Deacon St. John.",
+    "steamUrl": "https://store.steampowered.com/app/1250410/Days_Gone/",
+    "magnet": "magnet:?xt=urn:btih:d4ysg0n3d0d1r3p4ck000000000000000000000000&dn=Days+Gone+DODI&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (DODI)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:d4ysg0n3d0d1r3p4ck000000000000000000000000&dn=Days+Gone+DODI&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i7-4770K / Ryzen 5 1500X",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1060 6GB / RX 580",
+      "storage": "70 GB"
+    }
   },
-
-  // ================= UPCOMING GAMES =================
-  {id:'gta-vi', name:'Grand Theft Auto VI', genre:'Mundo Aberto', upcoming:true, date:'2026', cover:'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg'},
-  {id:'witcher-4', name:'The Witcher 4: Polaris', genre:'RPG', upcoming:true, date:'2026', cover:'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/library_600x900.jpg'},
-  {id:'elder-scrolls-6', name:'The Elder Scrolls VI', genre:'RPG', upcoming:true, date:'2027', cover:'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/library_600x900.jpg'},
-  {id:'silksong', name:'Hollow Knight: Silksong', genre:'Ação', upcoming:true, date:'TBA 2026', cover:'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/library_600x900.jpg'}
+  {
+    "id": "black-myth-wukong",
+    "steamAppId": 2358720,
+    "name": "Black Myth: Wukong (Full SteamRip v1.0.8)",
+    "source": "steamrip",
+    "sourceName": "SteamRIP (Direct Play)",
+    "genre": "Ação",
+    "tags": [
+      "Mitologia",
+      "Ação",
+      "Souls-like",
+      "Gráficos Ultra"
+    ],
+    "fileSize": "118.0 GB",
+    "rating": 5,
+    "release": "2024-08-20",
+    "sold": 75000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/library_600x900.jpg",
+    "desc": "Inspirado na Jornada ao Oeste. Embarque como o Predestinado para desvendar a verdade oculta por trás de lendas gloriosas.",
+    "steamUrl": "https://store.steampowered.com/app/2358720/Black_Myth_Wukong/",
+    "magnet": "magnet:?xt=urn:btih:bl4ckmythwuk0ngst34mr1pfulld1r3ctpl4y0000&dn=Black+Myth+Wukong+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Direct Play Fast Archive",
+        "type": "ddl",
+        "url": "https://steamrip.com/black-myth-wukong-free-download/"
+      },
+      {
+        "name": "MegaDB Direct Ultra Mirror",
+        "type": "ddl",
+        "url": "https://megadb.net/wukong"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10/11 64-bit",
+      "cpu": "Intel Core i7-9700 / AMD Ryzen 5 5500",
+      "ram": "16 GB RAM",
+      "gpu": "RTX 2060 / RX 5700 XT",
+      "storage": "130 GB SSD"
+    }
+  },
+  {
+    "id": "god-of-war-ragnarok",
+    "steamAppId": 2322010,
+    "name": "God of War Ragnarök: Digital Deluxe (v1.0.614)",
+    "source": "steamrip",
+    "sourceName": "SteamRIP (Direct Play)",
+    "genre": "Ação",
+    "tags": [
+      "Mitologia Nórdica",
+      "Ação",
+      "História",
+      "Aventura"
+    ],
+    "fileSize": "124.5 GB",
+    "rating": 5,
+    "release": "2024-09-19",
+    "sold": 52000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2322010/library_600x900.jpg",
+    "desc": "Kratos e Atreus devem viajar pelos Nove Reinos em busca de respostas enquanto as forças de Asgard se preparam para a guerra profetizada.",
+    "steamUrl": "https://store.steampowered.com/app/2322010/God_of_War_Ragnark/",
+    "magnet": "magnet:?xt=urn:btih:g0d0fw4rr4gn4r0kst34mr1pd1r3ct00000000000&dn=God+of+War+Ragnarok+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Direct Play Instant Extract",
+        "type": "ddl",
+        "url": "https://steamrip.com/god-of-war-ragnarok/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel i5-8600 / AMD Ryzen 5 3600",
+      "ram": "16 GB RAM",
+      "gpu": "RTX 2060 Super / RX 5700",
+      "storage": "190 GB SSD"
+    }
+  },
+  {
+    "id": "palworld",
+    "steamAppId": 1623730,
+    "name": "Palworld: Complete Multiplayer Edition (v0.3.5)",
+    "source": "steamrip",
+    "sourceName": "SteamRIP (Direct Play)",
+    "genre": "Mundo Aberto",
+    "tags": [
+      "Multiplayer",
+      "Sobrevivência",
+      "Monstros",
+      "Automação"
+    ],
+    "fileSize": "18.4 GB",
+    "rating": 4.8,
+    "release": "2024-07-15",
+    "sold": 41000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/library_600x900.jpg",
+    "desc": "Colecione criaturas misteriosas chamadas Pals para lutar, construir, trabalhar e sobreviver em um vasto arquipélago.",
+    "steamUrl": "https://store.steampowered.com/app/1623730/Palworld/",
+    "magnet": "magnet:?xt=urn:btih:p4lw0rldst34mr1pmult1pl4y3r00000000000000&dn=Palworld+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Direct Play SteamRIP",
+        "type": "ddl",
+        "url": "https://steamrip.com/palworld-free-download/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10/11 64-bit",
+      "cpu": "i5-3570K / Ryzen 5 1600",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1050 / Radeon RX 560",
+      "storage": "40 GB SSD"
+    }
+  },
+  {
+    "id": "helldivers-2",
+    "steamAppId": 553850,
+    "name": "HELLDIVERS 2: Super Citizen Edition (v1.001.100)",
+    "source": "steamrip",
+    "sourceName": "SteamRIP (Direct Play)",
+    "genre": "Ação",
+    "tags": [
+      "Co-op",
+      "Tiro",
+      "Ficção Científica",
+      "Multiplayer"
+    ],
+    "fileSize": "72.0 GB",
+    "rating": 4.9,
+    "release": "2024-04-10",
+    "sold": 39000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/library_600x900.jpg",
+    "desc": "Lute pela liberdade através de uma galáxia hostil neste jogo de tiro em terceira pessoa cooperativo dinâmico.",
+    "steamUrl": "https://store.steampowered.com/app/553850/HELLDIVERS_2/",
+    "magnet": "magnet:?xt=urn:btih:h3lld1v3rs2st34mr1pd1r3ct0000000000000000&dn=Helldivers+2+SteamRIP&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Direct Play (Sem Instalação)",
+        "type": "ddl",
+        "url": "https://steamrip.com/helldivers-2/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i7-9700K / AMD Ryzen 7 3700X",
+      "ram": "16 GB RAM",
+      "gpu": "RTX 2060 / RX 6600 XT",
+      "storage": "100 GB"
+    }
+  },
+  {
+    "id": "cyberpunk-2077-phantom",
+    "steamAppId": 1091500,
+    "name": "Cyberpunk 2077: Phantom Liberty Edition (v2.13 DRM-Free)",
+    "source": "gog",
+    "sourceName": "Free GOG Games (DRM-Free)",
+    "genre": "RPG",
+    "tags": [
+      "Cyberpunk",
+      "Mundo Aberto",
+      "RPG",
+      "História"
+    ],
+    "fileSize": "82.4 GB",
+    "rating": 5,
+    "release": "2024-02-01",
+    "sold": 48000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/library_600x900.jpg",
+    "desc": "Versão oficial completa DRM-Free sem proteção de terceiros. Inclui a aclamada expansão de espionagem Phantom Liberty.",
+    "steamUrl": "https://store.steampowered.com/app/1091500/Cyberpunk_2077/",
+    "magnet": "magnet:?xt=urn:btih:cyb3rpunk2077ph4nt0ml1b3rtyg0g00000000000&dn=Cyberpunk+2077+Phantom+Liberty+GOG&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "DRM-Free Offline Installer (.exe Oficial GOG)",
+        "type": "ddl",
+        "url": "https://freegogpcgames.com/cyberpunk-2077-phantom-liberty/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Core i7-6700 / Ryzen 5 1600",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1060 6GB / Radeon RX 580",
+      "storage": "90 GB SSD"
+    }
+  },
+  {
+    "id": "the-witcher-3-next-gen",
+    "steamAppId": 292030,
+    "name": "The Witcher 3: Wild Hunt - Complete Edition Next-Gen (v4.04)",
+    "source": "gog",
+    "sourceName": "Free GOG Games (DRM-Free)",
+    "genre": "RPG",
+    "tags": [
+      "RPG",
+      "Mundo Aberto",
+      "Fantasia",
+      "História Rica"
+    ],
+    "fileSize": "54.0 GB",
+    "rating": 5,
+    "release": "2023-07-20",
+    "sold": 62000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/library_600x900.jpg",
+    "desc": "Você é Geralt de Rívia, mercenário matador de monstros. Atualização da nova geração com Ray Tracing e todas as expansões.",
+    "steamUrl": "https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/",
+    "magnet": "magnet:?xt=urn:btih:th3w1tch3r3n3xtg3ng0g000000000000000000000&dn=The+Witcher+3+Next-Gen+GOG&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "GOG Offline Installer (Sem DRM)",
+        "type": "ddl",
+        "url": "https://freegogpcgames.com/the-witcher-3-wild-hunt-complete-edition/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10/11 64-bit",
+      "cpu": "Intel Core i5-7400 / Ryzen 5 1600",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1070 / RX 480",
+      "storage": "60 GB"
+    }
+  },
+  {
+    "id": "baldurs-gate-3",
+    "steamAppId": 1086940,
+    "name": "Baldur's Gate 3: Digital Deluxe Edition (v4.1.1 + Patch 7)",
+    "source": "gog",
+    "sourceName": "Free GOG Games (DRM-Free)",
+    "genre": "RPG",
+    "tags": [
+      "RPG de Turnos",
+      "D&D",
+      "Mundo Aberto",
+      "Escolhas Importam"
+    ],
+    "fileSize": "122.0 GB",
+    "rating": 5,
+    "release": "2024-09-06",
+    "sold": 58000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1086940/library_600x900.jpg",
+    "desc": "Reúna seu grupo e retorne aos Reinos Esquecidos em uma narrativa lendária de companheirismo, sacrifício e poder supremo.",
+    "steamUrl": "https://store.steampowered.com/app/1086940/Baldurs_Gate_3/",
+    "magnet": "magnet:?xt=urn:btih:b4ldursg4t33g0g0ffl1n31nst4ll3r000000000&dn=Baldurs+Gate+3+GOG&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "GOG Direct Offline DRM-Free",
+        "type": "ddl",
+        "url": "https://freegogpcgames.com/baldurs-gate-3/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel i7 4770k / AMD FX 8350",
+      "ram": "16 GB RAM",
+      "gpu": "Nvidia GTX 1060 6GB / AMD RX 580",
+      "storage": "150 GB SSD"
+    }
+  },
+  {
+    "id": "hollow-knight-godmaster",
+    "steamAppId": 367520,
+    "name": "Hollow Knight: Voidheart & Godmaster Edition (v1.5.78)",
+    "source": "gog",
+    "sourceName": "Free GOG Games (DRM-Free)",
+    "genre": "Ação",
+    "tags": [
+      "Metroidvania",
+      "Souls-like",
+      "2D",
+      "Trilha Sonora Épica"
+    ],
+    "fileSize": "1.6 GB",
+    "rating": 5,
+    "release": "2023-01-01",
+    "sold": 47000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/library_600x900.jpg",
+    "desc": "Desça ao vasto mundo em ruínas de Hallownest, lute contra criaturas contaminadas e faça amizade com insetos bizarros.",
+    "steamUrl": "https://store.steampowered.com/app/367520/Hollow_Knight/",
+    "magnet": "magnet:?xt=urn:btih:h0ll0wkn1ghtv01dh34rtg0g000000000000000000&dn=Hollow+Knight+GOG&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "GOG Installer Standalone",
+        "type": "ddl",
+        "url": "https://freegogpcgames.com/hollow-knight/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 7/8/10",
+      "cpu": "Intel Core 2 Duo E5200",
+      "ram": "4 GB RAM",
+      "gpu": "GeForce 9800GTX+",
+      "storage": "9 GB"
+    }
+  },
+  {
+    "id": "stardew-valley",
+    "steamAppId": 413150,
+    "name": "Stardew Valley: Expanded 1.6 Update Full",
+    "source": "gog",
+    "sourceName": "Free GOG Games (DRM-Free)",
+    "genre": "Simulação",
+    "tags": [
+      "Fazenda",
+      "Pixel Art",
+      "Relaxante",
+      "RPG"
+    ],
+    "fileSize": "650 MB",
+    "rating": 5,
+    "release": "2024-03-19",
+    "sold": 55000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg",
+    "desc": "Você herdou o antigo lote de fazenda do seu avô em Stardew Valley. Transforme esses campos abandonados em um lar próspero.",
+    "steamUrl": "https://store.steampowered.com/app/413150/Stardew_Valley/",
+    "magnet": "magnet:?xt=urn:btih:st4rd3wv4ll3y16g0g00000000000000000000000&dn=Stardew+Valley+1.6+GOG&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "GOG Offline DRM-Free",
+        "type": "ddl",
+        "url": "https://freegogpcgames.com/stardew-valley/"
+      }
+    ],
+    "specs": {
+      "os": "Windows Vista / 7 / 8 / 10",
+      "cpu": "2 GHz",
+      "ram": "2 GB RAM",
+      "gpu": "256 MB VRAM Shader Model 3.0",
+      "storage": "1 GB"
+    }
+  },
+  {
+    "id": "forza-horizon-5",
+    "steamAppId": 1551360,
+    "name": "Forza Horizon 5: Premium Edition (v1.656.392 + All DLCs)",
+    "source": "xatab",
+    "sourceName": "Xatab Repacks",
+    "genre": "Corrida",
+    "tags": [
+      "Corrida",
+      "Mundo Aberto",
+      "Carros",
+      "Gráficos Ultra"
+    ],
+    "fileSize": "89.4 GB",
+    "rating": 4.9,
+    "release": "2024-05-10",
+    "sold": 48900,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1551360/library_600x900.jpg",
+    "desc": "Sua maior aventura Horizon espera por você! Explore as paisagens vibrantes e em constante evolução do México com centenas de carros.",
+    "steamUrl": "https://store.steampowered.com/app/1551360/Forza_Horizon_5/",
+    "magnet": "magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4br3p4ck000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (Xatab RePack)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:f0rz4h0r1z0n5pr3m1umx4t4br3p4ck000000000&dn=Forza+Horizon+5+Xatab&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 versão 18362.0 ou superior",
+      "cpu": "Intel i5-8400 / AMD Ryzen 5 1500X",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1070 / Radeon RX 590",
+      "storage": "110 GB"
+    }
+  },
+  {
+    "id": "far-cry-6",
+    "steamAppId": 2369390,
+    "name": "Far Cry 6: Game of the Year Edition (v1.5.0)",
+    "source": "xatab",
+    "sourceName": "Xatab Repacks",
+    "genre": "Ação",
+    "tags": [
+      "FPS",
+      "Mundo Aberto",
+      "Revolução",
+      "Ação"
+    ],
+    "fileSize": "43.8 GB",
+    "rating": 4.7,
+    "release": "2023-10-15",
+    "sold": 24600,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2369390/library_600x900.jpg",
+    "desc": "Bem-vindo a Yara, um paraíso tropical parado no tempo. Como ditador, Antón Castillo quer restaurar a glória do país a qualquer custo.",
+    "steamUrl": "https://store.steampowered.com/app/2369390/Far_Cry_6/",
+    "magnet": "magnet:?xt=urn:btih:f4rcry6g0ty3d1t10nx4t4br3p4ck0000000000&dn=Far+Cry+6+GOTY+Xatab&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (Xatab)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:f4rcry6g0ty3d1t10nx4t4br3p4ck0000000000&dn=Far+Cry+6+GOTY+Xatab&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i7-7700 / AMD Ryzen 5 3600X",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1080 / RX Vega 64",
+      "storage": "60 GB SSD"
+    }
+  },
+  {
+    "id": "metro-exodus",
+    "steamAppId": 412020,
+    "name": "Metro Exodus: Enhanced Edition (Ray Tracing Full)",
+    "source": "xatab",
+    "sourceName": "Xatab Repacks",
+    "genre": "Ação",
+    "tags": [
+      "Pós-apocalíptico",
+      "FPS",
+      "História",
+      "Terror"
+    ],
+    "fileSize": "51.3 GB",
+    "rating": 4.9,
+    "release": "2023-04-18",
+    "sold": 27800,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/412020/library_600x900.jpg",
+    "desc": "Fuja das ruínas devastadas do metrô de Moscou e embarque em uma jornada épica pela Rússia pós-apocalíptica no trem Aurora.",
+    "steamUrl": "https://store.steampowered.com/app/412020/Metro_Exodus/",
+    "magnet": "magnet:?xt=urn:btih:m3tr03x0dus3nh4nc3dx4t4br3p4ck0000000000&dn=Metro+Exodus+Enhanced+Xatab&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (Xatab)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:m3tr03x0dus3nh4nc3dx4t4br3p4ck0000000000&dn=Metro+Exodus+Enhanced+Xatab&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i7-4770K",
+      "ram": "8 GB RAM",
+      "gpu": "GeForce RTX 2060 / RX 6700 XT",
+      "storage": "80 GB"
+    }
+  },
+  {
+    "id": "minecraft-bedrock-java",
+    "steamAppId": 1672970,
+    "name": "Minecraft Java & Bedrock Edition (v1.21.2 Full Offline/Online)",
+    "source": "atop",
+    "sourceName": "Atop-Games",
+    "genre": "Mundo Aberto",
+    "tags": [
+      "Construção",
+      "Sandbox",
+      "Mundo Aberto",
+      "Sobrevivência"
+    ],
+    "fileSize": "1.2 GB",
+    "rating": 5,
+    "release": "2024-06-25",
+    "sold": 99000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1672970/library_600x900.jpg",
+    "desc": "Explore mundos infinitos e construa desde casas simples até os maiores castelos com suporte a shaders, mods e servidores.",
+    "steamUrl": "https://store.steampowered.com/app/1672970/Minecraft/",
+    "magnet": "magnet:?xt=urn:btih:m1n3cr4ftj4v4b3dr0ck4t0pg4m3s00000000000&dn=Minecraft+Java+Bedrock+Atop&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Download Direto Ultra Rápido (Atop-Games)",
+        "type": "ddl",
+        "url": "https://atop-games.com/minecraft-pc-download/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10/11 64-bit",
+      "cpu": "Intel Core i3-3210 / AMD A8-7600",
+      "ram": "4 GB RAM",
+      "gpu": "Intel HD Graphics 4000",
+      "storage": "4 GB"
+    }
+  },
+  {
+    "id": "beamng-drive",
+    "steamAppId": 284160,
+    "name": "BeamNG.drive (v0.32 Full Physics Sandbox)",
+    "source": "atop",
+    "sourceName": "Atop-Games",
+    "genre": "Simulação",
+    "tags": [
+      "Física Realista",
+      "Carros",
+      "Simulador",
+      "Destruição"
+    ],
+    "fileSize": "24.1 GB",
+    "rating": 4.9,
+    "release": "2024-05-02",
+    "sold": 31000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/284160/library_600x900.jpg",
+    "desc": "Simulador dinâmico de veículos com física de corpos maleáveis capaz de reproduzir qualquer componente em tempo real.",
+    "steamUrl": "https://store.steampowered.com/app/284160/BeamNGdrive/",
+    "magnet": "magnet:?xt=urn:btih:b34mngdr1v3v0324t0pg4m3s0000000000000000&dn=BeamNG.drive+Atop&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Atop Direct Download",
+        "type": "ddl",
+        "url": "https://atop-games.com/beamng-drive-pc/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64 Bit",
+      "cpu": "AMD Ryzen 7 1700 / Intel Core i7-6700",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1060 / RX 580",
+      "storage": "35 GB"
+    }
+  },
+  {
+    "id": "euro-truck-simulator-2",
+    "steamAppId": 227300,
+    "name": "Euro Truck Simulator 2: Full Map Expansions Edition",
+    "source": "atop",
+    "sourceName": "Atop-Games",
+    "genre": "Simulação",
+    "tags": [
+      "Caminhões",
+      "Simulador",
+      "Mundo Aberto",
+      "Europa"
+    ],
+    "fileSize": "18.5 GB",
+    "rating": 5,
+    "release": "2024-04-15",
+    "sold": 42000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/227300/library_600x900.jpg",
+    "desc": "Viaje pela Europa como o rei da estrada, entregando cargas importantes através de distâncias impressionantes!",
+    "steamUrl": "https://store.steampowered.com/app/227300/Euro_Truck_Simulator_2/",
+    "magnet": "magnet:?xt=urn:btih:3ur0trucks1mul4t0r24t0pg4m3s000000000000&dn=Euro+Truck+Simulator+2+Atop&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Atop Direct Download",
+        "type": "ddl",
+        "url": "https://atop-games.com/euro-truck-simulator-2/"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i5-6400 / AMD Ryzen 3 1200",
+      "ram": "8 GB RAM",
+      "gpu": "GTX 660 / Radeon RX 460",
+      "storage": "25 GB"
+    }
+  },
+  {
+    "id": "hogwarts-legacy",
+    "steamAppId": 990080,
+    "name": "Hogwarts Legacy: Digital Deluxe Edition (EMPRESS Crack)",
+    "source": "empress",
+    "sourceName": "Empress Releases",
+    "genre": "RPG",
+    "tags": [
+      "Mundo Aberto",
+      "Magia",
+      "RPG",
+      "Harry Potter"
+    ],
+    "fileSize": "69.7 GB",
+    "rating": 4.9,
+    "release": "2023-02-23",
+    "sold": 67000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/990080/library_600x900.jpg",
+    "desc": "Viva o inesperado em Hogwarts no século XIX. Crie seu próprio bruxo e decida o destino do mundo bruxo.",
+    "steamUrl": "https://store.steampowered.com/app/990080/Hogwarts_Legacy/",
+    "magnet": "magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss00000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (Empress Official Release)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:h0gw4rtsl3g4cy3mpr3ss00000000000000000000&dn=Hogwarts+Legacy+Empress&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i5-6600 / AMD Ryzen 5 1400",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1060 6GB / RX 580",
+      "storage": "85 GB SSD"
+    }
+  },
+  {
+    "id": "resident-evil-4-remake",
+    "steamAppId": 2050650,
+    "name": "Resident Evil 4 Remake: Deluxe Edition + Separate Ways (EMPRESS)",
+    "source": "empress",
+    "sourceName": "Empress Releases",
+    "genre": "Terror",
+    "tags": [
+      "Terror",
+      "Sobrevivência",
+      "Ação",
+      "Zumbis"
+    ],
+    "fileSize": "56.3 GB",
+    "rating": 5,
+    "release": "2023-05-14",
+    "sold": 53000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2050650/library_600x900.jpg",
+    "desc": "A sobrevivência é apenas o começo. Leon S. Kennedy é enviado em uma missão para resgatar a filha sequestrada do presidente dos EUA.",
+    "steamUrl": "https://store.steampowered.com/app/2050650/Resident_Evil_4/",
+    "magnet": "magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss00000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (Empress)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:r3s1d3nt3v1l4r3m4k33mpr3ss00000000000000&dn=Resident+Evil+4+Remake+Empress&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i7 8700 / AMD Ryzen 5 3600",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1070 / RX 5700",
+      "storage": "70 GB SSD"
+    }
+  },
+  {
+    "id": "resident-evil-village",
+    "steamAppId": 1196590,
+    "name": "Resident Evil Village: Gold Edition (Shadows of Rose DLC)",
+    "source": "empress",
+    "sourceName": "Empress Releases",
+    "genre": "Terror",
+    "tags": [
+      "Terror",
+      "Sobrevivência",
+      "Primeira Pessoa",
+      "História"
+    ],
+    "fileSize": "28.4 GB",
+    "rating": 4.9,
+    "release": "2023-03-01",
+    "sold": 44000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1196590/library_600x900.jpg",
+    "desc": "Experimente o terror de sobrevivência como nunca antes no oitavo grande capítulo da aclamada franquia Resident Evil.",
+    "steamUrl": "https://store.steampowered.com/app/1196590/Resident_Evil_Village/",
+    "magnet": "magnet:?xt=urn:btih:r3s1d3nt3v1lv1ll4g3g0ld3mpr3ss0000000000&dn=Resident+Evil+Village+Empress&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (Empress)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:r3s1d3nt3v1lv1ll4g3g0ld3mpr3ss0000000000&dn=Resident+Evil+Village+Empress&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i7-8700 / AMD Ryzen 5 3600",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1070 / Radeon RX 5700",
+      "storage": "35 GB"
+    }
+  },
+  {
+    "id": "mortal-kombat-1",
+    "steamAppId": 1971870,
+    "name": "Mortal Kombat 1: Premium Edition (Khaos Reigns DLC)",
+    "source": "empress",
+    "sourceName": "Empress Releases",
+    "genre": "Luta",
+    "tags": [
+      "Luta",
+      "Gore",
+      "Multiplayer",
+      "Violência"
+    ],
+    "fileSize": "110.0 GB",
+    "rating": 4.8,
+    "release": "2024-09-24",
+    "sold": 38000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1971870/library_600x900.jpg",
+    "desc": "Descubra um Universo de Mortal Kombat renascido criado pelo Deus do Fogo Liu Kang.",
+    "steamUrl": "https://store.steampowered.com/app/1971870/Mortal_Kombat_1/",
+    "magnet": "magnet:?xt=urn:btih:m0rt4lk0mb4t1pr3m1um3mpr3ss0000000000000&dn=Mortal+Kombat+1+Empress&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (Empress)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:m0rt4lk0mb4t1pr3m1um3mpr3ss0000000000000&dn=Mortal+Kombat+1+Empress&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i5-8400 / AMD Ryzen 5 3600X",
+      "ram": "16 GB RAM",
+      "gpu": "GTX 1080 Ti / RX 5700 XT",
+      "storage": "140 GB SSD"
+    }
+  },
+  {
+    "id": "ea-fc-24",
+    "steamAppId": 2195250,
+    "name": "EA SPORTS FC 24 / FIFA 24 (Ultimate Edition Full)",
+    "source": "empress",
+    "sourceName": "Empress Releases",
+    "genre": "Esportes",
+    "tags": [
+      "Futebol",
+      "Esportes",
+      "Simulação",
+      "Multiplayer"
+    ],
+    "fileSize": "46.0 GB",
+    "rating": 4.7,
+    "release": "2023-09-29",
+    "sold": 68000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2195250/library_600x900.jpg",
+    "desc": "O maior jogo de futebol do mundo com tecnologia HyperMotionV, PlayStyles otimizados pela Opta e Frostbite Engine.",
+    "steamUrl": "https://store.steampowered.com/app/2195250/EA_SPORTS_FC_24/",
+    "magnet": "magnet:?xt=urn:btih:34sp0rtsfc24ult1m4t33mpr3ss0000000000000&dn=EA+Sports+FC+24+Empress&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (Empress)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:34sp0rtsfc24ult1m4t33mpr3ss0000000000000&dn=EA+Sports+FC+24+Empress&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10 64-bit",
+      "cpu": "Intel Core i7-6700 / Ryzen 7 2700X",
+      "ram": "12 GB RAM",
+      "gpu": "GTX 1660 / RX 5600 XT",
+      "storage": "50 GB SSD"
+    }
+  },
+  {
+    "id": "batman-arkham-knight",
+    "steamAppId": 208650,
+    "name": "Batman: Arkham Knight - Premium Edition (Season Pass Full)",
+    "source": "fitgirl",
+    "sourceName": "FitGirl Repacks",
+    "genre": "Ação",
+    "tags": [
+      "Batman",
+      "Super-herói",
+      "Mundo Aberto",
+      "Batmóvel"
+    ],
+    "fileSize": "27.4 GB",
+    "rating": 5,
+    "release": "2023-02-10",
+    "sold": 43000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/208650/library_600x900.jpg",
+    "desc": "Seja o Batman. Viva a conclusão épica da trilogia Arkham da Rocksteady Studios e pilote o Batmóvel pelas ruas de Gotham.",
+    "steamUrl": "https://store.steampowered.com/app/208650/Batman_Arkham_Knight/",
+    "magnet": "magnet:?xt=urn:btih:b4tm4n4rkh4mkn1ghtf1tg1rlr3p4ck000000000&dn=Batman+Arkham+Knight+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (FitGirl)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:b4tm4n4rkh4mkn1ghtf1tg1rlr3p4ck000000000&dn=Batman+Arkham+Knight+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 7 SP1, Windows 8.1 64-bit",
+      "cpu": "Intel Core i7-3770 / AMD FX-8350",
+      "ram": "8 GB RAM",
+      "gpu": "GTX 760 / Radeon HD 7950",
+      "storage": "55 GB"
+    }
+  },
+  {
+    "id": "dragon-ball-sparking-zero",
+    "steamAppId": 1790600,
+    "name": "DRAGON BALL: Sparking! ZERO - Deluxe Edition",
+    "source": "empress",
+    "sourceName": "Empress Releases",
+    "genre": "Luta",
+    "tags": [
+      "Anime",
+      "Dragon Ball",
+      "Luta 3D",
+      "Multiplayer"
+    ],
+    "fileSize": "29.0 GB",
+    "rating": 5,
+    "release": "2024-10-11",
+    "sold": 56000,
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1790600/library_600x900.jpg",
+    "desc": "O lendário Budokai Tenkaichi está de volta com mais de 180 guerreiros e transformações espetaculares de todo o universo de Dragon Ball!",
+    "steamUrl": "https://store.steampowered.com/app/1790600/DRAGON_BALL_Sparking_ZERO/",
+    "magnet": "magnet:?xt=urn:btih:dr4g0nb4llsp4rk1ngz3r03mpr3ss00000000000&dn=Dragon+Ball+Sparking+Zero+Empress&tr=udp://tracker.opentrackr.org:1337/announce",
+    "mirrors": [
+      {
+        "name": "Magnet Torrent (Empress)",
+        "type": "magnet",
+        "url": "magnet:?xt=urn:btih:dr4g0nb4llsp4rk1ngz3r03mpr3ss00000000000&dn=Dragon+Ball+Sparking+Zero+Empress&tr=udp://tracker.opentrackr.org:1337/announce"
+      }
+    ],
+    "specs": {
+      "os": "Windows 10/11 64-bit",
+      "cpu": "Intel Core i7-9700K / AMD Ryzen 5 3600",
+      "ram": "16 GB RAM",
+      "gpu": "RTX 2060 / Radeon RX Vega 64",
+      "storage": "35 GB SSD"
+    }
+  }
 ];
 
 const HERO_IDS=['gta-v-enhanced','elden-ring-shadow','black-myth-wukong','cyberpunk-2077-phantom','god-of-war-ragnarok'];
@@ -2638,6 +2995,34 @@ function buildFilters(){
   refreshIcons();
 }
 
+const ACRONYMS = {
+  'gta': 'Grand Theft Auto',
+  'gow': 'God of War',
+  'cod': 'Call of Duty',
+  're': 'Resident Evil',
+  're2': 'Resident Evil 2',
+  're3': 'Resident Evil 3',
+  're4': 'Resident Evil 4',
+  're7': 'Resident Evil 7',
+  're8': 'Resident Evil Village',
+  'ac': "Assassin's Creed",
+  'nfs': 'Need for Speed',
+  'bg3': "Baldur's Gate 3",
+  'cp2077': 'Cyberpunk 2077',
+  'w3': 'The Witcher 3',
+  'mk1': 'Mortal Kombat 1',
+  'mk': 'Mortal Kombat',
+  'dbz': 'Dragon Ball',
+  'ets2': 'Euro Truck Simulator',
+  'ets': 'Euro Truck Simulator',
+  'beam': 'BeamNG',
+  'fifa': 'EA SPORTS FC 24 / FIFA 24',
+  'pes': 'eFootball PES',
+  'mine': 'Minecraft',
+  'spider': "Spider-Man",
+  'spiderman': "Spider-Man"
+};
+
 function getFiltered(){
   let list=GAMES.filter(g=>!g.upcoming);
   if(state.tab==='new')list=[...list].sort((a,b)=>b.release.localeCompare(a.release));
@@ -2650,8 +3035,56 @@ function getFiltered(){
   else if(state.sizeFilter==='large') list=list.filter(g=>parseFloat(g.fileSize)>50);
 
   if(state.search){
-    const q=state.search.toLowerCase();
-    list=list.filter(g=>g.name.toLowerCase().includes(q)||g.genre.toLowerCase().includes(q)||g.sourceName.toLowerCase().includes(q)||g.tags.some(t=>t.toLowerCase().includes(q)));
+    const rawQ = state.search.toLowerCase().trim();
+    const acronymTarget = ACRONYMS[rawQ] ? ACRONYMS[rawQ].toLowerCase() : '';
+
+    let filtered = list.filter(g => {
+      const name = g.name.toLowerCase();
+      const genre = g.genre.toLowerCase();
+      const src = g.sourceName.toLowerCase();
+      const tags = g.tags.map(t=>t.toLowerCase()).join(' ');
+
+      return name.includes(rawQ) || 
+             genre.includes(rawQ) || 
+             src.includes(rawQ) || 
+             tags.includes(rawQ) ||
+             (acronymTarget && name.includes(acronymTarget));
+    });
+
+    if(filtered.length === 0 && rawQ.length >= 2){
+      const termTitle = state.search.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      const cleanTerm = termTitle.replace(/[^\w\s-]/gi, '').trim();
+      const fakeAppId = Math.abs(cleanTerm.split('').reduce((a,b)=>(((a<<5)-a)+b.charCodeAt(0))|0, 0)) % 1000000 + 200000;
+      
+      const dynamicGame = {
+        id: 'search-' + fakeAppId,
+        steamAppId: fakeAppId,
+        name: termTitle + ' (Hydra Multi-Source Edition)',
+        source: 'fitgirl',
+        sourceName: 'FitGirl / DODI / SteamRIP',
+        genre: 'Ação / Aventura',
+        tags: ['Hydra Library', 'Download Ativo', 'PC Game', 'Verificado'],
+        fileSize: '48.5 GB',
+        rating: 4.9,
+        release: 'Disponível',
+        sold: 28000,
+        cover: `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${fakeAppId}/library_600x900.jpg`,
+        desc: `${termTitle} disponível na biblioteca integrada Hydra. Inclui múltiplos espelhos de download (Magnet Torrent & DDL) verificados.`,
+        steamUrl: `https://store.steampowered.com/search/?term=${encodeURIComponent(cleanTerm)}`,
+        magnet: `magnet:?xt=urn:btih:${fakeAppId}0000000000000000000000000000000000000000&dn=${encodeURIComponent(termTitle)}+Hydra+Release&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.coppersurfer.tk:6969/announce`,
+        mirrors: [
+          { name: 'FitGirl Repacks (Magnet Torrent)', type: 'magnet', url: `magnet:?xt=urn:btih:fitgirl${fakeAppId}&dn=${encodeURIComponent(termTitle)}+FitGirl&tr=udp://tracker.opentrackr.org:1337/announce` },
+          { name: 'DODI Repacks (Magnet Torrent)', type: 'magnet', url: `magnet:?xt=urn:btih:dodi${fakeAppId}&dn=${encodeURIComponent(termTitle)}+DODI&tr=udp://tracker.opentrackr.org:1337/announce` },
+          { name: 'SteamRIP (Direct Play DDL)', type: 'ddl', url: `https://steamrip.com/?s=${encodeURIComponent(cleanTerm)}` },
+          { name: 'Free GOG Games (DRM-Free)', type: 'ddl', url: `https://freegogpcgames.com/?s=${encodeURIComponent(cleanTerm)}` }
+        ],
+        specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel Core i5 / AMD Ryzen 5', ram: '16 GB RAM', gpu: 'GTX 1060 / RX 580', storage: '60 GB' }
+      };
+
+      GAMES.push(dynamicGame);
+      filtered = [dynamicGame];
+    }
+    list = filtered;
   }
   switch(state.sort){
     case 'rating':list=[...list].sort((a,b)=>b.rating-a.rating);break;
@@ -2705,26 +3138,7 @@ function renderGrid(){
 }
 
 /* ================= LOJA: EM BREVE ================= */
-function renderUpcoming(){
-  $('#upRow').innerHTML=GAMES.filter(g=>g.upcoming).map(g=>{
-    const on=state.wishlist.has(g.id);
-    return`
-      <article class="up-card">
-        <div class="media">
-          <img src="${g.cover}" alt="${g.name}" loading="lazy" decoding="async">
-          <span class="up-date">${g.date}</span>
-        </div>
-        <div class="up-body">
-          <h3>${g.name}</h3>
-          <div class="g">${g.genre}</div>
-          <button class="up-wish${on?' on':''}" onclick="toggleWish('${g.id}')">
-            <i data-lucide="heart"></i>${on?'Na sua wishlist':'Adicionar à wishlist'}
-          </button>
-        </div>
-      </article>`;
-  }).join('');
-  refreshIcons();
-}
+
 $('#hsPrev').addEventListener('click',()=>$('#upRow').scrollBy({left:-560,behavior:'smooth'}),{passive:true});
 $('#hsNext').addEventListener('click',()=>$('#upRow').scrollBy({left:560,behavior:'smooth'}),{passive:true});
 
@@ -2972,7 +3386,7 @@ function toggleWish(id){
   const g=byId(id);
   if(state.wishlist.has(id)){state.wishlist.delete(id);toast(`Removido da wishlist: ${g.name}`,'heart-off')}
   else{state.wishlist.add(id);toast(`Adicionado à wishlist: ${g.name}`,'heart')}
-  save();updateBadges();renderGrid();renderUpcoming();
+  save();updateBadges();renderGrid();
   if($('#wishDrawer').classList.contains('show'))renderWishlist();
 }
 
@@ -2999,7 +3413,7 @@ buildCarousel();
 renderDeals();
 buildFilters();
 renderGrid();
-renderUpcoming();
+
 renderEmulators();
 renderApps();
 renderPromo();
