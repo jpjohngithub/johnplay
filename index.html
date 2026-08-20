@@ -134,18 +134,18 @@
   .stat span{font-size:12px;color:var(--muted)}
 
   /* ---------- Carousel ---------- */
-  .carousel{position:relative;height:460px;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:var(--bg-deep)}
-  .slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;pointer-events:none}
+  .carousel{position:relative;height:470px;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:var(--bg-deep)}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease;pointer-events:none}
   .slide.active{opacity:1;pointer-events:auto}
-  .slide img{width:100%;height:100%;object-fit:cover;object-position:center 20%;will-change:transform}
-  .slide.active img{animation:kb 8s ease-out forwards}
-  @keyframes kb{from{transform:scale(1.06)}to{transform:scale(1)}}
-  .slide::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,7,19,.96) 0%,rgba(11,7,19,.68) 46%,rgba(11,7,19,.1) 82%)}
-  .slide-body{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;max-width:620px;padding:0 54px}
+  .slide img{width:100%;height:100%;object-fit:cover;object-position:right center;will-change:transform}
+  .slide.active img{animation:kb 10s ease-out forwards}
+  @keyframes kb{from{transform:scale(1.04)}to{transform:scale(1)}}
+  .slide::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg, rgba(11,7,19,.98) 0%, rgba(11,7,19,.88) 38%, rgba(11,7,19,.4) 70%, rgba(11,7,19,.15) 100%), linear-gradient(180deg, rgba(11,7,19,.2) 0%, transparent 40%, rgba(11,7,19,.6) 100%)}
+  .slide-body{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;max-width:640px;padding:0 54px}
   .slide-tags{display:flex;gap:8px;align-items:center;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
   .slide-tags .sep{width:26px;height:1px;background:var(--accent);opacity:.6}
-  .slide-title{font-family:'Barlow Condensed',sans-serif;font-size:60px;font-weight:700;text-transform:uppercase;line-height:.95;margin-bottom:14px}
-  .slide-desc{color:#c9bfe0;font-size:15px;max-width:480px;margin-bottom:18px;line-height:1.4}
+  .slide-title{font-family:'Barlow Condensed',sans-serif;font-size:62px;font-weight:800;text-transform:uppercase;line-height:.95;margin-bottom:14px;color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.6)}
+  .slide-desc{color:#d5cceb;font-size:15px;max-width:500px;margin-bottom:18px;line-height:1.45;text-shadow:0 2px 8px rgba(0,0,0,.5)}
   .slide-meta{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
   .slide-buy{display:flex;gap:12px;flex-wrap:wrap}
   .car-arrows{position:absolute;right:16px;bottom:16px;z-index:3;display:flex;gap:8px}
@@ -7857,16 +7857,25 @@ document.addEventListener('visibilitychange',()=>{
 
 /* ================= CARROSSEL HERO ================= */
 const CAR_DUR=6500;let carIdx=0,carStart=performance.now(),carElapsed=0,carPaused=false;
+function getHeroBanner(g){
+  if(g && g.steamAppId){
+    return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${g.steamAppId}/library_hero.jpg`;
+  }
+  return getGameCover(g);
+}
+
 function buildCarousel(){
   const carEl=$('#carousel'),dotsEl=$('#carDots');
   HERO_IDS.forEach((id,i)=>{
     const g=byId(id);
     if(!g)return;
     const srcObj=SOURCES.find(s=>s.id===g.source)||{badgeClass:'source-fitgirl'};
+    const heroBannerUrl = getHeroBanner(g);
+    const coverFallback = getGameCover(g);
     const slide=document.createElement('div');
     slide.className='slide'+(i===0?' active':'');
     slide.innerHTML=`
-      <img src="${g.cover}" alt="${g.name}" ${i===0?'':'loading="lazy"'} decoding="async">
+      <img src="${heroBannerUrl}" alt="${g.name}" ${i===0?'':'loading="lazy"'} decoding="async" onerror="this.onerror=null;this.src='${coverFallback}'">
       <div class="slide-body">
         <div class="slide-tags">
           <span>Destaque Oficial</span>
