@@ -8164,8 +8164,6 @@ function cardHTML(g){
   if(!g) return '';
   const srcObj = SOURCES.find(s=>s.id===g.source) || SOURCES[0] || {badgeClass:'source-fitgirl', name:'Hydra Verified'};
   const on = state.wishlist && state.wishlist.has(g.id);
-  const ratingVal = (typeof g.rating === 'number') ? g.rating.toFixed(1) : '4.9';
-  const sizeVal = g.fileSize || '45.0 GB';
   const coverImg = getGameCover(g);
   const fallbackSvg = makeBoxArtSVG(g.name, g.genre);
 
@@ -8174,18 +8172,13 @@ function cardHTML(g){
       <div class="cover">
         <img src="${coverImg}" alt="${g.name}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${fallbackSvg}'">
         <span class="disc-badge source-chip ${srcObj.badgeClass || 'source-fitgirl'}">${g.sourceName || srcObj.name}</span>
-        <span class="size-badge">${sizeVal}</span>
         <button class="wish-btn${on?' on':''}" onclick="event.stopPropagation(); toggleWish('${g.id}')" aria-label="Lista de desejos"><i data-lucide="heart"></i></button>
       </div>
       <div class="card-body">
         <h3 title="${g.name}">${g.name}</h3>
-        <div class="card-foot">
-          <span class="card-rate">${starIcon} ${ratingVal}</span>
-          <span class="free-badge">Grátis</span>
-        </div>
         <div class="card-actions">
           <button class="action-dl" onclick="event.stopPropagation(); openModal('${g.id}')">
-            <i data-lucide="download"></i>Opções
+            <i data-lucide="download"></i>Opções de Download
           </button>
           <button class="action-det" onclick="event.stopPropagation(); openModal('${g.id}')">
             <i data-lucide="info"></i>Specs
