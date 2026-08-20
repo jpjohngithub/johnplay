@@ -7630,6 +7630,36 @@ async function fetchLiveEpicFreeGames(){
   }
 }
 
+function renderEpicGrid(freeGames){
+  const grid = $('#liveEpicGrid');
+  if(!grid) return;
+  const list = freeGames && freeGames.length ? freeGames : FALLBACK_EPIC;
+  grid.innerHTML = list.map((g, idx) => `
+    <div class="epic-card" onclick="openLiveEpicModal(${idx})">
+      <div class="thumb">
+        <img src="${g.image}" alt="${g.title}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://cdn1.epicgames.com/offer/diesel/Cardpocalypse_OfferImageWide_2560x1440-4286127b3b3a32fbe1364d9db6b3fa2c'">
+        <span class="epic-badge ${g.isCurrentFree ? 'epic-badge-free' : 'epic-badge-soon'}" style="position:absolute;top:10px;left:10px">
+          ${g.isCurrentFree ? 'GRÁTIS AGORA' : 'EM BREVE'}
+        </span>
+      </div>
+      <div class="body">
+        <h4>${g.title}</h4>
+        <p>${g.description}</p>
+        <div class="foot">
+          <div>
+            <span style="color:var(--muted);text-decoration:line-through;font-size:12px;margin-right:6px">${g.originalPrice}</span>
+            <span style="color:var(--emerald);font-weight:900;font-size:14px">100% GRÁTIS</span>
+          </div>
+          <button class="opt-btn opt-btn-primary" style="padding:6px 14px;font-size:11.5px" onclick="event.stopPropagation(); openLiveEpicModal(${idx})">
+            Resgatar na Epic
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  refreshIcons();
+}
+
 async function fetchLiveSteamSpecials(){
   const grid = $('#liveSteamGrid');
   if(!grid) return;
@@ -8423,9 +8453,16 @@ renderGrid();
 
 renderEmulators();
 renderApps();
+renderEpicGrid(FALLBACK_EPIC);
+renderSteamGrid(FALLBACK_STEAM);
 updateBadges();
 navigate();
 refreshIcons();
+
+// Inicia atualização de segundo plano sem bloquear a tela
+setTimeout(() => {
+  fetchLivePromosAndSpecials();
+}, 500);
 </script>
 </body>
 </html>
