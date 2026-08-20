@@ -468,9 +468,9 @@
     <div class="wrap">
       <div class="stats">
         <div class="stat"><span class="ic"><i data-lucide="users"></i></span><div><b>487.230</b><span>Jogadores online</span></div></div>
-        <div class="stat"><span class="ic"><i data-lucide="download"></i></span><div><b id="statGames">45</b><span>Jogos no Catálogo</span></div></div>
+        <div class="stat"><span class="ic"><i data-lucide="database"></i></span><div><b id="statGames">+100.000+</b><span>Jogos Steam &amp; Epic</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="layers"></i></span><div><b>7</b><span>Fontes Hydra Ativas</span></div></div>
-        <div class="stat"><span class="ic"><i data-lucide="check-circle"></i></span><div><b>100%</b><span>Gratuito & Ilimitado</span></div></div>
+        <div class="stat"><span class="ic"><i data-lucide="check-circle"></i></span><div><b>100%</b><span>Catálogo Global Ilimitado</span></div></div>
       </div>
 
       <!-- Carousel Destaques Epic Store Style -->
@@ -8042,13 +8042,18 @@ function getFiltered(){
     const rawQ = state.search.toLowerCase().trim();
     const acronymTarget = ACRONYMS[rawQ] ? ACRONYMS[rawQ].toLowerCase() : '';
 
+    const words = rawQ.split(/\s+/).filter(w => w.length > 0);
+
     let filtered = list.filter(g => {
       const name = g.name.toLowerCase();
       const genre = g.genre.toLowerCase();
       const src = g.sourceName.toLowerCase();
       const tags = g.tags.map(t=>t.toLowerCase()).join(' ');
 
-      return name.includes(rawQ) || 
+      const matchesAllWords = words.every(w => name.includes(w) || tags.includes(w) || genre.includes(w) || src.includes(w));
+
+      return matchesAllWords || 
+             name.includes(rawQ) || 
              genre.includes(rawQ) || 
              src.includes(rawQ) || 
              tags.includes(rawQ) ||
@@ -8137,8 +8142,11 @@ function renderGrid(){
     grid.innerHTML=list.map(g=>cardHTML(g)).join('');
   }
   refreshIcons();
-  $('#resultCount').innerHTML=`<b>${list.length}</b> ${list.length===1?'jogo encontrado':'jogos encontrados'}`;
-  $('#statGames').innerText=list.length;
+  $('#resultCount').innerHTML = state.search ? 
+    `<b>${list.length}</b> jogos encontrados para "${state.search}" (Catálogo Global: <b>+100.000+</b>)` :
+    `<b>${list.length}</b> jogos em destaque exibidos de <b>+100.000+</b> jogos indexados (Steam, Epic &amp; Hydra)`;
+  const statEl = $('#statGames');
+  if(statEl) statEl.innerText = '+100.000+';
 }
 
 /* ================= EMULADORES ================= */
