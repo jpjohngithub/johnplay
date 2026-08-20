@@ -427,27 +427,138 @@
   .foot-base{border-top:1px solid #1a1129;padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;color:#5f5079;font-size:12.5px}
   .foot-base .legal{display:flex;gap:18px}
 
-  /* ---------- Responsive ---------- */
+  /* ---------- Mobile Responsive Full Adaptation ---------- */
+  .mobile-dock{display:none}
+
   @media(max-width:1100px){
     .nav-links{display:none}
-    .deals-grid{grid-template-columns:1fr 1fr}
+    .deals-grid{grid-template-columns:repeat(2, 1fr)}
     .browse-layout{grid-template-columns:1fr}
     .filters{position:static}
     .stats{grid-template-columns:repeat(2,1fr)}
   }
-  @media(max-width:720px){
-    .slide-body{padding:0 26px}
-    .slide-title{font-size:38px}
-    .carousel{height:430px}
-    .modal{grid-template-columns:1fr}
-    .modal-media{min-height:230px;aspect-ratio:16/9}
-    .deals-grid{grid-template-columns:1fr}
-    .foot-grid{grid-template-columns:1fr 1fr}
+
+  @media(max-width:768px){
+    body{padding-bottom:76px}
+    .wrap{padding:0 16px}
+    .nav{height:58px}
+    .nav-search{max-width:170px}
+    .logo-txt small{display:none}
+    .logo-txt b{font-size:17px}
+    .logo-mark{width:32px;height:32px;font-size:12px;border-radius:8px}
     .topstrip{display:none}
+    
+    /* Mobile Bottom Dock */
+    .mobile-dock{
+      display:flex;
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      height:62px;
+      background:rgba(14,27,21,.95);
+      backdrop-filter:blur(18px);
+      border-top:1px solid var(--border);
+      z-index:150;
+      justify-content:space-around;
+      align-items:center;
+      padding:0 6px max(env(safe-area-inset-bottom), 4px);
+      box-shadow:0 -6px 20px rgba(0,0,0,.45);
+    }
+    body[data-theme="purple"] .mobile-dock{
+      background:rgba(24,17,38,.95);
+    }
+    .mob-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:3px;
+      color:var(--muted);
+      font-size:10.5px;
+      font-weight:700;
+      flex:1;
+      padding:6px 0;
+      border-radius:10px;
+      transition:color .15s, transform .15s;
+      text-decoration:none;
+    }
+    .mob-item svg{width:19px;height:19px;stroke-width:2.2}
+    .mob-item.on, .mob-item:hover{color:var(--accent);transform:translateY(-1px)}
+    .mob-item.on svg{stroke-width:2.6}
+
+    /* Hero Carousel Mobile */
+    .hero{margin-top:12px}
+    .carousel{height:360px;border-radius:12px}
+    .slide-body{padding:0 20px;max-width:100%}
+    .slide-tags{font-size:9.5px;margin-bottom:8px;gap:6px}
+    .slide-title{font-size:32px;margin-bottom:8px;line-height:1}
+    .slide-desc{font-size:12.5px;max-width:100%;margin-bottom:12px;-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+    .slide-meta{display:none}
+    .slide-buy{gap:8px}
+    .slide-buy .btn{height:38px;padding:0 14px;font-size:12.5px}
+    .car-arrows{display:none}
+    .car-dots{left:20px;bottom:14px}
+    
+    /* Stats Bar Mobile */
+    .stats{grid-template-columns:repeat(2, 1fr);gap:10px;margin-top:16px}
+    .stat{padding:12px;gap:10px}
+    .stat .ic{width:36px;height:36px}
+    .stat b{font-size:15px}
+    
+    /* Deals Grid Mobile */
+    .sec-head{margin-top:28px;gap:10px}
+    .sec-head h2{font-size:26px}
+    .deals-grid{grid-template-columns:repeat(2, 1fr);gap:10px}
+    .deal-card{aspect-ratio:3/4.6}
+    .deal-info{padding:12px}
+    .deal-info h3{font-size:13.5px}
+    .deal-info .g{font-size:11px;margin-bottom:4px}
+    .deal-btn{height:32px;font-size:11px}
+    
+    /* Filter & Browse Layout Mobile */
+    .browse-layout{gap:18px;margin-top:14px}
+    .results-bar{margin-bottom:12px}
+    .games-grid{grid-template-columns:repeat(2, 1fr);gap:10px}
+    .game-card .card-body{padding:10px}
+    .game-card .card-body h3{font-size:13px}
+    .card-actions .action-dl, .card-actions .action-det{height:30px;font-size:11px}
+    
+    /* Web Station Player Mobile */
+    .bg-hero{padding:20px 16px;gap:14px;border-radius:12px}
+    .bg-hero h2{font-size:28px}
+    .bg-hero p{font-size:13px}
+    .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;padding-bottom:6px;gap:6px}
+    .tabs button{padding:6px 14px;font-size:12px;white-space:nowrap;flex-shrink:0}
+    .game-player-section{border-radius:12px;margin-top:16px}
+    .player-topbar{padding:10px 14px;gap:8px}
+    .player-topbar .title-box h3{font-size:18px}
+    .player-topbar .controls-help{display:none}
+    .player-actions .btn{height:30px;padding:0 8px;font-size:11px}
+    .game-viewport{height:min(72vh, 540px)}
+    
+    /* Specials & Promos Mobile */
+    .specials-grid{grid-template-columns:1fr;gap:14px}
+    
+    /* Modal Mobile */
+    .modal-box{width:94%;max-width:440px;border-radius:16px;max-height:88vh}
+    .modal{grid-template-columns:1fr}
+    .modal-media{min-height:180px;aspect-ratio:16/9}
+    .modal-content{padding:16px}
+    .modal-content h2{font-size:20px}
+    .modal-actions{grid-template-columns:1fr}
+    
+    /* Footer Mobile */
+    .foot-grid{grid-template-columns:1fr 1fr;gap:24px}
+    .foot-base{flex-direction:column;align-items:flex-start}
+  }
+
+  @media(max-width:420px){
+    .deals-grid{grid-template-columns:1fr}
+    .games-grid{grid-template-columns:1fr}
     .stats{grid-template-columns:1fr}
-    .game-viewport{height:480px}
-    .bg-hero h2{font-size:38px}
-    .app-hero h2{font-size:32px}
+    .foot-grid{grid-template-columns:1fr}
+    .nav-search{display:none}
   }
 </style>
 </head>
@@ -883,6 +994,30 @@
   <div class="drawer-list" id="wishList"></div>
   <div class="drawer-foot" id="wishFoot"></div>
 </aside>
+
+<!-- Mobile Bottom Dock (App Experience) -->
+<nav class="mobile-dock" id="mobileDock">
+  <a href="#loja" data-mobnav="loja" class="mob-item on">
+    <i data-lucide="store"></i>
+    <span>Loja</span>
+  </a>
+  <a href="#browser" data-mobnav="browser" class="mob-item">
+    <i data-lucide="gamepad-2"></i>
+    <span>Jogos Web</span>
+  </a>
+  <a href="#emuladores" data-mobnav="emuladores" class="mob-item">
+    <i data-lucide="cpu"></i>
+    <span>Emuladores</span>
+  </a>
+  <a href="#promo" data-mobnav="promo" class="mob-item">
+    <i data-lucide="gift"></i>
+    <span>Promoções</span>
+  </a>
+  <a href="#apps" data-mobnav="apps" class="mob-item">
+    <i data-lucide="layers"></i>
+    <span>Apps</span>
+  </a>
+</nav>
 
 <div class="toasts" id="toasts"></div>
 
@@ -7925,6 +8060,7 @@ function navigate(){
   if(!PAGES.includes(h))h='loja';
   $$('.page').forEach(p=>p.classList.toggle('on',p.id==='page-'+h));
   $$('#navLinks a').forEach(a=>a.classList.toggle('on',a.dataset.nav===h));
+  $$('#mobileDock .mob-item').forEach(a=>a.classList.toggle('on',a.dataset.mobnav===h));
   window.scrollTo({top:0});
   
   if(h==='promo') fetchLivePromosAndSpecials();
