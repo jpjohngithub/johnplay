@@ -7661,127 +7661,118 @@ function debouncedSearch(val){
 
 async function searchLiveHydraLibrary(query){
   if(!query || query.length < 2) return;
+
   const resultCount = $('#resultCount');
   if(resultCount){
-    resultCount.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px;color:var(--accent)"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:14px;height:14px"></i> Identificando jogos no catálogo global Steam &amp; Epic para "${query}"...</span>`;
+    resultCount.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px;color:var(--accent)"><i data-lucide="loader" style="animation:spin 1s linear infinite;width:14px;height:14px"></i> Buscando em todas as bibliotecas Hydra para "<b>${query}</b>"...</span>`;
     refreshIcons();
   }
 
-  const STEAM_COMMUNITY_URL = `https://steamcommunity.com/actions/SearchApps/${encodeURIComponent(query)}`;
-  const STEAM_STORE_URL = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(query)}&l=portuguese&cc=BR`;
-  const HYDRA_API = `https://api.hydralibrary.com/games?q=${encodeURIComponent(query)}`;
+  const HYDRA_API_BASE = 'https://api.hydralibrary.com';
+  const PROXY = 'https://proxy.cors.sh/';
+  const endpoint = `${HYDRA_API_BASE}/games?q=${encodeURIComponent(query)}&limit=40`;
 
-  const fetchPromises = [
-    fetchFastWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(STEAM_COMMUNITY_URL)}`, 2500),
-    fetchFastWithTimeout(`https://corsproxy.io/?url=${encodeURIComponent(STEAM_COMMUNITY_URL)}`, 2500),
-    fetchFastWithTimeout(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(STEAM_STORE_URL)}`, 2500),
-    fetchFastWithTimeout(`https://corsproxy.io/?url=${encodeURIComponent(STEAM_STORE_URL)}`, 2500),
-    fetchFastWithTimeout(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(HYDRA_API)}`, 2500)
-  ];
+  let games = [];
+  let totalFound = 0;
 
-  const results = await Promise.allSettled(fetchPromises);
-  let addedCount = 0;
+  try {
+    let data = null;
 
-  for(const res of results){
-    if(res.status === 'fulfilled' && res.value){
-      const data = res.value;
+    const tryFetch = async (url, extraHeaders = {}) => {
+      const r = await fetch(url, {
+        signal: AbortSignal.timeout(7000),
+        headers: { 'Accept': 'application/json', ...extraHeaders }
+      });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    };
 
-      // Se retornou array do SearchApps
-      if(Array.isArray(data) && data.length > 0 && data[0].appid){
-        data.forEach(item => {
-          const appId = parseInt(item.appid, 10);
-          if(!appId || isNaN(appId)) return;
-          const exists = GAMES.some(g => g.steamAppId === appId || g.name.toLowerCase() === item.name.toLowerCase());
-          if(!exists){
-            const sourcesKeys = ['fitgirl', 'dodi', 'steamrip', 'gog', 'xatab', 'atop', 'empress'];
-            const randomSrc = sourcesKeys[Math.floor(Math.random() * sourcesKeys.length)];
-            const srcObj = SOURCES.find(s => s.id === randomSrc) || SOURCES[0];
-
-            const newGame = {
-              id: 'steam-' + appId,
-              steamAppId: appId,
-              name: item.name,
-              source: srcObj.id,
-              sourceName: srcObj.name,
-              genre: 'Ação / Aventura',
-              tags: ['Steam / Epic Catalog', 'Download Ativo', 'PC Game', 'Verificado'],
-              fileSize: '45.0 GB',
-              rating: 4.9,
-              release: 'Disponível',
-              sold: 30000,
-              cover: `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/library_600x900.jpg`,
-              desc: `${item.name} catalogado oficialmente. Disponível com opções de download rápido e instalador verificado JohnPlay.`,
-              steamUrl: `https://store.steampowered.com/app/${appId}/`,
-              magnet: `magnet:?xt=urn:btih:${appId}0000000000000000000000000000000000000000&dn=${encodeURIComponent(item.name)}+Release&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.coppersurfer.tk:6969/announce`,
-              mirrors: [
-                { name: `${srcObj.name} (Mirror Principal)`, type: 'magnet', url: `magnet:?xt=urn:btih:${srcObj.id}${appId}&dn=${encodeURIComponent(item.name)}&tr=udp://tracker.opentrackr.org:1337/announce` },
-                { name: 'Direct Play Fast Archive (DDL)', type: 'ddl', url: `https://steamrip.com/?s=${encodeURIComponent(item.name)}` },
-                { name: 'Free GOG Games DRM-Free Mirror', type: 'ddl', url: `https://freegogpcgames.com/?s=${encodeURIComponent(item.name)}` }
-              ],
-              specs: {
-                os: 'Windows 10/11 64-bit',
-                cpu: 'Intel Core i5 / AMD Ryzen 5',
-                ram: '16 GB RAM',
-                gpu: 'NVIDIA GTX 1060 / AMD RX 580',
-                storage: '50 GB SSD'
-              }
-            };
-            GAMES.push(newGame);
-            addedCount++;
-          }
-        });
-      }
-
-      // Se retornou items do Store Search
-      if(data.items && Array.isArray(data.items) && data.items.length > 0){
-        data.items.forEach(item => {
-          const appId = item.id;
-          const exists = GAMES.some(g => g.steamAppId === appId || g.name.toLowerCase() === item.name.toLowerCase());
-          if(!exists && item.type === 'app'){
-            const sourcesKeys = ['fitgirl', 'dodi', 'steamrip', 'gog', 'xatab', 'atop', 'empress'];
-            const randomSrc = sourcesKeys[Math.floor(Math.random() * sourcesKeys.length)];
-            const srcObj = SOURCES.find(s => s.id === randomSrc) || SOURCES[0];
-
-            const newGame = {
-              id: 'steam-' + appId,
-              steamAppId: appId,
-              name: item.name,
-              source: srcObj.id,
-              sourceName: srcObj.name,
-              genre: 'Ação / Aventura',
-              tags: ['Steam / Epic Catalog', 'Download Ativo', 'PC Game'],
-              fileSize: '42.5 GB',
-              rating: 4.8,
-              release: 'Disponível',
-              sold: 25000,
-              cover: `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/library_600x900.jpg`,
-              desc: `${item.name} disponível para download com todas as opções de instalação verificadas.`,
-              steamUrl: `https://store.steampowered.com/app/${appId}/`,
-              magnet: `magnet:?xt=urn:btih:${appId}0000000000000000000000000000000000000000&dn=${encodeURIComponent(item.name)}+Release&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.coppersurfer.tk:6969/announce`,
-              mirrors: [
-                { name: `${srcObj.name} (Magnet Torrent)`, type: 'magnet', url: `magnet:?xt=urn:btih:${srcObj.id}${appId}&dn=${encodeURIComponent(item.name)}&tr=udp://tracker.opentrackr.org:1337/announce` },
-                { name: 'Direct Play (DDL)', type: 'ddl', url: `https://steamrip.com/?s=${encodeURIComponent(item.name)}` }
-              ],
-              specs: {
-                os: 'Windows 10/11 64-bit',
-                cpu: 'Intel Core i5 / AMD Ryzen 5',
-                ram: '16 GB RAM',
-                gpu: 'NVIDIA GTX 1060 / AMD RX 580',
-                storage: '50 GB SSD'
-              }
-            };
-            GAMES.push(newGame);
-            addedCount++;
-          }
-        });
+    // Attempt 1: via proxy.cors.sh (confirmed working)
+    try {
+      data = await tryFetch(PROXY + endpoint);
+    } catch(e1) {
+      // Attempt 2: direct
+      try {
+        data = await tryFetch(endpoint);
+      } catch(e2) {
+        // Attempt 3: allorigins last resort
+        try {
+          const r = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(endpoint)}`, {signal: AbortSignal.timeout(5000)});
+          data = await r.json();
+        } catch(e3) { /* all failed */ }
       }
     }
-  }
 
-  if(addedCount > 0){
-    buildFilters();
+    if (data && data.games && Array.isArray(data.games)) {
+      games = data.games;
+      totalFound = data.totalGames || data.filteredCount || games.length;
+
+      let addedCount = 0;
+      games.forEach(item => {
+        if (!item.name) return;
+        const cleanName = item.name.replace(/\{[^}]*\}/g,'').replace(/\[[^\]]*\]/g,'').trim();
+        const nameKey = cleanName.toLowerCase().replace(/\s+/g,'');
+
+        const exists = GAMES.some(g =>
+          g.name.toLowerCase().replace(/\s+/g,'').includes(nameKey.substring(0,12)) ||
+          nameKey.includes(g.name.toLowerCase().replace(/\s+/g,'').substring(0,12))
+        );
+        if (exists) return;
+
+        const srcName = (item.source || 'FitGirl Repacks').replace(/\{[^}]*\}/g,'').trim();
+        const srcUrl = item.sourceUrl || '';
+        const isFitGirl = srcName.toLowerCase().includes('fitgirl');
+        const isDODI = srcName.toLowerCase().includes('dodi');
+        const isSteamRIP = srcName.toLowerCase().includes('steamrip') || srcName.toLowerCase().includes('steam rip');
+        const isGOG = srcName.toLowerCase().includes('gog');
+        const isOnlineFix = srcName.toLowerCase().includes('online');
+        const sourceId = isFitGirl ? 'fitgirl' : isDODI ? 'dodi' : isSteamRIP ? 'steamrip' : isGOG ? 'gog' : isOnlineFix ? 'onlinefix' : 'fitgirl';
+        const srcObj = SOURCES.find(s => s.id === sourceId) || SOURCES[0];
+
+        const uploadDate = item.uploadDate ? new Date(item.uploadDate).toLocaleDateString('pt-BR', {year:'numeric',month:'short',day:'numeric'}) : 'Disponível';
+
+        const newGame = {
+          id: 'hydra-' + Date.now() + '-' + Math.random().toString(36).substr(2,5),
+          steamAppId: null,
+          name: cleanName,
+          source: sourceId,
+          sourceName: srcName,
+          genre: 'Ação / Aventura',
+          tags: ['Hydra Library', 'Download Ativo', 'PC Game', 'Verificado', srcName.split(' ')[0]],
+          fileSize: item.fileSize || 'Disponível',
+          rating: 4.8,
+          release: uploadDate,
+          sold: 28000,
+          cover: makeBoxArtSVG(cleanName, 'Ação / Aventura'),
+          desc: `${cleanName} — disponível via ${srcName}. Tamanho: ${item.fileSize || 'N/A'}. Publicado em ${uploadDate}.`,
+          steamUrl: `https://store.steampowered.com/search/?term=${encodeURIComponent(cleanName)}`,
+          magnet: '',
+          mirrors: [
+            { name: `${srcName} (Fonte Hydra Oficial)`, type: 'ddl', url: srcUrl || `https://library.hydra.wiki/search/?q=${encodeURIComponent(cleanName)}` },
+            { name: 'Buscar no Hydra Library', type: 'ddl', url: `https://library.hydra.wiki/search/?q=${encodeURIComponent(cleanName)}` },
+            { name: 'FitGirl Repacks', type: 'ddl', url: `https://fitgirl-repacks.site/?s=${encodeURIComponent(cleanName)}` },
+            { name: 'DODI Repacks', type: 'ddl', url: `https://dodi-repacks.site/?s=${encodeURIComponent(cleanName)}` },
+            { name: 'SteamRIP (Direct Play)', type: 'ddl', url: `https://steamrip.com/?s=${encodeURIComponent(cleanName)}` }
+          ],
+          specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel Core i5 / AMD Ryzen 5', ram: '8 GB RAM', gpu: 'GTX 1060 / RX 580', storage: item.fileSize || 'N/A' }
+        };
+
+        GAMES.push(newGame);
+        addedCount++;
+      });
+
+      if (addedCount > 0) buildFilters();
+      renderGrid();
+
+      if (resultCount) {
+        resultCount.innerHTML = `<b>${games.length}</b> jogos encontrados em <b>${Number(totalFound).toLocaleString('pt-BR')}+</b> itens da Hydra Library para "<b>${query}</b>"`;
+      }
+    } else {
+      renderGrid();
+    }
+  } catch(e) {
+    renderGrid();
   }
-  renderGrid();
 }
 
 /* ================= LIVE STEAM & EPIC SPECIALS ENGINE (TEMPO REAL OFICIAL) ================= */
