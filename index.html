@@ -279,7 +279,20 @@
   .game-player-section:fullscreen{border-radius:0;border:none}
   .game-player-section:fullscreen .game-viewport{height:calc(100vh - 60px)}
 
-  /* ---------- Browser games ---------- */
+  /* ---------- Browser games Selector & YouTube Playables ---------- */
+  .browser-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(210px, 1fr));gap:16px;margin:22px 0 28px}
+  .browser-game-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .18s, border-color .18s, box-shadow .18s;display:flex;flex-direction:column}
+  .browser-game-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .browser-game-card.active{border-color:var(--emerald);box-shadow:0 0 0 2px var(--emerald)}
+  .browser-game-card .thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:#140e24}
+  .browser-game-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+  .browser-game-card:hover .thumb img{transform:scale(1.06)}
+  .browser-game-card .bbody{padding:12px;display:flex;flex-direction:column;gap:4px;flex:1}
+  .browser-game-card .bbody h4{font-size:14.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .browser-game-card .bbody span{font-size:11.5px;color:var(--muted)}
+  .browser-game-card .bbody button{margin-top:8px;height:32px;border-radius:7px;background:var(--panel-2);border:1px solid var(--border);color:var(--text);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s, border-color .15s}
+  .browser-game-card:hover .bbody button, .browser-game-card.active .bbody button{background:var(--emerald);color:#031d13;border-color:var(--emerald)}
+
   .bg-hero{margin-top:26px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;position:relative;overflow:hidden}
   .bg-hero::before{content:'';position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;background:var(--accent-dim);filter:blur(10px)}
   .bg-hero h2{font-family:'Barlow Condensed',sans-serif;font-size:52px;text-transform:uppercase;line-height:1}
@@ -440,7 +453,7 @@
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="#loja" data-nav="loja" class="on">Loja</a>
-      <a href="#browser" data-nav="browser">Jogar Subway Surfers</a>
+      <a href="#browser" data-nav="browser">Jogos Web &amp; YouTube</a>
       <a href="#emuladores" data-nav="emuladores">Emuladores</a>
       <a href="#promo" data-nav="promo">Promoções & Jogos Grátis</a>
       <a href="#apps" data-nav="apps">Apps & Otimizações</a>
@@ -568,61 +581,226 @@
   <section class="page" id="page-browser">
     <div class="wrap">
       
-      <!-- SUBWAY SURFERS HERO -->
+      <!-- SUBWAY SURFERS & BROWSER HERO -->
       <div class="bg-hero">
         <div class="z">
           <div class="kicker">Game Player Embutido · 100% no JohnPlay</div>
-          <h2>Subway Surfers World Tour</h2>
-          <p>Jogue direto aqui no navegador com som, 60 FPS e suporte a tela cheia. Sem anúncios chatos e sem precisar sair do site!</p>
+          <h2 id="browserHeroTitle">Jogos de Navegador &amp; Poki</h2>
+          <p id="browserHeroDesc">Jogue os maiores sucessos da web direto aqui no JohnPlay com 60 FPS, som estéreo e modo tela cheia. Sem anúncios chatos!</p>
         </div>
-        <button class="btn btn-primary z" onclick="launchSubwayPlayer()">
-          <i data-lucide="play"></i>Jogar Subway Surfers Agora
+        <button class="btn btn-primary z" onclick="launchBrowserPlayer()">
+          <i data-lucide="play"></i>Jogar no Player Agora
         </button>
       </div>
 
-      <!-- IN-SITE GAME PLAYER EMBED CONTAINER -->
-      <div class="game-player-section" id="gamePlayerSection">
-        <div class="player-topbar">
-          <div class="title-box">
-            <span class="disc-chip" style="background:var(--emerald);color:#031d13">PLAYER AO VIVO</span>
-            <h3>Subway Surfers (HTML5 WebGL)</h3>
+      <!-- Sub-Abas de Navegação (Poki / HTML5 vs Jogos do YouTube) -->
+      <div class="sec-head" style="margin-top:32px">
+        <div><div class="kicker">Categorias Web</div><h2>Escolha sua Plataforma de Jogos</h2></div>
+        <div class="tabs" id="browserTabs">
+          <button id="tabPoki" class="on" onclick="setBrowserSubTab('poki')">🎮 Jogos Poki &amp; HTML5 (Player)</button>
+          <button id="tabYT" onclick="setBrowserSubTab('youtube')">▶️ Jogos do YouTube (Playables)</button>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 1: JOGOS POKI & HTML5 -->
+      <div id="secPokiBrowser">
+        <!-- Grade de Seleção de Jogos -->
+        <div class="browser-grid">
+          <!-- 1. Subway Surfers -->
+          <div class="browser-game-card active" data-gameid="subway-surfers" onclick="selectBrowserGame('subway-surfers')">
+            <div class="thumb">
+              <img src="https://images.crazygames.com/subway-surfers-ny/20231201103233/subway-surfers-ny-cover?auto=format%2Ccompress&q=65&fit=crop&w=480" alt="Subway Surfers">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:var(--emerald);color:#031d13;font-size:10px">CORRIDA</span>
+            </div>
+            <div class="bbody">
+              <h4>Subway Surfers</h4>
+              <span>Poki · Corrida Infinita</span>
+              <button><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+            </div>
           </div>
-          <div class="controls-help">
-            <i data-lucide="gamepad-2" style="width:16px;height:16px;color:var(--accent)"></i>
-            <b>Controles:</b> Setas [⬅️ ➡️] Mover · [⬆️] Pular · [⬇️] Rolar · [Espaço] Skate
+
+          <!-- 2. Level Devil -->
+          <div class="browser-game-card" data-gameid="level-devil" onclick="selectBrowserGame('level-devil')">
+            <div class="thumb">
+              <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/3bfdc9e7fa1a4e1d141e6e814a706b8c.png" alt="Level Devil">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:var(--accent);color:var(--accent-ink);font-size:10px">PLATAFORMA</span>
+            </div>
+            <div class="bbody">
+              <h4>Level Devil</h4>
+              <span>Poki · Desafio &amp; Troll</span>
+              <button><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+            </div>
           </div>
-          <div class="player-actions">
-            <button class="btn btn-ghost" style="height:36px;padding:0 14px;font-size:12px" onclick="reloadSubwayPlayer()" title="Reiniciar Jogo">
-              <i data-lucide="rotate-ccw"></i>Reiniciar
-            </button>
-            <button class="btn btn-primary" style="height:36px;padding:0 14px;font-size:12px" onclick="togglePlayerFullscreen()" title="Modo Tela Cheia">
-              <i data-lucide="maximize"></i>Tela Cheia
-            </button>
+
+          <!-- 3. Talking Tom Gold Run -->
+          <div class="browser-game-card" data-gameid="talking-tom-gold-run" onclick="selectBrowserGame('talking-tom-gold-run')">
+            <div class="thumb">
+              <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/029d57a22fa59f93ec4ce38291583df9.png" alt="Talking Tom Gold Run">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:var(--gold);color:#191202;font-size:10px">AÇÃO</span>
+            </div>
+            <div class="bbody">
+              <h4>Talking Tom Gold Run</h4>
+              <span>Poki · Ação &amp; Corrida</span>
+              <button><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+            </div>
+          </div>
+
+          <!-- 4. Under The Red Sky -->
+          <div class="browser-game-card" data-gameid="under-the-red-sky" onclick="selectBrowserGame('under-the-red-sky')">
+            <div class="thumb">
+              <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/302061ae49646b9a89d49fe4f1a265ae.png" alt="Under The Red Sky">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:var(--danger);color:#fff;font-size:10px">TIRO / AVENTURA</span>
+            </div>
+            <div class="bbody">
+              <h4>Under The Red Sky</h4>
+              <span>Poki · Sobrevivência</span>
+              <button><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+            </div>
+          </div>
+
+          <!-- 5. Neon Challenge Legends -->
+          <div class="browser-game-card" data-gameid="neon-challenge-legends" onclick="selectBrowserGame('neon-challenge-legends')">
+            <div class="thumb">
+              <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/387431f4a9b2d3080ffbfa6b8f36c535.png" alt="Neon Challenge Legends">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:var(--accent-hi);color:#031d13;font-size:10px">NEON HABILIDADE</span>
+            </div>
+            <div class="bbody">
+              <h4>Neon Challenge Legends</h4>
+              <span>Poki · Reflexos Rápidos</span>
+              <button><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
+            </div>
           </div>
         </div>
 
-        <div class="game-viewport" id="gameViewport">
-          <!-- Splash Screen with Official Cover -->
-          <div class="game-splash" id="gameSplash">
-            <h2 style="font-family:'Barlow Condensed';font-size:48px;text-transform:uppercase;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.8)">
-              Subway Surfers World Tour
-            </h2>
-            <p style="color:#d1c4e9;max-width:500px;font-size:15px">
-              Clique no botão verde abaixo para inicializar o motor WebGL e começar a correr!
-            </p>
-            <button class="play-large-btn" onclick="launchSubwayPlayer()">
-              <i data-lucide="play"></i>CLIQUE PARA JOGAR AGORA
-            </button>
+        <!-- IN-SITE GAME PLAYER EMBED CONTAINER -->
+        <div class="game-player-section" id="gamePlayerSection">
+          <div class="player-topbar">
+            <div class="title-box">
+              <span class="disc-chip" style="background:var(--emerald);color:#031d13">PLAYER AO VIVO</span>
+              <h3 id="playerGameTitle">Subway Surfers World Tour (Poki / WebGL)</h3>
+            </div>
+            <div class="controls-help" id="playerControls">
+              <i data-lucide="gamepad-2" style="width:16px;height:16px;color:var(--accent)"></i>
+              <b>Controles:</b> Setas [⬅️ ➡️] Mover · [⬆️] Pular · [⬇️] Rolar · [Espaço] Skate
+            </div>
+            <div class="player-actions">
+              <button class="btn btn-ghost" style="height:36px;padding:0 14px;font-size:12px" onclick="reloadSubwayPlayer()" title="Reiniciar Jogo">
+                <i data-lucide="rotate-ccw"></i>Reiniciar
+              </button>
+              <button class="btn btn-primary" style="height:36px;padding:0 14px;font-size:12px" onclick="togglePlayerFullscreen()" title="Modo Tela Cheia">
+                <i data-lucide="maximize"></i>Tela Cheia
+              </button>
+            </div>
           </div>
 
-          <!-- HTML5 Game Iframe Player -->
-          <iframe 
-            id="subwayIframe" 
-            class="game-iframe" 
-            src="about:blank"
-            allow="fullscreen; gamepad; autoplay" 
-            allowfullscreen>
-          </iframe>
+          <div class="game-viewport" id="gameViewport">
+            <!-- Splash Screen with Official Cover -->
+            <div class="game-splash" id="gameSplash">
+              <h2 id="splashTitle" style="font-family:'Barlow Condensed';font-size:48px;text-transform:uppercase;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.8)">
+                Subway Surfers World Tour
+              </h2>
+              <p id="splashDesc" style="color:#d1c4e9;max-width:500px;font-size:15px">
+                Clique no botão verde abaixo para inicializar o motor WebGL e começar a jogar!
+              </p>
+              <button class="play-large-btn" onclick="launchBrowserPlayer()">
+                <i data-lucide="play"></i>CLIQUE PARA JOGAR AGORA
+              </button>
+            </div>
+
+            <!-- HTML5 Game Iframe Player -->
+            <iframe 
+              id="subwayIframe" 
+              class="game-iframe" 
+              src="about:blank"
+              allow="fullscreen; gamepad; autoplay" 
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 2: JOGOS DO YOUTUBE (YOUTUBE PLAYABLES) -->
+      <div id="secYouTubePlayables" style="display:none">
+        <div class="bg-hero" style="margin-top:0;background:linear-gradient(135deg, rgba(255,0,0,.15), var(--panel));border-color:rgba(255,0,0,.3)">
+          <div class="z">
+            <div class="kicker" style="color:#ff4444"><i data-lucide="youtube" style="width:14px;height:14px;display:inline;vertical-align:middle"></i> YouTube Playables Oficial</div>
+            <h2>Mais de 75+ Jogos Gratuitos no YouTube</h2>
+            <p>Jogue títulos famosos como Angry Birds Showdown, Cut the Rope, Trivia Crack e muito mais diretamente no YouTube Playables, sem precisar instalar nada!</p>
+          </div>
+          <a href="https://www.youtube.com/playables" target="_blank" rel="noopener noreferrer" class="btn btn-primary z" style="background:#ff0000;color:#fff;border:none">
+            <i data-lucide="external-link"></i>Abrir YouTube Playables Oficial
+          </a>
+        </div>
+
+        <div class="sec-head" style="margin-top:32px">
+          <div><div class="kicker">Destaques do YouTube</div><h2>Títulos Populares do YouTube Playables</h2></div>
+        </div>
+
+        <div class="browser-grid" id="ytPlayablesGrid">
+          <!-- Angry Birds Showdown -->
+          <div class="browser-game-card" onclick="window.open('https://www.youtube.com/playables','_blank')">
+            <div class="thumb" style="background:#2a1111">
+              <img src="https://images.crazygames.com/angry-birds/20231201103233/angry-birds-cover?auto=format%2Ccompress&q=65&fit=crop&w=480" alt="Angry Birds Showdown" onerror="this.src='https://cdn1.epicgames.com/offer/diesel/Cardpocalypse_OfferImageWide_2560x1440-4286127b3b3a32fbe1364d9db6b3fa2c'">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+            </div>
+            <div class="bbody">
+              <h4>Angry Birds Showdown</h4>
+              <span>YouTube Playables · Ação &amp; Física</span>
+              <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar no YouTube</button>
+            </div>
+          </div>
+
+          <!-- Cut the Rope -->
+          <div class="browser-game-card" onclick="window.open('https://www.youtube.com/playables','_blank')">
+            <div class="thumb" style="background:#112a11">
+              <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/b980a905a396ea4d4c55ecdf81e9b28b.png" alt="Cut the Rope">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+            </div>
+            <div class="bbody">
+              <h4>Cut the Rope</h4>
+              <span>YouTube Playables · Puzzle Clássico</span>
+              <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar no YouTube</button>
+            </div>
+          </div>
+
+          <!-- Trivia Crack (Perguntados) -->
+          <div class="browser-game-card" onclick="window.open('https://www.youtube.com/playables','_blank')">
+            <div class="thumb" style="background:#2a2511">
+              <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/46487ffdb66580f4f0393b3f9dc2c366.png" alt="Trivia Crack" onerror="this.src='https://cdn1.epicgames.com/offer/diesel/Cardpocalypse_OfferImageWide_2560x1440-4286127b3b3a32fbe1364d9db6b3fa2c'">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+            </div>
+            <div class="bbody">
+              <h4>Trivia Crack (Perguntados)</h4>
+              <span>YouTube Playables · Quiz &amp; Conhecimento</span>
+              <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar no YouTube</button>
+            </div>
+          </div>
+
+          <!-- Tomb of the Mask -->
+          <div class="browser-game-card" onclick="window.open('https://www.youtube.com/playables','_blank')">
+            <div class="thumb" style="background:#111b2a">
+              <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/4d2a6a12ee49ea76bb06198f1f7d5494.png" alt="Tomb of the Mask">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+            </div>
+            <div class="bbody">
+              <h4>Tomb of the Mask</h4>
+              <span>YouTube Playables · Arcade Retrô</span>
+              <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar no YouTube</button>
+            </div>
+          </div>
+
+          <!-- Stack Bounce -->
+          <div class="browser-game-card" onclick="window.open('https://www.youtube.com/playables','_blank')">
+            <div class="thumb" style="background:#2a112a">
+              <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/387431f4a9b2d3080ffbfa6b8f36c535.png" alt="Stack Bounce">
+              <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
+            </div>
+            <div class="bbody">
+              <h4>Stack Bounce</h4>
+              <span>YouTube Playables · Casual 3D</span>
+              <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar no YouTube</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -7211,24 +7389,130 @@ const APPS=[
    desc:'Limpa a memória RAM em tempo real para evitar travamentos e stutterings em jogos pesados.', url:'https://github.com/henrypp/memreduct/releases'},
 ];
 
-/* ================= SUBWAY SURFERS IN-SITE EMBEDDED PLAYER ================= */
-function launchSubwayPlayer(){
-  const iframe=$('#subwayIframe'),splash=$('#gameSplash');
-  if(!iframe.src || iframe.src==='about:blank'){
-    iframe.src='https://ubg98.github.io/SubwaySurfers/';
+/* ================= JOGOS DE NAVEGADOR & YOUTUBE PLAYABLES ================= */
+const BROWSER_GAMES = [
+  {
+    id: 'subway-surfers',
+    name: 'Subway Surfers World Tour',
+    category: 'Poki / Corrida Infinita',
+    cover: 'https://images.crazygames.com/subway-surfers-ny/20231201103233/subway-surfers-ny-cover?auto=format%2Ccompress&q=65&fit=crop&w=480',
+    embedUrl: 'https://ubg98.github.io/SubwaySurfers/',
+    controls: 'Setas [⬅️ ➡️] Mover · [⬆️] Pular · [⬇️] Rolar · [Espaço] Skate',
+    desc: 'Corra pelos trilhos de trem, desvie de obstáculos e fuja do inspetor em alta velocidade com 60 FPS e tela cheia!'
+  },
+  {
+    id: 'level-devil',
+    name: 'Level Devil',
+    category: 'Poki / Plataforma & Desafio',
+    cover: 'https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/3bfdc9e7fa1a4e1d141e6e814a706b8c.png',
+    embedUrl: 'https://ubg98.github.io/level-devil/',
+    controls: 'Setas [⬅️ ➡️] ou [A/D] Mover · [Espaço/W/⬆️] Pular',
+    desc: 'O jogo de plataforma troll onde o chão se move, espinhos aparecem do nada e tudo tenta te enganar até a porta!'
+  },
+  {
+    id: 'talking-tom-gold-run',
+    name: 'Talking Tom Gold Run',
+    category: 'Poki / Ação & Corrida',
+    cover: 'https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/029d57a22fa59f93ec4ce38291583df9.png',
+    embedUrl: 'https://poki.com/en/g/talking-tom-gold-run',
+    controls: 'Setas [⬅️ ➡️] Mover de faixa · [⬆️] Pular · [⬇️] Deslizar',
+    desc: 'Persiga o guaxinim ladrão que roubou o ouro de Tom e seus amigos através de mundos coloridos e pistas divertidas!'
+  },
+  {
+    id: 'under-the-red-sky',
+    name: 'Under The Red Sky',
+    category: 'Poki / Aventura & Tiro',
+    cover: 'https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/302061ae49646b9a89d49fe4f1a265ae.png',
+    embedUrl: 'https://poki.com/en/g/under-the-red-sky',
+    controls: '[W A S D] Mover · [Mouse] Mirar e Atirar · [R] Recarregar · [Shift] Correr',
+    desc: 'Sobreviva sob o céu vermelho contra hordas de inimigos misteriosos em um jogo de ação atmosférico e desafiador!'
+  },
+  {
+    id: 'neon-challenge-legends',
+    name: 'Neon Challenge Legends',
+    category: 'Poki / Ação Neon & Habilidade',
+    cover: 'https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/387431f4a9b2d3080ffbfa6b8f36c535.png',
+    embedUrl: 'https://poki.com/en/g/neon-challenge-legends',
+    controls: '[Mouse / Setas] Conduzir a esfera · [Espaço] Impulso de Velocidade',
+    desc: 'Desafios lendários de velocidade neon em trilhas futuristas com reflexos rápidos e trilha sonora eletrizante!'
   }
-  splash.classList.add('hidden');
-  iframe.classList.add('loaded');
-  iframe.focus();
+];
+
+let currentGameId = 'subway-surfers';
+
+function selectBrowserGame(id){
+  const game = BROWSER_GAMES.find(g => g.id === id) || BROWSER_GAMES[0];
+  currentGameId = game.id;
+  
+  const titleEl = $('#playerGameTitle');
+  const controlsEl = $('#playerControls');
+  const splashTitle = $('#splashTitle');
+  const splashDesc = $('#splashDesc');
+  const heroTitle = $('#browserHeroTitle');
+  const heroDesc = $('#browserHeroDesc');
+  
+  if(titleEl) titleEl.textContent = `${game.name} (${game.category})`;
+  if(controlsEl) controlsEl.innerHTML = `<i data-lucide="gamepad-2" style="width:16px;height:16px;color:var(--accent)"></i> <b>Controles:</b> ${game.controls}`;
+  if(splashTitle) splashTitle.textContent = game.name;
+  if(splashDesc) splashDesc.textContent = game.desc;
+  if(heroTitle) heroTitle.textContent = game.name;
+  if(heroDesc) heroDesc.textContent = game.desc;
+
+  $$('.browser-game-card').forEach(c => c.classList.toggle('active', c.dataset.gameid === id));
+  launchBrowserPlayer(game.id);
+}
+
+function launchBrowserPlayer(id){
+  const gameId = id || currentGameId;
+  const game = BROWSER_GAMES.find(g => g.id === gameId) || BROWSER_GAMES[0];
+  const iframe = $('#subwayIframe'), splash = $('#gameSplash');
+  
+  if(iframe){
+    iframe.src = game.embedUrl;
+    iframe.classList.add('loaded');
+    iframe.focus();
+  }
+  if(splash) splash.classList.add('hidden');
+  
   $('#gamePlayerSection').scrollIntoView({behavior:'smooth'});
-  toast('Subway Surfers inicializado no player!', 'play');
+  toast(`${game.name} inicializado no player!`, 'play');
+  refreshIcons();
+}
+
+function launchSubwayPlayer(){
+  selectBrowserGame('subway-surfers');
 }
 
 function reloadSubwayPlayer(){
-  const iframe=$('#subwayIframe');
-  iframe.src='https://ubg98.github.io/SubwaySurfers/';
-  iframe.focus();
-  toast('Player reiniciado', 'rotate-ccw');
+  const game = BROWSER_GAMES.find(g => g.id === currentGameId) || BROWSER_GAMES[0];
+  const iframe = $('#subwayIframe');
+  if(iframe){
+    iframe.src = game.embedUrl;
+    iframe.focus();
+  }
+  toast(`${game.name} reiniciado`, 'rotate-ccw');
+}
+
+function setBrowserSubTab(tab){
+  const secPoki = $('#secPokiBrowser');
+  const secYT = $('#secYouTubePlayables');
+  const tabPoki = $('#tabPoki');
+  const tabYT = $('#tabYT');
+  
+  if(tab === 'youtube'){
+    if(secPoki) secPoki.style.display = 'none';
+    if(secYT) secYT.style.display = 'block';
+    if(tabPoki) tabPoki.classList.remove('on');
+    if(tabYT) tabYT.classList.add('on');
+    toast('YouTube Playables selecionado', 'youtube');
+  } else {
+    if(secPoki) secPoki.style.display = 'block';
+    if(secYT) secYT.style.display = 'none';
+    if(tabPoki) tabPoki.classList.add('on');
+    if(tabYT) tabYT.classList.remove('on');
+    toast('Jogos Poki & HTML5 selecionados', 'play');
+  }
+  refreshIcons();
 }
 
 function togglePlayerFullscreen(){
