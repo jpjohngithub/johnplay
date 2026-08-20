@@ -421,7 +421,7 @@
     <span><span class="live-dot"></span><b>487.230</b> jogadores online agora · 100% Addons Gratuitos & Promoções Oficiais</span>
     <div class="right">
       <a href="#apps">Baixar o JohnPlay</a>
-      <a href="#" onclick="openSourcesModal(); return false;">Fontes Hydra (7)</a>
+      <a href="#" onclick="openSourcesModal(); return false;">Fontes Hydra (10)</a>
       <a href="#promo">Promoções Steam & Epic</a>
       <a href="#">PT-BR</a>
     </div>
@@ -469,7 +469,7 @@
       <div class="stats">
         <div class="stat"><span class="ic"><i data-lucide="users"></i></span><div><b>487.230</b><span>Jogadores online</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="database"></i></span><div><b id="statGames">+100.000+</b><span>Jogos Steam &amp; Epic</span></div></div>
-        <div class="stat"><span class="ic"><i data-lucide="layers"></i></span><div><b>7</b><span>Fontes Hydra Ativas</span></div></div>
+        <div class="stat"><span class="ic"><i data-lucide="layers"></i></span><div><b>10</b><span>Fontes Hydra Ativas</span></div></div>
         <div class="stat"><span class="ic"><i data-lucide="check-circle"></i></span><div><b>100%</b><span>Catálogo Global Ilimitado</span></div></div>
       </div>
 
@@ -830,15 +830,18 @@
 <div class="toasts" id="toasts"></div>
 
 <script>
-/* ================= DADOS COMPLETOS DAS 7 FONTES HYDRA COM CAPAS 100% OFICIAIS STEAM ================= */
+/* ================= DADOS COMPLETOS DE TODAS AS 10 FONTES E ADDONS HYDRA ================= */
 const SOURCES = [
-  { id: 'fitgirl', name: 'FitGirl Repacks', url: 'https://hydralinks.cloud/sources/fitgirl.json', badgeClass: 'source-fitgirl' },
-  { id: 'dodi', name: 'DODI Repacks', url: 'https://hydralinks.cloud/sources/dodi.json', badgeClass: 'source-dodi' },
-  { id: 'steamrip', name: 'SteamRIP (Direct Play)', url: 'https://hydralinks.cloud/sources/steamrip.json', badgeClass: 'source-steamrip' },
-  { id: 'gog', name: 'Free GOG Games (DRM-Free)', url: 'https://hydralinks.cloud/sources/gog.json', badgeClass: 'source-gog' },
-  { id: 'xatab', name: 'Xatab Repacks', url: 'https://hydralinks.cloud/sources/xatab.json', badgeClass: 'source-xatab' },
-  { id: 'atop', name: 'Atop-Games', url: 'https://hydralinks.cloud/sources/atop-games.json', badgeClass: 'source-atop' },
-  { id: 'empress', name: 'Empress Releases', url: 'https://hydralinks.cloud/sources/empress.json', badgeClass: 'source-empress' }
+  { id: 'fitgirl', name: 'FitGirl Repacks', url: 'https://hydralinks.cloud/sources/fitgirl.json', site: 'https://fitgirl-repacks.site/', badgeClass: 'source-fitgirl' },
+  { id: 'dodi', name: 'DODI Repacks', url: 'https://hydralinks.cloud/sources/dodi.json', site: 'https://dodi-repacks.site/', badgeClass: 'source-dodi' },
+  { id: 'steamrip', name: 'SteamRIP (Direct Play)', url: 'https://hydralinks.cloud/sources/steamrip.json', site: 'https://steamrip.com/', badgeClass: 'source-steamrip' },
+  { id: 'gog', name: 'Free GOG Games (DRM-Free)', url: 'https://hydralinks.cloud/sources/gog.json', site: 'https://freegogpcgames.com/', badgeClass: 'source-gog' },
+  { id: 'onlinefix', name: 'Online-Fix (Multiplayer)', url: 'https://hydralinks.cloud/sources/onlinefix.json', site: 'https://online-fix.me/', badgeClass: 'source-empress' },
+  { id: 'xatab', name: 'Xatab Repacks', url: 'https://hydralinks.cloud/sources/xatab.json', site: 'https://byxatab.com/', badgeClass: 'source-xatab' },
+  { id: 'atop', name: 'Atop-Games', url: 'https://hydralinks.cloud/sources/atop-games.json', site: 'https://atop-games.com/', badgeClass: 'source-atop' },
+  { id: 'kaoskrew', name: 'KaosKrew Repacks', url: 'https://hydralinks.cloud/sources/kaoskrew.json', site: 'https://kaoskrew.org/', badgeClass: 'source-dodi' },
+  { id: 'tinyrepacks', name: 'Tiny-Repacks', url: 'https://hydralinks.cloud/sources/tinyrepaks.json', site: 'https://tiny-repacks.win/', badgeClass: 'source-fitgirl' },
+  { id: 'empress', name: 'Empress Releases', url: 'https://hydralinks.cloud/sources/empress.json', site: 'https://hydralinks.cloud/', badgeClass: 'source-empress' }
 ];
 
 let GAMES = [
@@ -8252,29 +8255,34 @@ function renderApps(){
 /* ================= MODAL DETALHES COM OPÇÕES DINÂMICAS HYDRA ================= */
 function openModal(id){
   const g=byId(id);if(!g)return;
-  const srcObj=SOURCES.find(s=>s.id===g.source)||{badgeClass:'source-fitgirl'};
+  const srcObj=SOURCES.find(s=>s.id===g.source)||SOURCES[0];
+  const q = encodeURIComponent(g.name.replace(/\([^)]*\)/g, '').replace(/:\s*Enhanced.*|:\s*Shadow.*|:\s*Deluxe.*|:\s*Edition.*/i, '').trim());
 
-  const mirrorsList = g.mirrors && g.mirrors.length > 0 ? g.mirrors : [
-    { name: `Magnet Torrent (${g.sourceName})`, type: 'magnet', url: g.magnet }
+  const ADDONS_LIST = [
+    { name: 'SteamRIP (Direct Play & DDL)', desc: 'Download direto rápido sem instalador (Extrair e Jogar)', url: `https://steamrip.com/?s=${q}`, badge: 'Recomendado / DDL' },
+    { name: 'FitGirl Repacks (Addon Oficial)', desc: 'Instalador ultra compacto verificado Hydra', url: `https://fitgirl-repacks.site/?s=${q}`, badge: 'Repack Leve' },
+    { name: 'DODI Repacks (Addon Oficial)', desc: 'Instalador rápido completo com todas as DLCs', url: `https://dodi-repacks.site/?s=${q}`, badge: 'Repack Rápido' },
+    { name: 'Free GOG Games (DRM-Free)', desc: 'Instaladores oficiais DRM-Free sem proteção', url: `https://freegogpcgames.com/?s=${q}`, badge: 'DRM-Free' },
+    { name: 'Online-Fix (Multiplayer Co-op)', desc: 'Versão com servidores online e co-op com amigos', url: `https://online-fix.me/index.php?do=search&subaction=search&story=${q}`, badge: 'Multiplayer' },
+    { name: 'Atop-Games (Direct Play)', desc: 'Espelho de download direto de alta velocidade', url: `https://atop-games.com/?s=${q}`, badge: 'Direct Play' },
+    { name: 'Xatab Repacks (Addon)', desc: 'Versão repack clássica e otimizada', url: `https://byxatab.com/index.php?do=search&subaction=search&story=${q}`, badge: 'Repack' },
+    { name: 'KaosKrew Repacks (Addon)', desc: 'Compactação avançada sem perdas', url: `https://kaoskrew.org/?s=${q}`, badge: 'Repack' }
   ];
 
-  const mirrorsHTML = mirrorsList.map((m, idx) => `
+  const mirrorsHTML = ADDONS_LIST.map(m => `
     <div class="dl-option-row">
       <div class="opt-info">
         <h5>
-          <i data-lucide="${m.type==='magnet'?'zap':'download'}" style="width:16px;height:16px;color:var(--emerald)"></i>
+          <i data-lucide="external-link" style="width:16px;height:16px;color:var(--accent)"></i>
           ${m.name}
+          <span style="font-size:10px;background:var(--panel-2);color:var(--accent-hi);border:1px solid var(--border);padding:1px 6px;border-radius:4px;margin-left:6px">${m.badge}</span>
         </h5>
-        <p>${m.type==='magnet' ? 'Download direto P2P de alta velocidade (qBittorrent / Hydra Engine)' : 'Espelho de download direto (Servidor Web)'}</p>
+        <p>${m.desc}</p>
       </div>
       <div class="opt-actions">
-        <button class="opt-btn opt-btn-primary" onclick="triggerDownload('${m.url}','${g.name}','${m.type}')">
-          <i data-lucide="download"></i>Baixar
-        </button>
-        ${m.type==='magnet' ? `
-          <button class="opt-btn opt-btn-ghost" onclick="copyMagnet('${m.url}','${g.name}')" title="Copiar Magnet Link">
-            <i data-lucide="copy"></i>
-          </button>` : ''}
+        <a href="${m.url}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-primary" style="text-decoration:none">
+          <i data-lucide="download"></i>Acessar Addon
+        </a>
       </div>
     </div>
   `).join('');
@@ -8304,9 +8312,9 @@ function openModal(id){
       <div class="download-options-box">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <span style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-hi);display:flex;align-items:center;gap:6px">
-            <i data-lucide="layers" style="width:14px;height:14px"></i> Opções de Download Disponíveis (${mirrorsList.length})
+            <i data-lucide="layers" style="width:14px;height:14px"></i> Redirecionamento Direto para os Addons (${ADDONS_LIST.length})
           </span>
-          <span style="font-size:11px;color:var(--emerald);font-weight:700">100% Funcional</span>
+          <span style="font-size:11px;color:var(--emerald);font-weight:700">Fontes Hydra Oficiais</span>
         </div>
         ${mirrorsHTML}
       </div>
