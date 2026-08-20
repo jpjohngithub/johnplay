@@ -133,6 +133,8 @@
   .source-xatab{background:rgba(245,158,11,.15);color:#fbbf24;border-color:rgba(245,158,11,.4)}
   .source-atop{background:rgba(6,182,212,.15);color:#22d3ee;border-color:rgba(6,182,212,.4)}
   .source-empress{background:rgba(217,70,239,.15);color:#e879f9;border-color:rgba(217,70,239,.4)}
+  .trust-blue{background:rgba(59,130,246,.18);color:#60a5fa;border:1px solid rgba(59,130,246,.4);font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:4px}
+  .trust-green{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.4);font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:4px}
   
   .free-badge{background:rgba(16,185,129,.18);color:var(--emerald);border:1px solid rgba(16,185,129,.4);font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px}
   .tags{display:flex;gap:7px;flex-wrap:wrap}
@@ -975,7 +977,7 @@
     <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:12px">
       <h3 style="font-family:'Barlow Condensed';font-size:28px;text-transform:uppercase">
         <i data-lucide="database" style="display:inline;width:22px;height:22px;color:var(--accent);vertical-align:middle;margin-right:6px"></i>
-        Fontes Oficiais HydraLinks (7 Fontes)
+        Fontes Verificadas Hydra (Trust Azul &amp; Verde) (20 Fontes)
       </h3>
       <button class="modal-close" onclick="closeSourcesModal()"><i data-lucide="x"></i></button>
     </div>
@@ -1045,18 +1047,31 @@
 <div class="toasts" id="toasts"></div>
 
 <script>
-/* ================= DADOS COMPLETOS DE TODAS AS 10 FONTES E ADDONS HYDRA ================= */
+/* ================= FONTES E ADDONS HYDRA VERIFICADAS (TRUST AZUL & VERDE) ================= */
 const SOURCES = [
-  { id: 'fitgirl', name: 'FitGirl Repacks', url: 'https://hydralinks.cloud/sources/fitgirl.json', site: 'https://fitgirl-repacks.site/', badgeClass: 'source-fitgirl' },
-  { id: 'dodi', name: 'DODI Repacks', url: 'https://hydralinks.cloud/sources/dodi.json', site: 'https://dodi-repacks.site/', badgeClass: 'source-dodi' },
-  { id: 'steamrip', name: 'SteamRIP (Direct Play)', url: 'https://hydralinks.cloud/sources/steamrip.json', site: 'https://steamrip.com/', badgeClass: 'source-steamrip' },
-  { id: 'gog', name: 'Free GOG Games (DRM-Free)', url: 'https://hydralinks.cloud/sources/gog.json', site: 'https://freegogpcgames.com/', badgeClass: 'source-gog' },
-  { id: 'onlinefix', name: 'Online-Fix (Multiplayer)', url: 'https://hydralinks.cloud/sources/onlinefix.json', site: 'https://online-fix.me/', badgeClass: 'source-empress' },
-  { id: 'xatab', name: 'Xatab Repacks', url: 'https://hydralinks.cloud/sources/xatab.json', site: 'https://byxatab.com/', badgeClass: 'source-xatab' },
-  { id: 'atop', name: 'Atop-Games', url: 'https://hydralinks.cloud/sources/atop-games.json', site: 'https://atop-games.com/', badgeClass: 'source-atop' },
-  { id: 'kaoskrew', name: 'KaosKrew Repacks', url: 'https://hydralinks.cloud/sources/kaoskrew.json', site: 'https://kaoskrew.org/', badgeClass: 'source-dodi' },
-  { id: 'tinyrepacks', name: 'Tiny-Repacks', url: 'https://hydralinks.cloud/sources/tinyrepaks.json', site: 'https://tiny-repacks.win/', badgeClass: 'source-fitgirl' },
-  { id: 'empress', name: 'Empress Releases', url: 'https://hydralinks.cloud/sources/empress.json', site: 'https://hydralinks.cloud/', badgeClass: 'source-empress' }
+  // --- TRUST AZUL (OFICIAL / TRUSTED) ---
+  { id: 'fitgirl', name: 'FitGirl Repacks', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/fitgirl.json', site: 'https://fitgirl-repacks.site/', badgeClass: 'source-fitgirl' },
+  { id: 'steamrip', name: 'SteamRIP (Direct Play)', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/steamrip.json', site: 'https://steamrip.com/', badgeClass: 'source-steamrip' },
+  { id: 'onlinefix', name: 'Online-Fix (Multiplayer)', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/onlinefix.json', site: 'https://online-fix.me/', badgeClass: 'source-empress' },
+  { id: 'dodi', name: 'DODI Repacks', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/dodi.json', site: 'https://dodi-repacks.site/', badgeClass: 'source-dodi' },
+  { id: 'gog', name: 'Free GOG Games (DRM-Free)', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/gog.json', site: 'https://freegogpcgames.com/', badgeClass: 'source-gog' },
+  { id: 'xatab', name: 'ByXatab Repacks', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/xatab.json', site: 'https://byxatab.com/', badgeClass: 'source-xatab' },
+  { id: 'atop', name: 'Atop-Games', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/atop-games.json', site: 'https://atop-games.com/', badgeClass: 'source-atop' },
+  { id: 'rexagames', name: 'RexaGames (DDL)', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/rexagames.json', site: 'https://rexagames.com/', badgeClass: 'source-steamrip' },
+  { id: 'kaoskrew', name: 'KaOsKrew Repacks', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/kaoskrew.json', site: 'https://kaoskrew.org/', badgeClass: 'source-dodi' },
+  { id: 'tinyrepacks', name: 'Tiny-Repacks', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/tinyrepacks.json', site: 'https://tiny-repacks.win/', badgeClass: 'source-fitgirl' },
+  { id: 'empress', name: 'Empress Releases', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/empress.json', site: 'https://hydralinks.cloud/', badgeClass: 'source-empress' },
+  { id: 'psxroms', name: 'PsxRoms Classics', trust: 'blue', trustLabel: 'Oficial (Azul)', url: 'https://hydralinks.cloud/sources/psx-roms.json', site: 'https://psxroms.net/', badgeClass: 'source-fitgirl' },
+
+  // --- TRUST VERDE (SAFE FOR USE / SEGURO) ---
+  { id: 'steamgg', name: 'SteamGG (Pre-Installed)', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://wkeynhk.online/steamgg.json', site: 'https://steamgg.net/', badgeClass: 'source-steamrip' },
+  { id: 'davidkazumi', name: 'David Kazumi Source', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://davidkazumisource.com/fontekazumi.json', site: 'https://davidkazumisource.com/', badgeClass: 'source-dodi' },
+  { id: 'rutracker', name: 'RuTracker & Rutor', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://wkeynhk.online/rutor.json', site: 'https://rutracker.org/', badgeClass: 'source-xatab' },
+  { id: 'shisuy', name: "Shisuy's (Repack-Games)", trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://raw.githubusercontent.com/Shisuiicaro/source/refs/heads/main/shisuyssource.json', site: 'https://repack-games.com/', badgeClass: 'source-steamrip' },
+  { id: 'ankergames', name: 'AnkerGames', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://wkeynhk.online/ankergames.json', site: 'https://ankergames.net/', badgeClass: 'source-atop' },
+  { id: 'freetp', name: 'FreeTP.Org (Multiplayer)', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://hydrasources.su/freetp_games.json', site: 'https://freetp.org/', badgeClass: 'source-empress' },
+  { id: 'elamigos', name: 'ElAmigos Repacks', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://raw.githubusercontent.com/vinikjkkj/game-links-collection/refs/heads/master/jsons/elamigos.json', site: 'https://elamigos.site/', badgeClass: 'source-fitgirl' },
+  { id: 'antidenuvo', name: 'Anti-Denuvo Sanctuary', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://git.denuvosanctuary.com/denuvosanctuary/hydra/raw/branch/main/source.json', site: 'https://denuvosanctuary.com/', badgeClass: 'source-gog' }
 ];
 
 let GAMES = [
@@ -9077,68 +9092,160 @@ function openModal(id){
   const directAtop = g.mirrors?.find(m => m.name.toLowerCase().includes('atop') && !m.url.startsWith('magnet:'))?.url;
 
   const ADDONS_LIST = [
+    // --- TRUST AZUL (OFICIAL / TRUSTED) ---
     { 
       name: 'SteamRIP (Direct Play & DDL)', 
       desc: 'Download direto rápido sem instalador (Extrair e Jogar)', 
       siteUrl: directSteamRIP || `https://steamrip.com/?s=${q}`, 
       magnet: buildInstantMagnet(g.name, 'SteamRIP', g.source === 'steamrip' ? g.magnet : null),
-      badge: 'Recomendado / DDL' 
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
     },
     { 
       name: 'FitGirl Repacks (Addon Oficial)', 
       desc: 'Instalador ultra compacto verificado Hydra', 
       siteUrl: directFitGirl || `https://fitgirl-repacks.site/?s=${q}`, 
       magnet: buildInstantMagnet(g.name, 'FitGirl Repacks', g.source === 'fitgirl' ? g.magnet : null),
-      badge: 'Repack Leve' 
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
     },
     { 
       name: 'DODI Repacks (Addon Oficial)', 
       desc: 'Instalador rápido completo com todas as DLCs', 
       siteUrl: directDODI || `https://dodi-repacks.site/?s=${q}`, 
       magnet: buildInstantMagnet(g.name, 'DODI Repacks', g.source === 'dodi' ? g.magnet : null),
-      badge: 'Repack Rápido' 
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
     },
     { 
       name: 'Free GOG Games (DRM-Free)', 
       desc: 'Instaladores oficiais DRM-Free sem proteção', 
       siteUrl: directGOG || `https://freegogpcgames.com/?s=${q}`, 
       magnet: buildInstantMagnet(g.name, 'Free GOG Games', g.source === 'gog' ? g.magnet : null),
-      badge: 'DRM-Free' 
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
     },
     { 
       name: 'Online-Fix (Multiplayer Co-op)', 
       desc: 'Versão com servidores online e co-op com amigos', 
       siteUrl: directOnlineFix || `https://online-fix.me/index.php?do=search&subaction=search&story=${q}`, 
       magnet: buildInstantMagnet(g.name, 'Online-Fix', g.source === 'onlinefix' ? g.magnet : null),
-      badge: 'Multiplayer' 
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
+    },
+    { 
+      name: 'ByXatab Repacks (Oficial)', 
+      desc: 'Versão repack clássica russa otimizada e confiável', 
+      siteUrl: `https://byxatab.com/index.php?do=search&subaction=search&story=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'ByXatab Repacks'),
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
     },
     { 
       name: 'Atop-Games (Direct Play)', 
       desc: 'Espelho de download direto de alta velocidade', 
       siteUrl: directAtop || `https://atop-games.com/?s=${q}`, 
       magnet: buildInstantMagnet(g.name, 'Atop-Games', g.source === 'atop' ? g.magnet : null),
-      badge: 'Direct Play' 
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
     },
     { 
-      name: 'Xatab Repacks (Addon)', 
-      desc: 'Versão repack clássica e otimizada', 
-      siteUrl: `https://byxatab.com/index.php?do=search&subaction=search&story=${q}`, 
-      magnet: buildInstantMagnet(g.name, 'Xatab Repacks'),
-      badge: 'Repack' 
+      name: 'RexaGames (Direct Download)', 
+      desc: 'Jogos de PC pré-instalados via links diretos seguros', 
+      siteUrl: `https://rexagames.com/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'RexaGames'),
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
     },
     { 
-      name: 'KaosKrew Repacks (Addon)', 
-      desc: 'Compactação avançada sem perdas', 
+      name: 'KaOsKrew Repacks', 
+      desc: 'Compactação avançada sem perdas de áudio/vídeo', 
       siteUrl: `https://kaoskrew.org/?s=${q}`, 
-      magnet: buildInstantMagnet(g.name, 'KaosKrew Repacks'),
-      badge: 'Repack' 
+      magnet: buildInstantMagnet(g.name, 'KaOsKrew Repacks'),
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
+    },
+    { 
+      name: 'Tiny-Repacks (Addon)', 
+      desc: 'Repacks compactos e leves verificados', 
+      siteUrl: `https://tiny-repacks.win/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'Tiny-Repacks'),
+      badge: 'Trust Azul (Oficial)',
+      badgeClass: 'trust-blue'
+    },
+
+    // --- TRUST VERDE (SAFE FOR USE / SEGURO) ---
+    { 
+      name: 'SteamGG (Pre-Installed)', 
+      desc: 'Biblioteca de jogos pré-instalados rápidos', 
+      siteUrl: `https://steamgg.net/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'SteamGG'),
+      badge: 'Trust Verde (Seguro)',
+      badgeClass: 'trust-green'
+    },
+    { 
+      name: 'David Kazumi Source', 
+      desc: 'Fonte comunitária verificada da comunidade Hydra', 
+      siteUrl: `https://davidkazumisource.com/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'David Kazumi'),
+      badge: 'Trust Verde (Seguro)',
+      badgeClass: 'trust-green'
+    },
+    { 
+      name: 'RuTracker & Rutor Torrents', 
+      desc: 'Maior acervo mundial de Torrents com alta taxa de seeders', 
+      siteUrl: `https://rutor.info/search/0/0/0/0/${q}`, 
+      magnet: buildInstantMagnet(g.name, 'RuTracker & Rutor'),
+      badge: 'Trust Verde (Seguro)',
+      badgeClass: 'trust-green'
+    },
+    { 
+      name: "Shisuy's (Repack-Games)", 
+      desc: 'Downloads rápidos espelhados de Repack-Games', 
+      siteUrl: `https://repack-games.com/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, "Shisuy's Source"),
+      badge: 'Trust Verde (Seguro)',
+      badgeClass: 'trust-green'
+    },
+    { 
+      name: 'AnkerGames (Direct)', 
+      desc: 'Jogos populares verificados com links diretos', 
+      siteUrl: `https://ankergames.net/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'AnkerGames'),
+      badge: 'Trust Verde (Seguro)',
+      badgeClass: 'trust-green'
+    },
+    { 
+      name: 'FreeTP.Org (Multiplayer Fix)', 
+      desc: 'Jogos completos com correções online para jogar junto', 
+      siteUrl: `https://freetp.org/index.php?do=search&subaction=search&story=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'FreeTP.Org'),
+      badge: 'Trust Verde (Seguro)',
+      badgeClass: 'trust-green'
+    },
+    { 
+      name: 'ElAmigos Repacks', 
+      desc: 'Instaladores limpos, rápidos e com atualizações integradas', 
+      siteUrl: `https://elamigos.site/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'ElAmigos'),
+      badge: 'Trust Verde (Seguro)',
+      badgeClass: 'trust-green'
+    },
+    { 
+      name: 'Anti-Denuvo Sanctuary', 
+      desc: 'Arquivos limpos para ativação offline', 
+      siteUrl: `https://denuvosanctuary.com/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'Anti-Denuvo Sanctuary'),
+      badge: 'Trust Verde (Seguro)',
+      badgeClass: 'trust-green'
     },
     { 
       name: 'Hydra Wiki Library (Busca Global)', 
-      desc: 'Pesquisa ao vivo em todas as 10+ fontes Hydra', 
+      desc: 'Pesquisa ao vivo em todas as 20+ fontes Hydra', 
       siteUrl: `https://library.hydra.wiki/search/?q=${q}`, 
       magnet: buildInstantMagnet(g.name, 'Hydra Wiki Library'),
-      badge: 'Hydra Live' 
+      badge: 'Trust Verde (Seguro)',
+      badgeClass: 'trust-green'
     }
   ];
 
@@ -9148,7 +9255,7 @@ function openModal(id){
         <h5>
           <i data-lucide="layers" style="width:16px;height:16px;color:var(--accent)"></i>
           ${m.name}
-          <span style="font-size:10px;background:var(--panel-2);color:var(--accent-hi);border:1px solid var(--border);padding:1px 6px;border-radius:4px;margin-left:6px">${m.badge}</span>
+          <span class="${m.badgeClass || 'trust-blue'}" style="margin-left:6px">${m.badge}</span>
         </h5>
         <p>${m.desc}</p>
       </div>
@@ -9190,9 +9297,9 @@ function openModal(id){
       <div class="download-options-box">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
           <span style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-hi);display:flex;align-items:center;gap:6px">
-            <i data-lucide="zap" style="width:14px;height:14px;color:var(--emerald)"></i> Download Instantâneo &amp; Addons (${ADDONS_LIST.length})
+            <i data-lucide="shield-check" style="width:15px;height:15px;color:var(--emerald)"></i> Fontes Verificadas Hydra (Trust Azul &amp; Verde) (${ADDONS_LIST.length})
           </span>
-          <span style="font-size:11px;color:var(--emerald);font-weight:700">⚡ Estilo Hydra Launcher</span>
+          <span style="font-size:11px;color:var(--emerald);font-weight:700">⚡ Padrão Oficial Hydra</span>
         </div>
         ${mirrorsHTML}
       </div>
@@ -9226,14 +9333,22 @@ $('#modalOverlay').addEventListener('click',e=>{if(e.target.id==='modalOverlay')
 /* ================= SOURCES MODAL ================= */
 function openSourcesModal(){
   $('#sourcesModalList').innerHTML=SOURCES.map(s=>`
-    <div class="source-item">
-      <div class="info">
-        <h4>${s.name}</h4>
-        <p>${s.url}</p>
+    <div class="source-item" style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;background:var(--panel-2)">
+      <div class="info" style="flex:1;min-width:0;margin-right:12px">
+        <h4 style="margin:0 0 4px 0;display:flex;align-items:center;gap:8px;font-size:15px">
+          ${s.name}
+          <span class="${s.trust === 'blue' ? 'trust-blue' : 'trust-green'}">${s.trustLabel || (s.trust === 'blue' ? 'Oficial (Azul)' : 'Seguro (Verde)')}</span>
+        </h4>
+        <p style="margin:0;font-size:11.5px;color:var(--muted);word-break:break-all">${s.url}</p>
       </div>
-      <button onclick="navigator.clipboard.writeText('${s.url}'); toast('URL da fonte copiada!','copy')">
-        Copiar URL
-      </button>
+      <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+        <a href="${s.site}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-ghost" style="text-decoration:none;padding:6px 12px;font-size:12px">
+          <i data-lucide="external-link" style="width:13px;height:13px"></i>Site
+        </a>
+        <button class="opt-btn opt-btn-primary" style="padding:6px 12px;font-size:12px" onclick="navigator.clipboard.writeText('${s.url}'); toast('URL JSON copiada!','copy')">
+          <i data-lucide="copy" style="width:13px;height:13px"></i>Copiar JSON
+        </button>
+      </div>
     </div>
   `).join('');
   $('#sourcesModalOverlay').classList.add('show');
