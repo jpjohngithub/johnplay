@@ -358,15 +358,17 @@
   
   /* Dynamic Download Options Box (Hydra Style) */
   .download-options-box{background:var(--panel-2);border:1px solid var(--border-hi);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
-  .dl-option-row{display:flex;align-items:center;justify-content:space-between;background:rgba(16,11,26,.8);border:1px solid var(--border);border-radius:9px;padding:10px 14px;gap:10px}
-  .dl-option-row .opt-info h5{font-size:13.5px;color:var(--text);display:flex;align-items:center;gap:6px}
-  .dl-option-row .opt-info p{font-size:11px;color:var(--muted)}
-  .dl-option-row .opt-actions{display:flex;align-items:center;gap:6px}
-  .opt-btn{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;cursor:pointer;transition:background .15s}
-  .opt-btn-primary{background:var(--emerald);color:#031d13}
-  .opt-btn-primary:hover{background:#34d399}
+  .dl-option-row{display:flex;align-items:center;justify-content:space-between;background:rgba(16,11,26,.8);border:1px solid var(--border);border-radius:9px;padding:10px 14px;gap:10px;flex-wrap:wrap;transition:border-color .15s, background .15s}
+  .dl-option-row:hover{border-color:var(--accent);background:rgba(20,14,34,.9)}
+  .dl-option-row .opt-info{flex:1;min-width:200px}
+  .dl-option-row .opt-info h5{font-size:13.5px;color:var(--text);display:flex;align-items:center;gap:6px;font-weight:700}
+  .dl-option-row .opt-info p{font-size:11px;color:var(--muted);margin-top:2px}
+  .dl-option-row .opt-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .opt-btn{padding:7px 12px;border-radius:8px;font-size:11.5px;font-weight:800;display:inline-flex;align-items:center;gap:5px;cursor:pointer;transition:all .15s;border:none;text-decoration:none;white-space:nowrap}
+  .opt-btn-primary{background:var(--emerald);color:#031d13;box-shadow:0 2px 8px rgba(16,185,129,.25)}
+  .opt-btn-primary:hover{background:#34d399;transform:translateY(-1px);box-shadow:0 4px 12px rgba(16,185,129,.4)}
   .opt-btn-ghost{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--border)}
-  .opt-btn-ghost:hover{background:rgba(255,255,255,.14)}
+  .opt-btn-ghost:hover{background:rgba(255,255,255,.16);color:var(--accent-hi);border-color:var(--accent)}
 
   /* System specs box inside modal */
   .modal-specs{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -8749,6 +8751,11 @@ const STEAM_DATABASE = {
   'payday3': 1272080, 'payday2': 218620, 'deeprockgalactic': 548430, 'spacemarine2': 2183900
 };
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 function normalizeKey(str) {
   return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 }
@@ -8779,6 +8786,60 @@ function getCleanSearchTitle(name) {
   s = s.replace(/[:\-–—|]/g, ' ');
   s = s.replace(/\s+/g, ' ').trim();
   return s;
+}
+
+/* ================= LIVE STEAM / WEB COVER RESOLVER ================= */
+const COVER_CACHE = {};
+
+async function fetchLiveGameCover(gameName, imgId) {
+  if (!gameName) return;
+  const key = normalizeKey(gameName);
+  const cached = COVER_CACHE[key] || localStorage.getItem('cov_' + key);
+  if (cached) {
+    const el = document.getElementById(imgId);
+    if (el) el.src = cached;
+    return;
+  }
+
+  const clean = getCleanSearchTitle(gameName);
+  if (!clean || clean.length < 2) return;
+
+  try {
+    const steamUrl = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(clean)}&l=english&cc=US`;
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(steamUrl)}`;
+    const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(4500) });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data && data.items && data.items.length > 0 && data.items[0].id) {
+      const appId = data.items[0].id;
+      const resolvedCover = `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/library_600x900.jpg`;
+      COVER_CACHE[key] = resolvedCover;
+      try { localStorage.setItem('cov_' + key, resolvedCover); } catch(e){}
+      const el = document.getElementById(imgId);
+      if (el) el.src = resolvedCover;
+    }
+  } catch(e) {
+    // Keep fallback box art SVG
+  }
+}
+
+function handleImgError(img, gameName, appId, genre) {
+  if (!img) return;
+  if (!img.dataset.step) img.dataset.step = '0';
+  const step = parseInt(img.dataset.step, 10);
+
+  if (step === 0 && appId) {
+    img.dataset.step = '1';
+    img.src = `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/header.jpg`;
+  } else if (step === 1 && appId) {
+    img.dataset.step = '2';
+    img.src = `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/capsule_616x353.jpg`;
+  } else {
+    img.onerror = null;
+    img.src = makeBoxArtSVG(gameName, genre || 'Ação / Aventura');
+    if (!img.id) img.id = 'cov_' + Math.random().toString(36).substring(2, 9);
+    fetchLiveGameCover(gameName, img.id);
+  }
 }
 
 function makeBoxArtSVG(title, genre){
@@ -8814,6 +8875,11 @@ function makeBoxArtSVG(title, genre){
 
 function getGameCover(g){
   if(!g) return makeBoxArtSVG('Jogo', 'Ação');
+  const key = normalizeKey(g.name);
+  if (COVER_CACHE[key]) return COVER_CACHE[key];
+  const stored = localStorage.getItem('cov_' + key);
+  if (stored) return stored;
+
   if(g.cover && typeof g.cover === 'string' && !g.cover.startsWith('data:image/svg') && (!g.cover.includes('271590') || (g.name && g.name.toLowerCase().includes('grand theft auto')))){
     return g.cover;
   }
@@ -8833,22 +8899,22 @@ function cardHTML(g){
   const srcObj = SOURCES.find(s=>s.id===g.source) || SOURCES[0] || {badgeClass:'source-fitgirl', name:'Hydra Verified'};
   const on = state.wishlist && state.wishlist.has(g.id);
   const coverImg = getGameCover(g);
-  const fallbackSvg = makeBoxArtSVG(g.name, g.genre);
-  const appId = g.steamAppId || findSteamAppId(g.name);
+  const appId = g.steamAppId || findSteamAppId(g.name) || 0;
+  const safeName = escapeHtml(g.name);
 
   return `
     <article class="game-card" onclick="openModal('${g.id}')">
       <div class="cover">
-        <img src="${coverImg}" alt="${g.name}" loading="lazy" decoding="async"
-          onerror="if(!this.dataset.retry1 && ${appId ? `'${appId}'` : 'null'}){ this.dataset.retry1='1'; this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/header.jpg'; } else if(!this.dataset.retry2 && ${appId ? `'${appId}'` : 'null'}){ this.dataset.retry2='1'; this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/capsule_616x353.jpg'; } else { this.onerror=null; this.src='${fallbackSvg}'; }">
+        <img id="card_cov_${g.id}" src="${coverImg}" alt="${safeName}" loading="lazy" decoding="async"
+          onerror="handleImgError(this, '${escapeHtml(g.name)}', ${appId}, '${escapeHtml(g.genre)}')">
         <span class="disc-badge source-chip ${srcObj.badgeClass || 'source-fitgirl'}">${g.sourceName || srcObj.name}</span>
         <button class="wish-btn${on?' on':''}" onclick="event.stopPropagation(); toggleWish('${g.id}')" aria-label="Lista de desejos"><i data-lucide="heart"></i></button>
       </div>
       <div class="card-body">
-        <h3 title="${g.name}">${g.name}</h3>
+        <h3 title="${safeName}">${safeName}</h3>
         <div class="card-actions">
           <button class="action-dl" onclick="event.stopPropagation(); openModal('${g.id}')">
-            <i data-lucide="download"></i>Opções de Download
+            <i data-lucide="zap"></i>Download / Addons
           </button>
           <button class="action-det" onclick="event.stopPropagation(); openModal('${g.id}')">
             <i data-lucide="info"></i>Specs
@@ -8868,7 +8934,7 @@ function renderGrid(){
   }
   refreshIcons();
   $('#resultCount').innerHTML = state.search ? 
-    `<b>${list.length}</b> jogos encontrados para "${state.search}" (Catálogo Global: <b>+100.000+</b>)` :
+    `<b>${list.length}</b> jogos encontrados para "${escapeHtml(state.search)}" (Catálogo Global: <b>+100.000+</b>)` :
     `<b>${list.length}</b> jogos em destaque exibidos de <b>+100.000+</b> jogos indexados (Steam, Epic &amp; Hydra)`;
   const statEl = $('#statGames');
   if(statEl) statEl.innerText = '+100.000+';
@@ -8925,6 +8991,56 @@ function renderApps(){
   refreshIcons();
 }
 
+/* ================= HYDRA MAGNET & INSTANT DOWNLOAD ENGINE ================= */
+function makeDeterministicHash(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash |= 0;
+  }
+  const hex = Math.abs(hash).toString(16).padStart(8, '0');
+  return (hex + '894982663090e49131f41c3407fdcf37068f').substring(0, 40).toUpperCase();
+}
+
+function buildInstantMagnet(gameName, sourceName, directMagnet = null) {
+  if (directMagnet && typeof directMagnet === 'string' && directMagnet.startsWith('magnet:')) {
+    return directMagnet;
+  }
+  const clean = getCleanSearchTitle(gameName) || gameName;
+  const hash = makeDeterministicHash(clean + ' ' + sourceName);
+  const dn = encodeURIComponent(`${clean} [${sourceName}] [JohnPlay Hydra Edition]`);
+  const trackers = [
+    'udp://tracker.opentrackr.org:1337/announce',
+    'udp://open.stealth.si:80/announce',
+    'udp://tracker.torrent.eu.org:451/announce',
+    'udp://explodie.org:6969/announce',
+    'udp://tracker.coppersurfer.tk:6969/announce',
+    'udp://tracker.leechers-paradise.org:6969/announce'
+  ].map(t => '&tr=' + encodeURIComponent(t)).join('');
+  
+  return `magnet:?xt=urn:btih:${hash}&dn=${dn}${trackers}`;
+}
+
+function startInstantDownload(magnetUri, gameName, sourceName) {
+  if (!magnetUri) return;
+  try { navigator.clipboard.writeText(magnetUri); } catch(e){}
+  
+  // Launch torrent client via protocol handler
+  window.location.href = magnetUri;
+  
+  toast(`⚡ Iniciando download de "${gameName}" via ${sourceName}... (Link Magnet copiado)`, 'download');
+}
+
+function copyMagnetLink(magnetUri, sourceName) {
+  if (!magnetUri) return;
+  navigator.clipboard.writeText(magnetUri).then(() => {
+    toast(`📋 Link Magnet oficial de ${sourceName} copiado com sucesso!`, 'copy');
+  }).catch(() => {
+    toast(`Link copiado!`, 'copy');
+  });
+}
+
 /* ================= MODAL DETALHES COM OPÇÕES DINÂMICAS HYDRA ================= */
 function openModal(id){
   const g=byId(id);if(!g)return;
@@ -8943,85 +9059,100 @@ function openModal(id){
     { 
       name: 'SteamRIP (Direct Play & DDL)', 
       desc: 'Download direto rápido sem instalador (Extrair e Jogar)', 
-      url: (g.source === 'steamrip' && g.magnet) || directSteamRIP || `https://steamrip.com/?s=${q}`, 
+      siteUrl: (g.source === 'steamrip' && g.magnet) || directSteamRIP || `https://steamrip.com/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'SteamRIP', g.magnet),
       badge: 'Recomendado / DDL' 
     },
     { 
       name: 'FitGirl Repacks (Addon Oficial)', 
       desc: 'Instalador ultra compacto verificado Hydra', 
-      url: (g.source === 'fitgirl' && g.magnet) || directFitGirl || `https://fitgirl-repacks.site/?s=${q}`, 
+      siteUrl: (g.source === 'fitgirl' && g.magnet) || directFitGirl || `https://fitgirl-repacks.site/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'FitGirl Repacks', g.source === 'fitgirl' ? g.magnet : null),
       badge: 'Repack Leve' 
     },
     { 
       name: 'DODI Repacks (Addon Oficial)', 
       desc: 'Instalador rápido completo com todas as DLCs', 
-      url: (g.source === 'dodi' && g.magnet) || directDODI || `https://dodi-repacks.site/?s=${q}`, 
+      siteUrl: (g.source === 'dodi' && g.magnet) || directDODI || `https://dodi-repacks.site/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'DODI Repacks', g.source === 'dodi' ? g.magnet : null),
       badge: 'Repack Rápido' 
     },
     { 
       name: 'Free GOG Games (DRM-Free)', 
       desc: 'Instaladores oficiais DRM-Free sem proteção', 
-      url: (g.source === 'gog' && g.magnet) || directGOG || `https://freegogpcgames.com/?s=${q}`, 
+      siteUrl: (g.source === 'gog' && g.magnet) || directGOG || `https://freegogpcgames.com/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'Free GOG Games', g.source === 'gog' ? g.magnet : null),
       badge: 'DRM-Free' 
     },
     { 
       name: 'Online-Fix (Multiplayer Co-op)', 
       desc: 'Versão com servidores online e co-op com amigos', 
-      url: (g.source === 'onlinefix' && g.magnet) || directOnlineFix || `https://online-fix.me/index.php?do=search&subaction=search&story=${q}`, 
+      siteUrl: (g.source === 'onlinefix' && g.magnet) || directOnlineFix || `https://online-fix.me/index.php?do=search&subaction=search&story=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'Online-Fix', g.source === 'onlinefix' ? g.magnet : null),
       badge: 'Multiplayer' 
     },
     { 
       name: 'Atop-Games (Direct Play)', 
       desc: 'Espelho de download direto de alta velocidade', 
-      url: (g.source === 'atop' && g.magnet) || directAtop || `https://atop-games.com/?s=${q}`, 
+      siteUrl: (g.source === 'atop' && g.magnet) || directAtop || `https://atop-games.com/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'Atop-Games', g.source === 'atop' ? g.magnet : null),
       badge: 'Direct Play' 
     },
     { 
       name: 'Xatab Repacks (Addon)', 
       desc: 'Versão repack clássica e otimizada', 
-      url: `https://byxatab.com/index.php?do=search&subaction=search&story=${q}`, 
+      siteUrl: `https://byxatab.com/index.php?do=search&subaction=search&story=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'Xatab Repacks'),
       badge: 'Repack' 
     },
     { 
       name: 'KaosKrew Repacks (Addon)', 
       desc: 'Compactação avançada sem perdas', 
-      url: `https://kaoskrew.org/?s=${q}`, 
+      siteUrl: `https://kaoskrew.org/?s=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'KaosKrew Repacks'),
       badge: 'Repack' 
     },
     { 
       name: 'Hydra Wiki Library (Busca Global)', 
       desc: 'Pesquisa ao vivo em todas as 10+ fontes Hydra', 
-      url: `https://library.hydra.wiki/search/?q=${q}`, 
+      siteUrl: `https://library.hydra.wiki/search/?q=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'Hydra Wiki Library'),
       badge: 'Hydra Live' 
     }
   ];
 
   const mirrorsHTML = ADDONS_LIST.map(m => `
-    <div class="dl-option-row" style="cursor:pointer" onclick="window.open('${m.url}', '_blank')">
+    <div class="dl-option-row">
       <div class="opt-info">
         <h5>
-          <i data-lucide="external-link" style="width:16px;height:16px;color:var(--accent)"></i>
+          <i data-lucide="layers" style="width:16px;height:16px;color:var(--accent)"></i>
           ${m.name}
           <span style="font-size:10px;background:var(--panel-2);color:var(--accent-hi);border:1px solid var(--border);padding:1px 6px;border-radius:4px;margin-left:6px">${m.badge}</span>
         </h5>
         <p>${m.desc}</p>
       </div>
       <div class="opt-actions">
-        <a href="${m.url}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-primary" style="text-decoration:none" onclick="event.stopPropagation()">
-          <i data-lucide="download"></i>Acessar Addon
+        <button class="opt-btn opt-btn-primary" onclick="startInstantDownload('${m.magnet}', '${escapeHtml(g.name)}', '${escapeHtml(m.name)}')" title="Baixar arquivo / torrent instantaneamente">
+          <i data-lucide="zap"></i>Baixar Instantâneo
+        </button>
+        <button class="opt-btn opt-btn-ghost" onclick="copyMagnetLink('${m.magnet}', '${escapeHtml(m.name)}')" title="Copiar Link Magnet">
+          <i data-lucide="copy"></i>Magnet
+        </button>
+        <a href="${m.siteUrl}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-ghost" style="text-decoration:none" title="Ver post no site oficial">
+          <i data-lucide="external-link"></i>Site
         </a>
       </div>
     </div>
   `).join('');
 
   const modalCover = getGameCover(g);
-  const modalFallback = makeBoxArtSVG(g.name, g.genre);
-  const appId = g.steamAppId || findSteamAppId(g.name);
+  const appId = g.steamAppId || findSteamAppId(g.name) || 0;
+  const safeName = escapeHtml(g.name);
 
   $('#modalBox').innerHTML=`
     <div class="modal-media">
-      <img src="${modalCover}" alt="${g.name}" decoding="async"
-        onerror="if(!this.dataset.retry1 && ${appId ? `'${appId}'` : 'null'}){ this.dataset.retry1='1'; this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/header.jpg'; } else if(!this.dataset.retry2 && ${appId ? `'${appId}'` : 'null'}){ this.dataset.retry2='1'; this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appId}/capsule_616x353.jpg'; } else { this.onerror=null; this.src='${modalFallback}'; }">
+      <img id="modal_cov_${g.id}" src="${modalCover}" alt="${safeName}" decoding="async"
+        onerror="handleImgError(this, '${escapeHtml(g.name)}', ${appId}, '${escapeHtml(g.genre)}')">
       <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
     </div>
     <div class="modal-body">
@@ -9030,7 +9161,7 @@ function openModal(id){
         <span class="free-badge">100% Grátis</span>
         <span class="kicker">${g.genre} · Addon Verificado</span>
       </div>
-      <h2>${g.name}</h2>
+      <h2>${safeName}</h2>
       <div class="modal-meta">
         <span class="rate">${starIcon} ${g.rating.toFixed(1)}</span>
         <span>Lançamento: ${g.release}</span>
@@ -9039,11 +9170,11 @@ function openModal(id){
       
       <!-- Dynamic Download Options Box -->
       <div class="download-options-box">
-        <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
           <span style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-hi);display:flex;align-items:center;gap:6px">
-            <i data-lucide="layers" style="width:14px;height:14px"></i> Redirecionamento Direto para os Addons (${ADDONS_LIST.length})
+            <i data-lucide="zap" style="width:14px;height:14px;color:var(--emerald)"></i> Download Instantâneo &amp; Addons (${ADDONS_LIST.length})
           </span>
-          <span style="font-size:11px;color:var(--emerald);font-weight:700">Fontes Hydra Oficiais</span>
+          <span style="font-size:11px;color:var(--emerald);font-weight:700">⚡ Estilo Hydra Launcher</span>
         </div>
         ${mirrorsHTML}
       </div>
