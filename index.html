@@ -8072,7 +8072,7 @@ function getFiltered(){
         rating: 4.9,
         release: 'Disponível',
         sold: 28000,
-        cover: `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${fakeAppId}/library_600x900.jpg`,
+        cover: makeBoxArtSVG(termTitle, 'Ação / Aventura'),
         desc: `${termTitle} disponível na biblioteca integrada Hydra. Inclui múltiplos espelhos de download (Magnet Torrent & DDL) verificados.`,
         steamUrl: `https://store.steampowered.com/search/?term=${encodeURIComponent(cleanTerm)}`,
         magnet: `magnet:?xt=urn:btih:${fakeAppId}0000000000000000000000000000000000000000&dn=${encodeURIComponent(termTitle)}+Hydra+Release&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://tracker.coppersurfer.tk:6969/announce`,
@@ -8099,18 +8099,37 @@ function getFiltered(){
   return list;
 }
 
+function makeBoxArtSVG(title, genre){
+  const t = (title || 'Jogo').replace(/[<>&"]/g, '').substring(0, 28);
+  const gen = (genre || 'Game').replace(/[<>&"]/g, '').substring(0, 20);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#141126"/><stop offset="50%" stop-color="#0b0f19"/><stop offset="100%" stop-color="#181329"/></linearGradient><radialGradient id="g2" cx="50%" cy="35%" r="55%"><stop offset="0%" stop-color="#6366f1" stop-opacity="0.4"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00dfd8"/><stop offset="100%" stop-color="#7928ca"/></linearGradient></defs><rect width="600" height="900" fill="url(#g1)"/><rect width="600" height="900" fill="url(#g2)"/><rect x="30" y="30" width="130" height="34" rx="8" fill="#1b1d2a" stroke="#373d54" stroke-width="1.5"/><text x="95" y="52" fill="#00dfd8" font-size="12" font-weight="bold" font-family="system-ui,-apple-system,sans-serif" text-anchor="middle" letter-spacing="2">JOHNPLAY</text><circle cx="300" cy="360" r="75" fill="#181b29" stroke="url(#g3)" stroke-width="3"/><path d="M265 360 L335 360 M300 325 L300 395" stroke="#00dfd8" stroke-width="6" stroke-linecap="round"/><circle cx="365" cy="345" r="7" fill="#7928ca"/><circle cx="380" cy="365" r="7" fill="#00dfd8"/><rect x="30" y="650" width="540" height="210" rx="16" fill="#0d111a" fill-opacity="0.9" stroke="#262d40" stroke-width="1.5"/><text x="300" y="725" fill="#ffffff" font-size="26" font-weight="800" font-family="system-ui,-apple-system,sans-serif" text-anchor="middle">${t}</text><text x="300" y="775" fill="#9ca3af" font-size="16" font-weight="600" font-family="system-ui,-apple-system,sans-serif" text-anchor="middle" letter-spacing="1">${gen.toUpperCase()} · HYDRA EDITION</text><rect x="220" y="810" width="160" height="5" rx="2.5" fill="url(#g3)"/></svg>`;
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
+function getGameCover(g){
+  if(!g) return makeBoxArtSVG('Jogo', 'Ação');
+  if(g.cover && (!g.cover.includes('271590') || (g.name && g.name.toLowerCase().includes('grand theft auto')))){
+    return g.cover;
+  }
+  if(g.steamAppId && g.steamAppId !== 271590){
+    return `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${g.steamAppId}/library_600x900.jpg`;
+  }
+  return makeBoxArtSVG(g.name, g.genre);
+}
+
 function cardHTML(g){
   if(!g) return '';
   const srcObj = SOURCES.find(s=>s.id===g.source) || SOURCES[0] || {badgeClass:'source-fitgirl', name:'Hydra Verified'};
   const on = state.wishlist && state.wishlist.has(g.id);
   const ratingVal = (typeof g.rating === 'number') ? g.rating.toFixed(1) : '4.9';
   const sizeVal = g.fileSize || '45.0 GB';
-  const coverImg = g.cover || `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${g.steamAppId || 271590}/library_600x900.jpg`;
+  const coverImg = getGameCover(g);
+  const fallbackSvg = makeBoxArtSVG(g.name, g.genre);
 
   return `
     <article class="game-card" onclick="openModal('${g.id}')">
       <div class="cover">
-        <img src="${coverImg}" alt="${g.name}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/library_600x900.jpg'">
+        <img src="${coverImg}" alt="${g.name}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${fallbackSvg}'">
         <span class="disc-badge source-chip ${srcObj.badgeClass || 'source-fitgirl'}">${g.sourceName || srcObj.name}</span>
         <span class="size-badge">${sizeVal}</span>
         <button class="wish-btn${on?' on':''}" onclick="event.stopPropagation(); toggleWish('${g.id}')" aria-label="Lista de desejos"><i data-lucide="heart"></i></button>
@@ -8230,9 +8249,12 @@ function openModal(id){
     </div>
   `).join('');
 
+  const modalCover = getGameCover(g);
+  const modalFallback = makeBoxArtSVG(g.name, g.genre);
+
   $('#modalBox').innerHTML=`
     <div class="modal-media">
-      <img src="${g.cover}" alt="${g.name}" decoding="async">
+      <img src="${modalCover}" alt="${g.name}" decoding="async" onerror="this.onerror=null;this.src='${modalFallback}'">
       <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
     </div>
     <div class="modal-body">
