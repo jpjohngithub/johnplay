@@ -690,9 +690,6 @@
             <h4>Fontes Addons</h4>
             <div class="fpills" id="sourceFilters" style="margin-bottom:18px"></div>
 
-            <h4>Tamanho do Download</h4>
-            <div class="fpills" id="sizeFilters" style="margin-bottom:18px"></div>
-
             <h4>Gênero</h4>
             <div id="genreFilters"></div>
             
@@ -705,8 +702,6 @@
               <select id="sortSelect" aria-label="Ordenar por">
                 <option value="relev">Relevância / Lançamento</option>
                 <option value="rating">Melhor avaliados ⭐</option>
-                <option value="size-asc">Tamanho: menor → maior</option>
-                <option value="size-desc">Tamanho: maior → menor</option>
                 <option value="name">Nome (A - Z)</option>
               </select>
             </div>
@@ -8139,7 +8134,7 @@ function buildCarousel(){
         <p class="slide-desc">${g.desc}</p>
         <div class="slide-meta">
           <span class="rate">${starIcon} ${g.rating.toFixed(1)}</span>
-          <span><i data-lucide="hard-drive" style="width:14px;height:14px;display:inline;vertical-align:middle"></i> ${g.fileSize}</span>
+          <span>${g.genre}</span>
           <span>${g.tags[0]}</span>
         </div>
         <div class="slide-buy">
@@ -8218,7 +8213,7 @@ function renderDeals(){
         </div>
         <div class="deal-info">
           <h3>${g.name}</h3>
-          <div class="g">${g.genre} · ${g.fileSize || 'Addon Verificado'}</div>
+          <div class="g">${g.genre} · Addon Verificado</div>
           <button class="deal-btn" onclick="event.stopPropagation(); openModal('${g.id}')">
             <i data-lucide="download"></i>${isFreeSpecial ? 'Baixar Addon Grátis' : 'Acessar Download'}
           </button>
@@ -8249,21 +8244,6 @@ function buildFilters(){
     renderGrid();
   });
 
-  // Size Filter
-  const SIZE_OPTS=[
-    {v:'all', l:'Todos'},
-    {v:'small', l:'Leves (< 10 GB)'},
-    {v:'med', l:'Médios (10 - 50 GB)'},
-    {v:'large', l:'Grandes (50 GB+)'}
-  ];
-  $('#sizeFilters').innerHTML=SIZE_OPTS.map(o=>`<button class="fpill ${state.sizeFilter===o.v?'on':''}" data-size="${o.v}">${o.l}</button>`).join('');
-  $('#sizeFilters').addEventListener('click',e=>{
-    const b=e.target.closest('[data-size]');if(!b)return;
-    state.sizeFilter=b.dataset.size;
-    $$('#sizeFilters .fpill').forEach(p=>p.classList.toggle('on',p.dataset.size===state.sizeFilter));
-    renderGrid();
-  });
-
   // Genres Filter
   const genres=[...new Set(store.map(g=>g.genre))].sort();
   const counts={};store.forEach(g=>counts[g.genre]=(counts[g.genre]||0)+1);
@@ -8280,10 +8260,9 @@ function buildFilters(){
   });
 
   $('#clearFilters').addEventListener('click',()=>{
-    state.genres.clear();state.sourceFilter='all';state.sizeFilter='all';state.search='';
+    state.genres.clear();state.sourceFilter='all';state.search='';
     $$('#genreFilters input').forEach(i=>i.checked=false);
     $$('#sourceFilters .fpill').forEach(p=>p.classList.toggle('on',p.dataset.source==='all'));
-    $$('#sizeFilters .fpill').forEach(p=>p.classList.toggle('on',p.dataset.size==='all'));
     renderGrid();
   });
   refreshIcons();
@@ -8323,10 +8302,6 @@ function getFiltered(){
   if(state.tab==='top')list=[...list].sort((a,b)=>b.sold-a.sold);
   if(state.sourceFilter!=='all')list=list.filter(g=>g.source===state.sourceFilter);
   if(state.genres.size)list=list.filter(g=>state.genres.has(g.genre));
-  
-  if(state.sizeFilter==='small') list=list.filter(g=>parseFloat(g.fileSize)<10);
-  else if(state.sizeFilter==='med') list=list.filter(g=>parseFloat(g.fileSize)>=10 && parseFloat(g.fileSize)<=50);
-  else if(state.sizeFilter==='large') list=list.filter(g=>parseFloat(g.fileSize)>50);
 
   if(state.search){
     const rawQ = state.search.toLowerCase().trim();
@@ -8363,7 +8338,6 @@ function getFiltered(){
         sourceName: 'FitGirl / DODI / SteamRIP',
         genre: 'Ação / Aventura',
         tags: ['Hydra Library', 'Download Ativo', 'PC Game', 'Verificado'],
-        fileSize: '48.5 GB',
         rating: 4.9,
         release: 'Disponível',
         sold: 28000,
@@ -8377,7 +8351,7 @@ function getFiltered(){
           { name: 'SteamRIP (Direct Play DDL)', type: 'ddl', url: `https://steamrip.com/?s=${encodeURIComponent(cleanTerm)}` },
           { name: 'Free GOG Games (DRM-Free)', type: 'ddl', url: `https://freegogpcgames.com/?s=${encodeURIComponent(cleanTerm)}` }
         ],
-        specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel Core i5 / AMD Ryzen 5', ram: '16 GB RAM', gpu: 'GTX 1060 / RX 580', storage: '60 GB' }
+        specs: { os: 'Windows 10/11 64-bit', cpu: 'Intel Core i5 / AMD Ryzen 5', ram: '16 GB RAM', gpu: 'GTX 1060 / RX 580', storage: 'Disponível' }
       };
 
       GAMES.push(dynamicGame);
@@ -8387,8 +8361,6 @@ function getFiltered(){
   }
   switch(state.sort){
     case 'rating':list=[...list].sort((a,b)=>b.rating-a.rating);break;
-    case 'size-asc':list=[...list].sort((a,b)=>parseFloat(a.fileSize)-parseFloat(b.fileSize));break;
-    case 'size-desc':list=[...list].sort((a,b)=>parseFloat(b.fileSize)-parseFloat(a.fileSize));break;
     case 'name':list=[...list].sort((a,b)=>a.name.localeCompare(b.name));break;
   }
   return list;
@@ -8554,7 +8526,7 @@ function openModal(id){
       <div style="display:flex;gap:8px;align-items:center">
         <span class="source-chip ${srcObj.badgeClass}">${g.sourceName}</span>
         <span class="free-badge">100% Grátis</span>
-        <span class="kicker">${g.genre} · ${g.fileSize}</span>
+        <span class="kicker">${g.genre} · Addon Verificado</span>
       </div>
       <h2>${g.name}</h2>
       <div class="modal-meta">
@@ -8582,7 +8554,6 @@ function openModal(id){
         <div class="spec-item"><span>Processador:</span><b>${g.specs.cpu}</b></div>
         <div class="spec-item"><span>Memória RAM:</span><b>${g.specs.ram}</b></div>
         <div class="spec-item"><span>Placa de Vídeo:</span><b>${g.specs.gpu}</b></div>
-        <div class="spec-item" style="grid-column:span 2"><span>Armazenamento:</span><b>${g.specs.storage}</b></div>
       </div>
 
       <div class="modal-buy">
@@ -8654,7 +8625,7 @@ function renderWishlist(){
     const g=byId(id);
     return`<div class="drawer-item">
       <img src="${g.cover}" alt="${g.name}" loading="lazy" decoding="async">
-      <div class="inf"><h4>${g.name}</h4><span class="g">${g.genre}</span><div class="p">${g.fileSize || 'Em breve'} · Grátis</div></div>
+      <div class="inf"><h4>${g.name}</h4><span class="g">${g.genre}</span><div class="p">${g.genre} · Addon Grátis</div></div>
       <button class="rm" onclick="toggleWish('${id}')" aria-label="Remover"><i data-lucide="trash-2"></i></button>
     </div>`;
   }).join('');
@@ -8673,7 +8644,7 @@ function renderCart(){
       const g=byId(id);
       return`<div class="drawer-item">
         <img src="${g.cover}" alt="${g.name}" loading="lazy" decoding="async">
-        <div class="inf"><h4>${g.name}</h4><span class="g">${g.genre}</span><div class="p">${g.fileSize} · 100% Grátis</div></div>
+        <div class="inf"><h4>${g.name}</h4><span class="g">${g.genre}</span><div class="p">${g.genre} · 100% Grátis</div></div>
         <button class="rm" onclick="state.cart=state.cart.filter(x=>x!=='${id}'); save(); updateBadges(); renderCart();" aria-label="Remover"><i data-lucide="trash-2"></i></button>
       </div>`;
     }).join('');
