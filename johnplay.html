@@ -789,108 +789,26 @@
           </iframe>
 
           <!-- YOUTUBE PLAYABLES DEDICATED STATION VIEWPORT -->
-          <div id="ytStationView" style="display:none;position:absolute;inset:0;background:linear-gradient(180deg,#140909,#0c0606);overflow-y:auto;padding:32px 24px;z-index:10">
-            <div style="max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
-              
+          <div id="ytStationView" style="display:none;position:absolute;inset:0;background:linear-gradient(180deg,#140909,#0c0606);overflow-y:auto;padding:32px 24px;z-index:10;display:none;align-items:center;justify-content:center">
+            <div style="max-width:920px;width:100%;margin:auto">
               <!-- YT Banner Card -->
-              <div style="background:linear-gradient(135deg,rgba(255,0,0,.25),rgba(20,9,9,.8));border:1px solid rgba(255,0,0,.35);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px">
+              <div style="background:linear-gradient(135deg,rgba(255,0,0,.25),rgba(20,9,9,.8));border:1px solid rgba(255,0,0,.35);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;box-shadow:0 12px 40px rgba(0,0,0,0.5)">
                 <div>
-                  <div style="display:inline-flex;align-items:center;gap:6px;background:#ff0000;color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;margin-bottom:10px">
+                  <div style="display:inline-flex;align-items:center;gap:6px;background:#ff0000;color:#fff;font-size:11px;font-weight:800;padding:4px 12px;border-radius:6px;margin-bottom:12px;letter-spacing:1px">
                     <i data-lucide="youtube" style="width:14px;height:14px"></i> GOOGLE / YOUTUBE PLAYABLES
                   </div>
-                  <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:36px;text-transform:uppercase;color:#fff;line-height:1">Mais de 75+ Jogos Gratuitos do YouTube</h2>
-                  <p style="color:#e4c7c7;font-size:14px;margin-top:6px;max-width:560px">
+                  <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:38px;text-transform:uppercase;color:#fff;line-height:1;margin:0 0 10px">Mais de 75+ Jogos Gratuitos do YouTube</h2>
+                  <p style="color:#e4c7c7;font-size:15px;margin:0;max-width:580px;line-height:1.5">
                     Jogue instantaneamente no YouTube sem necessidade de download ou instalação. Clique no botão ao lado para abrir a Central Oficial!
                   </p>
                 </div>
                 <div style="display:flex;gap:12px;flex-wrap:wrap">
-                  <button class="btn btn-primary" onclick="openYouTubeApp()" style="background:#ff0000;color:#fff;border:none;box-shadow:0 6px 24px rgba(255,0,0,.45);height:44px;padding:0 22px;font-size:14px">
+                  <button class="btn btn-primary" onclick="openYouTubeApp()" style="background:#ff0000;color:#fff;border:none;box-shadow:0 6px 24px rgba(255,0,0,.45);height:46px;padding:0 24px;font-size:14px;font-weight:700">
                     <i data-lucide="play"></i>Jogar no YouTube Playables
                   </button>
-                  <a href="https://www.youtube.com/playables" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="height:44px;padding:0 18px;font-size:13px">
+                  <a href="https://www.youtube.com/playables" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="height:46px;padding:0 20px;font-size:13px">
                     <i data-lucide="external-link"></i>Abrir em Nova Aba
                   </a>
-                </div>
-              </div>
-
-              <!-- Top YouTube Playables Games Grid -->
-              <div>
-                <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:24px;text-transform:uppercase;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:8px">
-                  <i data-lucide="sparkles" style="width:18px;height:18px;color:#ff4444"></i> Jogos em Alta no YouTube Playables
-                </h3>
-                
-                <div class="browser-grid" style="margin:0">
-                  <div class="browser-game-card" onclick="openYouTubeGame('Angry Birds Showdown')">
-                    <div class="thumb" style="background:#2a1111">
-                      <img src="https://images.crazygames.com/angry-birds/20231201103233/angry-birds-cover?auto=format%2Ccompress&q=65&fit=crop&w=480" alt="Angry Birds Showdown">
-                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
-                    </div>
-                    <div class="bbody">
-                      <h4>Angry Birds Showdown</h4>
-                      <span>YouTube Playables · Ação</span>
-                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
-                    </div>
-                  </div>
-
-                  <div class="browser-game-card" onclick="openYouTubeGame('Cut the Rope')">
-                    <div class="thumb" style="background:#112a11">
-                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/b980a905a396ea4d4c55ecdf81e9b28b.png" alt="Cut the Rope">
-                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
-                    </div>
-                    <div class="bbody">
-                      <h4>Cut the Rope</h4>
-                      <span>YouTube Playables · Puzzle</span>
-                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
-                    </div>
-                  </div>
-
-                  <div class="browser-game-card" onclick="openYouTubeGame('Trivia Crack')">
-                    <div class="thumb" style="background:#2a2511">
-                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/46487ffdb66580f4f0393b3f9dc2c366.png" alt="Trivia Crack">
-                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
-                    </div>
-                    <div class="bbody">
-                      <h4>Trivia Crack (Perguntados)</h4>
-                      <span>YouTube Playables · Quiz</span>
-                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
-                    </div>
-                  </div>
-
-                  <div class="browser-game-card" onclick="openYouTubeGame('Tomb of the Mask')">
-                    <div class="thumb" style="background:#111b2a">
-                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/4d2a6a12ee49ea76bb06198f1f7d5494.png" alt="Tomb of the Mask">
-                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
-                    </div>
-                    <div class="bbody">
-                      <h4>Tomb of the Mask</h4>
-                      <span>YouTube Playables · Arcade</span>
-                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
-                    </div>
-                  </div>
-
-                  <div class="browser-game-card" onclick="openYouTubeGame('Stack Bounce')">
-                    <div class="thumb" style="background:#2a112a">
-                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/387431f4a9b2d3080ffbfa6b8f36c535.png" alt="Stack Bounce">
-                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
-                    </div>
-                    <div class="bbody">
-                      <h4>Stack Bounce</h4>
-                      <span>YouTube Playables · 3D Casual</span>
-                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
-                    </div>
-                  </div>
-
-                  <div class="browser-game-card" onclick="openYouTubeGame('Magic Tiles 3')">
-                    <div class="thumb" style="background:#112a28">
-                      <img src="https://img.poki.com/cdn-cgi/image/quality=78,width=600,height=600,fit=cover,f=auto/3bfdc9e7fa1a4e1d141e6e814a706b8c.png" alt="Magic Tiles 3">
-                      <span class="disc-badge disc-chip" style="position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;font-size:10px">YOUTUBE</span>
-                    </div>
-                    <div class="bbody">
-                      <h4>Magic Tiles 3</h4>
-                      <span>YouTube Playables · Ritmo</span>
-                      <button style="background:rgba(255,0,0,.15);color:#ff6666;border-color:rgba(255,0,0,.3)"><i data-lucide="play" style="width:13px;height:13px"></i>Jogar Agora</button>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -7586,7 +7504,7 @@ function selectWebPlatform(key){
       iframe.style.display = 'none';
       iframe.src = 'about:blank';
     }
-    if(ytStation) ytStation.style.display = 'block';
+    if(ytStation) ytStation.style.display = 'flex';
   } else {
     if(ytStation) ytStation.style.display = 'none';
     if(iframe){
