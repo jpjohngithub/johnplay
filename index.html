@@ -709,14 +709,6 @@
           </div>
         </div>
       </section>
-
-      <!-- Destaques Grátis DRM-Free da Semana -->
-      <section class="section">
-        <div class="sec-head">
-          <div><div class="kicker">Addons DRM-Free JohnPlay</div><h2>Jogos Gratuitos em Destaque no Catálogo</h2></div>
-        </div>
-        <div class="deals-grid" id="freeGrid"></div>
-      </section>
     </div>
   </section>
 
@@ -758,10 +750,9 @@
       </div>
       <div class="foot-col">
         <h5>Loja</h5>
-        <a href="#loja">Todos os Jogos</a>
-        <a href="#promo">Promoções Steam & Epic</a>
-        <a href="#promo">Jogos Grátis</a>
-        <a href="#loja">Em breve</a>
+        <a href="#loja">Catálogo Completo</a>
+        <a href="#promo">Promoções Steam &amp; Epic</a>
+        <a href="#promo">Jogos Grátis da Semana</a>
       </div>
       <div class="foot-col">
         <h5>Descubra</h5>
@@ -3137,33 +3128,6 @@ function renderGrid(){
   $('#statGames').innerText=list.length;
 }
 
-/* ================= LOJA: EM BREVE ================= */
-
-$('#hsPrev').addEventListener('click',()=>$('#upRow').scrollBy({left:-560,behavior:'smooth'}),{passive:true});
-$('#hsNext').addEventListener('click',()=>$('#upRow').scrollBy({left:560,behavior:'smooth'}),{passive:true});
-
-/* ================= PROMOÇÕES & JOGOS GRÁTIS ================= */
-function renderPromo(){
-  $('#freeGrid').innerHTML=FREE_WEEK.map(id=>{
-    const g=byId(id);
-    return`
-      <article class="deal-card" onclick="openModal('${g.id}')">
-        <div class="media">
-          <span class="free-flag">Grátis para Baixar</span>
-          <img src="${g.cover}" alt="${g.name}" loading="lazy" decoding="async">
-        </div>
-        <div class="deal-info">
-          <h3>${g.name}</h3>
-          <div class="g">${g.genre} · DRM-Free GOG Oficial</div>
-          <button class="redeem-btn" onclick="event.stopPropagation(); openModal('${g.id}')">
-            <i data-lucide="download"></i>Baixar Jogo Grátis
-          </button>
-        </div>
-      </article>`;
-  }).join('');
-  refreshIcons();
-}
-
 /* ================= EMULADORES ================= */
 function renderEmulators(){
   $('#emuTabs').innerHTML=EMU_ERAS.map(e=>`<button data-era="${e}" class="${state.emuEra===e?'on':''}">${e}</button>`).join('');
@@ -3416,7 +3380,6 @@ renderGrid();
 
 renderEmulators();
 renderApps();
-renderPromo();
 updateBadges();
 navigate();
 refreshIcons();
