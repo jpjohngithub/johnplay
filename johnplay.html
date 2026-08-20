@@ -8772,8 +8772,10 @@ function getCleanSearchTitle(name) {
   s = s.replace(/\[[^\]]*\]/g, ' ');
   s = s.replace(/\([^)]*\)/g, ' ');
   s = s.replace(/[®™©]/g, '');
+  s = s.replace(/\bv\.?\d+(\.\d+)*[a-z]?\b/gi, ' ');
   s = s.replace(/\b\d{1,2}\s+(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|Janeiro|Fevereiro|Março|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro)\s+\d{4}\b/gi, ' ');
-  s = s.replace(/\b(build\s*\d+|v\d+\.\d+|multi\d+|repack|portable|direct\s*play)\b.*/gi, ' ');
+  s = s.replace(/\b(build\s*\d+|multi\d+|repack|portable|direct\s*play|free\s*download|full\s*unlocked|cracked|fitgirl|dodi|xatab|kaoskrew|steamrip|gog)\b.*/gi, ' ');
+  s = s.replace(/:\s*(Enhanced|Deluxe|Definitive|Complete|Anniversary|Collector|Standard|Digital)\s*Edition.*/gi, ' ');
   s = s.replace(/[:\-–—|]/g, ' ');
   s = s.replace(/\s+/g, ' ').trim();
   return s;
@@ -8930,20 +8932,72 @@ function openModal(id){
   const cleanSearch = getCleanSearchTitle(g.name);
   const q = encodeURIComponent(cleanSearch);
 
+  const directFitGirl = g.mirrors?.find(m => m.name.toLowerCase().includes('fitgirl'))?.url;
+  const directDODI = g.mirrors?.find(m => m.name.toLowerCase().includes('dodi'))?.url;
+  const directSteamRIP = g.mirrors?.find(m => m.name.toLowerCase().includes('steamrip'))?.url;
+  const directGOG = g.mirrors?.find(m => m.name.toLowerCase().includes('gog'))?.url;
+  const directOnlineFix = g.mirrors?.find(m => m.name.toLowerCase().includes('online'))?.url;
+  const directAtop = g.mirrors?.find(m => m.name.toLowerCase().includes('atop'))?.url;
+
   const ADDONS_LIST = [
-    { name: 'SteamRIP (Direct Play & DDL)', desc: 'Download direto rápido sem instalador (Extrair e Jogar)', url: `https://steamrip.com/?s=${q}`, badge: 'Recomendado / DDL' },
-    { name: 'FitGirl Repacks (Addon Oficial)', desc: 'Instalador ultra compacto verificado Hydra', url: `https://fitgirl-repacks.site/?s=${q}`, badge: 'Repack Leve' },
-    { name: 'DODI Repacks (Addon Oficial)', desc: 'Instalador rápido completo com todas as DLCs', url: `https://dodi-repacks.site/?s=${q}`, badge: 'Repack Rápido' },
-    { name: 'Free GOG Games (DRM-Free)', desc: 'Instaladores oficiais DRM-Free sem proteção', url: `https://freegogpcgames.com/?s=${q}`, badge: 'DRM-Free' },
-    { name: 'Online-Fix (Multiplayer Co-op)', desc: 'Versão com servidores online e co-op com amigos', url: `https://online-fix.me/index.php?do=search&subaction=search&story=${q}`, badge: 'Multiplayer' },
-    { name: 'Atop-Games (Direct Play)', desc: 'Espelho de download direto de alta velocidade', url: `https://atop-games.com/?s=${q}`, badge: 'Direct Play' },
-    { name: 'Xatab Repacks (Addon)', desc: 'Versão repack clássica e otimizada', url: `https://byxatab.com/index.php?do=search&subaction=search&story=${q}`, badge: 'Repack' },
-    { name: 'KaosKrew Repacks (Addon)', desc: 'Compactação avançada sem perdas', url: `https://kaoskrew.org/?s=${q}`, badge: 'Repack' },
-    { name: 'Hydra Wiki Library (Busca Global)', desc: 'Pesquisa ao vivo em todas as 10+ fontes Hydra', url: `https://library.hydra.wiki/search/?q=${q}`, badge: 'Hydra Live' }
+    { 
+      name: 'SteamRIP (Direct Play & DDL)', 
+      desc: 'Download direto rápido sem instalador (Extrair e Jogar)', 
+      url: (g.source === 'steamrip' && g.magnet) || directSteamRIP || `https://steamrip.com/?s=${q}`, 
+      badge: 'Recomendado / DDL' 
+    },
+    { 
+      name: 'FitGirl Repacks (Addon Oficial)', 
+      desc: 'Instalador ultra compacto verificado Hydra', 
+      url: (g.source === 'fitgirl' && g.magnet) || directFitGirl || `https://fitgirl-repacks.site/?s=${q}`, 
+      badge: 'Repack Leve' 
+    },
+    { 
+      name: 'DODI Repacks (Addon Oficial)', 
+      desc: 'Instalador rápido completo com todas as DLCs', 
+      url: (g.source === 'dodi' && g.magnet) || directDODI || `https://dodi-repacks.site/?s=${q}`, 
+      badge: 'Repack Rápido' 
+    },
+    { 
+      name: 'Free GOG Games (DRM-Free)', 
+      desc: 'Instaladores oficiais DRM-Free sem proteção', 
+      url: (g.source === 'gog' && g.magnet) || directGOG || `https://freegogpcgames.com/?s=${q}`, 
+      badge: 'DRM-Free' 
+    },
+    { 
+      name: 'Online-Fix (Multiplayer Co-op)', 
+      desc: 'Versão com servidores online e co-op com amigos', 
+      url: (g.source === 'onlinefix' && g.magnet) || directOnlineFix || `https://online-fix.me/index.php?do=search&subaction=search&story=${q}`, 
+      badge: 'Multiplayer' 
+    },
+    { 
+      name: 'Atop-Games (Direct Play)', 
+      desc: 'Espelho de download direto de alta velocidade', 
+      url: (g.source === 'atop' && g.magnet) || directAtop || `https://atop-games.com/?s=${q}`, 
+      badge: 'Direct Play' 
+    },
+    { 
+      name: 'Xatab Repacks (Addon)', 
+      desc: 'Versão repack clássica e otimizada', 
+      url: `https://byxatab.com/index.php?do=search&subaction=search&story=${q}`, 
+      badge: 'Repack' 
+    },
+    { 
+      name: 'KaosKrew Repacks (Addon)', 
+      desc: 'Compactação avançada sem perdas', 
+      url: `https://kaoskrew.org/?s=${q}`, 
+      badge: 'Repack' 
+    },
+    { 
+      name: 'Hydra Wiki Library (Busca Global)', 
+      desc: 'Pesquisa ao vivo em todas as 10+ fontes Hydra', 
+      url: `https://library.hydra.wiki/search/?q=${q}`, 
+      badge: 'Hydra Live' 
+    }
   ];
 
   const mirrorsHTML = ADDONS_LIST.map(m => `
-    <div class="dl-option-row">
+    <div class="dl-option-row" style="cursor:pointer" onclick="window.open('${m.url}', '_blank')">
       <div class="opt-info">
         <h5>
           <i data-lucide="external-link" style="width:16px;height:16px;color:var(--accent)"></i>
@@ -8953,7 +9007,7 @@ function openModal(id){
         <p>${m.desc}</p>
       </div>
       <div class="opt-actions">
-        <a href="${m.url}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-primary" style="text-decoration:none">
+        <a href="${m.url}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-primary" style="text-decoration:none" onclick="event.stopPropagation()">
           <i data-lucide="download"></i>Acessar Addon
         </a>
       </div>
