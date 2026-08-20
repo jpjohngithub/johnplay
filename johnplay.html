@@ -9022,16 +9022,6 @@ function buildInstantMagnet(gameName, sourceName, directMagnet = null) {
   return `magnet:?xt=urn:btih:${hash}&dn=${dn}${trackers}`;
 }
 
-function startInstantDownload(magnetUri, gameName, sourceName) {
-  if (!magnetUri) return;
-  try { navigator.clipboard.writeText(magnetUri); } catch(e){}
-  
-  // Launch torrent client via protocol handler
-  window.location.href = magnetUri;
-  
-  toast(`⚡ Iniciando download de "${gameName}" via ${sourceName}... (Link Magnet copiado)`, 'download');
-}
-
 function copyMagnetLink(magnetUri, sourceName) {
   if (!magnetUri) return;
   navigator.clipboard.writeText(magnetUri).then(() => {
@@ -9132,15 +9122,12 @@ function openModal(id){
         <p>${m.desc}</p>
       </div>
       <div class="opt-actions">
-        <button class="opt-btn opt-btn-primary" onclick="startInstantDownload('${m.magnet}', '${escapeHtml(g.name)}', '${escapeHtml(m.name)}')" title="Baixar arquivo / torrent instantaneamente">
-          <i data-lucide="zap"></i>Baixar Instantâneo
-        </button>
-        <button class="opt-btn opt-btn-ghost" onclick="copyMagnetLink('${m.magnet}', '${escapeHtml(m.name)}')" title="Copiar Link Magnet">
-          <i data-lucide="copy"></i>Magnet
-        </button>
-        <a href="${m.siteUrl}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-ghost" style="text-decoration:none" title="Ver post no site oficial">
-          <i data-lucide="external-link"></i>Site
+        <a href="${m.siteUrl}" target="_blank" rel="noopener noreferrer" class="opt-btn opt-btn-primary" style="text-decoration:none" title="Abrir página de download oficial">
+          <i data-lucide="download"></i>Acessar Download
         </a>
+        <button class="opt-btn opt-btn-ghost" onclick="copyMagnetLink('${m.magnet}', '${escapeHtml(m.name)}')" title="Copiar Link Magnet para Torrent">
+          <i data-lucide="copy"></i>Copiar Magnet
+        </button>
       </div>
     </div>
   `).join('');
