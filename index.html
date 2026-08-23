@@ -740,11 +740,14 @@
         <div><div class="kicker">Estação de Jogos</div><h2>Selecione a Plataforma para Rodar no Site</h2></div>
         <div class="tabs" id="webPlatformTabs">
           <button class="on" data-platform="subway" onclick="selectWebPlatform('subway')">🏄 Subway Surfers</button>
+          <button data-platform="wordbomb" onclick="selectWebPlatform('wordbomb')">💣 Word Bomb (.io)</button>
+          <button data-platform="gartic" onclick="selectWebPlatform('gartic')">🎨 Gartic.io</button>
           <button data-platform="2048" onclick="selectWebPlatform('2048')">🔢 2048 Clássico</button>
+          <button data-platform="pacman" onclick="selectWebPlatform('pacman')">👻 Pac-Man</button>
           <button data-platform="flappy" onclick="selectWebPlatform('flappy')">🐦 Flappy Bird</button>
-          <button data-platform="poki" onclick="selectWebPlatform('poki')">🎮 Poki (Central de Jogos)</button>
+          <button data-platform="poki" onclick="selectWebPlatform('poki')">🎮 Poki (Jogos Online)</button>
           <button data-platform="jogos360" onclick="selectWebPlatform('jogos360')">🕹️ Jogos 360 (Portal)</button>
-          <button data-platform="youtube" onclick="selectWebPlatform('youtube')">▶️ Jogos do YouTube (Playables)</button>
+          <button data-platform="youtube" onclick="selectWebPlatform('youtube')">▶️ YouTube Playables</button>
         </div>
       </div>
 
@@ -820,6 +823,28 @@
                 <div style="display:flex;gap:12px;flex-wrap:wrap">
                   <a href="https://www.jogos360.com.br/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:var(--gold);color:#191202;border:none;box-shadow:0 6px 24px rgba(245,158,11,.45);height:48px;padding:0 24px;font-size:15px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px">
                     <i data-lucide="play"></i>Jogar no Jogos 360
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GARTIC.IO DEDICATED STATION VIEWPORT -->
+          <div id="garticStationView" style="display:none;position:absolute;inset:0;background:linear-gradient(180deg,#120924,#070310);overflow-y:auto;padding:32px 24px;z-index:10;align-items:center;justify-content:center">
+            <div style="max-width:920px;width:100%;margin:auto">
+              <div style="background:linear-gradient(135deg,rgba(168,85,247,.22),rgba(18,9,36,.95));border:1px solid rgba(168,85,247,.35);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;box-shadow:0 12px 40px rgba(0,0,0,0.5)">
+                <div>
+                  <div style="display:inline-flex;align-items:center;gap:6px;background:#a855f7;color:#fff;font-size:11px;font-weight:800;padding:4px 12px;border-radius:6px;margin-bottom:12px;letter-spacing:1px">
+                    <i data-lucide="palette" style="width:14px;height:14px"></i> GARTIC.IO OFICIAL
+                  </div>
+                  <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:38px;text-transform:uppercase;color:#fff;line-height:1;margin:0 0 10px">Gartic.io — Jogo de Desenhar e Adivinhar</h2>
+                  <p style="color:#e9d5ff;font-size:15px;margin:0;max-width:580px;line-height:1.5">
+                    O jogo multiplayer mais divertido da internet! Crie salas com amigos ou entre em salas públicas para desenhar, adivinhar palavras e acumular pontos.
+                  </p>
+                </div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                  <a href="https://gartic.io/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:#a855f7;color:#fff;border:none;box-shadow:0 6px 24px rgba(168,85,247,.45);height:48px;padding:0 24px;font-size:15px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px">
+                    <i data-lucide="play"></i>Jogar Gartic.io Agora
                   </a>
                 </div>
               </div>
@@ -7476,7 +7501,7 @@ const APPS=[
    desc:'Limpa a memória RAM em tempo real para evitar travamentos e stutterings em jogos pesados.', url:'https://github.com/henrypp/memreduct/releases'},
 ];
 
-/* ================= ESTAÇÃO DE JOGOS & PLATAFORMAS WEB (SUBWAY, 2048, FLAPPY, POKI, 360, YOUTUBE) ================= */
+/* ================= ESTAÇÃO DE JOGOS & PLATAFORMAS WEB (SUBWAY, WORDBOMB, GARTIC, 2048, PACMAN, FLAPPY, POKI, 360, YOUTUBE) ================= */
 const WEB_PLATFORMS = {
   'subway': {
     name: 'Subway Surfers World Tour',
@@ -7487,20 +7512,47 @@ const WEB_PLATFORMS = {
     badgeBg: 'var(--emerald)',
     badgeColor: '#031d13'
   },
+  'wordbomb': {
+    name: 'Word Bomb (.io) — Multiplayer de Palavras',
+    badge: 'MULTIPLAYER .IO',
+    type: 'iframe',
+    url: 'https://wordbomb.io/',
+    controls: 'Digite palavras rapidamente contendo a combinação de letras antes da bomba explodir!',
+    badgeBg: '#ef4444',
+    badgeColor: '#ffffff'
+  },
+  'gartic': {
+    name: 'Gartic.io — Desenhe e Adivinhe',
+    badge: 'GARTIC MULTIPLAYER',
+    type: 'gartic_station',
+    url: 'https://gartic.io/',
+    controls: 'Desenhe no painel, adivinhe as palavras no chat e pontue mais que seus amigos!',
+    badgeBg: '#a855f7',
+    badgeColor: '#ffffff'
+  },
   '2048': {
     name: '2048 — Quebra-Cabeça Clássico',
     badge: 'HTML5 PUZZLE',
     type: 'iframe',
-    url: 'https://gabrielecirulli.github.io/2048/',
+    url: 'https://2048game.com/',
     controls: 'Use as Setas do Teclado [⬅️ ⬆️ ➡️ ⬇️] para juntar os números e alcançar 2048!',
     badgeBg: 'var(--accent)',
     badgeColor: 'var(--accent-ink)'
+  },
+  'pacman': {
+    name: 'Pac-Man Clássico Original HTML5',
+    badge: 'ARCADE CLÁSSICO',
+    type: 'iframe',
+    url: 'https://rawcdn.githack.com/daleharvey/pacman/master/index.html',
+    controls: 'Use as Setas do Teclado [⬅️ ⬆️ ➡️ ⬇️] para guiar o Pac-Man e devorar todas as pastilhas!',
+    badgeBg: 'var(--gold)',
+    badgeColor: '#191202'
   },
   'flappy': {
     name: 'Flappy Bird Original HTML5',
     badge: 'ARCADE CLÁSSICO',
     type: 'iframe',
-    url: 'https://nebezb.com/floppybird/',
+    url: 'https://rawcdn.githack.com/nebez/floppybird/master/index.html',
     controls: 'Clique com o Mouse ou pressione [Espaço] para bater as asas e voar entre os canos!',
     badgeBg: 'var(--gold)',
     badgeColor: '#191202'
@@ -7564,6 +7616,7 @@ function selectWebPlatform(key){
   const ytStation = $('#ytStationView');
   const pokiStation = $('#pokiStationView');
   const j360Station = $('#j360StationView');
+  const garticStation = $('#garticStationView');
 
   if(titleEl) titleEl.textContent = p.name;
   if(badgeEl){
@@ -7578,6 +7631,7 @@ function selectWebPlatform(key){
   if(ytStation) ytStation.style.display = 'none';
   if(pokiStation) pokiStation.style.display = 'none';
   if(j360Station) j360Station.style.display = 'none';
+  if(garticStation) garticStation.style.display = 'none';
 
   if(p.type === 'iframe'){
     if(iframe){
@@ -7595,6 +7649,7 @@ function selectWebPlatform(key){
     if(p.type === 'yt_station' && ytStation) ytStation.style.display = 'flex';
     if(p.type === 'poki_station' && pokiStation) pokiStation.style.display = 'flex';
     if(p.type === 'jogos360_station' && j360Station) j360Station.style.display = 'flex';
+    if(p.type === 'gartic_station' && garticStation) garticStation.style.display = 'flex';
   }
 
   $('#gamePlayerSection').scrollIntoView({behavior:'smooth'});
@@ -7613,6 +7668,10 @@ function reloadWebPlatform(){
   }
   if(currentPlatform === 'jogos360'){
     window.open('https://www.jogos360.com.br/', '_blank');
+    return;
+  }
+  if(currentPlatform === 'gartic'){
+    window.open('https://gartic.io/', '_blank');
     return;
   }
   const p = WEB_PLATFORMS[currentPlatform] || WEB_PLATFORMS['subway'];
