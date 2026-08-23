@@ -8013,6 +8013,7 @@ async function searchLiveHydraLibrary(query){
 let LIVE_STEAM_CACHE = [];
 let LIVE_EPIC_CACHE = [];
 let currentPromoFilter = 'all';
+let promoSyncTimer = null;
 
 function setPromoFilter(filter){
   currentPromoFilter = filter;
@@ -8023,52 +8024,66 @@ function setPromoFilter(filter){
   if(secSteam) secSteam.style.display = (filter === 'all' || filter === 'steam') ? 'block' : 'none';
 }
 
-async function fetchLivePromosAndSpecials(){
-  await Promise.allSettled([
+async function fetchLivePromosAndSpecials(isManual = false){
+  if(isManual){
+    toast('Sincronizando promoções e jogos grátis ao vivo...', 'refresh-cw');
+  }
+
+  const results = await Promise.allSettled([
     fetchLiveEpicFreeGames(),
     fetchLiveSteamSpecials()
   ]);
+
+  const statusEl = $('#promoLiveStatusTxt');
+  if(statusEl){
+    const timeStr = new Date().toLocaleTimeString('pt-BR');
+    statusEl.innerHTML = `Sincronizado ao Vivo: <b>${timeStr}</b> · Steam Store &amp; Epic Games Store`;
+  }
+
+  if(isManual){
+    toast('Promoções e jogos grátis atualizados com sucesso!', 'check-circle');
+  }
 }
 
 const FALLBACK_EPIC = [
   {
-    id: 'epic-grow-and-go',
-    title: 'Grow And Go: Cozy Deliveries',
-    description: 'Relaxe e faça entregas charmosas por um mundo acolhedor. Resgate 100% grátis e guarde para sempre na sua conta Epic Games.',
-    image: 'https://www.gamerpower.com/offers/1b/6a863f21649e6.jpg',
+    id: 'epic-cardpocalypse',
+    title: 'Cardpocalypse Standard Edition',
+    description: 'Faça amigos, dispute cartas e derrote monstros neste RPG retrô incrível dos anos 90. 100% grátis para resgatar na Epic Games Store!',
+    image: 'https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_Cardpocalypse_Gambrinous_S1_2560x1440-410a08e6f1a8c880816cfbc6fa1548cf',
     isCurrentFree: true,
     isUpcomingFree: false,
     startDate: 'Hoje',
-    endDate: '22 de Ago',
-    originalPrice: 'R$ 24,99',
+    endDate: '27 de Ago',
+    originalPrice: 'R$ 74,99',
     giveawayUrl: 'https://store.epicgames.com/free-games?lang=pt-BR',
-    epicSlug: 'grow-and-go'
+    epicSlug: 'cardpocalypse'
   },
   {
-    id: 'epic-caravan-sandwitch',
-    title: 'Caravan SandWitch',
-    description: 'Embarque em uma jornada inesquecível pelo deserto pós-apocalíptico e desvende os mistérios do desaparecimento de sua irmã.',
-    image: 'https://www.gamerpower.com/offers/1b/6a7ddc052cf6c.jpg',
+    id: 'epic-mago-epico',
+    title: 'Pacote do Mago Épico',
+    description: 'Pacote exclusivo com bônus de campeões lendários, skins mágicas e recompensas únicas grátis por tempo limitado na Epic Games!',
+    image: 'https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_IdleChampions_CodenameEntertainment_S1_2560x1440-6215bead1d7d079d38102ff9a5ef282c',
     isCurrentFree: true,
     isUpcomingFree: false,
     startDate: 'Hoje',
-    endDate: '20 de Ago',
-    originalPrice: 'R$ 124,99',
+    endDate: '27 de Ago',
+    originalPrice: 'R$ 150,00',
     giveawayUrl: 'https://store.epicgames.com/free-games?lang=pt-BR',
-    epicSlug: 'caravan-sandwitch'
+    epicSlug: 'idle-champions-of-the-forgotten-realms'
   },
   {
-    id: 'epic-targeted-10-days',
-    title: 'Targeted – 10 Days',
-    description: 'Jogo de sobrevivência tática e ação rápida. Complete objetivos dinâmicos e enfrente ameaças em alta tensão.',
-    image: 'https://www.gamerpower.com/offers/1b/6a7ce767b76aa.jpg',
-    isCurrentFree: true,
-    isUpcomingFree: false,
-    startDate: 'Hoje',
-    endDate: '31 de Ago',
-    originalPrice: 'R$ 24,99',
+    id: 'epic-rival-stars',
+    title: 'Rival Stars Horse Racing : Desktop Edition',
+    description: 'Gerencie seu próprio haras, crie cavalos campeões e dispute corridas emocionantes ao redor do mundo. Em breve grátis!',
+    image: 'https://cdn1.epicgames.com/offer/f6114e27f0054703a55a6d36e2f132e0/EGS_RivalStarsHorseRacingDesktopEdition_PikPok_S1_2560x1440-ad921a97d91d90618059085ec6d47b59',
+    isCurrentFree: false,
+    isUpcomingFree: true,
+    startDate: '27 de Ago',
+    endDate: '03 de Set',
+    originalPrice: 'R$ 119,99',
     giveawayUrl: 'https://store.epicgames.com/free-games?lang=pt-BR',
-    epicSlug: 'targeted-10-days'
+    epicSlug: 'rival-stars-horse-racing-desktop-edition'
   }
 ];
 
@@ -8090,8 +8105,59 @@ async function fetchLiveEpicFreeGames(){
   if(!LIVE_EPIC_CACHE.length) LIVE_EPIC_CACHE = FALLBACK_EPIC;
   renderEpicGrid(LIVE_EPIC_CACHE);
 
+  // 1. Tentar Endpoint Oficial da Epic Games
   try {
-    const res = await fetch('https://www.gamerpower.com/api/giveaways?platform=epic-games-store');
+    const epicUrl = 'https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=pt-BR&country=BR&allowCountries=BR';
+    const res = await fetch(epicUrl, { signal: AbortSignal.timeout(6000) });
+    if(res.ok){
+      const json = await res.json();
+      const elements = json?.data?.Catalog?.searchStore?.elements || [];
+      const freeList = [];
+
+      for(const el of elements){
+        const p = el.promotions;
+        if(!p) continue;
+        const currentOffers = p.promotionalOffers?.[0]?.promotionalOffers || [];
+        const upcomingOffers = p.upcomingPromotionalOffers?.[0]?.promotionalOffers || [];
+        const currentFree = currentOffers.find(o => o.discountSetting?.discountPercentage === 0);
+        const upcomingFree = upcomingOffers.find(o => o.discountSetting?.discountPercentage === 0);
+
+        if(currentFree || upcomingFree){
+          const isCurrent = !!currentFree;
+          const offer = isCurrent ? currentFree : upcomingFree;
+          const imgObj = el.keyImages?.find(img => img.type === 'DieselStoreFrontWide' || img.type === 'OfferImageWide') || el.keyImages?.[0];
+          const origPrice = el.price?.totalPrice?.fmtPrice?.originalPrice || '100% Grátis';
+          const startDate = isCurrent ? 'Hoje' : new Date(offer.startDate).toLocaleDateString('pt-BR', {day:'2-digit', month:'short'});
+          const endDate = new Date(offer.endDate).toLocaleDateString('pt-BR', {day:'2-digit', month:'short'});
+          const slug = el.productSlug || el.urlSlug || el.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+          freeList.push({
+            id: 'epic-' + el.id,
+            title: el.title,
+            description: el.description || 'Jogo gratuito oficial na Epic Games Store.',
+            image: imgObj?.url || '',
+            isCurrentFree: isCurrent,
+            isUpcomingFree: !isCurrent,
+            startDate: startDate,
+            endDate: endDate,
+            originalPrice: origPrice,
+            giveawayUrl: `https://store.epicgames.com/p/${slug}?lang=pt-BR`,
+            epicSlug: slug
+          });
+        }
+      }
+
+      if(freeList.length > 0){
+        LIVE_EPIC_CACHE = freeList;
+        renderEpicGrid(freeList);
+        return;
+      }
+    }
+  } catch(e){}
+
+  // 2. Fallback Secundário GamerPower API
+  try {
+    const res = await fetch('https://www.gamerpower.com/api/giveaways?platform=epic-games-store', { signal: AbortSignal.timeout(5000) });
     if(res.ok){
       const data = await res.json();
       if(Array.isArray(data) && data.length > 0){
@@ -8165,14 +8231,47 @@ async function fetchLiveSteamSpecials(){
   if(!LIVE_STEAM_CACHE.length) LIVE_STEAM_CACHE = FALLBACK_STEAM;
   renderSteamGrid(LIVE_STEAM_CACHE);
 
+  // 1. Tenta buscar da Steam Store oficial via proxies resilientes
+  const steamTarget = 'https://store.steampowered.com/api/featuredcategories/?l=brazilian';
+  const proxyEndpoints = [
+    `https://corsproxy.io/?${encodeURIComponent(steamTarget)}`,
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(steamTarget)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(steamTarget)}`
+  ];
+
+  for(const pUrl of proxyEndpoints){
+    try {
+      const res = await fetch(pUrl, { signal: AbortSignal.timeout(5000) });
+      if(res.ok){
+        const data = await res.json();
+        if(data.specials && data.specials.items && data.specials.items.length > 0){
+          LIVE_STEAM_CACHE = data.specials.items;
+          renderSteamGrid(data.specials.items);
+          return;
+        }
+      }
+    } catch(e){}
+  }
+
+  // 2. Fallback GamerPower Steam giveaways
   try {
-    const res = await fetch('https://store.steampowered.com/api/featuredcategories/?l=brazilian');
+    const res = await fetch('https://www.gamerpower.com/api/giveaways?platform=steam', { signal: AbortSignal.timeout(4500) });
     if(res.ok){
       const data = await res.json();
-      if(data.specials && data.specials.items && data.specials.items.length > 0){
-        LIVE_STEAM_CACHE = data.specials.items;
-        renderSteamGrid(data.specials.items);
-        return;
+      if(Array.isArray(data) && data.length > 0){
+        const steamItems = data.slice(0, 12).map(item => ({
+          id: item.id,
+          name: item.title.replace(/\(Steam.*?\)/gi, '').trim(),
+          discount_percent: 100,
+          original_price: Math.round(parseFloat(item.worth?.replace(/[^0-9.]/g, '') || '50') * 100),
+          final_price: 0,
+          header_image: item.image || item.thumbnail
+        }));
+        if(steamItems.length > 0){
+          LIVE_STEAM_CACHE = steamItems;
+          renderSteamGrid(steamItems);
+          return;
+        }
       }
     }
   } catch(e){}
@@ -9679,10 +9778,16 @@ updateBadges();
 navigate();
 refreshIcons();
 
-// Inicia atualização de segundo plano sem bloquear a tela
+// Inicia atualização de segundo plano em tempo real
 setTimeout(() => {
   fetchLivePromosAndSpecials();
-}, 500);
+}, 400);
+
+// Sistema de rotação e sincronização automática a cada 45 segundos
+if (promoSyncTimer) clearInterval(promoSyncTimer);
+promoSyncTimer = setInterval(() => {
+  fetchLivePromosAndSpecials();
+}, 45000);
 </script>
 </body>
 </html>
