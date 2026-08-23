@@ -740,8 +740,10 @@
         <div><div class="kicker">Estação de Jogos</div><h2>Selecione a Plataforma para Rodar no Site</h2></div>
         <div class="tabs" id="webPlatformTabs">
           <button class="on" data-platform="subway" onclick="selectWebPlatform('subway')">🏄 Subway Surfers</button>
-          <button data-platform="poki" onclick="selectWebPlatform('poki')">🎮 Poki (Site Completo)</button>
-          <button data-platform="jogos360" onclick="selectWebPlatform('jogos360')">🕹️ Jogos 360 (Site Completo)</button>
+          <button data-platform="2048" onclick="selectWebPlatform('2048')">🔢 2048 Clássico</button>
+          <button data-platform="flappy" onclick="selectWebPlatform('flappy')">🐦 Flappy Bird</button>
+          <button data-platform="poki" onclick="selectWebPlatform('poki')">🎮 Poki (Central de Jogos)</button>
+          <button data-platform="jogos360" onclick="selectWebPlatform('jogos360')">🕹️ Jogos 360 (Portal)</button>
           <button data-platform="youtube" onclick="selectWebPlatform('youtube')">▶️ Jogos do YouTube (Playables)</button>
         </div>
       </div>
@@ -780,8 +782,52 @@
             allowfullscreen>
           </iframe>
 
+          <!-- POKI DEDICATED STATION VIEWPORT -->
+          <div id="pokiStationView" style="display:none;position:absolute;inset:0;background:linear-gradient(180deg,#07121c,#04090f);overflow-y:auto;padding:32px 24px;z-index:10;align-items:center;justify-content:center">
+            <div style="max-width:920px;width:100%;margin:auto">
+              <div style="background:linear-gradient(135deg,rgba(0,210,255,.22),rgba(7,18,28,.95));border:1px solid rgba(0,210,255,.35);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;box-shadow:0 12px 40px rgba(0,0,0,0.5)">
+                <div>
+                  <div style="display:inline-flex;align-items:center;gap:6px;background:#00d2ff;color:#002838;font-size:11px;font-weight:800;padding:4px 12px;border-radius:6px;margin-bottom:12px;letter-spacing:1px">
+                    <i data-lucide="gamepad-2" style="width:14px;height:14px"></i> POKI.COM OFICIAL
+                  </div>
+                  <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:38px;text-transform:uppercase;color:#fff;line-height:1;margin:0 0 10px">Catálogo Completo Poki Brasil</h2>
+                  <p style="color:#b8e4f5;font-size:15px;margin:0;max-width:580px;line-height:1.5">
+                    Mais de 1.000+ jogos online grátis como Subway Surfers, Temple Run 2, Stickman Hook, Moto X3M e muito mais. Clique abaixo para abrir e jogar sem bloqueios!
+                  </p>
+                </div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                  <a href="https://poki.com/br" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:#00d2ff;color:#002838;border:none;box-shadow:0 6px 24px rgba(0,210,255,.45);height:48px;padding:0 24px;font-size:15px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px">
+                    <i data-lucide="play"></i>Jogar no Poki Agora
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- JOGOS 360 DEDICATED STATION VIEWPORT -->
+          <div id="j360StationView" style="display:none;position:absolute;inset:0;background:linear-gradient(180deg,#191509,#0e0c05);overflow-y:auto;padding:32px 24px;z-index:10;align-items:center;justify-content:center">
+            <div style="max-width:920px;width:100%;margin:auto">
+              <div style="background:linear-gradient(135deg,rgba(245,158,11,.22),rgba(25,21,9,.95));border:1px solid rgba(245,158,11,.35);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;box-shadow:0 12px 40px rgba(0,0,0,0.5)">
+                <div>
+                  <div style="display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#191202;font-size:11px;font-weight:800;padding:4px 12px;border-radius:6px;margin-bottom:12px;letter-spacing:1px">
+                    <i data-lucide="compass" style="width:14px;height:14px"></i> JOGOS360.COM.BR
+                  </div>
+                  <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:38px;text-transform:uppercase;color:#fff;line-height:1;margin:0 0 10px">Portal Oficial Jogos 360</h2>
+                  <p style="color:#f5e2b8;font-size:15px;margin:0;max-width:580px;line-height:1.5">
+                    Milhares de clássicos de 2 jogadores, corrida, tiro, futebol, puzzle e aventura em português. Clique abaixo para abrir o catálogo completo!
+                  </p>
+                </div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                  <a href="https://www.jogos360.com.br/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:var(--gold);color:#191202;border:none;box-shadow:0 6px 24px rgba(245,158,11,.45);height:48px;padding:0 24px;font-size:15px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px">
+                    <i data-lucide="play"></i>Jogar no Jogos 360
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- YOUTUBE PLAYABLES DEDICATED STATION VIEWPORT -->
-          <div id="ytStationView" style="display:none;position:absolute;inset:0;background:linear-gradient(180deg,#140909,#0c0606);overflow-y:auto;padding:32px 24px;z-index:10;display:none;align-items:center;justify-content:center">
+          <div id="ytStationView" style="display:none;position:absolute;inset:0;background:linear-gradient(180deg,#140909,#0c0606);overflow-y:auto;padding:32px 24px;z-index:10;align-items:center;justify-content:center">
             <div style="max-width:920px;width:100%;margin:auto">
               <!-- YT Banner Card -->
               <div style="background:linear-gradient(135deg,rgba(255,0,0,.25),rgba(20,9,9,.8));border:1px solid rgba(255,0,0,.35);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;box-shadow:0 12px 40px rgba(0,0,0,0.5)">
@@ -7430,35 +7476,57 @@ const APPS=[
    desc:'Limpa a memória RAM em tempo real para evitar travamentos e stutterings em jogos pesados.', url:'https://github.com/henrypp/memreduct/releases'},
 ];
 
-/* ================= ESTAÇÃO DE JOGOS & PLATAFORMAS WEB (POKI, 360, YOUTUBE, SUBWAY) ================= */
+/* ================= ESTAÇÃO DE JOGOS & PLATAFORMAS WEB (SUBWAY, 2048, FLAPPY, POKI, 360, YOUTUBE) ================= */
 const WEB_PLATFORMS = {
   'subway': {
     name: 'Subway Surfers World Tour',
     badge: 'HTML5 WEBGL',
+    type: 'iframe',
     url: 'https://ubg98.github.io/SubwaySurfers/',
     controls: 'Setas [⬅️ ➡️] Mover · [⬆️] Pular · [⬇️] Rolar · [Espaço] Skate',
     badgeBg: 'var(--emerald)',
     badgeColor: '#031d13'
   },
-  'poki': {
-    name: 'Poki — Plataforma Completa de Jogos Online',
-    badge: 'POKI.COM OFICIAL',
-    url: 'https://poki.com/br',
-    controls: 'Navegue e jogue qualquer um dos mais de 1.000+ jogos grátis do catálogo Poki!',
+  '2048': {
+    name: '2048 — Quebra-Cabeça Clássico',
+    badge: 'HTML5 PUZZLE',
+    type: 'iframe',
+    url: 'https://gabrielecirulli.github.io/2048/',
+    controls: 'Use as Setas do Teclado [⬅️ ⬆️ ➡️ ⬇️] para juntar os números e alcançar 2048!',
     badgeBg: 'var(--accent)',
     badgeColor: 'var(--accent-ink)'
   },
+  'flappy': {
+    name: 'Flappy Bird Original HTML5',
+    badge: 'ARCADE CLÁSSICO',
+    type: 'iframe',
+    url: 'https://nebezb.com/floppybird/',
+    controls: 'Clique com o Mouse ou pressione [Espaço] para bater as asas e voar entre os canos!',
+    badgeBg: 'var(--gold)',
+    badgeColor: '#191202'
+  },
+  'poki': {
+    name: 'Poki — Portal Oficial de Jogos Online',
+    badge: 'POKI.COM OFICIAL',
+    type: 'poki_station',
+    url: 'https://poki.com/br',
+    controls: 'Mais de 1.000+ jogos grátis! Clique no botão para jogar em tela cheia sem bloqueios.',
+    badgeBg: '#00d2ff',
+    badgeColor: '#002838'
+  },
   'jogos360': {
-    name: 'Jogos 360 — Portal Oficial de Jogos Online',
+    name: 'Jogos 360 — Plataforma de Jogos Online',
     badge: 'JOGOS360.COM.BR',
+    type: 'jogos360_station',
     url: 'https://www.jogos360.com.br/',
-    controls: 'Milhares de jogos clássicos, 2 jogadores, corrida, tiro e puzzle em português!',
+    controls: 'Milhares de jogos clássicos, 2 jogadores, corrida e tiro em português!',
     badgeBg: 'var(--gold)',
     badgeColor: '#191202'
   },
   'youtube': {
     name: 'YouTube Playables — Jogos Oficiais do YouTube',
     badge: 'YOUTUBE OFICIAL',
+    type: 'yt_station',
     url: 'https://www.youtube.com/playables',
     controls: 'Mais de 75+ jogos leves e rápidos do Google / YouTube sem instalação!',
     badgeBg: '#ff0000',
@@ -7494,6 +7562,8 @@ function selectWebPlatform(key){
   const extBtn = $('#playerExternalBtn');
   const iframe = $('#webStationIframe');
   const ytStation = $('#ytStationView');
+  const pokiStation = $('#pokiStationView');
+  const j360Station = $('#j360StationView');
 
   if(titleEl) titleEl.textContent = p.name;
   if(badgeEl){
@@ -7504,19 +7574,27 @@ function selectWebPlatform(key){
   if(controlsEl) controlsEl.innerHTML = `<i data-lucide="gamepad-2" style="width:16px;height:16px;color:var(--accent)"></i> <b>Controles:</b> ${p.controls}`;
   if(extBtn) extBtn.href = p.url;
 
-  if(key === 'youtube'){
-    if(iframe) {
+  // Reset station views
+  if(ytStation) ytStation.style.display = 'none';
+  if(pokiStation) pokiStation.style.display = 'none';
+  if(j360Station) j360Station.style.display = 'none';
+
+  if(p.type === 'iframe'){
+    if(iframe){
+      iframe.style.display = 'block';
+      if(iframe.src !== p.url){
+        iframe.src = p.url;
+      }
+      iframe.focus();
+    }
+  } else {
+    if(iframe){
       iframe.style.display = 'none';
       iframe.src = 'about:blank';
     }
-    if(ytStation) ytStation.style.display = 'flex';
-  } else {
-    if(ytStation) ytStation.style.display = 'none';
-    if(iframe){
-      iframe.style.display = 'block';
-      iframe.src = p.url;
-      iframe.focus();
-    }
+    if(p.type === 'yt_station' && ytStation) ytStation.style.display = 'flex';
+    if(p.type === 'poki_station' && pokiStation) pokiStation.style.display = 'flex';
+    if(p.type === 'jogos360_station' && j360Station) j360Station.style.display = 'flex';
   }
 
   $('#gamePlayerSection').scrollIntoView({behavior:'smooth'});
@@ -7527,6 +7605,14 @@ function selectWebPlatform(key){
 function reloadWebPlatform(){
   if(currentPlatform === 'youtube'){
     openYouTubeApp();
+    return;
+  }
+  if(currentPlatform === 'poki'){
+    window.open('https://poki.com/br', '_blank');
+    return;
+  }
+  if(currentPlatform === 'jogos360'){
+    window.open('https://www.jogos360.com.br/', '_blank');
     return;
   }
   const p = WEB_PLATFORMS[currentPlatform] || WEB_PLATFORMS['subway'];
