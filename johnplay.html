@@ -1135,7 +1135,8 @@ const SOURCES = [
   { id: 'ankergames', name: 'AnkerGames', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://wkeynhk.online/ankergames.json', site: 'https://ankergames.net/', badgeClass: 'source-atop' },
   { id: 'freetp', name: 'FreeTP.Org (Multiplayer)', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://hydrasources.su/freetp_games.json', site: 'https://freetp.org/', badgeClass: 'source-empress' },
   { id: 'elamigos', name: 'ElAmigos Repacks', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://raw.githubusercontent.com/vinikjkkj/game-links-collection/refs/heads/master/jsons/elamigos.json', site: 'https://elamigos.site/', badgeClass: 'source-fitgirl' },
-  { id: 'antidenuvo', name: 'Anti-Denuvo Sanctuary', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://git.denuvosanctuary.com/denuvosanctuary/hydra/raw/branch/main/source.json', site: 'https://denuvosanctuary.com/', badgeClass: 'source-gog' }
+  { id: 'antidenuvo', name: 'Anti-Denuvo Sanctuary', trust: 'green', trustLabel: 'Seguro (Verde)', url: 'https://git.denuvosanctuary.com/denuvosanctuary/hydra/raw/branch/main/source.json', site: 'https://denuvosanctuary.com/', badgeClass: 'source-gog' },
+  { id: 'steamtools', name: 'SteamTools & Manifests', trust: 'blue', trustLabel: 'Ferramenta (Azul)', url: 'https://steamtools.net/', site: 'https://steamtools.net/', badgeClass: 'source-steamrip' }
 ];
 
 let GAMES = [
@@ -8928,15 +8929,16 @@ function findSteamAppId(name) {
 function getCleanSearchTitle(name) {
   if (!name) return '';
   let s = name;
+  s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Remove accents (ö -> o, é -> e, ã -> a)
   s = s.replace(/\{[^}]*\}/g, ' ');
   s = s.replace(/\[[^\]]*\]/g, ' ');
   s = s.replace(/\([^)]*\)/g, ' ');
   s = s.replace(/[®™©]/g, '');
   s = s.replace(/\bv\.?\d+(\.\d+)*[a-z]?\b/gi, ' ');
   s = s.replace(/\b\d{1,2}\s+(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|Janeiro|Fevereiro|Março|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro)\s+\d{4}\b/gi, ' ');
-  s = s.replace(/\b(build\s*\d+|multi\d+|repack|portable|direct\s*play|free\s*download|full\s*unlocked|cracked|fitgirl|dodi|xatab|kaoskrew|steamrip|gog)\b.*/gi, ' ');
-  s = s.replace(/:\s*(Enhanced|Deluxe|Definitive|Complete|Anniversary|Collector|Standard|Digital)\s*Edition.*/gi, ' ');
-  s = s.replace(/[:\-–—|]/g, ' ');
+  s = s.replace(/\b(build\s*\d+|multi\d+|repack|portable|direct\s*play|free\s*download|full\s*unlocked|cracked|fitgirl|dodi|xatab|kaoskrew|steamrip|gog|p2p|rune|tenoke|codex|flt|skidrow|empress|goldberg)\b.*/gi, ' ');
+  s = s.replace(/[\-–—:]?\s*\b(Enhanced|Deluxe|Definitive|Complete|Anniversary|Collector'?s?|Standard|Digital|Ultimate|Premium|Game of the Year|GOTY|Special|Master)\s+Edition\b.*/gi, ' ');
+  s = s.replace(/[:\-–—|/\\\\]/g, ' ');
   s = s.replace(/\s+/g, ' ').trim();
   return s;
 }
@@ -9384,6 +9386,14 @@ function openModal(id){
       magnet: buildInstantMagnet(g.name, 'Hydra Wiki Library'),
       badge: 'Trust Verde (Seguro)',
       badgeClass: 'trust-green'
+    },
+    { 
+      name: 'SteamTools & Manifests', 
+      desc: 'Manifests oficiais Steam, DepotDownloader e desbloqueador', 
+      siteUrl: g.steamAppId ? `https://steamdb.info/app/${g.steamAppId}/` : `https://steamdb.info/search/?a=app&q=${q}`, 
+      magnet: buildInstantMagnet(g.name, 'SteamTools'),
+      badge: 'Ferramenta Steam (Azul)',
+      badgeClass: 'trust-blue'
     }
   ];
 
