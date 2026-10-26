@@ -29,70 +29,71 @@
 
 <style>
   :root{
-    --bg:#09120e; --bg-deep:#050c09; --panel:#0e1b15; --panel-2:#14261e;
-    --border:#1d382b; --border-hi:#2c5944; --text:#e2f2ea; --muted:#89af9c;
-    --accent:#10b981; --accent-hi:#34d399; --accent-ink:#031d13; --accent-dim:rgba(16,185,129,.16);
-    --danger:#e06c8c; --gold:#ecc55e; --emerald:#10b981; --cyan:#06b6d4; --radius:12px;
+    --bg:#060d0a; --bg-deep:#030705; --panel:#0b1711; --panel-2:#11231b;
+    --border:#193528; --border-hi:#295c44; --text:#e8f6ef; --muted:#86b09b;
+    --accent:#10b981; --accent-hi:#34d399; --accent-ink:#02180f; --accent-dim:rgba(16,185,129,.16);
+    --danger:#f43f5e; --gold:#f59e0b; --emerald:#10b981; --cyan:#06b6d4; --radius:14px;
   }
 
   body[data-theme="green"]{
-    --bg:#09120e; --bg-deep:#050c09; --panel:#0e1b15; --panel-2:#14261e;
-    --border:#1d382b; --border-hi:#2c5944; --text:#e2f2ea; --muted:#89af9c;
-    --accent:#10b981; --accent-hi:#34d399; --accent-ink:#031d13; --accent-dim:rgba(16,185,129,.16);
-    --danger:#e06c8c; --gold:#ecc55e; --emerald:#10b981; --cyan:#06b6d4; --radius:12px;
+    --bg:#060d0a; --bg-deep:#030705; --panel:#0b1711; --panel-2:#11231b;
+    --border:#193528; --border-hi:#295c44; --text:#e8f6ef; --muted:#86b09b;
+    --accent:#10b981; --accent-hi:#34d399; --accent-ink:#02180f; --accent-dim:rgba(16,185,129,.16);
+    --danger:#f43f5e; --gold:#f59e0b; --emerald:#10b981; --cyan:#06b6d4; --radius:14px;
   }
 
   body[data-theme="purple"]{
-    --bg:#100b1a; --bg-deep:#0b0713; --panel:#181126; --panel-2:#1f1730;
-    --border:#2c2144; --border-hi:#463568; --text:#e4ddf2; --muted:#9a8bb5;
-    --accent:#a06bff; --accent-hi:#b98cff; --accent-ink:#150827; --accent-dim:rgba(160,107,255,.14);
-    --danger:#e06c8c; --gold:#ecc55e; --emerald:#10b981; --cyan:#06b6d4; --radius:12px;
+    --bg:#0b0714; --bg-deep:#06040b; --panel:#130d21; --panel-2:#1b132e;
+    --border:#2a1e46; --border-hi:#483375; --text:#ece6f8; --muted:#9b8cb8;
+    --accent:#a06bff; --accent-hi:#be95ff; --accent-ink:#120624; --accent-dim:rgba(160,107,255,.15);
+    --danger:#f43f5e; --gold:#f59e0b; --emerald:#10b981; --cyan:#06b6d4; --radius:14px;
   }
 
-  .theme-switcher{display:inline-flex;gap:4px;align-items:center;background:var(--panel-2);padding:2px 4px;border-radius:20px;border:1px solid var(--border)}
-  .theme-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:14px;font-size:11px;font-weight:700;color:var(--muted);transition:all .15s;cursor:pointer}
+  .theme-switcher{display:inline-flex;gap:4px;align-items:center;background:var(--panel-2);padding:3px 5px;border-radius:20px;border:1px solid var(--border);box-shadow:inset 0 1px 2px rgba(0,0,0,.3)}
+  .theme-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:14px;font-size:11px;font-weight:700;color:var(--muted);transition:all .18s;cursor:pointer}
   .theme-chip:hover{color:var(--text)}
-  .theme-chip.active{background:var(--accent);color:var(--accent-ink)}
+  .theme-chip.active{background:var(--accent);color:var(--accent-ink);box-shadow:0 2px 10px var(--accent-dim)}
   .theme-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
-  *{margin:0;padding:0;box-sizing:border-box}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{background:var(--bg);background-image:radial-gradient(ellipse 80% 50% at 50% -15%, var(--accent-dim), transparent 70%);background-attachment:fixed;color:var(--text);font-family:'Archivo',sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
   ::selection{background:var(--accent);color:var(--accent-ink)}
-  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar{width:8px;height:8px}
   ::-webkit-scrollbar-track{background:var(--bg-deep)}
-  ::-webkit-scrollbar-thumb{background:#33244e;border-radius:6px}
-  ::-webkit-scrollbar-thumb:hover{background:var(--border-hi)}
+  ::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:6px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
   img{display:block;content-visibility:auto}
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
   a{color:inherit;text-decoration:none}
   h1,h2,h3,h4{font-weight:700}
-  .wrap{max-width:1300px;margin:0 auto;padding:0 26px}
+  .wrap{max-width:1340px;margin:0 auto;padding:0 26px}
   .page{display:none}
-  .page.on{display:block;animation:fadein .2s cubic-bezier(0.16, 1, 0.3, 1)}
+  .page.on{display:block;animation:fadein .22s cubic-bezier(0.16, 1, 0.3, 1)}
   @keyframes fadein{from{opacity:0;transform:translateY(6px)}}
 
-  .section{margin-top:56px;content-visibility:auto;contain-intrinsic-size:500px}
+  .section{margin-top:52px;content-visibility:auto;contain-intrinsic-size:500px}
 
   /* ---------- Topstrip ---------- */
-  .topstrip{background:var(--bg-deep);border-bottom:1px solid #1a1129;font-size:12px;color:var(--muted)}
-  .topstrip .wrap{display:flex;justify-content:space-between;height:34px;align-items:center}
-  .topstrip .right{display:flex;gap:22px}
-  .topstrip a:hover{color:var(--text)}
-  .live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:7px;animation:pulse 2s infinite}
+  .topstrip{background:var(--bg-deep);border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+  .topstrip .wrap{display:flex;justify-content:space-between;height:36px;align-items:center}
+  .topstrip .right{display:flex;gap:20px}
+  .topstrip a:hover{color:var(--accent-hi)}
+  .live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:7px;box-shadow:0 0 8px var(--accent);animation:pulse 2s infinite}
   @keyframes pulse{50%{opacity:.35}}
 
   /* ---------- Navbar ---------- */
-  .nav{position:sticky;top:0;z-index:120;background:rgba(16,11,26,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);will-change:transform}
-  .nav .wrap{display:flex;align-items:center;gap:22px;height:68px}
+  .nav{position:sticky;top:0;z-index:120;background:rgba(6,13,10,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border);will-change:transform;box-shadow:0 6px 28px rgba(0,0,0,.35)}
+  body[data-theme="purple"] .nav{background:rgba(11,7,20,.88)}
+  .nav .wrap{display:flex;align-items:center;gap:20px;height:68px}
   .logo{display:flex;align-items:center;gap:11px;flex-shrink:0;cursor:pointer}
-  .logo-mark{width:36px;height:36px;border-radius:10px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);font-weight:900;font-size:14px;box-shadow:0 4px 18px rgba(160,107,255,.35)}
+  .logo-mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg, var(--accent-hi), var(--accent));display:grid;place-items:center;color:var(--accent-ink);font-weight:900;font-size:15px;box-shadow:0 4px 18px var(--accent-dim)}
   .logo-txt{line-height:1}
-  .logo-txt small{display:block;font-size:9.5px;letter-spacing:.32em;color:var(--accent);font-weight:700;margin-bottom:3px}
-  .logo-txt b{font-size:20px;font-weight:800;letter-spacing:-.02em}
-  .nav-links{display:flex;gap:4px}
-  .nav-links a{padding:8px 13px;border-radius:8px;font-weight:600;font-size:13.5px;color:var(--muted);transition:background .15s, color .15s;white-space:nowrap;cursor:pointer}
+  .logo-txt small{display:block;font-size:9.5px;letter-spacing:.32em;color:var(--accent);font-weight:800;margin-bottom:3px}
+  .logo-txt b{font-size:21px;font-weight:800;letter-spacing:-.02em}
+  .nav-links{display:flex;gap:5px;background:rgba(255,255,255,.02);padding:4px;border-radius:11px;border:1px solid var(--border)}
+  .nav-links a{padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;color:var(--muted);transition:all .16s;white-space:nowrap;cursor:pointer}
   .nav-links a:hover{color:var(--text);background:var(--panel-2)}
-  .nav-links a.on{color:var(--text);background:var(--panel-2);box-shadow:inset 0 -2px 0 var(--accent)}
+  .nav-links a.on{color:var(--accent-ink);background:var(--accent);box-shadow:0 3px 12px var(--accent-dim)}
   
   /* Search box */
   .nav-search{position:relative;flex:1;max-width:320px;margin-left:10px}
@@ -431,6 +432,36 @@
   .foot-base{border-top:1px solid #1a1129;padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;color:#5f5079;font-size:12.5px}
   .foot-base .legal{display:flex;gap:18px}
 
+  /* ---------- Ported2Browser Web Catalog ---------- */
+  .p2b-section{margin-top:42px;padding-top:34px;border-top:1px solid var(--border)}
+  .p2b-toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:18px 0 14px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px 18px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .p2b-search-wrap{position:relative;flex:1;min-width:240px}
+  .p2b-search-wrap input{width:100%;height:42px;background:var(--bg-deep);border:1px solid var(--border-hi);border-radius:10px;padding:0 16px 0 40px;color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:border-color .15s, box-shadow .15s}
+  .p2b-search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+  .p2b-search-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+  .p2b-selects{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .p2b-pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+  .p2b-pill{padding:7px 14px;border-radius:99px;background:var(--panel);border:1px solid var(--border);color:var(--muted);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .15s}
+  .p2b-pill:hover{color:var(--text);border-color:var(--border-hi)}
+  .p2b-pill.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);box-shadow:0 4px 14px var(--accent-dim)}
+  .p2b-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(235px, 1fr));gap:16px}
+  .p2b-card{background:linear-gradient(180deg, var(--panel-2) 0%, var(--panel) 100%);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;transition:transform .18s, border-color .18s, box-shadow .18s;position:relative;overflow:hidden;cursor:pointer}
+  .p2b-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.45)}
+  .p2b-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .p2b-plat{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:6px;background:var(--accent-dim);color:var(--accent-hi);border:1px solid rgba(16,185,129,.3)}
+  body[data-theme="purple"] .p2b-plat{border-color:rgba(160,107,255,.3)}
+  .p2b-year{font-size:11px;font-weight:700;color:var(--muted);background:var(--bg-deep);padding:2px 7px;border-radius:5px;border:1px solid var(--border)}
+  .p2b-card h4{font-size:16px;font-weight:800;color:#fff;line-height:1.25;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+  .p2b-card p{font-size:12px;color:var(--muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+  .p2b-meta{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);padding-top:6px;border-top:1px solid rgba(255,255,255,.05)}
+  .p2b-actions{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:4px}
+  .p2b-btn-play{height:36px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:12.5px;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s, transform .15s}
+  .p2b-btn-play:hover{background:var(--accent-hi);transform:scale(1.02)}
+  .p2b-btn-play svg{width:14px;height:14px}
+  .p2b-btn-ext{width:36px;height:36px;border-radius:9px;background:var(--bg-deep);border:1px solid var(--border);color:var(--muted);display:grid;place-items:center;transition:all .15s}
+  .p2b-btn-ext:hover{color:var(--text);border-color:var(--accent)}
+  .p2b-btn-ext svg{width:14px;height:14px}
+
   /* ---------- Mobile Responsive Full Adaptation ---------- */
   .mobile-dock{display:none}
 
@@ -443,14 +474,16 @@
   }
 
   @media(max-width:768px){
-    body{padding-bottom:76px}
-    .wrap{padding:0 16px}
-    .nav{height:58px}
-    .nav-search{max-width:170px}
+    body{padding-bottom:78px}
+    .wrap{padding:0 14px}
+    .nav .wrap{height:58px;gap:10px}
+    .nav-search{max-width:160px}
     .logo-txt small{display:none}
     .logo-txt b{font-size:17px}
-    .logo-mark{width:32px;height:32px;font-size:12px;border-radius:8px}
+    .logo-mark{width:32px;height:32px;font-size:12px;border-radius:9px}
     .topstrip{display:none}
+    .theme-chip{padding:3px 7px;font-size:10px}
+    .icon-btn{width:36px;height:36px;border-radius:9px}
     
     /* Mobile Bottom Dock */
     .mobile-dock{
@@ -459,18 +492,19 @@
       bottom:0;
       left:0;
       right:0;
-      height:62px;
-      background:rgba(14,27,21,.95);
-      backdrop-filter:blur(18px);
-      border-top:1px solid var(--border);
+      height:64px;
+      background:rgba(6,13,10,.94);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      border-top:1px solid var(--border-hi);
       z-index:150;
       justify-content:space-around;
       align-items:center;
       padding:0 6px max(env(safe-area-inset-bottom), 4px);
-      box-shadow:0 -6px 20px rgba(0,0,0,.45);
+      box-shadow:0 -8px 28px rgba(0,0,0,.6);
     }
     body[data-theme="purple"] .mobile-dock{
-      background:rgba(24,17,38,.95);
+      background:rgba(11,7,20,.94);
     }
     .mob-item{
       display:flex;
@@ -488,81 +522,94 @@
       text-decoration:none;
     }
     .mob-item svg{width:19px;height:19px;stroke-width:2.2}
-    .mob-item.on, .mob-item:hover{color:var(--accent);transform:translateY(-1px)}
-    .mob-item.on svg{stroke-width:2.6}
+    .mob-item.on, .mob-item:hover{color:var(--accent);transform:translateY(-2px)}
+    .mob-item.on svg{stroke-width:2.6;filter:drop-shadow(0 2px 6px var(--accent-dim))}
 
     /* Hero Carousel Mobile */
-    .hero{margin-top:12px}
-    .carousel{height:360px;border-radius:12px}
-    .slide-body{padding:0 20px;max-width:100%}
-    .slide-tags{font-size:9.5px;margin-bottom:8px;gap:6px}
-    .slide-title{font-size:32px;margin-bottom:8px;line-height:1}
-    .slide-desc{font-size:12.5px;max-width:100%;margin-bottom:12px;-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+    .hero{margin-top:10px}
+    .carousel{height:330px;border-radius:14px}
+    .slide-body{padding:0 18px;max-width:100%}
+    .slide-tags{font-size:9.5px;margin-bottom:6px;gap:6px}
+    .slide-title{font-size:30px;margin-bottom:6px;line-height:1}
+    .slide-desc{font-size:12px;max-width:100%;margin-bottom:12px;-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
     .slide-meta{display:none}
     .slide-buy{gap:8px}
-    .slide-buy .btn{height:38px;padding:0 14px;font-size:12.5px}
+    .slide-buy .btn{height:36px;padding:0 14px;font-size:12px}
     .car-arrows{display:none}
-    .car-dots{left:20px;bottom:14px}
+    .car-dots{left:18px;bottom:12px}
     
-    /* Stats Bar Mobile */
-    .stats{grid-template-columns:repeat(2, 1fr);gap:10px;margin-top:16px}
-    .stat{padding:12px;gap:10px}
-    .stat .ic{width:36px;height:36px}
-    .stat b{font-size:15px}
-    
-    /* Deals Grid Mobile */
-    .sec-head{margin-top:28px;gap:10px}
-    .sec-head h2{font-size:26px}
+    /* Deals & Games Grid Mobile */
+    .sec-head{margin-top:24px;gap:10px}
+    .sec-head h2{font-size:25px}
     .deals-grid{grid-template-columns:repeat(2, 1fr);gap:10px}
-    .deal-card{aspect-ratio:3/4.6}
-    .deal-info{padding:12px}
-    .deal-info h3{font-size:13.5px}
-    .deal-info .g{font-size:11px;margin-bottom:4px}
+    .deal-card{aspect-ratio:3/4.5}
+    .deal-info{padding:11px}
+    .deal-info h3{font-size:13px}
+    .deal-info .g{font-size:10.5px;margin-bottom:4px}
     .deal-btn{height:32px;font-size:11px}
     
     /* Filter & Browse Layout Mobile */
-    .browse-layout{gap:18px;margin-top:14px}
+    .browse-layout{gap:16px;margin-top:14px}
+    .filters{padding:14px;border-radius:12px}
     .results-bar{margin-bottom:12px}
     .games-grid{grid-template-columns:repeat(2, 1fr);gap:10px}
     .game-card .card-body{padding:10px}
     .game-card .card-body h3{font-size:13px}
-    .card-actions .action-dl, .card-actions .action-det{height:30px;font-size:11px}
+    .card-actions .action-dl, .card-actions .action-det{height:32px;font-size:11px}
     
-    /* Web Station Player Mobile */
-    .bg-hero{padding:20px 16px;gap:14px;border-radius:12px}
-    .bg-hero h2{font-size:28px}
-    .bg-hero p{font-size:13px}
-    .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;padding-bottom:6px;gap:6px}
-    .tabs button{padding:6px 14px;font-size:12px;white-space:nowrap;flex-shrink:0}
-    .game-player-section{border-radius:12px;margin-top:16px}
-    .player-topbar{padding:10px 14px;gap:8px}
-    .player-topbar .title-box h3{font-size:18px}
+    /* Web Station Player & Ported2Browser Mobile */
+    .bg-hero{padding:18px 16px;gap:12px;border-radius:14px;margin-top:14px}
+    .bg-hero h2{font-size:26px}
+    .bg-hero p{font-size:12.5px}
+    .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;padding-bottom:6px;gap:6px;width:100%;max-width:100%}
+    .tabs button{padding:7px 13px;font-size:12px;white-space:nowrap;flex-shrink:0}
+    .game-player-section{border-radius:14px;margin-top:14px}
+    .player-topbar{padding:10px 12px;gap:8px}
+    .player-topbar .title-box h3{font-size:16px}
     .player-topbar .controls-help{display:none}
-    .player-actions .btn{height:30px;padding:0 8px;font-size:11px}
-    .game-viewport{height:min(72vh, 540px)}
+    .player-actions{width:100%;justify-content:space-between}
+    .player-actions .btn{height:32px;padding:0 10px;font-size:11px;flex:1;justify-content:center}
+    .game-viewport{height:min(68vh, 480px) !important}
+    .p2b-toolbar{padding:12px;gap:10px}
+    .p2b-search-wrap{min-width:100%}
+    .p2b-selects{width:100%}
+    .p2b-selects select{flex:1;font-size:12px;height:36px}
+    .p2b-pills{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;padding-bottom:6px}
+    .p2b-pill{white-space:nowrap;flex-shrink:0;padding:6px 12px;font-size:11.5px}
+    .p2b-grid{grid-template-columns:repeat(2, 1fr);gap:10px}
+    .p2b-card{padding:12px;gap:8px}
+    .p2b-card h4{font-size:14px}
+    .p2b-card p{font-size:11px}
+    .p2b-btn-play{height:32px;font-size:11.5px}
+    .p2b-btn-ext{width:32px;height:32px}
     
     /* Specials & Promos Mobile */
     .specials-grid{grid-template-columns:1fr;gap:14px}
+    .cat-grid{grid-template-columns:1fr;gap:12px}
     
     /* Modal Mobile */
-    .modal-box{width:94%;max-width:440px;border-radius:16px;max-height:88vh}
-    .modal{grid-template-columns:1fr}
-    .modal-media{min-height:180px;aspect-ratio:16/9}
-    .modal-content{padding:16px}
-    .modal-content h2{font-size:20px}
-    .modal-actions{grid-template-columns:1fr}
+    .overlay{padding:10px}
+    .modal{grid-template-columns:1fr;max-height:90vh;border-radius:14px}
+    .modal-media{min-height:170px;aspect-ratio:16/9}
+    .modal-body{padding:16px;gap:10px}
+    .modal-body h2{font-size:26px}
+    .dl-option-row{padding:10px}
+    .dl-option-row .opt-actions{width:100%}
+    .dl-option-row .opt-btn{flex:1;justify-content:center}
     
     /* Footer Mobile */
-    .foot-grid{grid-template-columns:1fr 1fr;gap:24px}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:22px;padding:32px 0 24px}
     .foot-base{flex-direction:column;align-items:flex-start}
+    .toasts{bottom:74px;right:12px;left:12px}
+    .toast{max-width:100%}
   }
 
   @media(max-width:420px){
-    .deals-grid{grid-template-columns:1fr}
-    .games-grid{grid-template-columns:1fr}
+    .deals-grid{grid-template-columns:repeat(2, 1fr);gap:8px}
+    .games-grid{grid-template-columns:repeat(2, 1fr);gap:8px}
+    .p2b-grid{grid-template-columns:1fr}
     .stats{grid-template-columns:1fr}
     .foot-grid{grid-template-columns:1fr}
-    .nav-search{display:none}
   }
 </style>
 </head>
@@ -718,19 +765,19 @@
       <!-- HERO -->
       <div class="bg-hero">
         <div class="z">
-          <div class="kicker">Estação Web Gamer · 100% no JohnPlay</div>
-          <h2 id="browserHeroTitle">Jogos de Navegador &amp; Plataformas Web</h2>
-          <p id="browserHeroDesc">Jogue Subway Surfers, navegue pelos sites completos do Poki e Jogos 360 ou acesse o YouTube Playables diretamente aqui dentro do site, em tela cheia e sem travas!</p>
+          <div class="kicker">Estação Web Gamer · Ported2Browser + Plataformas</div>
+          <h2 id="browserHeroTitle">Jogos de Navegador &amp; Ported2Browser</h2>
+          <p id="browserHeroDesc">Jogue +260 clássicos portados do Ported2Browser (PC, N64, PS1, GameCube, Sega), Subway Surfers, Word Bomb, Gartic, CrazyGames, Poki e Jogos 360 direto no navegador!</p>
         </div>
-        <div class="z" style="display:flex;gap:12px;flex-wrap:wrap">
-          <button class="btn btn-primary" onclick="selectWebPlatform('subway')">
-            <i data-lucide="play"></i>Jogar Subway Surfers
+        <div class="z" style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="$('#p2bSection').scrollIntoView({behavior:'smooth'})">
+            <i data-lucide="cpu"></i>Catálogo Ported2Browser (262)
           </button>
-          <button class="btn btn-ghost" onclick="selectWebPlatform('poki')">
-            <i data-lucide="gamepad-2"></i>Abrir Poki
+          <button class="btn btn-ghost" onclick="selectWebPlatform('subway')">
+            <i data-lucide="play"></i>Subway Surfers
           </button>
-          <button class="btn btn-ghost" onclick="selectWebPlatform('jogos360')">
-            <i data-lucide="compass"></i>Abrir Jogos 360
+          <button class="btn btn-ghost" onclick="selectWebPlatform('crazygames')">
+            <i data-lucide="zap"></i>CrazyGames
           </button>
         </div>
       </div>
@@ -901,6 +948,43 @@
           </div>
         </div>
       </div>
+
+      <!-- CATÁLOGO COMPLETO PORTED2BROWSER (262 JOGOS) -->
+      <div class="p2b-section" id="p2bSection">
+        <div class="sec-head" style="margin-bottom:8px">
+          <div>
+            <div class="kicker">Ported2Browser · 262 Jogos Portados para Web</div>
+            <h2>Catálogo Completo Ported2Browser</h2>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px">
+            <span id="p2bCountLbl"><b style="color:var(--accent-hi)">262</b> jogos disponíveis</span>
+          </div>
+        </div>
+        <p style="color:var(--muted);font-size:13.5px;margin-bottom:14px">
+          Clássicos de PC, PlayStation, Nintendo 64, GameCube, Sega, Xbox e Arcade portados via WebAssembly/HTML5 para rodar direto no navegador!
+        </p>
+
+        <div class="p2b-toolbar">
+          <div class="p2b-search-wrap">
+            <i data-lucide="search"></i>
+            <input type="text" id="p2bSearchInput" placeholder="Buscar nos 262 jogos do Ported2Browser (ex: Doom, Mario 64, Half-Life, Diablo, Quake, GTA)..." oninput="filterP2BGames()">
+          </div>
+          <div class="p2b-selects">
+            <select id="p2bPlatFilter" onchange="filterP2BGames()">
+              <option value="all">Todas as Plataformas</option>
+            </select>
+            <select id="p2bSortSelect" onchange="filterP2BGames()">
+              <option value="az">Ordem: A → Z</option>
+              <option value="year_desc">Mais Recentes</option>
+              <option value="year_asc">Mais Clássicos</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="p2b-pills" id="p2bGenrePills"></div>
+        <div class="p2b-grid" id="p2bGamesGrid"></div>
+      </div>
+
     </div>
   </section>
 
@@ -7714,6 +7798,11 @@ function reloadWebPlatform(){
     window.open('https://gartic.io/', '_blank');
     return;
   }
+  if(currentPlatform && currentPlatform.startsWith('p2b_')){
+    const slug = currentPlatform.replace('p2b_', '');
+    playP2BGame(slug);
+    return;
+  }
   const p = WEB_PLATFORMS[currentPlatform] || WEB_PLATFORMS['subway'];
   const iframe = $('#webStationIframe');
   if(iframe){
@@ -9260,6 +9349,7 @@ $('#emuTabs').addEventListener('click',e=>{
   const b=e.target.closest('[data-era]');if(!b)return;
   state.emuEra=b.dataset.era;
   renderEmulators();
+initP2BCatalog();
 });
 
 /* ================= APPS ================= */
@@ -9761,6 +9851,139 @@ function toggleTheme(){
   const current = document.body.getAttribute('data-theme') || 'green';
   const next = (current === 'green') ? 'purple' : 'green';
   setTheme(next, true);
+}
+
+
+/* ================= PORTED2BROWSER CATALOG (262 GAMES) ================= */
+const P2B_GAMES = [{"s":"the-man-from-the-window-2","t":"The Man From The Window 2","p":"PC","g":"Horror","y":"2023","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/MFDW2/index.html"},{"s":"super-smash-bros-64","t":"Super Smash Bros. 64","p":"Nintendo 64","g":"Fighting","y":"1999","c":"Keyboard, Gamepad","u":"https://smash.fun/"},{"s":"wipeout","t":"WipEout","p":"PlayStation","g":"Action","y":"1995","c":"Keyboard, Touch","u":"https://phoboslab.org/wipegame/"},{"s":"super-mario-bros","t":"Super Mario Bros.","p":"NES","g":"Platformer","y":"1985","c":"Keyboard","u":"https://supermarioplay.com/"},{"s":"sonic-cd","t":"Sonic CD","p":"Sega CD","g":"Platformer","y":"1993","c":"Keyboard, Gamepad","u":"https://tws2401.github.io/Sonic-CD-WASM/"},{"s":"tomb-raider","t":"Tomb Raider","p":"PlayStation","g":"Action","y":"1996","c":"Keyboard, Mouse, Gamepad","u":"https://xproger.info/projects/OpenLara/"},{"s":"super-mario-64","t":"Super Mario 64","p":"Nintendo 64","g":"Platformer","y":"1996","c":"Keyboard, Gamepad","u":"https://heyitsheart.github.io/sm3das/64/"},{"s":"red-alert-2","t":"Red Alert 2","p":"PC","g":"Strategy","y":"2000","c":"Keyboard, Mouse, Touch","u":"https://game.chronodivide.com/"},{"s":"quake","t":"Quake","p":"PC","g":"FPS","y":"1996","c":"Keyboard, Mouse","u":"https://q1.pieter.com/"},{"s":"ages-of-conflict","t":"Ages of Conflict","p":"PC","g":"Strategy","y":"2023","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/aoc/index.html"},{"s":"super-monkey-ball","t":"Super Monkey Ball","p":"GameCube","g":"Platformer","y":"2001","c":"Keyboard, Gamepad, Touch","u":"https://monkeyball-online.pages.dev/"},{"s":"nippon-safes-inc","t":"Nippon Safes Inc.","p":"PC","g":"Adventure","y":"1993","c":"Keyboard, Gamepad","u":"https://scummweb.tsilva.eu/#game-nippon-safes-inc"},{"s":"sonic-the-hedgehog","t":"Sonic the Hedgehog","p":"Genesis","g":"Platformer","y":"1991","c":"Keyboard, Gamepad","u":"https://vinmannie.github.io/Sonic-1-WASM/"},{"s":"phantasy-star-online","t":"Phantasy Star Online","p":"Dreamcast","g":"RPG","y":"2000","c":"Keyboard, Gamepad, Touch","u":"https://psoreborn.com/"},{"s":"doom","t":"Doom","p":"PC","g":"FPS","y":"1993","c":"Keyboard, Mouse","u":"https://ozkl.github.io/doomgeneric/"},{"s":"half-life","t":"Half-Life","p":"PC","g":"FPS","y":"1998","c":"Keyboard, Mouse","u":"https://x8bitrain.github.io/webXash/"},{"s":"diablo","t":"Diablo","p":"PC","g":"Action","y":"1996","c":"Mouse, Keyboard, Touch","u":"https://d07riv.github.io/diabloweb/"},{"s":"the-simpsons-hit-run","t":"The Simpsons: Hit & Run","p":"PlayStation 2","g":"Racing","y":"2003","c":"Keyboard","u":"https://shar-wasm.cjoseph.workers.dev/"},{"s":"super-mario-land","t":"Super Mario Land","p":"Game Boy","g":"Platformer","y":"1989","c":"Keyboard, Gamepad","u":"https://badspot.us/Mario-Land-Fun.html"},{"s":"2048","t":"2048","p":"PC","g":"Strategy","y":"2014","c":"Keyboard, Touch","u":"https://play2048.co/"},{"s":"serial-experiments-lain","t":"Serial Experiments Lain","p":"PlayStation","g":"Adventure","y":"1998","c":"Keyboard","u":"https://3d.laingame.net/"},{"s":"super-mario-kart","t":"Super Mario Kart","p":"Super Nintendo","g":"Racing","y":"1992","c":"Keyboard, Gamepad","u":"https://burnedpopcorn.github.io/SM-Kart-ZX-Web-Port/index.html"},{"s":"sonic-4-episode-i","t":"Sonic 4: Episode I","p":"Android / iOS","g":"Platformer","y":"2010","c":"Keyboard, Gamepad","u":"https://wamwoowam.co.uk/sonic4/"},{"s":"openttd","t":"OpenTTD","p":"PC","g":"Strategy","y":"2004","c":"Mouse, Keyboard","u":"https://epicport.com/en/ttd/"},{"s":"master-of-defence","t":"Master of Defence","p":"PC","g":"Strategy","y":"2006","c":"Keyboard","u":"https://nomadic-ua.itch.io/master-of-defence"},{"s":"lobotomy-corporation","t":"Lobotomy Corporation","p":"PC","g":"Simulation","y":"2018","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/lob-corp/index.html"},{"s":"helltaker","t":"Helltaker","p":"PC","g":"Puzzle","y":"2020","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/Helltaker/helltaker.html"},{"s":"beatblock","t":"Beatblock","p":"PC","g":"Rhythm","y":"2025","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/beatblock/index.html"},{"s":"brotato-paws-n-claws","t":"Brotato Paws n' Claws","p":"PC","g":"RPG","y":"2023","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/bpac/index.html"},{"s":"happy-room","t":"Happy Room","p":"PC","g":"Simulation","y":"2016","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/happy-room/index.html"},{"s":"among-us","t":"Among Us","p":"Android / iOS","g":"Strategy","y":"2018","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/amongus/index.html"},{"s":"daedalian-opus","t":"Daedalian Opus","p":"Game Boy","g":"Strategy","y":"1990","c":"Keyboard, Gamepad","u":"https://joyrider3774.itch.io/puzzle-land-playdate"},{"s":"fez","t":"FEZ","p":"Xbox 360","g":"Puzzle","y":"2012","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/FEZ/fez.html"},{"s":"trombone-champ","t":"Trombone Champ","p":"PC","g":"Rhythm","y":"2022","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/tchamp/index.html"},{"s":"while-true-learn","t":"while True: learn()","p":"PC","g":"Puzzle","y":"2019","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/wtl/index.html"},{"s":"bendy-and-the-ink-machine","t":"Bendy and the Ink Machine","p":"PC","g":"Puzzle","y":"2017","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/BATIM/index.html"},{"s":"plague-inc","t":"Plague Inc.","p":"Android / iOS","g":"Strategy","y":"2012","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/plauge/index.html"},{"s":"peak","t":"PEAK","p":"PC","g":"Platformer","y":"2025","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/peak/PEAK.html"},{"s":"stardew-valley","t":"Stardew Valley","p":"PC","g":"RPG","y":"2016","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/stardewvalley/index.html"},{"s":"dice-a-million","t":"Dice A Million","p":"PC","g":"Strategy","y":"2026","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/diceAmillion/diceamillion.html"},{"s":"inscryption","t":"Inscryption","p":"PC","g":"Strategy","y":"2021","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/inscryption/index.html"},{"s":"ravenfield","t":"Ravenfield","p":"PC","g":"Shooter","y":"2017","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/ravenfield/index.html"},{"s":"oneshot-world-machine-edition","t":"OneShot: World Machine Edition","p":"Nintendo Switch","g":"RPG","y":"2022","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/oneshot-wme/index.html"},{"s":"taiko-no-tatsujin","t":"Taiko no Tatsujin","p":"Arcade","g":"Rhythm","y":"Not documented","c":"Keyboard, Gamepad, Touch","u":"https://cjdgrevival.com/"},{"s":"granny-3","t":"Granny 3","p":"Android / iOS","g":"Adventure","y":"2021","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/granny/granny3.html"},{"s":"baldi-s-basics-birthday-bash","t":"Baldi's Basics Birthday Bash","p":"PC","g":"Horror","y":"2019","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/birthdaybash/index.html"},{"s":"boil-noodles-at-night","t":"Boil Noodles at Night","p":"PC","g":"Simulation","y":"2023","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/boilnoodles/index.html"},{"s":"cheese-rolling","t":"Cheese Rolling","p":"PC","g":"Action","y":"2025","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/cheese-rolling/index.html"},{"s":"cuphead","t":"Cuphead","p":"PC","g":"Platformer","y":"2017","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/cuphead/index.html"},{"s":"miside","t":"MiSide","p":"PC","g":"Adventure","y":"2024","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/miside/miside.html"},{"s":"star-stealing-prince","t":"Star Stealing Prince","p":"PC","g":"RPG","y":"2011","c":"Keyboard, Gamepad","u":"https://white-axe.github.io/mkxp-z-libretro-emscripten/nostalgist-star-stealing-prince/"},{"s":"return-to-castle-wolfenstein","t":"Return to Castle Wolfenstein","p":"PC","g":"Shooter","y":"2001","c":"Keyboard, Gamepad","u":"https://wwasm.m-h.org.uk/"},{"s":"lure-of-the-temptress","t":"Lure of the Temptress","p":"PC","g":"Puzzle","y":"1992","c":"Keyboard, Gamepad","u":"https://scummweb.tsilva.eu/#game-lure-of-the-temptress"},{"s":"scp-containment-breach","t":"SCP: Containment Breach","p":"PC","g":"Adventure","y":"2014","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/scp/index.html"},{"s":"duke-nukem-3d","t":"Duke Nukem 3D","p":"PC","g":"Shooter","y":"1996","c":"Keyboard, Gamepad","u":"https://digitalcybersoft.github.io/eduke32-wasm/"},{"s":"grand-theft-auto-iii","t":"Grand Theft Auto III","p":"PlayStation 2","g":"Racing","y":"2001","c":"Keyboard, Gamepad","u":"https://wasmarcade.com/gta3"},{"s":"human-killing","t":"Human Killing","p":"PC","g":"Adventure","y":"Not documented","c":"Keyboard, Gamepad","u":"https://toen184.itch.io/human-killing-en"},{"s":"tsukihime","t":"Tsukihime","p":"PC","g":"Adventure","y":"2000","c":"Keyboard, Gamepad, Touch","u":"https://tsukiweb.holofield.fr/"},{"s":"exit-fate","t":"Exit Fate","p":"PC","g":"RPG","y":"2009","c":"Keyboard, Gamepad, Touch","u":"https://exitfate.radialapps.com/"},{"s":"zeno-daily-life","t":"ZENO Daily Life","p":"Web browser","g":"Adventure","y":"2016","c":"Keyboard, Gamepad, Touch","u":"https://e9116.itch.io/zdl912"},{"s":"sonic-robo-blast-2-kart","t":"Sonic Robo Blast 2 Kart","p":"PC","g":"Racing","y":"Not documented","c":"Keyboard, Gamepad","u":"https://skyleite.github.io/Kart-Public-WASM/"},{"s":"super-mario-127","t":"Super Mario 127","p":"PC","g":"Platformer","y":"Not documented","c":"Keyboard, Gamepad","u":"https://solarshine-studios.itch.io/super-mario-127"},{"s":"crashout-crew","t":"Crashout Crew","p":"PC","g":"Racing","y":"2026","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/cc/index.html"},{"s":"rimworld","t":"RimWorld","p":"PC","g":"Strategy","y":"2018","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/rimworld/index.html"},{"s":"clustertruck","t":"Clustertruck","p":"PC","g":"Platformer","y":"2016","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/ClusterTruck/clustertruck.html"},{"s":"dreamweb","t":"DreamWeb","p":"PC","g":"Adventure","y":"1994","c":"Keyboard, Gamepad","u":"https://scummweb.tsilva.eu/#game-dreamweb"},{"s":"beneath-a-steel-sky","t":"Beneath a Steel Sky","p":"PC","g":"Puzzle","y":"1994","c":"Keyboard, Gamepad","u":"https://scummweb.tsilva.eu/#game-beneath-a-steel-sky"},{"s":"howtofish","t":"HowToFish","p":"PC","g":"Shooter","y":"2026","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/HowToFish/HowToFish.html"},{"s":"drascula-the-vampire-strikes-back","t":"Dráscula: The Vampire Strikes Back","p":"PC","g":"Adventure","y":"1996","c":"Keyboard, Gamepad","u":"https://scummweb.tsilva.eu/#game-drascula-the-vampire-strikes-back"},{"s":"lethal-company","t":"Lethal Company","p":"PC","g":"Action","y":"2023","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/lethal/index.html"},{"s":"quake-ii","t":"Quake II","p":"PC","g":"Shooter","y":"1997","c":"Keyboard, Gamepad","u":"https://qwasm2.m-h.org.uk/"},{"s":"sonic-robo-blast-2","t":"Sonic Robo Blast 2","p":"PC","g":"Platformer","y":"Not documented","c":"Keyboard, Gamepad, Touch","u":"https://afd2025.srb2.org/"},{"s":"nsmb-mario-vs-luigi-online","t":"NSMB – Mario Vs Luigi Online","p":"PC","g":"Platformer","y":"Not documented","c":"Keyboard, Gamepad","u":"https://ipodtouch0218.itch.io/nsmb-mariovsluigi"},{"s":"broken-sword-2-5-the-return-of-the-templars","t":"Broken Sword 2.5: The Return of the Templars","p":"PC","g":"Puzzle","y":"2008","c":"Keyboard, Gamepad","u":"https://scummweb.tsilva.eu/#game-broken-sword-2-5-the-return-of-the-templars"},{"s":"flight-of-the-amazon-queen","t":"Flight of the Amazon Queen","p":"PC","g":"Puzzle","y":"1995","c":"Keyboard, Gamepad","u":"https://scummweb.tsilva.eu/#game-flight-of-the-amazon-queen"},{"s":"rpg-maker-compendium","t":"RPG Maker Compendium","p":"PC","g":"RPG","y":"2001","c":"Keyboard, Touch","u":"https://makerburns.github.io/Game-List/"},{"s":"daggerfall","t":"Daggerfall","p":"PC","g":"RPG","y":"1996","c":"Keyboard, Touch","u":"https://daggerfalljs.dev/"},{"s":"mega-man-rpg-prototype","t":"Mega Man RPG Prototype","p":"Web browser","g":"RPG","y":"Not documented","c":"Keyboard, Touch","u":"https://prototype.mmrpg-world.net/file/load/"},{"s":"pokeclicker","t":"PokéClicker","p":"Web browser","g":"RPG","y":"Not documented","c":"Keyboard, Touch","u":"https://www.pokeclicker.com/"},{"s":"super-mario-63","t":"Super Mario 63","p":"Web browser","g":"Platformer","y":"Not documented","c":"Keyboard","u":"https://archive.org/details/adobeflash-supermario63"},{"s":"visual-novel-compendium","t":"Visual Novel Compendium","p":"PC","g":"Puzzle","y":"2018","c":"Keyboard, Touch","u":"https://vgperson.com/games/"},{"s":"pokerogue","t":"PokéRogue","p":"Web browser","g":"RPG","y":"Not documented","c":"Keyboard, Gamepad, Touch","u":"https://pokerogue.net/"},{"s":"mari0","t":"Mari0","p":"PC","g":"Puzzle","y":"Not documented","c":"Keyboard","u":"https://tannerrogalsky.com/mari0/"},{"s":"abobo-s-big-adventure","t":"Abobo's Big Adventure","p":"Web browser","g":"Fighting","y":"Not documented","c":"Keyboard","u":"https://www.kongregate.com/en/games/pestoforce/abobos-big-adventure"},{"s":"ff7-the-first-soldier-fan-remake","t":"FF7: The First SOLDIER (Fan Remake)","p":"Web browser","g":"RPG","y":"Not documented","c":"Keyboard, Gamepad","u":"https://fracturedgems.itch.io/final-fantasy-vii-the-first-soldier"},{"s":"five-nights-at-freddy-s-nes","t":"Five Nights at Freddy's NES","p":"Web browser","g":"Strategy","y":"Not documented","c":"Keyboard, Gamepad","u":"https://endoblance.itch.io/fnafnes"},{"s":"final-fantasy-romhacks","t":"Final Fantasy Romhacks","p":"Super Nintendo","g":"RPG","y":"1987","c":"Keyboard, Gamepad, Touch","u":"https://romhaven.com/final-fantasy-rom-hacks/"},{"s":"fire-emblem-romhacks","t":"Fire Emblem Romhacks","p":"Game Boy Advance","g":"RPG","y":"2003","c":"Keyboard, Gamepad, Touch","u":"https://romhaven.com/fire-emblem-rom-hacks/"},{"s":"pokemon-romhacks","t":"Pokémon Romhacks","p":"Game Boy Advance","g":"RPG","y":"2002","c":"Keyboard, Gamepad, Touch","u":"https://romhaven.com/pokemon-rom-hacks/"},{"s":"undertale-yellow","t":"Undertale Yellow","p":"PC","g":"RPG","y":"Not documented","c":"Keyboard, Gamepad","u":"https://www.dubdoo.com/class/undertale-yellow"},{"s":"deltarune-lightners-live-plus","t":"Deltarune: Lightners Live Plus","p":"PC","g":"Rhythm","y":"Not documented","c":"Keyboard, Gamepad","u":"https://ezioeagle.itch.io/lightners-live-plus"},{"s":"super-mario-romhacks","t":"Super Mario Romhacks","p":"NES","g":"Platformer","y":"1985","c":"Keyboard, Gamepad, Touch","u":"https://www.smbgames.be/"},{"s":"pokepath-td","t":"PokéPath TD","p":"Web browser","g":"RPG","y":"Not documented","c":"Keyboard, Touch","u":"https://khydra98.itch.io/pokepath"},{"s":"dragon-ball-devolution","t":"Dragon Ball Devolution","p":"PC","g":"Fighting","y":"Not documented","c":"Keyboard, Gamepad","u":"https://www.txori.com/dbdevolution"},{"s":"zelda-romhacks","t":"Zelda Romhacks","p":"Game Boy Advance","g":"Puzzle","y":"1986","c":"Keyboard, Gamepad, Touch","u":"https://romhaven.com/zelda-rom-hacks/"},{"s":"ynoproject","t":"YNOproject","p":"PC","g":"Adventure","y":"2004","c":"Keyboard, Touch","u":"https://ynoproject.net/"},{"s":"metroid-romhacks","t":"Metroid Romhacks","p":"Game Boy Advance","g":"Platformer","y":"1986","c":"Keyboard, Gamepad, Touch","u":"https://romhaven.com/metroid-rom-hacks/"},{"s":"mario-64-romhacks","t":"Mario 64 Romhacks","p":"Nintendo 64","g":"Platformer","y":"1996","c":"Keyboard, Gamepad","u":"https://www.sm64games.com/games"},{"s":"xim-ff11-fangame","t":"Xim (FF11 fangame)","p":"Web browser","g":"RPG","y":"Not documented","c":"Keyboard, Gamepad","u":"https://aamace.itch.io/xim"},{"s":"bad-monday-simulator","t":"Bad Monday Simulator","p":"Web browser","g":"RPG","y":"Not documented","c":"Keyboard","u":"https://lumpytouch.itch.io/bad-monday-simulator"},{"s":"perfect-dark","t":"Perfect Dark","p":"Nintendo 64","g":"Shooter","y":"2000","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#perfectdark"},{"s":"castlevania-romhacks","t":"Castlevania Romhacks","p":"NES","g":"Platformer","y":"1986","c":"Keyboard, Gamepad, Touch","u":"https://kbhgames.com/tag/castlevania"},{"s":"lego-island","t":"LEGO Island","p":"PC","g":"Adventure","y":"1997","c":"Keyboard, Gamepad","u":"https://isle.pizza/"},{"s":"sonic-romhacks","t":"Sonic Romhacks","p":"Genesis","g":"Platformer","y":"1991","c":"Keyboard, Gamepad, Touch","u":"https://www.retrogames.onl/p/play-sega-genesis-games-online.html#:~:text=Sonic%203%20complete"},{"s":"rocket-soccer-derby","t":"Rocket Soccer Derby","p":"Mobile","g":"Racing","y":"2017","c":"Keyboard","u":"https://www.lemon-web.net/applications/lemon-web-games#rocketsoccerderby"},{"s":"rayman-series","t":"Rayman (Series)","p":"PlayStation","g":"Platformer","y":"1995","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#rayman1"},{"s":"rollercoaster-tycoon-1-2","t":"RollerCoaster Tycoon 1 & 2","p":"PC","g":"Strategy","y":"1999","c":"Keyboard","u":"https://www.lemon-web.net/applications/lemon-web-games#rollercoastertycoon1"},{"s":"paper-mario","t":"Paper Mario","p":"Nintendo 64","g":"RPG","y":"2000","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#papermario"},{"s":"resident-evil-series","t":"Resident Evil (Series)","p":"PlayStation","g":"Shooter","y":"1996","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#residentevil1"},{"s":"minecraft","t":"Minecraft","p":"Java","g":"Adventure","y":"2011","c":"Keyboard","u":"https://www.lemon-web.net/applications/lemon-web-games#minecraft"},{"s":"quest-64","t":"Quest 64","p":"Nintendo 64","g":"RPG","y":"1998","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#quest64"},{"s":"phantasmagoria-1-2","t":"Phantasmagoria 1 & 2","p":"PC","g":"Adventure","y":"1995","c":"Keyboard","u":"https://www.lemon-web.net/applications/lemon-web-games#phantasmogaria1"},{"s":"star-wars-series","t":"Star Wars (Series)","p":"PC","g":"Shooter","y":"1993","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#starwarsdarkforces"},{"s":"need-for-speed-series","t":"Need for Speed (Series)","p":"PlayStation","g":"Racing","y":"1994","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#needforspeed1"},{"s":"ogre-battle-64","t":"Ogre Battle 64","p":"Nintendo 64","g":"RPG","y":"1999","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#ogrebattle64personoflordlycaliber"},{"s":"streets-of-rage-series","t":"Streets of Rage (Series)","p":"Genesis","g":"Action","y":"1991","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#streetsofrage1"},{"s":"tmnt-series","t":"TMNT (Series)","p":"NES","g":"Fighting","y":"1989","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#teenagemutantninjaturtles"},{"s":"kirby-romhacks","t":"Kirby Romhacks","p":"Game Boy","g":"Puzzle","y":"1992","c":"Keyboard, Gamepad, Touch","u":"https://www.retrogames.cc/search?q=kirby"},{"s":"pokemon-red-blue-mmo","t":"Pokémon Red / Blue MMO","p":"Game Boy","g":"RPG","y":"1998","c":"Keyboard, Gamepad, Touch","u":"https://redblue.benjamincrozat.com/"},{"s":"magic-the-gathering","t":"Magic: The Gathering","p":"PC","g":"RPG","y":"1997","c":"Keyboard","u":"https://shandalar.dev/"},{"s":"mega-man-romhacks","t":"Mega Man Romhacks","p":"NES","g":"Platformer","y":"1987","c":"Keyboard, Gamepad, Touch","u":"https://www.megamangames.net/"},{"s":"adventure-capitalist","t":"Adventure Capitalist","p":"Web browser","g":"Strategy","y":"2014","c":"Keyboard, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#adventurecapitalist"},{"s":"1080-snowboarding","t":"1080° Snowboarding","p":"Nintendo 64","g":"Racing","y":"1998","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#1080snowboarding"},{"s":"raft","t":"Raft","p":"PC","g":"Adventure","y":"2018","c":"Keyboard","u":"https://www.lemon-web.net/applications/lemon-web-games#raft"},{"s":"conker-s-bad-fur-day","t":"Conker's Bad Fur Day","p":"Nintendo 64","g":"Platformer","y":"2001","c":"Keyboard, Gamepad, Touch","u":"https://www.lemon-web.net/applications/lemon-web-games#conkersbadfurday"},{"s":"animal-crossing","t":"Animal Crossing","p":"GameCube","g":"Simulation","y":"2002","c":"Keyboard, Gamepad, Touch","u":"https://truffled.lol/iframe.html?url=/games/slider/index.html"},{"s":"20-minutes-till-dawn","t":"20 Minutes Till Dawn","p":"PC","g":"Shooter","y":"2022","c":"Keyboard, Gamepad","u":"https://truffled.lol/unityframe.html?url=/games/20minutesbog/index.html"},{"s":"a-difficult-game-about-climbing","t":"A Difficult Game About Climbing","p":"PC","g":"Puzzle","y":"2024","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/gamefile/adgac.html"},{"s":"coffee-talk","t":"Coffee Talk","p":"PC","g":"Simulation","y":"2020","c":"Keyboard","u":"https://truffled.lol/iframe.html?url=/games/coffee/index.html"},{"s":"the-old-king-s-crown","t":"The Old King's Crown","p":"Tabletop","g":"Strategy","y":"2023","c":"Keyboard","u":"https://oldkingscrown.fly.dev/"},{"s":"gizmoduck","t":"Gizmoduck","p":"Web browser","g":"Platformer","y":"2026","c":"Keyboard, Gamepad","u":"https://sova-games.ru/en/games/gizmoduck/"},{"s":"buckshot-roulette","t":"Buckshot Roulette","p":"PC","g":"Strategy","y":"2023","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/games/buckshot/index.html"},{"s":"xenosaga-pied-piper","t":"Xenosaga Pied Piper","p":"Mobile","g":"RPG","y":"2004","c":"Keyboard, Gamepad","u":"https://cyclonefox.itch.io/xenosaga-pied-piper"},{"s":"dome-keeper","t":"Dome Keeper","p":"PC","g":"Strategy","y":"2022","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/games/domekeeper/index.html"},{"s":"alien-hominid","t":"Alien Hominid","p":"Web browser","g":"Platformer","y":"2002","c":"Keyboard","u":"https://truffled.lol/iframe.html?url=/games/alien/index.html"},{"s":"pikuniku","t":"Pikuniku","p":"PC","g":"Puzzle","y":"2019","c":"Keyboard, Gamepad","u":"https://truffled.lol/unityframe.html?url=/games/pikubog/index.html"},{"s":"celeste","t":"Celeste","p":"PC","g":"Platformer","y":"2018","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/games/celeste/index.html"},{"s":"hollow-knight","t":"Hollow Knight","p":"PC","g":"Platformer","y":"2017","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/games/newesthk/index.html"},{"s":"baldur-s-gate-2","t":"Baldur's Gate 2","p":"PC","g":"RPG","y":"2000","c":"Keyboard","u":"https://truffled.lol/iframe.html?url=/games/baldurs-gate-2/index.html"},{"s":"iron-lung","t":"Iron Lung","p":"PC","g":"Simulation","y":"2022","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/games/ironlung/index.html"},{"s":"needy-streamer-overload","t":"Needy Streamer Overload","p":"PC","g":"Adventure","y":"2022","c":"Keyboard","u":"https://truffled.lol/iframe.html?url=/games/nso/index.html"},{"s":"class-of-09","t":"Class of '09","p":"PC","g":"Adventure","y":"2021","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/games/C09/index.html"},{"s":"zoombinis","t":"Zoombinis","p":"PC","g":"Puzzle","y":"1996","c":"Keyboard","u":"https://zoombinis.online/"},{"s":"balatro","t":"Balatro","p":"PC","g":"Strategy","y":"2024","c":"Keyboard, Gamepad, Touch","u":"https://truffled.lol/iframe.html?url=/games/balatro/index.html"},{"s":"omori","t":"OMORI","p":"PC","g":"RPG","y":"2020","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/gamefile/OMORI.html"},{"s":"mario-kart-64","t":"Mario Kart 64","p":"Nintendo 64","g":"Racing","y":"1996","c":"Keyboard, Gamepad, Touch","u":"https://truffled.lol/iframe.html?url=/games/mk64/index.html"},{"s":"dude-stop","t":"Dude, Stop","p":"PC","g":"Puzzle","y":"2018","c":"Keyboard","u":"https://wasm.rip/files/dudestop/index.html"},{"s":"endacopia","t":"Endacopia","p":"PC","g":"Puzzle","y":"2026","c":"Keyboard","u":"https://truffled.lol/iframe.html?url=/games/endacopia/index.html"},{"s":"lego-racers","t":"LEGO Racers","p":"PC","g":"Racing","y":"1999","c":"Keyboard, Gamepad, Touch","u":"https://steponit.online/"},{"s":"catan-universe","t":"Catan Universe","p":"Tabletop","g":"Strategy","y":"2017","c":"Keyboard","u":"https://catanuniverse.com/en/game/"},{"s":"the-oregon-trail","t":"The Oregon Trail","p":"PC","g":"Simulation","y":"1992","c":"Keyboard","u":"https://dos.zone/oregon-trail-deluxe-1992/"},{"s":"pizza-tower","t":"Pizza Tower","p":"PC","g":"Platformer","y":"2023","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/games/NoiseUpdate/index.html"},{"s":"road-rash","t":"Road Rash","p":"PC","g":"Racing","y":"1996","c":"Keyboard","u":"https://dos.zone/road-rash/"},{"s":"hexen-ii","t":"Hexen II","p":"PC","g":"RPG","y":"1997","c":"Keyboard","u":"https://dos.zone/hexen-2-fteqw/"},{"s":"indiana-jones-series","t":"Indiana Jones (Series)","p":"PC","g":"Puzzle","y":"1989","c":"Keyboard","u":"https://www.bestoldgames.net/indiana-jones-last-crusade-adventure/play"},{"s":"toasterball","t":"Toasterball","p":"PC","g":"Sports","y":"2022","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/toasterball/index.html"},{"s":"fate-stay-night","t":"Fate/Stay Night","p":"PC","g":"Adventure","y":"2004","c":"Keyboard, Touch","u":"https://fatestaynight.vnovel.org/"},{"s":"pro-evolution-soccer-6","t":"Pro Evolution Soccer 6","p":"PSP","g":"Sports","y":"2006","c":"Keyboard, Gamepad, Touch","u":"https://pes6.optijuegos.net/"},{"s":"black-ops-zombies","t":"Black Ops Zombies","p":"PC","g":"Shooter","y":"2010","c":"Keyboard","u":"https://vel.gg/bsz"},{"s":"the-lost-vikings","t":"The Lost Vikings","p":"PC","g":"Strategy","y":"1993","c":"Keyboard","u":"https://dos.zone/the-lost-vikings-1993/"},{"s":"crash-bash","t":"Crash Bash","p":"PlayStation","g":"Action","y":"2000","c":"Keyboard, Gamepad, Touch","u":"https://crashbash.app/"},{"s":"monkey-island-series","t":"Monkey Island (Series)","p":"PC","g":"Puzzle","y":"1990","c":"Keyboard","u":"https://www.bestoldgames.net/secret-of-monkey-island/play"},{"s":"3d-pinball-space-cadet","t":"3D Pinball: Space Cadet","p":"PC","g":"Arcade","y":"1995","c":"Keyboard","u":"https://dos.zone/microsoft-3d-pinball-space-cadet/"},{"s":"fire-fight","t":"Fire Fight","p":"PC","g":"Shooter","y":"1996","c":"Keyboard","u":"https://tosiabunio.github.io/firefight-port/#GamePreservation"},{"s":"homm2","t":"HoMM2","p":"PC","g":"RPG","y":"1996","c":"Keyboard","u":"https://dos.zone/heroes-of-might-and-magic-ii/"},{"s":"taipei-rush","t":"Taipei Rush","p":"Web browser","g":"Simulation","y":"2026","c":"Keyboard, Gamepad, Touch","u":"https://www.taipei-rush.app/"},{"s":"counter-strike","t":"Counter-Strike","p":"PC","g":"Shooter","y":"2000","c":"Keyboard","u":"https://play-cs.com/"},{"s":"zquest-classic","t":"ZQuest Classic","p":"PC","g":"Adventure","y":"1999","c":"Keyboard, Gamepad","u":"https://web.zquestclassic.com/play/"},{"s":"windows-98","t":"Windows 98","p":"PC","g":"Puzzle","y":"1998","c":"Keyboard, Touch","u":"https://berrry.wine/"},{"s":"warcraft-ii","t":"Warcraft II","p":"PC","g":"Strategy","y":"1995","c":"Keyboard","u":"https://dos.zone/warcraft-ii-tides-of-darkness/"},{"s":"halo-combat-evolved","t":"Halo: Combat Evolved","p":"Xbox","g":"Shooter","y":"2001","c":"Keyboard, Gamepad, Touch","u":"https://openhaloce.com/"},{"s":"fancy-pants-series","t":"Fancy Pants (Series)","p":"Web browser","g":"Platformer","y":"2006","c":"Keyboard","u":"https://truffled.lol/iframe.html?url=/games/fancypantsadventures/index.html"},{"s":"age-of-empires-ii","t":"Age of Empires II","p":"PC","g":"Strategy","y":"1999","c":"Keyboard","u":"https://dos.zone/age-of-empires2/"},{"s":"mario-64","t":"Mario 64","p":"Nintendo 64","g":"Platformer","y":"1996","c":"Keyboard, Gamepad","u":"https://olivers.tools/play"},{"s":"vampire-survivors","t":"Vampire Survivors","p":"PC","g":"Action","y":"2022","c":"Keyboard, Gamepad","u":"https://truffled.lol/iframe.html?url=/games/vampire/index.html"},{"s":"wosu","t":"wosu\\!","p":"PC","g":"Rhythm","y":"2007","c":"Keyboard, Touch","u":"https://wosu.dino.icu/"},{"s":"minecraft-web-client","t":"Minecraft Web Client","p":"Java","g":"Adventure","y":"2011","c":"Keyboard, Gamepad, Touch","u":"https://mcraft.fun/"},{"s":"amazing-alex","t":"Amazing Alex","p":"Android / iOS","g":"Puzzle","y":"2012","c":"Keyboard, Touch","u":"https://nomadic-ua.itch.io/amazing-alex"},{"s":"tweetcraft","t":"Tweetcraft","p":"Web browser","g":"Other","y":"2026","c":"Keyboard, Touch","u":"https://tweetcraft.jai.vin/"},{"s":"binding-of-isaac-repentance","t":"Binding of Isaac: Repentance","p":"PC","g":"Shooter","y":"2021","c":"Keyboard","u":"https://tboi.online/"},{"s":"advance-wars-by-web","t":"Advance Wars By Web","p":"Web browser","g":"Strategy","y":"2004","c":"Keyboard, Touch","u":"https://awbw.amarriner.com/"},{"s":"oni","t":"Oni","p":"PC","g":"Shooter","y":"2001","c":"Keyboard","u":"https://spade-skill.github.io/"},{"s":"r-e-p-o","t":"R.E.P.O.","p":"PC","g":"Horror","y":"2025","c":"Keyboard","u":"https://truffled.lol/unityframe.html?url=/games/repo/index.html"},{"s":"you-don-t-know-jack","t":"You Don't Know Jack","p":"PC","g":"Puzzle","y":"1995","c":"Keyboard","u":"https://www.ydkj.co.uk/"},{"s":"nazi-zombies-portable","t":"Nazi Zombies: Portable","p":"PC","g":"Shooter","y":"2009","c":"Keyboard, Gamepad","u":"https://nzp.gay/"},{"s":"pokesurvivor","t":"PokéSurvivor","p":"Web browser","g":"Action","y":"2026","c":"Keyboard, Touch","u":"https://pokesurvivor.com/"},{"s":"moon-child-fe","t":"Moon Child FE","p":"PC","g":"Platformer","y":"1997","c":"Keyboard, Gamepad","u":"https://mors-games.itch.io/moon-child-fe"},{"s":"call-of-duty-webports","t":"Call of Duty Webports","p":"PC","g":"Shooter","y":"2010","c":"Keyboard, Gamepad","u":"https://cod-webports.pages.dev/"},{"s":"call-of-mini-dino-hunter","t":"Call of Mini: Dino Hunter","p":"Android / iOS","g":"Shooter","y":"2013","c":"Keyboard, Touch","u":"https://comdh.krig.games/"},{"s":"friday-night-funkin","t":"Friday Night Funkin'","p":"Web browser","g":"Rhythm","y":"2020","c":"Keyboard, Gamepad, Touch","u":"https://gamaverse.com/fnf-friday-night-funkin/"},{"s":"superflight","t":"Superflight","p":"PC","g":"Racing","y":"2017","c":"Keyboard, Gamepad","u":"https://wasm.rip/files/superflight/index.html"},{"s":"super-mario-zombies","t":"Super Mario Zombies","p":"PC","g":"Shooter","y":"Not documented","c":"Keyboard","u":"https://smz.fun/"},{"s":"messenger","t":"Messenger","p":"Web browser","g":"Adventure","y":"2025","c":"Keyboard, Touch","u":"https://messenger.abeto.co/"},{"s":"ovz-modern-warfare-2","t":"OVZ (Modern Warfare 2)","p":"PC","g":"Shooter","y":"2009","c":"Keyboard","u":"https://ovz-game-production.up.railway.app/"},{"s":"cave-story","t":"Cave Story","p":"PC","g":"Platformer","y":"2004","c":"Keyboard","u":"https://midzer.de/wasm/cavestory/"},{"s":"skate-3","t":"Skate 3","p":"PlayStation 3","g":"Sports","y":"2010","c":"Keyboard, Gamepad","u":"https://skate.aaddpp.lol/"},{"s":"superfighters","t":"Superfighters","p":"PC","g":"Shooter","y":"2018","c":"Keyboard, Gamepad","u":"https://superfighters.px.com.ar/"},{"s":"spore-origins","t":"Spore Origins","p":"Android / iOS","g":"Strategy","y":"2008","c":"Keyboard, Touch","u":"https://nomadic-ua.itch.io/spore-origins"},{"s":"holiday-island","t":"Holiday Island","p":"PC","g":"Strategy","y":"1996","c":"Keyboard","u":"https://playclassic.games/games/city-building-windows-games-online/holiday-island/play/"},{"s":"grand-theft-auto-v","t":"Grand Theft Auto V","p":"PlayStation 3","g":"Adventure","y":"2013","c":"Keyboard","u":"https://fiveplay.lol/"},{"s":"tremulous","t":"Tremulous","p":"PC","g":"Strategy","y":"2006","c":"Keyboard, Touch","u":"https://webnova360.com/play-tremulous/"},{"s":"guitar-hero-3","t":"Guitar Hero 3","p":"PC","g":"Rhythm","y":"2007","c":"Keyboard, Gamepad, Touch","u":"https://gh3.thediaryofchris.net/index.html"},{"s":"ballance","t":"Ballance","p":"PC","g":"Puzzle","y":"2004","c":"Keyboard, Gamepad, Touch","u":"https://ballance.fayaz.workers.dev/"},{"s":"doom-multiplayer","t":"DOOM Multiplayer","p":"PC","g":"Shooter","y":"1993","c":"Keyboard","u":"https://silentspacemarine.com/"},{"s":"combat-skirmish-cs-1-6","t":"Combat Skirmish (CS 1.6)","p":"PC","g":"Shooter","y":"2000","c":"Keyboard, Gamepad, Touch","u":"https://combatskirmish.net/"},{"s":"hot-shots-golf","t":"Hot Shots Golf","p":"PlayStation","g":"Sports","y":"1997","c":"Keyboard, Gamepad, Touch","u":"https://oldgames.app/games/ps1/hot-shots-golf-ps1-9226"},{"s":"no-one-lives-forever","t":"No One Lives Forever","p":"PC","g":"Shooter","y":"2000","c":"Keyboard, Gamepad, Touch","u":"https://playnolf.com/"},{"s":"tekken-dark-resurrection","t":"Tekken: Dark Resurrection","p":"PSP","g":"Fighting","y":"2006","c":"Keyboard, Gamepad, Touch","u":"https://tkdr-recomp.pages.dev/"},{"s":"nba-street-v3","t":"NBA Street V3","p":"PlayStation 2","g":"Sports","y":"2005","c":"Keyboard, Gamepad","u":"https://nbarecomp.xellrecomp.party/"},{"s":"conker-s-bfd-multiplayer","t":"Conker's BFD (Multiplayer)","p":"Nintendo 64","g":"Shooter","y":"2001","c":"Keyboard, Gamepad","u":"https://conker.wtf/"},{"s":"nfs-underground-2","t":"NFS Underground 2","p":"PlayStation 2","g":"Racing","y":"2004","c":"Keyboard, Gamepad, Touch","u":"https://nfsunderground2.site/"},{"s":"neverball","t":"Neverball","p":"PC","g":"Puzzle","y":"2003","c":"Keyboard, Gamepad, Touch","u":"https://play.neverball.org/"},{"s":"manic-miner","t":"Manic Miner","p":"ZX Spectrum","g":"Platformer","y":"1983","c":"Keyboard, Touch","u":"https://mm.sarson.cz/"},{"s":"happy-wheels","t":"Happy Wheels","p":"Web browser","g":"Racing","y":"2010","c":"Keyboard, Touch","u":"https://totaljerkface.com/happy_wheels.tjf"},{"s":"compositor","t":"Compositor","p":"PC","g":"Other","y":"2026","c":"Keyboard","u":"https://compositor.fyi/"},{"s":"assaultcube","t":"AssaultCube","p":"PC","g":"Shooter","y":"2008","c":"Keyboard","u":"https://crishoux.com/assaultcube-web/"},{"s":"pokemon-redstone","t":"Pokémon Redstone","p":"Web browser","g":"RPG","y":"Not documented","c":"Keyboard, Touch","u":"https://pokemon-redstone.pages.dev/"},{"s":"total-overdose","t":"Total Overdose","p":"PC","g":"Shooter","y":"2005","c":"Keyboard","u":"https://tod-game.pages.dev/"},{"s":"fifa-street-2","t":"FIFA Street 2","p":"PlayStation 2","g":"Sports","y":"2006","c":"Keyboard, Gamepad, Touch","u":"https://fifastreet2.fun/"},{"s":"mega-man-legends-series","t":"Mega Man Legends (Series)","p":"PlayStation","g":"Shooter","y":"1997","c":"Keyboard, Gamepad, Touch","u":"https://oldgames.app/games/ps1/mega-man-legends-ps1-9356"},{"s":"diablo-2-survivors","t":"Diablo 2 Survivors","p":"Web browser","g":"RPG","y":"2026","c":"Keyboard, Touch","u":"https://d2survivors.lol/"},{"s":"mindustry","t":"Mindustry","p":"PC","g":"Strategy","y":"2019","c":"Keyboard","u":"https://wasmga.me/games/mindustry"},{"s":"pokemon-stadium-2","t":"Pokémon Stadium 2","p":"Nintendo 64","g":"Strategy","y":"2001","c":"Keyboard, Gamepad","u":"https://azelf420.github.io/s2w/"},{"s":"clover-pit","t":"Clover Pit","p":"PC","g":"Strategy","y":"2025","c":"Keyboard","u":"https://genizymath.github.io/games/clover-pit/"},{"s":"dragon-ball-z-bt-3","t":"Dragon Ball Z: BT 3","p":"PlayStation 2","g":"Fighting","y":"2007","c":"Keyboard, Gamepad","u":"https://dragonballbt3.online/"},{"s":"crimsonland","t":"Crimsonland","p":"PC","g":"Shooter","y":"2003","c":"Keyboard, Gamepad","u":"https://crimson.land/play/"},{"s":"homeworld","t":"Homeworld","p":"PC","g":"Strategy","y":"1999","c":"Keyboard","u":"https://gardens-of-kadesh.gitlab.io/gardens-of-kadesh/"},{"s":"cut-the-rope-dx","t":"Cut the Rope DX","p":"Android / iOS","g":"Puzzle","y":"2010","c":"Keyboard, Touch","u":"https://yell0wsuit.github.io/cuttherope-dx/"},{"s":"dbz-budokai-2","t":"DBZ: Budokai 2","p":"PlayStation 2","g":"Fighting","y":"2003","c":"Keyboard, Gamepad, Touch","u":"https://budokai2onlline.cc/"},{"s":"fallout-nevada","t":"Fallout Nevada","p":"PC","g":"RPG","y":"2015","c":"Keyboard","u":"https://fallout-nevada.ru/#/en"},{"s":"nfl-street-2","t":"NFL Street 2","p":"PlayStation 2","g":"Sports","y":"2004","c":"Keyboard, Gamepad","u":"https://nilstreet.playthecombine.com/"},{"s":"fnaf-series","t":"FNAF (Series)","p":"PC","g":"Horror","y":"2014","c":"Keyboard, Touch","u":"https://fivenightsatfreddysgame.io/"},{"s":"wow-classic","t":"WoW Classic","p":"PC","g":"RPG","y":"2019","c":"Keyboard","u":"https://play.keldurn.com/"},{"s":"axiom-verge","t":"Axiom Verge","p":"PC","g":"Platformer","y":"2015","c":"Keyboard","u":"https://agentcube.github.io/axiomverge-wasm"},{"s":"metal-slug-series","t":"Metal Slug (Series)","p":"Neo Geo","g":"Shooter","y":"1996","c":"Keyboard, Gamepad, Touch","u":"https://wasmarcade.com/retro-games/metal-slug"},{"s":"link-s-arena","t":"Link's Arena","p":"Nintendo 64","g":"Action","y":"1998","c":"Keyboard, Gamepad, Touch","u":"https://linksarena.pages.dev/"},{"s":"mortal-kombat-sm","t":"Mortal Kombat: SM","p":"PlayStation 2","g":"Fighting","y":"2005","c":"Keyboard, Gamepad","u":"https://mortalkombatsm.online/"},{"s":"cricket-07","t":"Cricket 07","p":"PC","g":"Sports","y":"2006","c":"Keyboard, Gamepad","u":"https://cricket07.dhaiwat.com/"},{"s":"resident-evil-outbreak","t":"Resident Evil Outbreak","p":"PlayStation 2","g":"Horror","y":"2003","c":"Keyboard, Gamepad","u":"https://outbreakweb.com/"},{"s":"hill-climb-racing","t":"Hill Climb Racing","p":"Mobile","g":"Racing","y":"2012","c":"Keyboard, Touch","u":"https://wasm.rip/files/hcr/index.html"},{"s":"kerbal-space-program","t":"Kerbal Space Program","p":"PC","g":"Simulation","y":"2015","c":"Keyboard","u":"https://ksp.ishotupa.school/ksp/"},{"s":"mini-dayz","t":"Mini DayZ","p":"Mobile","g":"Action","y":"2017","c":"Keyboard, Touch","u":"https://rgc.zone/ports/minidayz/index.html"},{"s":"carrion","t":"Carrion","p":"PC","g":"Adventure","y":"2020","c":"Keyboard","u":"https://agentcube.github.io/carrion-wasm"},{"s":"angry-birds-2","t":"Angry Birds 2","p":"Mobile","g":"Puzzle","y":"2015","c":"Keyboard, Touch","u":"https://naotomori1.github.io/AngryBirds2Port/"},{"s":"wwe-smackdown-hctp","t":"WWE SmackDown\\! HCTP","p":"PlayStation 2","g":"Fighting","y":"2003","c":"Keyboard, Gamepad, Touch","u":"https://wwepain.online/"},{"s":"virtua-tennis-3","t":"Virtua Tennis 3","p":"PSP","g":"Sports","y":"2007","c":"Keyboard, Gamepad, Touch","u":"https://vt3.online/"},{"s":"granny-legacy","t":"Granny Legacy","p":"Mobile","g":"Adventure","y":"Not documented","c":"Keyboard","u":"https://granny-games.com/granny-legacy"},{"s":"mortal-kombat-armageddon","t":"Mortal Kombat: Armageddon","p":"PlayStation 2","g":"Fighting","y":"2006","c":"Keyboard, Touch","u":"https://mka.lauta.site/"},{"s":"mu-online","t":"MU Online","p":"PC","g":"RPG","y":"2001","c":"Keyboard","u":"https://muclaude.online/"},{"s":"nfs-most-wanted","t":"NFS: Most Wanted","p":"PC","g":"Racing","y":"2005","c":"Keyboard, Gamepad","u":"https://dezm0n.itch.io/nfs-most-wanted-web-port"},{"s":"slime-rancher","t":"Slime Rancher","p":"PC","g":"Simulation","y":"2017","c":"Keyboard, Gamepad, Touch","u":"https://gn-math.dev/?id=591"},{"s":"terraria","t":"Terraria","p":"PC","g":"Adventure","y":"2011","c":"Keyboard, Gamepad","u":"https://playterraria.lol/"},{"s":"formula-one-06","t":"Formula One 06","p":"PlayStation 2","g":"Racing","y":"2006","c":"Keyboard, Gamepad","u":"https://f12006.online/"},{"s":"pokeisaac","t":"PokéIsaac","p":"Web browser","g":"Shooter","y":"2026","c":"Keyboard, Gamepad, Touch","u":"https://pokeisaac.com/"},{"s":"meteor-60-seconds","t":"Meteor 60 Seconds\\!","p":"PC","g":"Simulation","y":"2018","c":"Keyboard","u":"https://thatwirdguy.github.io/Meteor-60-Seconds-Web/"},{"s":"cyberpunk-2077","t":"Cyberpunk 2077","p":"PC","g":"RPG","y":"2020","c":"Keyboard, Gamepad","u":"https://cyberpunk2077.lol/"},{"s":"def-jam-fight-for-ny","t":"Def Jam: Fight for NY","p":"PlayStation 2","g":"Fighting","y":"2004","c":"Keyboard, Gamepad","u":"https://def-jam.online/"},{"s":"burnout-3-takedown","t":"Burnout 3: Takedown","p":"PlayStation 2","g":"Racing","y":"2004","c":"Keyboard, Gamepad","u":"https://burnout3.online/"},{"s":"grand-theft-auto-vice-city","t":"Grand Theft Auto: Vice City","p":"PlayStation 2","g":"Racing","y":"2002","c":"Keyboard, Gamepad, Touch","u":"https://quenq.com/apps/vice-city/"},{"s":"naruto-nsuni","t":"Naruto (NSUNI)","p":"PSP","g":"Fighting","y":"2011","c":"Keyboard, Gamepad","u":"https://narutoimpact.online/"},{"s":"tekken-5","t":"Tekken 5","p":"PlayStation 2","g":"Fighting","y":"2005","c":"Keyboard, Gamepad","u":"https://tekken5.online/"},{"s":"rugby-08","t":"Rugby 08","p":"PC","g":"Sports","y":"2007","c":"Keyboard, Gamepad","u":"https://mitchivin.github.io/rugby08/"}];
+
+let currentP2BGenre = 'Todos';
+
+function initP2BCatalog(){
+  const platSelect = $('#p2bPlatFilter');
+  const genreContainer = $('#p2bGenrePills');
+  if(!platSelect || !genreContainer) return;
+
+  const platforms = [...new Set(P2B_GAMES.map(x => x.p))].sort();
+  platSelect.innerHTML = '<option value="all">Todas as Plataformas (' + P2B_GAMES.length + ')</option>' +
+    platforms.map(p => `<option value="${p}">${p}</option>`).join('');
+
+  const genres = ['Todos', ...[...new Set(P2B_GAMES.map(x => x.g))].sort()];
+  genreContainer.innerHTML = genres.map(g => 
+    `<button class="p2b-pill${g === currentP2BGenre ? ' on' : ''}" onclick="setP2BGenre('${g}')">${g === 'Todos' ? '🔥 Todos os Gêneros' : g}</button>`
+  ).join('');
+
+  filterP2BGames();
+}
+
+function setP2BGenre(genre){
+  currentP2BGenre = genre;
+  $('#p2bGenrePills .p2b-pill').forEach(b => {
+    const txt = b.textContent.replace('🔥 Todos os Gêneros', 'Todos').trim();
+    b.classList.toggle('on', txt === genre);
+  });
+  filterP2BGames();
+}
+
+function filterP2BGames(){
+  const q = ($('#p2bSearchInput')?.value || '').toLowerCase().trim();
+  const plat = $('#p2bPlatFilter')?.value || 'all';
+  const sort = $('#p2bSortSelect')?.value || 'az';
+
+  let list = P2B_GAMES.filter(item => {
+    if(currentP2BGenre !== 'Todos' && item.g !== currentP2BGenre) return false;
+    if(plat !== 'all' && item.p !== plat) return false;
+    if(q && !item.t.toLowerCase().includes(q) && !item.p.toLowerCase().includes(q) && !item.g.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  if(sort === 'az'){
+    list.sort((a,b) => a.t.localeCompare(b.t));
+  } else if(sort === 'year_desc'){
+    list.sort((a,b) => (parseInt(b.y)||0) - (parseInt(a.y)||0));
+  } else if(sort === 'year_asc'){
+    list.sort((a,b) => (parseInt(a.y)||9999) - (parseInt(b.y)||9999));
+  }
+
+  const countLbl = $('#p2bCountLbl');
+  if(countLbl) countLbl.innerHTML = `<b style="color:var(--accent-hi)">${list.length}</b> jogos encontrados`;
+
+  const grid = $('#p2bGamesGrid');
+  if(!grid) return;
+
+  if(list.length === 0){
+    grid.innerHTML = `<div class="empty"><i data-lucide="gamepad-2"></i><h3>Nenhum jogo encontrado</h3><p>Tente buscar outro nome ou limpar os filtros de plataforma/gênero.</p></div>`;
+    refreshIcons();
+    return;
+  }
+
+  grid.innerHTML = list.map(item => `
+    <div class="p2b-card" onclick="playP2BGame('${item.s}')">
+      <div class="p2b-card-top">
+        <span class="p2b-plat">${item.p}</span>
+        <span class="p2b-year">${item.y || 'Web'}</span>
+      </div>
+      <h4 title="${item.t}">${item.t}</h4>
+      <p>Port WebAssembly / HTML5 de <b>${item.t}</b> (${item.g}). Controles: ${item.c}.</p>
+      <div class="p2b-meta">
+        <span>🎮 ${item.g}</span>
+        <span>⌨️ ${item.c.split(',')[0]}</span>
+      </div>
+      <div class="p2b-actions">
+        <button class="p2b-btn-play" onclick="event.stopPropagation(); playP2BGame('${item.s}')">
+          <i data-lucide="play"></i> Jogar no Player
+        </button>
+        <a href="${item.u}" target="_blank" rel="noopener noreferrer" class="p2b-btn-ext" onclick="event.stopPropagation()" title="Abrir em Nova Aba">
+          <i data-lucide="external-link"></i>
+        </a>
+      </div>
+    </div>
+  `).join('');
+  refreshIcons();
+}
+
+function playP2BGame(slug){
+  const item = P2B_GAMES.find(x => x.s === slug);
+  if(!item) return;
+
+  currentPlatform = 'p2b_' + item.s;
+  $('#webPlatformTabs button').forEach(b => b.classList.remove('on'));
+
+  const titleEl = $('#playerPlatformTitle');
+  const badgeEl = $('#playerPlatformBadge');
+  const controlsEl = $('#playerPlatformControls');
+  const extBtn = $('#playerExternalBtn');
+  const iframe = $('#webStationIframe');
+  const ytStation = $('#ytStationView');
+  const pokiStation = $('#pokiStationView');
+  const j360Station = $('#j360StationView');
+  const garticStation = $('#garticStationView');
+  const crazyStation = $('#crazygamesStationView');
+
+  if(titleEl) titleEl.textContent = `${item.t} (${item.p})`;
+  if(badgeEl){
+    badgeEl.textContent = 'PORTED2BROWSER · ' + item.g.toUpperCase();
+    badgeEl.style.background = 'var(--accent)';
+    badgeEl.style.color = 'var(--accent-ink)';
+  }
+  if(controlsEl) controlsEl.innerHTML = `<i data-lucide="gamepad-2" style="width:16px;height:16px;color:var(--accent)"></i> <b>Controles:</b> ${item.c} · Caso o jogo exija arquivos ou bloqueie iframe, clique em <b>Nova Aba</b>.`;
+  if(extBtn) extBtn.href = item.u;
+
+  if(ytStation) ytStation.style.display = 'none';
+  if(pokiStation) pokiStation.style.display = 'none';
+  if(j360Station) j360Station.style.display = 'none';
+  if(garticStation) garticStation.style.display = 'none';
+  if(crazyStation) crazyStation.style.display = 'none';
+
+  if(iframe){
+    iframe.style.display = 'block';
+    iframe.src = item.u;
+    iframe.focus();
+  }
+
+  $('#gamePlayerSection').scrollIntoView({behavior:'smooth'});
+  toast(`Iniciando ${item.t} no Player Web!`, 'play');
+  refreshIcons();
 }
 
 /* ================= INIT ================= */
